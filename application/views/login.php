@@ -34,7 +34,7 @@
 <div id="backgroundImage" class="fullscreen-bg"></div>
 <div class="login-box">
 	<!-- /.login-logo -->
-	<div class="card card-outline card-primary">
+	<div class="card card-outline">
 		<div class="card-header text-center">
 			<img src="<?=base_url()?>assets/imgs/logos/icono.png" width="40px" height="40px" /> <span class="h3">Certificaciones WalMart</span>
 		</div>
