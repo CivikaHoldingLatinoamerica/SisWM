@@ -107,10 +107,15 @@ input[type=number] {
 }
 
 a.nav-link.active{
-	background-color: #fdbb30 !important;
-    background-image: none !important;
-    color: black !important;
+	background-color: white !important;
+    	background-image: none !important;
+    	color: #0d7bb2 !important;
+	/* color: #fdbb30 !important; */
 }
+
+/* a.nav-link.active > .nav-icon{
+	color: #fdbb30 !important;
+} */
 
 .brand-text{
 	color:white !important;
