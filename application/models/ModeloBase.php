@@ -77,6 +77,7 @@ class ModeloBase extends CI_Model
 				}
 			}
 		}catch (Exception $ex){
+			var_dump($ex);
 			$return['success'] = false;
 			$return['msg'] = 'Hubo un error en el sistema, favor de intentar más tarde';
 		}

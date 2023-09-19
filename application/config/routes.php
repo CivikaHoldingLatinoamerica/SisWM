@@ -1,4 +1,4 @@
-<?php
+	<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -79,3 +79,4 @@ $route['contacto'] = 'Informacion/contacto';
 $route['quienes_somos'] = 'Informacion/quienes_somos';
 
 $route['show-session'] = 'Welcome/sesion';
+$route['catalogos_sectores'] = 'Catalogo/sectores';
