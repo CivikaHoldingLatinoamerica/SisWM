@@ -509,6 +509,64 @@ class Validaciones_Helper {
 		return $result;
 	}
 
+	public static function formConvocatoriaEC($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['titulo']) || self::isCampoVacio($data['titulo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo titulo es requerido';
+		}if(!isset($data['programacion_inicio']) || self::isCampoVacio($data['programacion_inicio'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha programa inicio es requerido';
+		}if(!isset($data['programacion_fin']) || self::isCampoVacio($data['programacion_fin'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha programa fin es requerido';
+		}if(!isset($data['alineacion_inicio']) || self::isCampoVacio($data['alineacion_inicio'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha alineacion inicio es requerido';
+		}if(!isset($data['alineacion_fin']) || self::isCampoVacio($data['alineacion_fin'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha alineación fin es requerido';
+		}if(!isset($data['evaluacion_inicio']) || self::isCampoVacio($data['evaluacion_inicio'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha evaluación inicio es requerido';
+		}if(!isset($data['evaluacion_fin']) || self::isCampoVacio($data['evaluacion_fin'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha evaluación fin es requerido';
+		}if(!isset($data['certificado_inicio']) || self::isCampoVacio($data['certificado_inicio'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha certificado inicio es requerido';
+		}if(!isset($data['certificado_fin']) || self::isCampoVacio($data['certificado_fin'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo fecha certificado fin es requerido';
+		}if(!isset($data['proposito']) || self::isCampoVacio($data['proposito'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo proposito es requerido';
+		}if(!isset($data['descripcion']) || self::isCampoVacio($data['descripcion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo descripcion de la convocatoria es requerido';
+		}if(!isset($data['sector_descripcion']) || self::isCampoVacio($data['sector_descripcion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo sector descripcion es requerido';
+		}if(!isset($data['perfil']) || self::isCampoVacio($data['perfil'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo perfil es requerido';
+		}if(!isset($data['duracion_descripcion']) || self::isCampoVacio($data['duracion_descripcion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo duración de la duración es requerido';
+		}if(!isset($data['costo_alineacion']) || self::isCampoVacio($data['costo_alineacion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo costo alineación es requerido';
+		}if(!isset($data['costo_evaluacion']) || self::isCampoVacio($data['costo_evaluacion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo costo evaluación es requerido';
+		}if(!isset($data['costo_certificado']) || self::isCampoVacio($data['costo_certificado'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo costo certificado es requerido';
+		}
+		return $result;
+	}
+
 	public static function isCampoVacio($campo){
 		$validacion = false;
 		if(trim($campo) == '' && strlen($campo)){

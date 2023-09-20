@@ -105,7 +105,7 @@ var ActividadesTecnicasInstrumentos = {
 				$('#contenedor_formulario_ati').html(response);
 				$('#card_formulario_ati').fadeIn();
 				$('#card_resultados_ati').fadeOut();
-				//Comun.iniciar_editor_summernote('#txt_instrucciones','Describa las instrucciones del instrumento');
+				Comun.iniciar_editor_summernote('#txt_instrucciones','Describa las instrucciones del instrumento');
 				Comun.funcion_fileinput('#files_ati','Subir PDF o Imágen');
 				ActividadesTecnicasInstrumentos.iniciar_carga_archivos_ati(
 					'#files_ati',

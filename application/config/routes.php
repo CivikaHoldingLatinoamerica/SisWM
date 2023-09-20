@@ -61,6 +61,7 @@ $route['recuperar_password'] = 'Login/recuperar_password';
 $route['unsubscribe'] = 'Login/darse_baja';
 $route['perfil_permisos'] = 'PerfilPermiso/index';
 $route['estandar_competencia'] = 'EC/index';
+$route['estandar_competencia/convocatoria/(:num)'] = 'ConvocatoriasEC/index/$1';
 $route['tecnicas_instrumentos/(:any)'] = 'TecnicasInstrumentos/index/$1';
 $route['evaluacion_ec/(:any)'] = 'EvaluacionEC/index/$1';
 $route['evaluacion/(:num)/(:num)'] = 'AlumnosEC/evaluacion/$1/$2';

@@ -43,14 +43,14 @@
 						   name="instrumento_actividad[actividad]"
 						   value="<?=isset($ec_instrumento_has_actividad) ? $ec_instrumento_has_actividad->actividad : '' ?>">
 				</div>
-				<!--<div class="form-group row">
+				<div class="form-group row">
 					<label class="col-sm-3 col-form-label">Instrucciones:</label>
 					<div class="col-sm-9">
 						<textarea id="txt_instrucciones" type="text" data-rule-required="true" class="form-control "
 								  name="instrumento_actividad[instrucciones]"
 								  placeholder="Describa la actividad"><?=isset($ec_instrumento_has_actividad) ? $ec_instrumento_has_actividad->instrucciones : '' ?></textarea>
 					</div>
-				</div>-->
+				</div>
 				<div class="form-group row">
 					<label class="col-sm-3 col-form-label">
 						Archivos (PDF/Imágenes/URL de video)

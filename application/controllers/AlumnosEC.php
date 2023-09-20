@@ -352,8 +352,7 @@ class AlumnosEC extends CI_Controller {
 				}
 			}
 			//Fin del apartado para la evidencia de trabajo del candidato
-			formatoArrayData($data);exit;
-			$this->load->view('alumno_ec/progreso_pasos/evidencias',$data);
+			$this->load->view('alumno_ec/progreso_pasos/evidencias_old',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
