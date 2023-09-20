@@ -40,7 +40,7 @@
 
 			<div class="card card-solid" id="card_resultados_ati">
 				<div class="card-body pb-0">
-					<div id="_ati"></div>
+					<div id="contenedor_resultados_estandar_competencia_ati"></div>
 				</div>
 			</div>
 
