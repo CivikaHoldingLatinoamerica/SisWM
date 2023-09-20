@@ -47,7 +47,7 @@ class TecnicasInstrumentos extends CI_Controller {
 				base_url().'assets/frm/fileupload/js/vendor/jquery.ui.widget.js',
 				base_url().'assets/frm/fileupload/js/jquery.iframe-transport.js',
 				base_url().'assets/frm/fileupload/js/jquery.fileupload.js',
-				base_url() . 'assets/js/ec/actividades_ie.js'
+				base_url().'assets/js/ec/actividades_ie.js'
 			);
 			$ec_instrumento_alumno = $this->ActividadIEModel->obtener_ec_instrumento_alumno($id_estandar_competencia);
 			$data['existe_evidencia_alumnos'] = is_array($ec_instrumento_alumno) && sizeof($ec_instrumento_alumno) > 0;

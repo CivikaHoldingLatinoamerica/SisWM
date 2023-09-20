@@ -652,6 +652,7 @@ var Comun = {
 					funcion_response(archivo);
 				}else{
 					Comun.mensaje_operacion(data.result.msg,'error');
+					$(div_procesando).html('');
 				}
 			},
 			error:function (xhr, ajaxOptions, thrownError){
@@ -757,9 +758,9 @@ var Comun = {
 		});
 	},
 
-	iniciar_editor_summernote : function(textarea,placeholder){
+	iniciar_editor_summernote : function(textarea,placeholder,minHeight = 300){
 		$(textarea).summernote({
-			minHeight : 300,
+			minHeight : minHeight,
 			lang : 'es-ES',
 			placeholder : placeholder,
 			codeviewFilter: false,
@@ -768,7 +769,7 @@ var Comun = {
 				['style', ['bold', 'italic', 'underline']],
 				['font',['fontname','fontsize','forecolor']],
 				['para', ['ul', 'ol', 'paragraph']],
-				['insert', ['link', 'picture', 'video']],
+				//['insert', ['link', 'picture', 'video']],
 				['view', [ 'help']],
 			]
 		});

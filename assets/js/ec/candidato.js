@@ -265,7 +265,7 @@ var CandidatoEC = {
 
 	inicializar_input_file_entregables : function(){
 		$.each($('.doc_evidencia_ati_alumno'),function(index,input){
-			CandidatoEC.iniciar_carga_doc_evidencia('#'+input.id);
+			CandidatoEC.iniciar_carga_doc_evidencia_old('#'+input.id);
 		});
 	},
 
