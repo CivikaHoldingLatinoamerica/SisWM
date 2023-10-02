@@ -80,4 +80,5 @@ $route['contacto'] = 'Informacion/contacto';
 $route['quienes_somos'] = 'Informacion/quienes_somos';
 
 $route['show-session'] = 'Welcome/sesion';
-$route['catalogos_sectores'] = 'Catalogo/sectores';
+$route['catalogos_sectores'] = 'Catalogos/sectores';
+$route['evidencias_esperadas/(:num)'] = 'Entregable/index';

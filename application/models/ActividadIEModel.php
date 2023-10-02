@@ -298,4 +298,5 @@ class ActividadIEModel extends CI_Model
 		return $this->db->delete('estandar_competencia_instrumento');
 	}
 
+
 }

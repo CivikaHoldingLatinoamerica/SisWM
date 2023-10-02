@@ -114,6 +114,10 @@ class Catalogos extends CI_Controller {
 			$data['extra_css'] = array();
 			$this->load->model('CatSectorEc');
 			$data['tabla'] = $this->CatSectorEc->obtener_sectores();
+			$data['total_registros'] = $this->CatSectorEc->total_data();
+			$data_paginacion = data_paginacion(1,10,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+
 			//var_dump($data);exit;
 			$this->load->view('catalogo/sector',$data);
 		}catch (Exception $ex){
@@ -134,6 +138,7 @@ class Catalogos extends CI_Controller {
 				$id = $post['id_cat_sector_ec'];
 			}
 			$data = $this->CatSectorEc->guardar_row($post,$id);
+
 			if($data['success']){
 				$response['success'] = true;
 				$response['msg'] = array('Se guardo el sector correctamente');

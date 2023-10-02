@@ -1,3 +1,4 @@
+
 <?php foreach ($tabla as $index => $item): ?>
 	<tr>
 		<th scope="row"><?=$item->id_cat_sector_ec?></th>

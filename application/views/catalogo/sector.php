@@ -32,6 +32,9 @@
 					</tr>
 					</thead>
 					<tbody id="contenido_tabla_sectores">
+					<?php if($pagina_select ==1 ): ?>
+						<input type="hidden" id="paginacion_usuario" value="<?=$pagina_select?>" data-max_paginacion="<?=$paginas?>">
+					<?php endif; ?>
 					 <?php $this->load->view('catalogo/tablas/tabla_sectores')?>
 					</tbody>
 				</table>
