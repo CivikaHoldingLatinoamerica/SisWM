@@ -402,7 +402,7 @@ function fechaCastellano($fecha){
     $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
     $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
 //return $nombredia." ".$numeroDia." de ".$nombreMes." de ".$anio;
-    return $numeroDia." de ".$nombreMes." de ".$anio;
+    return $numeroDia." de ".$nombreMes." del ".$anio;
 }
 
 function fecha_castellano_sin_anio($fecha){
@@ -471,7 +471,7 @@ function rango_fecha_castellano($fecha_inicio,$fecha_fin){
 
 function existe_valor($campo){
     $existe = false;
-    if(!is_null($campo) && $campo != ''){
+    if(!is_null($campo) && $campo != '' && trim($campo) != ''){
         $existe = true;
     }
     return $existe;
@@ -560,7 +560,7 @@ function imagenFondoTransparente($archivo){
 	}
 }
 
-function formatoArrayData($data){
+function dd($data){
 	echo '<pre>';
 	echo print_R($data);
 }

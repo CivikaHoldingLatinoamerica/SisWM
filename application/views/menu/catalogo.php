@@ -9,7 +9,7 @@
 		</a>
 		<ul class="nav nav-treeview">
 			<li class="nav-item">
-				<a href="<?=base_url()?>Catalogos/bienvenida" class="nav-link <?=isset($sidebar) && $sidebar == 'cat_bienvenida' ? 'active':''?>">
+				<a href="<?=base_url()?>Catalogos/bienvenida" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'cat_bienvenida' ? 'active':''?>">
 					<i class="nav-icon fas fa-comment"></i>
 					<p>Mensaje de bienvenida</p>
 				</a>

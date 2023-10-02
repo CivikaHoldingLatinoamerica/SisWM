@@ -132,7 +132,24 @@ class Validaciones_Helper {
 			$result['msg'][] = 'El campo correo es requerido o no es un correo';
 		}if(!isset($data['curp']) || self::isCampoVacio($data['curp']) || !self::isValidRegex($data['curp'],'/^[A-ZÑ]{4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z]{6}[A-Z0-9]{1}[0-9]{1}$/')){
 			$result['success'] = false;
-			$result['msg'][] = 'El campo correo es requerido o no tiene la estructura correcta';
+			$result['msg'][] = 'El campo CURP es requerido o no tiene la estructura correcta';
+		}
+		return $result;
+	}
+
+	public static function formUsuarioCandidatoConvocatoria($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(isset($data['es_extranjero']) && $data['es_extranjero'] == 1){
+			if(!isset($data['codigo_extranjero']) || self::isCampoVacio($data['codigo_extranjero'])){
+				$result['success'] = false;
+				$result['msg'][] = 'El campo clave extranjera es requerido';
+			}
+		}else{
+			if(!isset($data['curp']) || self::isCampoVacio($data['curp']) || !self::isValidRegex($data['curp'],'/^[A-ZÑ]{4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z]{6}[A-Z0-9]{1}[0-9]{1}$/')){
+				$result['success'] = false;
+				$result['msg'][] = 'El campo CURP es requerido o no tiene la estructura correcta';
+			}
 		}
 		return $result;
 	}
@@ -539,21 +556,6 @@ class Validaciones_Helper {
 		}if(!isset($data['certificado_fin']) || self::isCampoVacio($data['certificado_fin'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo fecha certificado fin es requerido';
-		}if(!isset($data['proposito']) || self::isCampoVacio($data['proposito'])){
-			$result['success'] = false;
-			$result['msg'][] = 'El campo proposito es requerido';
-		}if(!isset($data['descripcion']) || self::isCampoVacio($data['descripcion'])){
-			$result['success'] = false;
-			$result['msg'][] = 'El campo descripcion de la convocatoria es requerido';
-		}if(!isset($data['sector_descripcion']) || self::isCampoVacio($data['sector_descripcion'])){
-			$result['success'] = false;
-			$result['msg'][] = 'El campo sector descripcion es requerido';
-		}if(!isset($data['perfil']) || self::isCampoVacio($data['perfil'])){
-			$result['success'] = false;
-			$result['msg'][] = 'El campo perfil es requerido';
-		}if(!isset($data['duracion_descripcion']) || self::isCampoVacio($data['duracion_descripcion'])){
-			$result['success'] = false;
-			$result['msg'][] = 'El campo duración de la duración es requerido';
 		}if(!isset($data['costo_alineacion']) || self::isCampoVacio($data['costo_alineacion'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo costo alineación es requerido';
@@ -563,6 +565,9 @@ class Validaciones_Helper {
 		}if(!isset($data['costo_certificado']) || self::isCampoVacio($data['costo_certificado'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo costo certificado es requerido';
+		}if(!isset($data['costo']) || self::isCampoVacio($data['costo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo costo total es requerido';
 		}
 		return $result;
 	}

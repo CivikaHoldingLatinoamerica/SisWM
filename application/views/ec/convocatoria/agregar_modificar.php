@@ -2,7 +2,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title"><?=isset($estandar_competencia_convocatoria) ? 'Actualizar':'Nueva'?> Convocatoria del Estándar de Competencia</h4>
+				<h4 class="modal-title"><?=isset($estandar_competencia_convocatoria) && (isset($es_clonacion) && !$es_clonacion) ? 'Actualizar':'Nueva'?> Convocatoria del Estándar de Competencia</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
@@ -10,17 +10,25 @@
 			<form id="form_agregar_modificar_convocatoria">
 				<input type="hidden" name="id_estandar_competencia_convocatoria" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->id_estandar_competencia_convocatoria : ''?>">
 				<input type="hidden" name="id_estandar_competencia" value="<?=$id_estandar_competencia?>">
+				<input type="hidden" name="publicada" value="no">
 				<div class="modal-body">
 					<div class="form-group row"> 
 						<div class="callout callout-warning col-md-12">
 							La fecha de "Alineación Fin" se usará para limitar las convocatorias mostradas en el "inicio" o portal público de convocatorias del sistema
 						</div>
 					</div>
+					<?php if(isset($es_clonacion) && $es_clonacion): ?>
+						<div class="form-group row"> 
+							<div class="callout callout-danger col-md-12">
+								Se detectó que es una convocatoria que esta obteniendo información de una existente; para registrar completamente la nueva convocatoria, es necesario que revise los datos del siguiente formulario y de en el botón de guardar
+							</div>
+						</div>
+					<?php endif; ?>
 					<div class="form-group row">
 						<div class="col-sm-12">
 							<label for="input_titulo" class="col-form-label">Titulo</label>
 							<input type="text" class="form-control" id="input_titulo" data-rule-required="true"
-									name="titulo" placeholder="Titulo de la convocatoria EC" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->titulo : ''?>">
+									name="titulo" placeholder="Titulo de la convocatoria EC" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->titulo : $estandar_competencia->codigo.' - '.$estandar_competencia->titulo?>">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -112,31 +120,40 @@
 					</div>
 
 					<div class="form-group row">
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<label for="input_costo_alineacion" class="col-form-label">Costo Alineación</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text">$</span>
 								</div>
-								<input id="input_costo_alineacion" type="number" data-rule-required="true" name="costo_alineacion" placeholder="Costo de la alienación del EC" class="form-control" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo_alineacion : ''?>">
+								<input id="input_costo_alineacion" type="number" data-rule-required="true" name="costo_alineacion" placeholder="Costo de la alienación del EC" class="form-control costo_convocatoria" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo_alineacion : ''?>">
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<label for="input_costo_evaluacion" class="col-form-label">Costo Evaluación</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text">$</span>
 								</div>
-								<input id="input_costo_evaluacion" data-rule-required="true" type="number" name="costo_evaluacion" placeholder="Costo de la Evaluación del EC" class="form-control" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo_alineacion : ''?>">
+								<input id="input_costo_evaluacion" data-rule-required="true" type="number" name="costo_evaluacion" placeholder="Costo de la Evaluación del EC" class="form-control costo_convocatoria" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo_alineacion : ''?>">
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<label for="input_costo_certificado" class="col-form-label">Costo Certificado</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text">$</span>
 								</div>
-								<input id="input_costo_certificado" data-rule-required="true" type="number" name="costo_certificado" placeholder="Costo de la Certificación del EC" class="form-control" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo_certificado : ''?>">
+								<input id="input_costo_certificado" data-rule-required="true" type="number" name="costo_certificado" placeholder="Costo de la Certificación del EC" class="form-control costo_convocatoria" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo_certificado : ''?>">
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<label for="input_costo" class="col-form-label">Costo total</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">$</span>
+								</div>
+								<input id="input_costo" data-rule-required="true" type="number" name="costo" placeholder="Costo de la Certificación del EC" class="form-control" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->costo : ''?>">
 							</div>
 						</div>
 					</div>

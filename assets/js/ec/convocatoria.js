@@ -20,6 +20,19 @@ $(document).ready(function(){
 		Convocatoria.agregar_modificar_convocatoria(id_estandar_competencia,id_estandar_competencia_convocatoria);
 	});
 
+	$(document).on('click','.clonar_convocatoria_ec',function(){
+		var id_estandar_competencia_convocatoria = $(this).data('id_estandar_competencia_convocatoria');
+		Convocatoria.clonar_convocatoria(id_estandar_competencia_convocatoria);
+	});
+
+	$(document).on('change','.costo_convocatoria',function(){
+		var suma = 0;
+		$('.costo_convocatoria').each(function(){
+			suma += $(this).val() != '' ? parseFloat($(this).val()) : 0;
+		});
+		$('#input_costo').val(suma);
+	});
+
 	//funcionalidad para el paginado por scroll
 	$(window).scroll(function(){
 		//validamos lo del scroll
@@ -77,6 +90,15 @@ var Convocatoria = {
 
 	agregar_modificar_convocatoria :function(id_estandar_competencia, id_estandar_competencia_convocatoria = ''){
 		Comun.obtener_contenido_peticion_html(base_url + 'ConvocatoriasEC/agregar_modificar_convocatoria/'+id_estandar_competencia + '/' + id_estandar_competencia_convocatoria,{},
+			function(response){
+				$('#contenedor_modal_primario').html(response);
+				Comun.mostrar_ocultar_modal('#modal_form_convocatoria_ec',true);
+				Convocatoria.iniciar_editor_summernote();
+		});
+	},
+
+	clonar_convocatoria :function(id_estandar_competencia_convocatoria = ''){
+		Comun.obtener_contenido_peticion_html(base_url + 'ConvocatoriasEC/clonar_convocatoria/' + id_estandar_competencia_convocatoria,{},
 			function(response){
 				$('#contenedor_modal_primario').html(response);
 				Comun.mostrar_ocultar_modal('#modal_form_convocatoria_ec',true);

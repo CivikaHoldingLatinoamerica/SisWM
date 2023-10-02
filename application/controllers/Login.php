@@ -121,4 +121,9 @@ class Login extends CI_Controller {
 	public function darse_baja(){
 		redirect(base_url());
 	}
+
+	public function registro($idEstandarCompetenciaConvocatoria){
+		$data['id_estandar_competencia_convocatoria'] = $idEstandarCompetenciaConvocatoria;
+		$this->load->view('registro_convocatoria',$data);
+	}
 }

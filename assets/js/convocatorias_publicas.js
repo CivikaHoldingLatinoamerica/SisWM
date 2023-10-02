@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+	$(document).on('click','.ver_detalle_convocatoria',function(){
+		var id_estandar_competencia_convocatoria = $(this).data('id_estandar_competencia_convocatoria');
+		ConvocatoriasPublicas.detalle(id_estandar_competencia_convocatoria);
+	});
+
 	ConvocatoriasPublicas.tablero();
 
 });
@@ -35,6 +40,15 @@ var ConvocatoriasPublicas = {
 				}
 			);
 		}
+	},
+
+	detalle :function(id_estandar_competencia_convocatoria = ''){
+		Comun.obtener_contenido_peticion_html(base_url + 'Publico/detalle/'+ id_estandar_competencia_convocatoria,{},
+			function(response){
+				$('#contenedor_modal_primario').html(response);
+				Comun.mostrar_ocultar_modal('#modal_convocatoria_ec_detalle',true);
+			}
+		);
 	},
 
 }

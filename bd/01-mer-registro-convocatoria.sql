@@ -19,6 +19,8 @@ CREATE TABLE `civika_ped`.`estandar_competencia_convocatoria` (
   `costo_alineacion` DECIMAL(8,2) NOT NULL,
   `costo_evaluacion` DECIMAL(8,2) NOT NULL,
   `costo_certificado` DECIMAL(8,2) NOT NULL,
+  `costo` DECIMAL(8,2) NOT NULL,
+  `publicada` ENUM('si', 'no') NOT NULL DEFAULT 'no' ,
   `eliminado` ENUM('si', 'no') NOT NULL DEFAULT 'no' ,
   PRIMARY KEY (`id_estandar_competencia_convocatoria`),
   INDEX `ec_convocatoria_estandar_competencia_idx` (`id_estandar_competencia` ASC) VISIBLE,

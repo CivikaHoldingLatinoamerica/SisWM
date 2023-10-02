@@ -8,9 +8,7 @@
 
 	<!-- Main content -->
 	<section class="content" id="tablero_estandar_competencia_convocatoria">
-		<?php if((isset($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0
-							&& isset($estandar_competencia_evaluacion) && is_object($estandar_competencia_evaluacion)
-							&& isset($estandar_competencia_has_requerimientos) && sizeof($estandar_competencia_has_requerimientos) != 0
+		<?php if((isset($estandar_competencia_evaluacion) && is_object($estandar_competencia_evaluacion)
 							&& isset($instructores_asignados) && sizeof($instructores_asignados) != 0)): ?>
 
 			<div class="container-fluid mb-3">
@@ -62,9 +60,9 @@
 										<tr>
 											<th>ID</th>
 											<th>Titulo</th>
-											<th>Programación</th>
-											<th>Costos</th>
+											<th style="min-width: 300px;">Programación y costos</th>
 											<th>Datos Generales</th>
+											<th>Estatus</th>
 											<th>Operaciones</th>
 										</tr>
 										</thead>
@@ -89,9 +87,7 @@
 							<h5>Lo siento</h5>
 							<p>Para poder realizar la publicación de una convocatoria, es necesario que registre:</p>
 							<ol>
-								<li>Las actividades, tecnicas e instrumentos de evaluación con sus cuestionarios liberados (si aplica) <span class="badge badge-dark"><?=isset($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0 && $evaluacion_instrumento_liberados ? 'OK':'Falta'?></span></li>
-								<li>Los requerimientos de evaluación <span class="badge badge-dark"><?=isset($estandar_competencia_has_requerimientos) && sizeof($estandar_competencia_has_requerimientos) != 0 ? 'OK':'Falta'?></span></li>
-								<li>La evaluación diagnostica liberada <span class="badge badge-dark"><?=isset($estandar_competencia_evaluacion) && is_object($estandar_competencia_evaluacion) != 0 ? 'OK':'Falta'?></span></li>
+								<li>La evaluación diagnóstica liberada <span class="badge badge-dark"><?=isset($estandar_competencia_evaluacion) && is_object($estandar_competencia_evaluacion) != 0 ? 'OK':'Falta'?></span></li>
 								<li>Asignar por lo menos un evaluador al Estándar de competencia <span class="badge badge-dark"><?=isset($instructores_asignados) && sizeof($instructores_asignados) != 0 ? 'OK':'Falta'?></span></li>
 							</ol>
 							<p>Los puntos que aparecen como <span class="badge badge-dark">Falta</span>, son aquellos que aún no esta cargado al sistema</p>

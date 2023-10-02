@@ -20,6 +20,7 @@ class EstandarCompetenciaConvocatoriaModel extends ModeloBase
 	{
 		$joins = ' inner join estandar_competencia ec on ec.id_estandar_competencia = ecc.id_estandar_competencia ';
 		$joins .= ' inner join archivo a on a.id_archivo = ec.id_archivo ';
+		$joins .= ' inner join cat_sector_ec csec on csec.id_cat_sector_ec = ecc.id_cat_sector_ec ';
 		return $joins;
 	}
 
@@ -31,8 +32,23 @@ class EstandarCompetenciaConvocatoriaModel extends ModeloBase
 			$criterios .= ' and ecc.id_estandar_competencia = '.$data['id_estandar_competencia'];
 		}if(isset($data['fecha']) && $data['fecha'] != ''){
 			$criterios .= " and ecc.alineacion_fin >= '".$data['fecha']."'";
+		}if(isset($data['id_estandar_competencia_convocatoria']) && $data['id_estandar_competencia_convocatoria'] != ''){
+			$criterios .= ' and ecc.id_estandar_competencia_convocatoria = '.$data['id_estandar_competencia_convocatoria'];
 		}
 		return $criterios;
+	}
+	
+	public function obtener_query_base(){
+		$fechaHoy = date('Y-m-d');
+		$consulta = "
+			select 
+				ec.*,
+				ecc.*,
+				a.*,
+				csec.nombre as nombre_sector,
+				if(ecc.alineacion_fin >= '".$fechaHoy."', true,false) convocatoria_vigente 
+			from estandar_competencia_convocatoria ecc";
+		return $consulta;
 	}
 
 }
