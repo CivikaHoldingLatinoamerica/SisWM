@@ -71,7 +71,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function tablero($pagina = 1, $registros = 5){
-		perfil_permiso_operacion('estandar_competencia.agregar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$post = $this->input->post();
 			if(in_array($this->usuario->perfil,array('instructor','alumno'))){
@@ -93,7 +93,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function agregar_modificar_convocatoria($idEstandarCompetencia,$idEstandarCompetenciaConvocatoria = ''){
-		perfil_permiso_operacion('estandar_competencia.agregar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$data['id_estandar_competencia'] = $idEstandarCompetencia;
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($idEstandarCompetencia);
@@ -111,7 +111,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function clonar_convocatoria($idEstandarCompetenciaConvocatoria){
-		perfil_permiso_operacion('estandar_competencia.agregar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$data['es_clonacion'] = true;
 			$data['cat_sector_ec'] = $this->CatalogoModel->cat_sector_ec();
@@ -130,7 +130,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function guardar_convocatoria($id_estandar_competencia_convocatoria = false){
-		perfil_permiso_operacion('estandar_competencia.agregar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$post = $this->input->post();
 			$validaciones = Validaciones_Helper::formConvocatoriaEC($post);
@@ -156,7 +156,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function eliminar($id_eliminar){
-		perfil_permiso_operacion('estandar_competencia.modificar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$eliminar = $this->EstandarCompetenciaConvocatoriaModel->eliminar_row($id_eliminar);
 			if($eliminar['success']){
@@ -175,7 +175,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function deseliminar($id_eliminar){
-		perfil_permiso_operacion('estandar_competencia.deseliminar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$deseliminar = $this->EstandarCompetenciaConvocatoriaModel->deseliminar_row($id_eliminar);
 			if($deseliminar['success']){
@@ -194,7 +194,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function publicar($id_estandar_competencia_convocatoria){
-		perfil_permiso_operacion('estandar_competencia.modificar');
+		perfil_permiso_operacion('estandar_competencia.consultar');
 		try{
 			$publicar = $this->EstandarCompetenciaConvocatoriaModel->actualizar(['publicada' => 'si'],$id_estandar_competencia_convocatoria);
 			if($publicar){
