@@ -216,6 +216,10 @@ var Comun = {
 		}
 	},
 
+	validar_string_no_vacio : function(stringValidar){
+		return stringValidar !== "";
+	},
+
 	mostrar_ocultar_modal : function(id_modal,mostrar,position_centered = false){
 		if(position_centered){
 			$(id_modal).find('div.modal-dialog').addClass('modal-dialog-centered');
