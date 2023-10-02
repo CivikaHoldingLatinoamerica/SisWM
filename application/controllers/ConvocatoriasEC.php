@@ -53,9 +53,9 @@ class ConvocatoriasEC extends CI_Controller {
 			$data['usuario'] = $this->usuario;
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($idEstandarCompetencia);
 			//cargar los datos que funcionaran para validaciones y poder liberar una convocatoria
-			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($idEstandarCompetencia);
-			$estandar_competencia_has_requerimientos = $this->PlanRequerimientoModel->tablero(array('id_estandar_competencia' => $idEstandarCompetencia),0,10);
-			$data['estandar_competencia_has_requerimientos'] = $estandar_competencia_has_requerimientos['estandar_competencia_has_requerimientos'];
+			//$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($idEstandarCompetencia);
+			//$estandar_competencia_has_requerimientos = $this->PlanRequerimientoModel->tablero(array('id_estandar_competencia' => $idEstandarCompetencia),0,10);
+			//$data['estandar_competencia_has_requerimientos'] = $estandar_competencia_has_requerimientos['estandar_competencia_has_requerimientos'];
 			//para la evaluacion diagnostica
 			$data['estandar_competencia_evaluacion'] = $this->ECHasEvaluacionModel->obtener_evaluacion_diagnostica_liberada($idEstandarCompetencia);
 			$data['evaluacion_instrumento_liberados'] = $this->ActividadIEModel->getEvaluacionInstrumento();
@@ -81,7 +81,8 @@ class ConvocatoriasEC extends CI_Controller {
 			$data['usuario'] = $this->usuario;
 			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
-			// var_dump($data);exit;
+			$data['fecha_hoy'] = date('Ymd');
+			//var_dump($data);exit;
 			$this->load->view('ec/convocatoria/resultado_tablero',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -95,10 +96,30 @@ class ConvocatoriasEC extends CI_Controller {
 		perfil_permiso_operacion('estandar_competencia.agregar');
 		try{
 			$data['id_estandar_competencia'] = $idEstandarCompetencia;
+			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($idEstandarCompetencia);
 			$data['cat_sector_ec'] = $this->CatalogoModel->cat_sector_ec();
 			if($idEstandarCompetenciaConvocatoria != ''){
 				$data['estandar_competencia_convocatoria'] = $this->EstandarCompetenciaConvocatoriaModel->obtener_row($idEstandarCompetenciaConvocatoria);
 			}
+			$this->load->view('ec/convocatoria/agregar_modificar',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function clonar_convocatoria($idEstandarCompetenciaConvocatoria){
+		perfil_permiso_operacion('estandar_competencia.agregar');
+		try{
+			$data['es_clonacion'] = true;
+			$data['cat_sector_ec'] = $this->CatalogoModel->cat_sector_ec();
+			$estandar_competencia_convocatoria_clon = $this->EstandarCompetenciaConvocatoriaModel->obtener_row($idEstandarCompetenciaConvocatoria);
+			$data['id_estandar_competencia'] = $estandar_competencia_convocatoria_clon->id_estandar_competencia;
+			$estandar_competencia_convocatoria_clon->id_estandar_competencia_convocatoria = '';
+			$data['estandar_competencia_convocatoria'] = $estandar_competencia_convocatoria_clon;
+			
 			$this->load->view('ec/convocatoria/agregar_modificar',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -135,7 +156,7 @@ class ConvocatoriasEC extends CI_Controller {
 	}
 
 	public function eliminar($id_eliminar){
-		perfil_permiso_operacion('estandar_competencia.agregar');
+		perfil_permiso_operacion('estandar_competencia.modificar');
 		try{
 			$eliminar = $this->EstandarCompetenciaConvocatoriaModel->eliminar_row($id_eliminar);
 			if($eliminar['success']){
@@ -163,6 +184,25 @@ class ConvocatoriasEC extends CI_Controller {
 			}else{
 				$response['success'] = false;
 				$response['msg'][] = $deseliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function publicar($id_estandar_competencia_convocatoria){
+		perfil_permiso_operacion('estandar_competencia.modificar');
+		try{
+			$publicar = $this->EstandarCompetenciaConvocatoriaModel->actualizar(['publicada' => 'si'],$id_estandar_competencia_convocatoria);
+			if($publicar){
+				$response['success'] = true;
+				$response['msg'][] = 'Se publicó la convocatoria con éxito';
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = 'No fue posible publicar la convocatoria, favor de intentar más tarde';
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

@@ -31,7 +31,7 @@ class Welcome extends CI_Controller {
 
 	public function sesion(){
 		//var_dump(perfil_permiso_operacion_menu('usuarios.consultar'));exit;
-		var_dump($this->session->userdata());exit;
+		dd($this->session->userdata());exit;
 	}
 
 	public function paginacion(){

@@ -57,7 +57,7 @@
 						   href="<?=base_url()?>evaluacion_ec/<?=$ec->id_estandar_competencia?>"><i class="fa fa-file-alt"></i> Evaluación diagnóstica</a>
 					<?php endif; ?>
 
-					<?php if(perfil_permiso_operacion_menu('estandar_competencia.modificar')): ?>
+					<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
 						<a class="btn btn-sm btn-outline-secondary" data-toggle="tooltip"
 						   title="Evaluación al Estándar de competencia"
 						   href="<?=base_url()?>estandar_competencia/convocatoria/<?=$ec->id_estandar_competencia?>"><i class="fa fa-file-alt"></i> Convocatoria</a>

@@ -2,13 +2,15 @@
 	<?php foreach($estandar_competencia_convocatoria as $index => $convocatoria): ?>
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 			<div class="card" style="width: 18rem;">
-				<img src="<?=base_url().$convocatoria->ruta_directorio.$convocatoria->nombre?>" class="card-img-top" alt="...">
+				<img src="<?=base_url().$convocatoria->ruta_directorio.$convocatoria->nombre?>" class="card-img-top img-convocatoria-publicada" alt="...">
 				<div class="card-body">
 					<h5 class="card-title"><?=$convocatoria->codigo?> </h5>
 					<p class="card-text"><?=$convocatoria->titulo?> </p>
 				</div>
 				<div class="card-footer text-right">
-					<button type="button" class="btn btn-sm btn-outline-secondary ver_detalle_convocatoria"><i class="fa fa-eye"></i> Ver detalle</button>
+					<button type="button" class="btn btn-sm btn-outline-secondary ver_detalle_convocatoria" data-id_estandar_competencia_convocatoria="<?=$convocatoria->id_estandar_competencia_convocatoria?>">
+						<i class="fa fa-eye"></i> Ver detalle
+					</button>
 				</div>
 			</div>
 		</div>

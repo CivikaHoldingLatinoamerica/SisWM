@@ -21,6 +21,7 @@
 	<link href="<?=base_url()?>assets/frm/watnotif/css/bubble/watnotif.right-top-bubble.min.css" rel="stylesheet" type="text/css">
 
 	<link href="<?= base_url() ?>assets/css/comun.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/css/colores_wm.css" rel="stylesheet">
 
 	<!-- CSS extras -->
 	<?php if (isset($extra_css) && is_array($extra_css)): ?>

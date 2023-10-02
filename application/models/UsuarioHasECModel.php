@@ -93,4 +93,17 @@ class UsuarioHasECModel extends ModeloBase
 		}
 	}
 
+	public function obtener_instructor_para_registro_candidato($data){
+		try{
+			$consulta = $this->obtener_query_base().$this->criterios_busqueda($data)." ORDER BY RAND() limit 1";
+			//pasamos los parametros en el data
+			$query = $this->db->query($consulta);
+			return $query->row();
+		}catch (Exception $ex){
+			log_message('error','UsuarioHasECModel->alumnos_inscritos_ec');
+			log_message('error',$ex->getMessage());
+			return 0;
+		}
+	}
+
 }
