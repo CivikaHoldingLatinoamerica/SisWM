@@ -170,6 +170,55 @@ class UsuarioModel extends ModeloBase
 		return $resultado;
 	}
 
+	public function guardar_usuario_candidato_convocatoria($data){
+		try{
+			if(isset($data['es_extranjero']) && $data['es_extranjero'] == 1){
+				$usuario = $this->obtener_usuario_by_usr($data['codigo_extranjero']);
+				if(is_object($usuario)){
+					$resultado['success'] = false;
+					$resultado['msg'] = 'Error, existe un regisro de un usuario con la Clave de indentificación proporcionado, inicie sesión para registrarse a la convocatoria';
+				}else{
+					$usuario_guardar = array(
+						'usuario' => $data['codigo_extranjero'],
+						'password' => sha1($data['codigo_extranjero']),
+					);
+					$id_usuario = $this->guardar_usuario($usuario_guardar);
+					$this->insertar_perfil_usuario($id_usuario,'candidato');
+					if($id_usuario){
+						$resultado['success'] = true;
+						$resultado['msg'] = 'Se registró su usuario en el sistema correctamente';
+						$resultado['data']['id_usuario'] = $id_usuario;
+					}
+				}
+			}else{
+				$usuario = $this->obtener_usuario_by_usr(substr($data['curp'],0,10));
+				if(is_object($usuario)){
+					$resultado['success'] = false;
+					$resultado['msg'] = 'Error, existe un regisro de un usuario con el CURP proporcionado, inicie sesión para ingresar a la convocatoria del Estandar de Competencia';
+				}else{
+					$curp_usuario = substr($data['curp'],0,10);
+					$usuario_guardar = array(
+						'usuario' => $curp_usuario,
+						'password' => sha1($curp_usuario),
+					);
+					$id_usuario = $this->guardar_usuario($usuario_guardar);
+					$this->insertar_perfil_usuario($id_usuario,'candidato');
+					if($id_usuario){
+						$resultado['success'] = true;
+						$resultado['msg'] = 'Se registró su usuario en el sistema correctamente';
+						$resultado['data']['id_usuario'] = $id_usuario;
+					}
+					
+				}
+			}
+			
+		}catch (Exception $ex){
+			$resultado['success'] = false;
+			$resultado['msg'] = 'Ocurrio un error al tratar de guardar el candidato';
+		}
+		return $resultado;
+	}
+
 	public function activar_usuario($id_usuario){
 		try{
 			$resultado['success'] = false;
@@ -335,7 +384,7 @@ class UsuarioModel extends ModeloBase
 			  u.id_usuario,u.usuario, u.password,u.activo,u.eliminado,cp.slug perfil 
 			from usuario u
 			  inner join usuario_has_perfil uhp on uhp.id_usuario = u.id_usuario
-			  inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
+			  left join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
 			where u.usuario = '$usuario' limit 1";
 		$query = $this->db->query($consulta);
 		if($query->num_rows() == 0){

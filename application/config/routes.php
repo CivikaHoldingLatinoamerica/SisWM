@@ -58,6 +58,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'Login/index';
 $route['cerrar_sesion'] = 'Login/cerrar_sesion';
 $route['recuperar_password'] = 'Login/recuperar_password';
+$route['registro/(:num)'] = 'Login/registro/$1';
 $route['unsubscribe'] = 'Login/darse_baja';
 $route['perfil_permisos'] = 'PerfilPermiso/index';
 $route['estandar_competencia'] = 'EC/index';
@@ -82,4 +83,5 @@ $route['contacto'] = 'Informacion/contacto';
 $route['quienes_somos'] = 'Informacion/quienes_somos';
 
 $route['show-session'] = 'Welcome/sesion';
-$route['catalogos_sectores'] = 'Catalogo/sectores';
+$route['catalogos_sectores'] = 'Catalogos/sectores';
+$route['evidencias_esperadas/(:num)'] = 'Entregable/index';

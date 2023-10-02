@@ -25,6 +25,12 @@ class CatSectorEc extends ModeloBase
 		$data = $query->result();
 		return $data;
 	}
+	public function  total_data(){
+		$consulta = "select count(*) total_registros from cat_sector_ec cse";
+		$query = $this->db->query($consulta);
+		$data = $query->row()->total_registros;
+		return $data;
+	}
 	public function  obtener_sector($id){
 		$consulta = "select * from cat_sector_ec cse where cse.id_cat_sector_ec = ".$id;
 		$query = $this->db->query($consulta);
