@@ -34,14 +34,14 @@
 			<td>
 				<?php if($echc->eliminado =='no'): ?>
 					<?php if($echc->convocatoria_vigente && $echc->publicada == 'no'): ?>
-						<?php if(perfil_permiso_operacion_menu('estandar_competencia.modificar')): ?>
+						<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
 							<button type="button" data-id_estandar_competencia="<?=$echc->id_estandar_competencia?>"
 									data-id_estandar_competencia_convocatoria="<?=$echc->id_estandar_competencia_convocatoria?>"
 									data-toggle="tooltip" title="Modificar Convocatoria"
 									class="btn btn-sm btn-outline-primary mb-1 modificar_convocatoria_ec"><i class="fa fa-edit"></i> Editar</button>
 						<?php endif; ?>
 
-						<?php if(perfil_permiso_operacion_menu('estandar_competencia.eliminar')): ?>
+						<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
 							<br><button type="button" class="btn btn-sm btn-outline-danger mb-1 iniciar_confirmacion_operacion"
 									data-toggle="tooltip" title="Eliminar Convocatoria"
 									data-msg_confirmacion_general="¿Esta seguro de eliminar la convocatoria del estándar de competencia?, esta acción no podrá revertirse"
@@ -51,7 +51,7 @@
 							</button>
 						<?php endif; ?>
 
-						<?php if(perfil_permiso_operacion_menu('estandar_competencia.modificar')): ?>
+						<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
 							<br><button type="button" class="btn btn-sm btn-outline-success mb-1 iniciar_confirmacion_operacion"
 									data-toggle="tooltip" title="Publicar Convocatoria"
 									data-msg_confirmacion_general="¿Esta seguro de publicar la convocatoria del estándar de competencia?; al hacerlo, no podra modificarla y esta acción no podrá revertirse"
@@ -61,7 +61,7 @@
 							</button>
 						<?php endif; ?>
 					<?php else: ?>
-						<?php if(perfil_permiso_operacion_menu('estandar_competencia.modificar')): ?>
+						<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
 							<button type="button" data-id_estandar_competencia_convocatoria="<?=$echc->id_estandar_competencia_convocatoria?>"
 									data-toggle="tooltip" title="Modificar estandar"
 									class="btn btn-sm btn-outline-dark clonar_convocatoria_ec"><i class="fa fa-edit"></i> Clonar convocatoria</button>
