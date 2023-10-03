@@ -14,7 +14,7 @@ class CatSectorEc extends ModeloBase
 		}
 	}
 
-	public function  obtener_sectores($pagina = 1 ,$limit = 10){
+	public function  obtener_sectores($pagina = 1 ,$limit = 15){
 		$sql_limit = " limit ".(($pagina*$limit)-$limit).",$limit";
 		if($pagina == 0){
 			$sql_limit = '';

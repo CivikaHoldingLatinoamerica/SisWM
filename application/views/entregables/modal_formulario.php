@@ -58,7 +58,13 @@
 						</div>
 					</div>
 				</div>
-
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="button" id="btn_guardar_form_entregable"
+							data-modificacion_from_perfil="<?= isset($modificacion_from_perfil) ? $modificacion_from_perfil : 'no' ?>"
+							class="btn btn-sm btn-outline-primary">Guardar
+					</button>
+				</div>
 			</form>
 		</div>
 		<!-- /.modal-content -->

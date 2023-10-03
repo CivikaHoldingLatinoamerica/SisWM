@@ -62,7 +62,7 @@ var CatSector = {
 			}
 		)
 	},
-	buscarSectores : function (pagina = 1, registros = 10) {
+	buscarSectores : function (pagina = 1, registros = 15) {
 		Comun.obtener_contenido_peticion_html(
 			base_url +'Catalogos/obtener_sectores/' + pagina + '/' + registros,
 			{},

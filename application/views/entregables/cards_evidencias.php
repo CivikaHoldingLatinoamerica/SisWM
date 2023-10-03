@@ -22,6 +22,10 @@
 										   data-url_confirmacion_general="<?=base_url()?>Entregable/eliminar/<?=$index?>"
 										   data-btn_trigger="#btn_buscar_sectores"
 										   href="#">Eliminar</a>
+										<?php
+										if ($item->tipo_entregable == "Formulario") : ?>
+										<a class="dropdown-item" href="<?= base_url().'/preguntas_abiertas/1'?>">Cargar formulario</a>
+										<?php  endif; ?>
 									</div>
 								</div>
 							</div>

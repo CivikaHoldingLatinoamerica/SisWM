@@ -115,9 +115,8 @@ class Catalogos extends CI_Controller {
 			$this->load->model('CatSectorEc');
 			$data['tabla'] = $this->CatSectorEc->obtener_sectores();
 			$data['total_registros'] = $this->CatSectorEc->total_data();
-			$data_paginacion = data_paginacion(1,10,$data['total_registros']);
+			$data_paginacion = data_paginacion(1,15,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
-
 			//var_dump($data);exit;
 			$this->load->view('catalogo/sector',$data);
 		}catch (Exception $ex){
@@ -154,7 +153,7 @@ class Catalogos extends CI_Controller {
 		echo json_encode($response);
 	}
 
-	public function obtener_sectores($pagina = 1, $limit = 10){
+	public function obtener_sectores($pagina = 1, $limit = 15){
 		$this->load->model('CatSectorEc');
 		$data['tabla'] = $this->CatSectorEc->obtener_sectores($pagina,$limit);
 		$this->load->view('catalogo/tablas/tabla_sectores',$data);
