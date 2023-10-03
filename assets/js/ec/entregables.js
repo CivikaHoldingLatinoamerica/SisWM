@@ -4,6 +4,7 @@ var data = [
 	{
 		id_entregable : 1,
 		nombre:'Entregable1',
+		tipo_entregable: 'Hola',
 		instrumentos:[
 			'La carta descriptiva elaborada',
 			'La carta descriptiva elaborada',
