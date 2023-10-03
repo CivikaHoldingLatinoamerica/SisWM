@@ -18,8 +18,8 @@
 				<label>Costo certificado: </label>$<?=$echc->costo?>
 			</td>
 			<td>
-				<label>Proposito: </label><?=$echc->proposito?><br>
-				<label>Descripción: </label><?=$echc->descripcion?>
+				<label>Proposito: </label> <?=$echc->proposito != '' ? $echc->proposito :'Sin información'?><br>
+				<label>Descripción: </label> <?=$echc->descripcion != '' ? $echc->descripcion : 'Sin información'?>
 				<!-- <label>Sector detalle: </label><?=$echc->sector_descripcion?>
 				<label>Perfil: </label><?=$echc->perfil?>
 				<label>Duración: </label><?=$echc->duracion_descripcion?> -->

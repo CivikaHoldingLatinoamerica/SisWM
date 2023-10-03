@@ -30,7 +30,8 @@ class Publico extends CI_Controller {
     		try{
 			//integramos la fecha del sistema y poder filtrar las convocatorias vigentes. Se toma hasta antes del final de la alineación
     			$post = [
-				'fecha' => date('Y-m-d')
+				'fecha' => date('Y-m-d'),
+				'publicada' => 'si'
 			];
 			if(!is_null($this->usuario) && in_array($this->usuario->perfil,array('instructor','alumno'))){
 				$post['id_usuario'] = $this->usuario->id_usuario;
