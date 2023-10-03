@@ -17,6 +17,7 @@
 				<tbody>
 
 					<?php foreach ($preguntas_abiertas as $index => $pa): ?>
+						<?php if($pa->eliminado == 'no'): ?>
 						<tr>
 							<td><?=$index + 1?></td>
 							<td><?=$pa->pregunta_formulario_abierto?></td>
@@ -38,6 +39,7 @@
 									<?php endif; ?>
 							</td>
 						</tr>
+						<?php endif; ?>
 					<?php endforeach; ?>
 				</tbody>
 			</table>

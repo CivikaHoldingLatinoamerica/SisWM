@@ -3,6 +3,7 @@ $(document).ready(function(){
 	FormPreguntasAbiertas.obtener_formulario();
 
 	$(document).on('click','#btn_buscar_preguntas_abiertas',function(){
+		var id_entregable_evidencia = $("#input_id_entregable_evidencia").val();
 		FormPreguntasAbiertas.obtener_preguntas_formulario(id_entregable_evidencia);
 	});
 

@@ -10,7 +10,8 @@
 		<section class="content" id="tablero_formulario_preguntas_abiertas">
 		<div class="form-group row">
 					<div class="col-sm-6">
-						<button type="button" style="display: none" id="btn_buscar_preguntas_abiertas">buscar</button>
+						<button type="button" style="display: none" id="btn_buscar_preguntas_abiertas"
+						data-id_entregable_evidencia="<?=$id_entregable_evidencia?>">buscar</button>
 					</div>
 				</div>
 			<div class="form-group row">
@@ -21,6 +22,7 @@
 				<div class="card-body pb-0">
 					<div id="contenedor_respuestas_abiertas_entregable_<?=$id_entregable_evidencia?>">
 					<?php foreach ($catalogoPreguntaFormAbiertoModel['preguntas_abiertas'] as $index => $pa): ?>
+						<?php if($pa->eliminado == 'no'): ?>
 
 						<div class="form-group row">
 							<label class="col-form-label col-sm-12" for="txt_pregunta_abierta"><?=$pa->pregunta_formulario_abierto?></label>
@@ -31,6 +33,7 @@
 										name="pregunta_formulario_abierto"><?=isset($respuesta_pregunta_abierta) ? $respuesta_pregunta_abierta->respuesta_pregunta_abierta : ''?></textarea>
 							</div>
 						</div>
+						<?php endif; ?>
 					<?php endforeach; ?>
 				
 					</div>
