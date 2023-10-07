@@ -66,7 +66,7 @@
 							</ul>
 						</div>
 						<div class="col-5 text-center">
-							<img src="<?=isset($u->foto_perfil) ? $u->foto_perfil : base_url().'assets/imgs/iconos/admin.png' ?>" alt="<?=$u->nombre.' '.$u->apellido_p?>" class="img-circle img-fluid">
+							<img src="<?=isset($u->foto_perfil) ? $u->foto_perfil : base_url().'assets/imgs/iconos/admin.png' ?>" alt="<?=$u->nombre.' '.$u->apellido_p?>" class="img-circle img-fluid img-perfil-usuario-tablero" >
 						</div>
 					</div>
 				</div>

@@ -88,3 +88,8 @@ input[type=number] {
  .img-detalle-convocatoria{
 	max-width: 500px !important;
  }
+
+ .img-perfil-usuario-tablero{
+	height: 100px !important;
+	width: 100px !important;
+ }

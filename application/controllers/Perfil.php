@@ -45,6 +45,7 @@ class Perfil extends CI_Controller {
 		);
 		$data['usuario'] = $this->usuario;
 		$data['datos_usuario'] = $this->UsuarioModel->obtener_usuario_modificar_id($this->usuario->id_usuario);
+		//dd($data);exit;
 		$switch_perfil = $this->usuario->perfil;
 		switch ($switch_perfil){
 			case 'root':case 'admin':

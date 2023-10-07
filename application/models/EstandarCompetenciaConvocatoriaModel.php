@@ -34,6 +34,8 @@ class EstandarCompetenciaConvocatoriaModel extends ModeloBase
 			$criterios .= " and ecc.alineacion_fin >= '".$data['fecha']."'";
 		}if(isset($data['id_estandar_competencia_convocatoria']) && $data['id_estandar_competencia_convocatoria'] != ''){
 			$criterios .= ' and ecc.id_estandar_competencia_convocatoria = '.$data['id_estandar_competencia_convocatoria'];
+		}if(isset($data['publicada']) && $data['publicada'] != ''){
+			$criterios .= " and ecc.publicada = 'si'";
 		}
 		return $criterios;
 	}

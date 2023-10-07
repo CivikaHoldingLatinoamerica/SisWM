@@ -48,9 +48,9 @@
 											</tr>
 											</thead>
 											<tbody>
-											<?php foreach ($eci->actividades as $a): ?>
+											<?php foreach ($eci->actividades as $index => $a): ?>
 												<tr>
-													<td><?=$a->id_ec_instrumento_has_actividad?></td>
+													<td><?=$index + 1?></td>
 													<td><?=$a->actividad?></td>
 													<td>
 														<?php if(isset($existe_evidencia_alumnos) && !$existe_evidencia_alumnos): ?>
@@ -68,11 +68,6 @@
 																	<i class="fas fa-trash"></i>
 																</button>
 															<?php endif; ?>
-														<?php endif; ?>
-														<?php if(perfil_permiso_operacion_menu('evaluacion.agregar') && $eci->id_cat_instrumento == INSTRUMENTO_CUESTIONARIO): ?>
-															<a href="<?=base_url()?>cuestionario_ati/<?=$estandar_competencia->id_estandar_competencia.'/'.$a->id_ec_instrumento_has_actividad?>" class="btn btn-sm btn-outline-dark" data-toggle="tooltip" title="Cuestionario de evaluación">
-																<i class="fa fa-file-alt"></i> Cuestionario
-															</a>
 														<?php endif; ?>
 													</td>
 												</tr>

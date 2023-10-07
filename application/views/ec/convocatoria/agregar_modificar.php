@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal_form_convocatoria_ec" aria-modal="true" role="dialog">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title"><?=isset($estandar_competencia_convocatoria) && (isset($es_clonacion) && !$es_clonacion) ? 'Actualizar':'Nueva'?> Convocatoria del Estándar de Competencia</h4>
