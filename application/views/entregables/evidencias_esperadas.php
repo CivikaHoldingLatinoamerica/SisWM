@@ -26,8 +26,8 @@
 		<div class="card">
 			<div class="card-body">
 				<?php if (isset($entregables) && sizeof($entregables) != 0): ?>
-				<div id="contenedor_entregables" class="row">
-				</div>
+					<div id="contenedor_entregables" class="row">
+					</div>
 				<?php else: ?>
 					<div class="row">
 						<div class="col">
@@ -40,8 +40,8 @@
 				<?php endif; ?>
 
 
-
 			</div>
+		</div>
 
 	</section>
 	<!-- /.content -->
@@ -51,6 +51,8 @@
 	</div>
 
 </div>
+
+
 <!-- /.content-wrapper -->
 
 <?php $this->load->view('default/footer'); ?>

@@ -4,7 +4,7 @@ var data = [
 	{
 		id_entregable : 1,
 		nombre:'Entregable1',
-		tipo_entregable: 'Hola',
+		tipo_entregable: 'prod',
 		instrumentos:[
 			'La carta descriptiva elaborada',
 			'La carta descriptiva elaborada',
@@ -57,6 +57,8 @@ var methods = {
 			Comun.obtener_contenido_peticion_html('obtener_sector/'+id,{},function (response) {
 				$('#contenedor_modal_sector').append(response);
 				Comun.mostrar_ocultar_modal('#modal_form_entregable',true);
+				Comun.funcion_fileinput('#material_apoyo','Archivo de apoyo');
+				methods.iniciar_carga_material_apoyo();
 			})
 		}else{
 			Comun.mostrar_ocultar_modal('#modal_form_entregable',true);
@@ -89,5 +91,12 @@ var methods = {
 				$('#contenedor_entregables').html(response);
 			},
 		);
+	},
+	iniciar_carga_material_apoyo : function(){
+		Comun.iniciar_carga_imagen('#material_apoyo','#procesando_material_apoyo',function(archivo){
+			$('#input_material_apoyo').val(archivo.id_archivo);
+			var html_img = '<img src="'+base_url + archivo.ruta_directorio + archivo.nombre+'" style="max-width: 120px" class="img-fluid img-thumbnail" alt="Imagen banner EC">';
+			$('#procesando_material_apoyo').html(html_img);
+		})
 	}
 };

@@ -48,6 +48,45 @@ class entregable extends CI_Controller
 		}
 	}
 
+	function index_candidato(){
+		if(sesionActive()){
+			$this->usuario = usuarioSession();
+		}else{
+			$this->usuario = false;
+			redirect(base_url().'login');
+		}
+		try{
+			$data['titulo_pagina'] = 'Entregables esperados';
+			$data['migas_pan'] = array(
+				array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
+				array('nombre' => 'Estándar de competencias','activo' => false,'url' => '#'),
+				array('nombre' => 'Entregables esperados','activo' => true,'url' => '#'),
+			);
+			$data['sidebar'] = '';
+			$data['extra_js'] = array(
+				base_url().'assets/js/ec/entregable_candidato.js',
+			);
+			$data['extra_css'] = array(
+				base_url().'assets/css/EC/entregables.css'
+			);
+			$data['usuario'] = $this->usuario;
+			$this->entregables[] = (object)array(
+				"nombre" => "Entregable 1",
+				"instrumentos" => array(
+					0 => "La carta descriptiva elaborada",
+					1 => "El objetivo general del curso redactado.",
+					2 => "Los objetivos particulares y/o específicos elaborados."
+				));
+			$data['entregables'] = $this->entregables;
+			$this->load->view('entregables/candidato/evidencias_candidato',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
 	function guardar_entregable(){
 		try {
 			$this->load->model('CatSectorEc');

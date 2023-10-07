@@ -523,7 +523,7 @@ var CandidatoEC = {
 					base_url + 'AlumnosEC/ver_progreso_evidencias/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
 					function(response){
 						$('#contenedor_pasos_evidencias').html(response);
-						Comun.funcion_fileinput('.doc_evidencia_ati_alumno','Evidencia PDF/Imágenes');
+						Comun.funcion_fileinput('.54','Evidencia PDF/Imágenes');
 						CandidatoEC.inicializar_input_file_entregables();
 						CandidatoEC.procesar_class_calificacion();
 						if($('#numero_actividades').val() != 0 && ($('#numero_actividades').val() == $('#numero_actividades_finalizadas').val())){

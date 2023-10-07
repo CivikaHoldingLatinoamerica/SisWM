@@ -1,12 +1,25 @@
 <?php if (isset($entregables) && sizeof($entregables) != 0): ?>
 		<?php foreach ($entregables as $index => $item): ?>
-			<div class="col-2">
+			<div class="col-3">
 				<div class="card">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-10">
 								<h5 class="card-title text-bold">
-									<em style="color: red" class="fa fa-file mr-1"></em>
+
+									<?php if ($item->tipo_entregable == "prod") : ?>
+										<em style="color: var(--blue)" class="fa fa-file mr-1"></em>
+									<?php  endif; ?>
+
+									<?php if ($item->tipo_entregable == "form") : ?>
+										<em style="color: var(--dark)" class="fa fa-list mr-1"></em>
+									<?php  endif; ?>
+
+									<?php if ($item->tipo_entregable == "cuest") : ?>
+										<em style="color: var(--green)" class="fa fa-question mr-1"></em>
+									<?php  endif; ?>
+
+
 									<?= $item->nombre ?></h5>
 							</div>
 							<div class="col-2">
@@ -23,8 +36,8 @@
 										   data-btn_trigger="#btn_buscar_sectores"
 										   href="#">Eliminar</a>
 										<?php
-										if ($item->tipo_entregable == "Formulario") : ?>
-										<a class="dropdown-item" href="<?= base_url().'/preguntas_abiertas/1'?>">Cargar formulario</a>
+										if ($item->tipo_entregable == "form") : ?>
+										<a class="dropdown-item" href="<?= base_url().'preguntas_abiertas/1'?>">Cargar formulario</a>
 										<?php  endif; ?>
 									</div>
 								</div>

@@ -44,7 +44,7 @@
 								   title="Plan de evaluación"
 								   href="<?=base_url()?>tecnicas_instrumentos/<?=$ec->id_estandar_competencia?>">Plan de evaluación</a>
 								<a class="dropdown-item" data-toggle="tooltip"
-								   title="Plan de evaluación"
+								   title="Evidencias esperadas"
 								   href="<?=base_url()?>evidencias_esperadas/<?=$ec->id_estandar_competencia?>">Evidencias esperadas</a>
 								<a class="dropdown-item lnk_agregar_modificacion_plan_requerimientos" data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>"
 								   data-toggle="tooltip" title="Plan de requerimientos" role="button">
