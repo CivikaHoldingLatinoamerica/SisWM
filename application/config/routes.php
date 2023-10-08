@@ -83,5 +83,10 @@ $route['contacto'] = 'Informacion/contacto';
 $route['quienes_somos'] = 'Informacion/quienes_somos';
 
 $route['show-session'] = 'Welcome/sesion';
-$route['catalogos_sectores'] = 'Catalogos/sectores';
 $route['evidencias_esperadas/(:num)'] = 'Entregable/index';
+
+/**
+ * rutas para los catalogos
+ */
+$route['catalogos/msg-bienvenida'] = 'Catalogos/bienvenida';
+$route['catalogos/sectores'] = 'Catalogos/sectores';

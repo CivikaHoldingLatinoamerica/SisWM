@@ -193,7 +193,8 @@ class Usuario extends CI_Controller {
 
 	public function agregar_modificar_usuario($tipo = 'admin',$id_usuario = false){
 		$data['tipo_usuario'] = $tipo == 'instructor' ? 'evaluador' : $tipo;
-		$data['cat_sector_productivo'] = $this->CatalogoModel->get_catalogo('cat_sector_productivo');
+		$data['cat_sector_ec'] = $this->CatalogoModel->get_catalogo('cat_sector_ec');
+		//dd($data);exit;
 		if($id_usuario){
 			$data['usuario'] = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario);
 			$data['usuario']->id_usuario = $id_usuario;
