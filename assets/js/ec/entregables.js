@@ -1,17 +1,5 @@
 
 
-var data = [
-	{
-		id_entregable : 1,
-		nombre:'Entregable1',
-		tipo_entregable: 'prod',
-		instrumentos:[
-			'La carta descriptiva elaborada',
-			'La carta descriptiva elaborada',
-			'La carta descriptiva elaborada'
-		]
-	}
-];
 
 $(document).ready(function (){
 
@@ -51,28 +39,28 @@ $(document).ready(function (){
 
 var methods = {
 	agregarModificar : function(id = 0){
-		console.log(id);
 		if (id !== 0){
-			$('#contenedor_modal_sector').empty();
-			Comun.obtener_contenido_peticion_html('obtener_sector/'+id,{},function (response) {
-				$('#contenedor_modal_sector').append(response);
+			Comun.obtener_contenido_peticion_html(base_url +'Entregable/obtener_entregable/'+id,{},function (response) {
+				$('#contenedor_modal_entregable').html(response);
 				Comun.mostrar_ocultar_modal('#modal_form_entregable',true);
 				Comun.funcion_fileinput('#material_apoyo','Archivo de apoyo');
 				methods.iniciar_carga_material_apoyo();
 			})
 		}else{
 			Comun.mostrar_ocultar_modal('#modal_form_entregable',true);
+			Comun.funcion_fileinput('#material_apoyo','Archivo de apoyo');
+			methods.iniciar_carga_material_apoyo();
 		}
+
 
 	},
 
 	guardar_entregable : function (){
 		Comun.enviar_formulario_post(
 			'#form_agregar_modificar_entregable',
-			base_url + 'Entregable/guardar_entregable/',
+			base_url + 'Entregable/guardar_entregable',
 			function(response){
 				if(response.success){
-					data.push(response.data)
 					Comun.mostrar_ocultar_modal('#modal_form_entregable',false);
 					Comun.mensajes_operacion(response.msg,'success');
 					// Comun.recargar_pagina(base_url + 'evidencias_esperadas/1',2000);
@@ -80,23 +68,28 @@ var methods = {
 				}else{
 					Comun.mensajes_operacion(response.msg,'error',5000);
 				}
-			}
+			},
+			{id_estandar_comptencia: this.idEstandar()}
 		)
 	},
 	buscarEntregables : function (pagina = 1, registros = 10){
 		$('#contenedor_entregables').html(overlay);
 		Comun.obtener_contenido_peticion_html(
-			base_url +'Entregable/obtener_entregables/'+pagina+'/'+registros,{data},
+			base_url +'Entregable/obtener_entregables/'+pagina+'/'+registros,{id_estandar_competencia : this.idEstandar()},
 			function(response){
 				$('#contenedor_entregables').html(response);
+
 			},
 		);
 	},
 	iniciar_carga_material_apoyo : function(){
-		Comun.iniciar_carga_imagen('#material_apoyo','#procesando_material_apoyo',function(archivo){
+		Comun.iniciar_carga_documento('#material_apoyo','#procesando_material_apoyo',function(archivo){
 			$('#input_material_apoyo').val(archivo.id_archivo);
-			var html_img = '<img src="'+base_url + archivo.ruta_directorio + archivo.nombre+'" style="max-width: 120px" class="img-fluid img-thumbnail" alt="Imagen banner EC">';
+			var html_img = '<p>archivo.nombre <em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>';
 			$('#procesando_material_apoyo').html(html_img);
 		})
+	},
+	idEstandar(){
+		return $('#id_estandar_competencia').val();
 	}
 };

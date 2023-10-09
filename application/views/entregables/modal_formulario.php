@@ -9,22 +9,21 @@
 			</div>
 
 			<form id="form_agregar_modificar_entregable">
-				<input hidden name="id_cat_sector_ec" value="<?= isset($entregable) ? $entregable->id : '' ?>">
+				<input hidden name="id_entregable" value="<?= isset($entregable) ? $entregable->id_entregable : '' ?>">
 				<div class="modal-body">
 					<div class="form-group row">
 						<label for="input_nombre" class="col-sm-3 col-form-label">Nombre</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="input_nombre" data-rule-required="true"
 								   name="nombre" placeholder="Nombre del entregable"
-								   value="<?= isset($entregable) ? $entregable->nombre : '' ?>">
+								   value="<?= old($entregable,'nombre')?>">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="input_nombre" class="col-sm-3 col-form-label">Descripción</label>
 						<div class="col-sm-9">
 							<textarea type="text" class="form-control" id="descripcion" data-rule-required="true"
-									  name="descripcion" placeholder="Descripción del entregable"
-									  value="<?= isset($entregable) ? $entregable->descripcion : '' ?>"></textarea>
+									  name="descripcion" placeholder="Descripción del entregable"><?=old($entregable,'descripcion')?></textarea>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -32,19 +31,27 @@
 						<div class="col-sm-9">
 							<textarea type="text" class="form-control" id="instrucciones" data-rule-required="true"
 									  name="instrucciones" placeholder="Instrucciones del entregable"
-									  value="<?= isset($entregable) ? $entregable->instrucciones : '' ?>"></textarea>
+									  ><?=old($entregable, 'instrucciones')?></textarea>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="input_nombre" class="col-sm-3 col-form-label">Tipo de entregable</label>
 						<div class="col-sm-9">
 							<select type="text" class="form-control" id="tipo_entregable" data-rule-required="true"
-									name="tipo_entregable"
-									value="<?= isset($entregable) ? $entregable->tipo_entregable : '' ?>">
+									name="tipo_entregable">
 								<option>Seleccione una opción</option>
-								<option value="prod">Producto (archivo)</option>
-								<option value="form">Formulario</option>
-								<option value="cuest">Cuestionario</option>
+								<option
+									value="prod" <?= old($entregable, 'tipo_entregable') == 'prod' ? 'selected' : '' ?> >
+									Producto (archivo)
+								</option>
+								<option
+									value="form" <?= old($entregable, 'tipo_entregable') == 'form' ? 'selected' : '' ?>>
+									Formulario
+								</option>
+								<option
+									value="cuest" <?= old($entregable, 'tipo_entregable') == 'cuest' ? 'selected' : '' ?>>
+									Cuestionario
+								</option>
 							</select>
 						</div>
 					</div>
@@ -56,10 +63,8 @@
 								   value="<?= isset($entregable) ? $entregable->id_archivo : '' ?>">
 							<input type="file" id="material_apoyo" name="material_apoyo" class="col-sm-3" accept="/*">
 							<div id="procesando_material_apoyo" class="col-sm-5">
-								<?php if (isset($archivo_entregable) && !is_null($archivo_entregable)): ?>
-									<img
-										src="<?= base_url() . $archivo_entregable->ruta_directorio . $archivo_entregable->nombre ?>"
-										alt="Imágen banner EC" style="max-width: 120px" class="img-fluid img-thumbnail">
+								<?php if (isset($entregable)): ?>
+								<p> <?= old($entregable,'archivo') ?><em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -69,15 +74,20 @@
 						<label for="input_nombre" class="col-sm-3 col-form-label">Intrumentos</label>
 						<div class="col-sm-9">
 							<label for="instrumentos"></label>
-							<select multiple="multiple" class="form-control" id="instrumentos" name="instrumentos[]">
-								<option> Orden. Guía de observación</option>
-								<option> La carta descriptiva elaborada</option>
-								<option> El objetivo general del curso redactado</option>
-								<option> Los objetivos particulares y/o específicos elaborados</option>
-								<option> Los temas y subtemas definidos</option>
-								<option> Las técnicas de instrucción seleccionadas</option>
-								<option> Las técnicas grupales seleccionadas</option>
-								<option> Las actividades del proceso de instrucción aprendizaje definidas</option>
+							<select multiple="multiple" class="form-control" id="instrumentos" name="instrumentos[]">}
+
+								<?php if (isset($instrumentos)): ?>
+									<?php foreach ($instrumentos as $item) ?>
+										<option value="<?= $item->id_ec_instrumento_has_actividad ?>"
+									<?php if (isset($entregable)): ?>
+									<?=in_array($item->id_ec_instrumento_has_actividad, old($entregable, 'instrumentos')) ? 'selected' : ''?>
+									<?php endif; ?>
+
+									> <?= $item->actividad ?>
+
+									</option>
+								<?php endif; ?>
+
 							</select>
 							<small id="emailHelp" class="form-text text-muted">Precione la tecla CTRL para seleccionar
 								más de una opción</small>

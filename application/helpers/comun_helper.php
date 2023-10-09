@@ -1,5 +1,6 @@
 <?php
 
+
 function fechaHtmlToBD($fecha)
 {
     if ($fecha == '' || $fecha == null) {
@@ -563,6 +564,17 @@ function imagenFondoTransparente($archivo){
 function dd($data){
 	echo '<pre>';
 	echo print_R($data);
+}
+
+function old( &$object, $atributo ){
+	if (isset($object)){
+		if (is_array($object)){
+			return  $object[$atributo] ;
+		}else{
+			return $object->{$atributo};
+		}
+	}
+	return null;
 }
 
 ?>

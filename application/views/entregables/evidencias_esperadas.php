@@ -7,6 +7,7 @@
 	<!-- /.content-header -->
 
 	<!-- Main content -->
+	<input hidden id="id_estandar_competencia" value="<?= isset($estandar) ? $estandar : '' ?>">
 	<section class="content" id="tablero_estandar_competencia">
 
 		<div class="container-fluid mb-3">

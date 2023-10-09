@@ -29,10 +29,10 @@
 										<em class="fa fa-ellipsis-v"></em>
 									</button>
 									<div class="dropdown-menu">
-										<a class="dropdown-item modificar_entregable" data_id="<?= $index ?>" href="#">Editar</a>
+										<a class="dropdown-item modificar_entregable" data-id="<?= $item->id_entregable ?>" href="#">Editar</a>
 										<a class="dropdown-item iniciar_confirmacion_operacion"
 										   data-msg_confirmacion_general="¿Esta seguro de eliminar el entregable?, esta acción no podrá revertirse"
-										   data-url_confirmacion_general="<?=base_url()?>Entregable/eliminar/<?=$index?>"
+										   data-url_confirmacion_general="<?=base_url()?>Entregable/eliminar/<?=$item->id_entregable?>"
 										   data-btn_trigger="#btn_buscar_sectores"
 										   href="#">Eliminar</a>
 										<?php
@@ -48,7 +48,7 @@
 								<div class="lines-2">
 									<em style="font-size: xx-small" class="fa fa-circle"></em>
 									<span
-										title="La carta descriptiva elaborada."> <?= $instrumento ?></span>
+										title="La carta descriptiva elaborada."> <?= $instrumento->actividad ?></span>
 								</div>
 							<?php endforeach; ?>
 						</div>
