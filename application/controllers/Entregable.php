@@ -139,10 +139,10 @@ class entregable extends CI_Controller
 		$data['entregables'] = $datos;
 		$this->load->view('entregables/cards_evidencias',$data);
 	}
-	public function obtener_entregable($id){
+	public function obtener_entregable($id,$id_estandar){
 		$data['entregable'] = $this->EntregableECModel->obtener_entregable($id);
 
-		$data['instrumentos'] = $this->ActividadIEModel->obtener_instrumentos_ec_entregable(1);
+		$data['instrumentos'] = $this->ActividadIEModel->obtener_instrumentos_ec_entregable($id_estandar);
 
 		$this->load->view('entregables/modal_formulario',$data);
 	}
