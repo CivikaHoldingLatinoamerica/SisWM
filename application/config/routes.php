@@ -60,7 +60,7 @@ $route['cerrar_sesion'] = 'Login/cerrar_sesion';
 $route['recuperar_password'] = 'Login/recuperar_password';
 $route['registro/(:num)'] = 'Login/registro/$1';
 $route['unsubscribe'] = 'Login/darse_baja';
-$route['perfil_permisos'] = 'PerfilPermiso/index';
+
 $route['estandar_competencia'] = 'EC/index';
 $route['estandar_competencia/convocatoria/(:num)'] = 'ConvocatoriasEC/index/$1';
 $route['tecnicas_instrumentos/(:any)'] = 'TecnicasInstrumentos/index/$1';
@@ -77,12 +77,28 @@ $route['encuesta_candidato/(:num)/(:num)'] = 'EncuestaSatisfaccion/candidato_lec
 $route['evaluacion_instrumento/(:num)/(:num)'] = 'AlumnosEC/evaluacion_instrumento/$1/$2';
 $route['403'] = 'admin/sin_permisos';
 $route['404'] = 'admin/no_encontrado';
+$route['500'] = 'admin/error_sistema';
 
 //rutas para las opciones del menu
 $route['contacto'] = 'Informacion/contacto';
 $route['quienes_somos'] = 'Informacion/quienes_somos';
 
 $route['show-session'] = 'Welcome/sesion';
-$route['catalogos_sectores'] = 'Catalogos/sectores';
 $route['evidencias_esperadas/(:num)'] = 'Entregable/index/$1';
 $route['evidencias_esperadas/candidato/(:num)'] = 'Entregable/index_candidato/$1';
+
+/**
+ * rutas para los catalogos
+ */
+$route['catalogos/msg-bienvenida'] = 'Catalogos/bienvenida';
+$route['catalogos/sectores'] = 'Catalogos/sectores';
+
+/**
+ * rutas para los perfiles y usuarios
+ */
+$route['perfil_permisos'] = 'PerfilPermiso/index';
+$route['perfil_candidato/(:number)'] = 'Perfil/editar/$1';
+$route['candidato/(:number)'] = 'Perfil/editar/$1';
+$route['usuario/administradores'] = 'Usuario/administradores';
+$route['usuario/evaluadores'] = 'Usuario/evaluadores';
+$route['usuario/candidatos'] = 'Usuario/candidatos';

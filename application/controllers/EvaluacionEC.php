@@ -41,7 +41,7 @@ class EvaluacionEC extends CI_Controller {
 			$data['usuario'] = $this->usuario;
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
 			$data['extra_js'] = array(
-				base_url() . 'assets/js/ec/evaluacion.js',
+				base_url().'assets/js/ec/evaluacion.js',
 				base_url().'assets/frm/fileinput/js/fileinput.js',
 				base_url().'assets/frm/fileupload/js/vendor/jquery.ui.widget.js',
 				base_url().'assets/frm/fileupload/js/jquery.iframe-transport.js',
@@ -52,6 +52,15 @@ class EvaluacionEC extends CI_Controller {
 				base_url().'assets/frm/fileinput/css/fileinput.css',
 				base_url().'assets/frm/fileupload/css/jquery.fileupload.css',
 			);
+			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
+			$busqueda = array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'id_cat_evaluacion' => EVALUACION_DIAGNOSTICA,
+				'eliminado' => 'no'
+			);
+			$evaluacionLiberada = $this->EvaluacionModel->tablero($busqueda);
+			$data['existe_evaluacion_diagnostica'] = $evaluacionLiberada['total_registros'] != 0;
+			//dd($data);exit;
 			$this->load->view('evaluacion/tablero',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -63,11 +72,12 @@ class EvaluacionEC extends CI_Controller {
 
 	public function resultado($id_estandar_competencia){
 		perfil_permiso_operacion('evaluacion.consultar');
-    	try{
-    		$busqueda = array(
-    			'id_estandar_competencia' => $id_estandar_competencia
+    		try{
+    			$busqueda = array(
+    				'id_estandar_competencia' => $id_estandar_competencia
 			);
 			$data = $this->EvaluacionModel->tablero($busqueda);
+			//dd($data);exit;
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
 			$this->load->view('evaluacion/resultado',$data);
 		}catch (Exception $ex){
@@ -194,7 +204,7 @@ class EvaluacionEC extends CI_Controller {
 					$data['tipo'] = EVALUACION_CUESTIONARIO_INSTRUMENTO;
 					break;
 			}
-    		$data['cat_evaluacion'] = $this->CatalogoModel->get_catalogo('cat_evaluacion');
+    			$data['cat_evaluacion'] = $this->CatalogoModel->get_catalogo('cat_evaluacion');
 			if($id_evaluacion){
 				$data['evaluacion'] = $this->EvaluacionModel->obtener_row($id_evaluacion);
 			}
@@ -238,15 +248,27 @@ class EvaluacionEC extends CI_Controller {
 			if($validacion['success']){
 				$id_evaluacion ? $post['fecha_actualizacion'] = date('Y-m-d H:i:s') : $post['fecha_creacion'] = date('Y-m-d H:i:s');
 				$post['eliminado'] = 'no';
-				$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
-				$response['success'] = $guardar['success'];
-				$response['msg'] = array($guardar['msg']);
-				if($guardar['success']){
-					$guardar_ec_eval = $id_evaluacion ? true : $this->EvaluacionModel->guardar_estandar_competencia_evaluacion($id_estandar_competencia,$guardar['id']);
-					if(!$guardar_ec_eval){
-						$response['success'] = false;
-						$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
+				//validar si existe una evaluacion diagnostica sin eliminar
+				$busqueda = array(
+					'id_estandar_competencia' => $id_estandar_competencia,
+					'id_cat_evaluacion' => EVALUACION_DIAGNOSTICA,
+					'eliminado' => 'no'
+				);
+				$evaluacion = $this->EvaluacionModel->tablero($busqueda);
+				if($evaluacion['total_registros'] == 0){
+					$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
+					$response['success'] = $guardar['success'];
+					$response['msg'] = array($guardar['msg']);
+					if($guardar['success']){
+						$guardar_ec_eval = $id_evaluacion ? true : $this->EvaluacionModel->guardar_estandar_competencia_evaluacion($id_estandar_competencia,$guardar['id']);
+						if(!$guardar_ec_eval){
+							$response['success'] = false;
+							$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
+						}
 					}
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = 'Existe una evaluación diagnóstica que esta en en proceso de carga o ha sido liberada para el candidato, no es posible agregar una nueva evaluación';	
 				}
 			}else{
 				$response['success'] = false;

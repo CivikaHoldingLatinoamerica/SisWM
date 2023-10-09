@@ -26,7 +26,7 @@ class UsuarioModel extends ModeloBase
 			if(is_object($usuario)){
 				$pass_sha1 = sha1($data_login['password']);
 				if($pass_sha1 == $usuario->password){
-					if($usuario->activo == 'si'){
+					if($usuario->activo == 'si' && $usuario->eliminado == 'no'){
 						$result['success'] = true;
 						$result['msg'][] = 'Bienvenido al sistema '.$usuario->usuario;
 						unset($usuario->password);
@@ -37,7 +37,7 @@ class UsuarioModel extends ModeloBase
 						$result['usuario'] = $usuario;
 					}else{
 						$result['success'] = false;
-						$result['msg'] = 'Su cuenta, actualmente se encuentra desactivada, no podrá iniciar sesión actualmente, contacte al administrador';
+						$result['msg'] = 'Su cuenta, actualmente se encuentra eliminada/desactivada, no podrá iniciar sesión actualmente, contacte al administrador';
 					}
 				}else{
 					$result['success'] = false;
@@ -106,7 +106,7 @@ class UsuarioModel extends ModeloBase
 			from usuario u
 			  left join datos_usuario du on du.id_usuario = u.id_usuario
 			  left join cat_nivel_academico cna on cna.id_cat_nivel_academico = du.id_cat_nivel_academico
-			  left join cat_sector_productivo csp on csp.id_cat_sector_productivo = du.id_cat_sector_productivo
+			  left join cat_sector_ec csp on csp.id_cat_sector_ec = du.id_cat_sector_ec
 			where u.id_usuario = $id_usuario";
 		$query = $this->db->query($consulta);
 		return $query->row();

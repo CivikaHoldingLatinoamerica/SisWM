@@ -63,7 +63,7 @@ input[type=number] {
 	opacity: 0.2;
 	height:100% !important;
 	width:100% !important;
- }
+}
 
  
 .fullscreen-bg {
@@ -74,22 +74,26 @@ input[type=number] {
 	left: 0;
 	overflow: hidden;
 	z-index: -100;
- }
+}
 
- .content-wrapper{
+.content-wrapper{
 	background-image: url('../imgs/logos/walmart_fondo.png');
 	background-repeat: unset;
 	background-size: 80%;
 	filter:alpha(opacity=0.2);
 	height:auto !important;
 	width:auto !important;
- }
+}
 
- .img-detalle-convocatoria{
+.img-detalle-convocatoria{
 	max-width: 500px !important;
- }
+}
 
- .img-perfil-usuario-tablero{
+.img-perfil-usuario-tablero{
 	height: 100px !important;
 	width: 100px !important;
- }
+}
+
+.centrado{
+	text-align: center !important;
+}

@@ -96,17 +96,22 @@ class Publico extends CI_Controller {
 					//asignar un evaluador correspondiente (hacer un ramdom de evaluadores y tomar uno)
 					//asignamos el candidato al estandar de competencia conforme a la convocatoria
 					$estandar_competencia_convocatoria = $this->EstandarCompetenciaConvocatoriaModel->obtener_row($post['id_estandar_compentencia_convocatoria']);
-					$parametros_busqueda = [
-						'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
-						'perfil' => 'instructor'
-					];
-					$instructor = $this->UsuarioHasECModel->obtener_instructor_para_registro_candidato($parametros_busqueda);
 					$insert = array(
 						'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
 						'id_usuario' => $guardar_candidato['data']['id_usuario'],
-						'id_usuario_evaluador' => $instructor->id_usuario,
+						//'id_usuario_evaluador' => $instructor->id_usuario,
 						'fecha_registro' => date('Y-m-d')
 					);
+					$insert['id_usuario_evaluador'] = $estandar_competencia_convocatoria->id_usuario;
+					//validamos si existe un instructor que haya registrado la convocatoria
+					if(is_null($estandar_competencia_convocatoria->id_usuario)){
+						$parametros_busqueda = [
+							'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
+							'perfil' => 'instructor'
+						];
+						$instructor = $this->UsuarioHasECModel->obtener_instructor_para_registro_candidato($parametros_busqueda);
+						$insert['id_usuario_evaluador'] = $instructor->id_usuario;
+					}
 					$guardar = $this->UsuarioHasECModel->guardar_row($insert);
 					if($guardar['success']){
 						$response['success'] = true;
@@ -119,8 +124,6 @@ class Publico extends CI_Controller {
 							$response['data']['usuario'] = substr($post['curp'],0,10);
 							$response['data']['password'] = substr($post['curp'],0,10);
 						}
-						
-						
 					}else{
 						$response['success'] = false;
 						$response['msg'][] = $guardar['msg'];

@@ -100,7 +100,7 @@ class Catalogos extends CI_Controller {
 			redirect(base_url().'login');
 		}
 		try{
-			$data['titulo_pagina'] = 'Catalogo - Sectores';
+			$data['titulo_pagina'] = 'Catalogo Sectores';
 			$data['migas_pan'] = array(
 				array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 				array('nombre' => 'Catalogos','activo' => false,'url' => '#'),
@@ -117,7 +117,7 @@ class Catalogos extends CI_Controller {
 			$data['total_registros'] = $this->CatSectorEc->total_data();
 			$data_paginacion = data_paginacion(1,15,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
-			//var_dump($data);exit;
+			//dd($data);exit;
 			$this->load->view('catalogo/sector',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

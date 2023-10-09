@@ -98,6 +98,9 @@ class ConvocatoriasEC extends CI_Controller {
 			$data['id_estandar_competencia'] = $idEstandarCompetencia;
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($idEstandarCompetencia);
 			$data['cat_sector_ec'] = $this->CatalogoModel->cat_sector_ec();
+			if($this->usuario->perfil == 'instructor'){
+				$data['id_usuario'] = $this->usuario->id_usuario;
+			}
 			if($idEstandarCompetenciaConvocatoria != ''){
 				$data['estandar_competencia_convocatoria'] = $this->EstandarCompetenciaConvocatoriaModel->obtener_row($idEstandarCompetenciaConvocatoria);
 			}
@@ -119,7 +122,9 @@ class ConvocatoriasEC extends CI_Controller {
 			$data['id_estandar_competencia'] = $estandar_competencia_convocatoria_clon->id_estandar_competencia;
 			$estandar_competencia_convocatoria_clon->id_estandar_competencia_convocatoria = '';
 			$data['estandar_competencia_convocatoria'] = $estandar_competencia_convocatoria_clon;
-			
+			if($this->usuario->perfil == 'instructor'){
+				$data['id_usuario'] = $this->usuario->id_usuario;
+			}
 			$this->load->view('ec/convocatoria/agregar_modificar',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

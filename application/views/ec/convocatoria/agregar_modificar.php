@@ -11,6 +11,9 @@
 				<input type="hidden" name="id_estandar_competencia_convocatoria" value="<?=isset($estandar_competencia_convocatoria) ? $estandar_competencia_convocatoria->id_estandar_competencia_convocatoria : ''?>">
 				<input type="hidden" name="id_estandar_competencia" value="<?=$id_estandar_competencia?>">
 				<input type="hidden" name="publicada" value="no">
+				<?php if(isset($id_usuario) && $id_usuario != ''): ?>
+					<input type="hidden" name="id_usuario" value="<?=$id_usuario?>">
+				<?php endif; ?>
 				<div class="modal-body">
 					<div class="form-group row"> 
 						<div class="callout callout-warning col-md-12">

@@ -1,11 +1,19 @@
 <?php if(isset($estandar_competencia_convocatoria) && is_array($estandar_competencia_convocatoria) && !empty($estandar_competencia_convocatoria)): ?>
 	<?php foreach($estandar_competencia_convocatoria as $index => $convocatoria): ?>
-		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+		<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 			<div class="card" style="width: 18rem;">
 				<img src="<?=base_url().$convocatoria->ruta_directorio.$convocatoria->nombre?>" class="card-img-top img-convocatoria-publicada" alt="...">
-				<div class="card-body">
-					<h5 class="card-title"><?=$convocatoria->codigo?> </h5>
-					<p class="card-text"><?=$convocatoria->titulo?> </p>
+				<div class="card-body text-justify">
+					<p class="card-text" >
+						<?php if(strlen($convocatoria->titulo) > 100): ?>
+							<span data-toggle="tooltip" title="<?=$convocatoria->titulo?>">
+								<?=substr($convocatoria->titulo,0,100).'...'?>
+							</span>
+						<?php else: ?>
+							<span><?=$convocatoria->titulos?></span>
+						<?php endif; ?>
+						
+					 </p>
 				</div>
 				<div class="card-footer text-right">
 					<button type="button" class="btn btn-sm btn-outline-secondary ver_detalle_convocatoria" data-id_estandar_competencia_convocatoria="<?=$convocatoria->id_estandar_competencia_convocatoria?>">
