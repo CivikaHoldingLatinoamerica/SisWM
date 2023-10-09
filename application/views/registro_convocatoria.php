@@ -59,10 +59,7 @@
 					<input id="input_clave_extranjera_registro_convocatoria" type="text" data-rule-required="true" name="codigo_extranjero" class="form-control" placeholder="Clave de identificación" value="" >
 					<span class="form-text text-muted">La clave de indentificación de procedencia extranjera se usará como contraseña</span>
 				</div>
-				<div class="row">
-					<div class="col-4">
-						<button type="button" data-toggle="tooltip"  data-placement="right" title="Ver contraseña" class="input-group-text ver_password no_password" data-id_password="#input_contrasena_login"><i class="fas fa-eye"></i></button>
-					</div>
+				<div class="row justify-content-between">
 					<div class="col-4">
 						<a href="<?=base_url()?>" class="btn btn-danger btn-block">Cancelar</a>
 					</div>

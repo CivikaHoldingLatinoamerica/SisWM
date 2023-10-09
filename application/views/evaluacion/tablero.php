@@ -16,7 +16,7 @@
 					<button type="button" style="display: none" id="btn_buscar_ec_evaluacion">buscar</button>
 				</div>
 				<div class="col-sm-6 text-right">
-					<?php if(perfil_permiso_operacion_menu('evaluacion.agregar')): ?>
+					<?php if(perfil_permiso_operacion_menu('evaluacion.agregar') && !$existe_evaluacion_diagnostica): ?>
 						<button type="button" id="agregar_evaluacion_ec" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-square"></i> Nueva evaluación</button>
 					<?php endif; ?>
 				</div>

@@ -194,14 +194,14 @@ class Perfil extends CI_Controller {
 	public function agregar_modificar_usuario($tipo = 'admin',$id_usuario = false,$is_admin = 'no'){
 		$data['tipo_usuario'] = $tipo != 'instructor' ? $tipo : 'evaluador';
 		//$data['cat_sector_productivo'] = $this->CatalogoModel->cat_sector_productivo();
-		$data['cat_sector_productivo'] = $this->CatalogoModel->get_catalogo('cat_sector_productivo');
+		$data['cat_sector_ec'] = $this->CatalogoModel->get_catalogo('cat_sector_ec');
 		if($id_usuario){
 			$data['usuario'] = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario);
 			$data['usuario']->id_usuario = $id_usuario;
 			$data['modificacion_from_perfil'] = $is_admin;
 			$data['id_usuario_sesion'] = $this->usuario->id_usuario;
 		}
-		//var_dump($data);exit;
+		//dd($data);exit;
 		$this->load->view('usuarios/agregar_modifiar_usr',$data);
 	}
 

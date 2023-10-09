@@ -30,7 +30,7 @@ $(document).ready(function(){
 		$('.costo_convocatoria').each(function(){
 			suma += $(this).val() != '' ? parseFloat($(this).val()) : 0;
 		});
-		$('#input_costo').val(suma);
+		$('#input_costo').val(suma.toFixed(2));
 	});
 
 	//funcionalidad para el paginado por scroll

@@ -129,7 +129,7 @@ class Usuario extends CI_Controller {
 		}
 	}
 
-	public function tablero_instructores($pagina = 1, $limit = 10){
+	public function tablero_evaluadores($pagina = 1, $limit = 10){
 		perfil_permiso_operacion('usuarios.instructor');
 		try{
 			$post = $this->input->post();
