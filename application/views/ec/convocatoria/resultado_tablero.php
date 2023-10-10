@@ -5,7 +5,13 @@
 	<?php foreach ($estandar_competencia_convocatoria as $index => $echc): ?>
 		<tr>
 			<td><?=$index + 1?></td>
-			<td><?=$echc->titulo?></td>
+			<td>
+				<?=$echc->titulo?>
+				<?php if(isset($echc->id_usuario) && !is_null($echc->id_usuario)): ?>
+					<br><span class="badge badge-info">Registro por instructor</span>
+					<br><span class="badge badge-info"><?=$echc->usuario_registra_convocatoria?></span>
+				<?php endif; ?>
+			</td>
 			<td>
 				<label>Programa: </label><?=fechaBDToHtml($echc->programacion_inicio)?> al <?=fechaBDToHtml($echc->programacion_fin)?><br>
 				<label>Alineación: </label><?=fechaBDToHtml($echc->alineacion_inicio)?> al <?=fechaBDToHtml($echc->alineacion_fin)?><br>
@@ -20,8 +26,8 @@
 			<td>
 				<label>Proposito: </label> <?=$echc->proposito != '' ? $echc->proposito :'Sin información'?><br>
 				<label>Descripción: </label> <?=$echc->descripcion != '' ? $echc->descripcion : 'Sin información'?>
-				<!-- <label>Sector detalle: </label><?=$echc->sector_descripcion?>
-				<label>Perfil: </label><?=$echc->perfil?>
+				<label>Sector descripción: </label> <?=$echc->sector_descripcion != '' ? $echc->sector_descripcion : 'Sin información'?>
+				<!--<label>Perfil: </label><?=$echc->perfil?>
 				<label>Duración: </label><?=$echc->duracion_descripcion?> -->
 			</td>
 			<td>
