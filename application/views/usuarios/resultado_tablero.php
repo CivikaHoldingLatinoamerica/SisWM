@@ -103,7 +103,7 @@
 										<i class="fas fa-edit"></i>
 									</button>
 									<?php if($u->perfil == 'alumno'): ?>
-										<a href="<?=base_url()?>perfil_candidato/<?=$u->id_usuario?>" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i> Perfil</a>
+										<a href="<?=base_url()?>candidato/perfil/<?=$u->id_usuario?>" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i> Perfil</a>
 									<?php endif; ?>
 								<?php endif; ?>
 							<?php else: ?>
