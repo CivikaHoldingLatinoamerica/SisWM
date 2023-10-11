@@ -615,7 +615,7 @@ var Comun = {
 		})
 	},
 
-	iniciar_carga_imagen : function(input_file,div_procesando,funcion_response,transparente = ''){
+	iniciar_carga_archivo : function(input_file,div_procesando,funcion_response,transparente = ''){
 		//funcion para cargar archivo via ajax
 		var nombre_archivo;
 		var id_cat_expediente = 2;

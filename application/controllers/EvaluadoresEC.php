@@ -10,6 +10,7 @@ class EvaluadoresEC extends CI_Controller {
         parent:: __construct();
 		$this->load->model('ActividadIEModel');
 		$this->load->model('EcInstrumentoAlumnoComentarioModel');
+		$this->load->model('EntregableAlumnoComentariosModel');
         $this->load->model('EcInstrumentoAlumnoModel');
         $this->load->model('ECUsuarioHasExpedientePEDModel');
 		$this->load->model('EstandarCompetenciaModel');
@@ -224,7 +225,7 @@ class EvaluadoresEC extends CI_Controller {
 			$validacion = Validaciones_Helper::formComentarioATI($post);
 			if($validacion['success']){
 				$post['fecha'] = date('Y-m-d H:i:s');
-				$guardar_comentario = $this->EcInstrumentoAlumnoComentarioModel->guardar_row($post);
+				$guardar_comentario = $this->EntregableAlumnoComentariosModel->guardar_comentario($post);
 				$response['success'] = $guardar_comentario['success'];
 				$response['msg'][] = $guardar_comentario['msg'];
 			}else{

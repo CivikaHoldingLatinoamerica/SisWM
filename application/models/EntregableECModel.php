@@ -93,6 +93,61 @@ class EntregableECModel extends ModeloBase
 		return $data;
 	}
 
+	public function obtener_entregables_candidato($id_estandar_competencia, $id_usuario)
+	{
+		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad  from entregable_ec ee "
+			. "join entregable_has_instrumento ehi ON ehi.id_entregable = ee.id_entregable "
+			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
+			. "join estandar_competencia_instrumento eci on eci.id_estandar_competencia_instrumento =eiha.id_estandar_competencia_instrumento "
+			. "join cat_instrumento ci on ci.id_cat_instrumento = eci.id_cat_instrumento "
+			. "where ee.activo and ee.id_estandar_competencia = " . $id_estandar_competencia;
+
+		$query = $this->db->query($consulta);
+		$data = $query->result();
+
+		$entregables = array();
+		foreach ($data as $item) {
+			$object = (object)array(
+				'id_entregable' => $item->id_entregable,
+				'nombre_entregable' => $item->nombre_entregable,
+				'descripcion' => $item->descripcion,
+				'instrucciones' => $item->instrucciones,
+				'tipo_entregable' => $item->tipo_entregable,
+				'instrumentos' => array(),
+				'archivos' => array(),
+				'comentarios' => array()
+			);
+
+			if (!in_array($object, $entregables)) {
+				$entregables[] = $object;
+			}
+
+		}
+		foreach ($entregables as $item) {
+			$item->instrumentos = array_filter($data, function ($i) use ($item) {
+				return $i->id_entregable == $item->id_entregable;
+			});
+
+			$consulta = "select ai.*, eaa.id_entregable_alumno_archivo from archivo_instrumento ai "
+				. " join entregable_alumno_archivo eaa on eaa.id_archivo_instrumento = ai.id_archivo_instrumento"
+				. " join ec_entregable_alumno ea on ea.id_entregable_alumno = eaa.id_entregable_alumno"
+				. " where ea.id_entregable = " . $item->id_entregable
+				. " and ea.id_usuario = " . $id_usuario;
+
+			$query = $this->db->query($consulta);
+			$item->archivos = $query->result();
+
+			$consulta = "select eac.*, ea.id_entregable_alumno from entregable_alumno_comentarios eac "
+				. " join ec_entregable_alumno ea on ea.id_entregable_alumno = eac.id_entregable_alumno"
+				. " where ea.id_entregable = " . $item->id_entregable
+				. " and ea.id_usuario = " . $id_usuario;
+
+			$query = $this->db->query($consulta);
+			$item->comentarios = $query->result();
+		}
+		return $entregables;
+	}
+
 	public function obtener_entregable($id)
 	{
 		$consulta = "select * from entregable_ec ee where ee.id_entregable = " . $id;
@@ -115,11 +170,11 @@ class EntregableECModel extends ModeloBase
                       where eha.id_entregable = " . $id;
 		$query = $this->db->query($consulta);
 
-		$archivos= $query->result();
+		$archivos = $query->result();
 
-		if (!empty($archivos)){
+		if (!empty($archivos)) {
 			$data->archivo = $archivos[0]->nombre;
-			$data->id_archivo =$archivos[0]-> id_archivo;
+			$data->id_archivo = $archivos[0]->id_archivo;
 		}
 
 

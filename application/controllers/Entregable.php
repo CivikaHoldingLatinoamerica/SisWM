@@ -7,6 +7,7 @@ class entregable extends CI_Controller
 	function __construct()
 	{
 		parent:: __construct();
+		$this->load->model('EntregableAlumnoArchivoModel');
 		$this->load->model('EntregableECModel');
 		$this->load->model('ActividadIEModel');
 	}
@@ -59,7 +60,7 @@ class entregable extends CI_Controller
 		}
 	}
 
-	function index_candidato(){
+	function index_candidato($id_estandar_competencia,$id_usuario){
 		if(sesionActive()){
 			$this->usuario = usuarioSession();
 		}else{
@@ -81,14 +82,9 @@ class entregable extends CI_Controller
 				base_url().'assets/css/EC/entregables.css'
 			);
 			$data['usuario'] = $this->usuario;
-			$this->entregables[] = (object)array(
-				"nombre" => "Entregable 1",
-				"instrumentos" => array(
-					0 => "La carta descriptiva elaborada",
-					1 => "El objetivo general del curso redactado.",
-					2 => "Los objetivos particulares y/o específicos elaborados."
-				));
-			$data['entregables'] = $this->entregables;
+			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario);
+
+			$data['entregables'] = $datos;
 			$this->load->view('entregables/candidato/evidencias_candidato',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -153,6 +149,25 @@ class entregable extends CI_Controller
 			if($eliminar['success']){
 				$response['success'] = true;
 				$response['msg'][] = $eliminar['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $eliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function eliminar_archivo($id_archivo_instrumento, $id_entregable_alumno_archivo){
+		try{
+			$eliminar =  $this->EntregableAlumnoArchivoModel->eliminar_archivo($id_archivo_instrumento, $id_entregable_alumno_archivo);
+			if($eliminar['success']){
+				$response['success'] = true;
+				$response['msg'][] = $eliminar['msg'];
+				$response['data'] = $eliminar['data'];
 			}else{
 				$response['success'] = false;
 				$response['msg'][] = $eliminar['msg'];

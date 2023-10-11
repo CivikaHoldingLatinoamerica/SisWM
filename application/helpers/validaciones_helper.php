@@ -361,7 +361,7 @@ class Validaciones_Helper {
 		if(!isset($data['comentario']) || self::isCampoVacio($data['comentario'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo comentario es requerido';
-		}if(!isset($data['id_ec_instrumento_alumno']) || self::isCampoVacio($data['id_ec_instrumento_alumno'])){
+		}if(!isset($data['id_entregable']) || self::isCampoVacio($data['id_entregable'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo identificador del instrumento del alumno es requerido';
 		}if(!isset($data['quien']) || self::isCampoVacio($data['quien'])){
