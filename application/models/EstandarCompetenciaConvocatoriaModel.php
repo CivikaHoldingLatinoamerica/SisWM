@@ -21,6 +21,7 @@ class EstandarCompetenciaConvocatoriaModel extends ModeloBase
 		$joins = ' inner join estandar_competencia ec on ec.id_estandar_competencia = ecc.id_estandar_competencia ';
 		$joins .= ' inner join archivo a on a.id_archivo = ec.id_archivo ';
 		$joins .= ' inner join cat_sector_ec csec on csec.id_cat_sector_ec = ecc.id_cat_sector_ec ';
+		$joins .= ' left join usuario u on u.id_usuario = ecc.id_usuario ';
 		return $joins;
 	}
 
@@ -48,7 +49,8 @@ class EstandarCompetenciaConvocatoriaModel extends ModeloBase
 				ecc.*,
 				a.*,
 				csec.nombre as nombre_sector,
-				if(ecc.alineacion_fin >= '".$fechaHoy."', true,false) convocatoria_vigente 
+				if(ecc.alineacion_fin >= '".$fechaHoy."', true,false) as convocatoria_vigente,
+				if(ecc.id_usuario is null, '', u.usuario) as usuario_registra_convocatoria
 			from estandar_competencia_convocatoria ecc";
 		return $consulta;
 	}

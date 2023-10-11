@@ -30,7 +30,7 @@
 								<div class="active tab-pane" id="mi_informacion">
 									<div class="form-group row">
 										<label class="col-sm-3">Usuario del sistema</label>
-										<span class="col-sm-9"><?=isset($usuario) ? $usuario->usuario : ''?></span>
+										<span class="col-sm-9"><?=isset($usuario_modificar) ? $usuario_modificar->usuario : $usuario->usuario?></span>
 									</div>
 									<?php if(isset($datos_usuario_modificar)):?>
 										<div class="form-group row">

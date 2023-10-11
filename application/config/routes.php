@@ -97,8 +97,7 @@ $route['catalogos/sectores'] = 'Catalogos/sectores';
  * rutas para los perfiles y usuarios
  */
 $route['perfil_permisos'] = 'PerfilPermiso/index';
-$route['perfil_candidato/(:number)'] = 'Perfil/editar/$1';
-$route['candidato/(:number)'] = 'Perfil/editar/$1';
+$route['candidato/perfil/(:num)'] = 'Perfil/editar/$1';
 $route['usuario/administradores'] = 'Usuario/administradores';
 $route['usuario/evaluadores'] = 'Usuario/evaluadores';
 $route['usuario/candidatos'] = 'Usuario/candidatos';

@@ -68,6 +68,7 @@ class Perfil extends CI_Controller {
 		perfil_permiso_operacion('usuarios.alumno');
 		$data = array();
 		$data['titulo_pagina'] = 'Editar perfil';
+		$data['sidebar'] = 'candidatos';
 		$data['migas_pan'] = array(
 			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 			array('nombre' => 'Usuarios','activo' => false,'url' => base_url().'usuario'),
