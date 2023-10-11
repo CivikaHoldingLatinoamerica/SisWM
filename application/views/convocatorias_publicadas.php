@@ -10,7 +10,7 @@
 								<?=substr($convocatoria->titulo,0,100).'...'?>
 							</span>
 						<?php else: ?>
-							<span><?=$convocatoria->titulos?></span>
+							<span><?=$convocatoria->titulo?></span>
 						<?php endif; ?>
 						
 					 </p>
