@@ -63,7 +63,7 @@ var methods = {
 				if(response.success){
 					Comun.mostrar_ocultar_modal('#modal_form_entregable',false);
 					Comun.mensajes_operacion(response.msg,'success');
-					// Comun.recargar_pagina(base_url + 'evidencias_esperadas/1',2000);
+					Comun.recargar_pagina(base_url + 'evidencias_esperadas/1',2000);
 					methods.buscarEntregables();
 				}else{
 					Comun.mensajes_operacion(response.msg,'error',5000);

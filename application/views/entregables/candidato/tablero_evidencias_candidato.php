@@ -24,7 +24,6 @@
 						</button>
 					</h5>
 				</div>
-
 				<div id="collapse-evidencia<?= old($entregable, 'id_entregable') ?>" class="collapse p-3"
 					 aria-labelledby="headingOne"
 					 data-parent="#accordion_evidencias">
@@ -149,7 +148,8 @@
 					<div class="row">
 						<div class="col text-right">
 							<?php if ($entregable->tipo_entregable == "form") : ?>
-								<a class="btn btn-sm btn-primary">Responder</a>
+
+								<a class="btn btn-sm btn-primary" href="<?= base_url().'respuestas_preguntas_abiertas/'.$entregable->id_entregable?>">Responder</a>
 							<?php endif; ?>
 
 							<?php if ($entregable->tipo_entregable == "cuest") : ?>

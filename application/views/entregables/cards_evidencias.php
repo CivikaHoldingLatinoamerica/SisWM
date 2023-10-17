@@ -37,7 +37,7 @@
 										   href="#">Eliminar</a>
 										<?php
 										if ($item->tipo_entregable == "form") : ?>
-										<a class="dropdown-item" href="<?= base_url().'preguntas_abiertas/1'?>">Cargar formulario</a>
+										<a class="dropdown-item" href="<?= base_url().'preguntas_abiertas/'.$item->id_entregable?>">Cargar formulario</a>
 										<?php  endif; ?>
 									</div>
 								</div>

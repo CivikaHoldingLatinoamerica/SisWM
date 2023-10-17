@@ -77,15 +77,15 @@
 							<select multiple="multiple" class="form-control" id="instrumentos" name="instrumentos[]">}
 
 								<?php if (isset($instrumentos)): ?>
-									<?php foreach ($instrumentos as $item) ?>
+									<?php foreach ($instrumentos as $item): ?>
 										<option value="<?= $item->id_ec_instrumento_has_actividad ?>"
-									<?php if (isset($entregable)): ?>
-									<?=in_array($item->id_ec_instrumento_has_actividad, old($entregable, 'instrumentos')) ? 'selected' : ''?>
-									<?php endif; ?>
-
-									> <?= $item->actividad ?>
+											<?php if (isset($entregable)): ?>
+												<?=in_array($item->id_ec_instrumento_has_actividad, old($entregable, 'instrumentos')) ? 'selected' : ''?>
+											<?php endif; ?>
+										> <?= $item->actividad ?>
 
 									</option>
+								<?php endforeach; ?>
 								<?php endif; ?>
 
 							</select>
