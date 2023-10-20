@@ -13,176 +13,179 @@
 <body>
 
 
-<!-- credencial frontal -->
-<table class="w-50 bordes_gafete">
+<table width="100%">
 	<tr>
-		<td colspan="4" class="centrado"><br></td>
-	</tr>
-	<tr>
-		<td colspan="4" class="centrado">
-			<img src="<?=base_url()?>assets/imgs/demos/wmcentroa.jpg" width="200px">
+		<td class="centrado" width="50%">
+
+			<!-- credencial frontal -->
+			<table class="bordes_gafete" >
+				<tr>
+					<td colspan="4">
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="centrado">
+						<img src="<?=base_url()?>assets/imgs/demos/wmcentroa.jpg" width="150px">
+					</td>
+					<td class="w10"></td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td class="w-50">
+						<img src="<?=base_url()?>assets/imgs/demos/person.png" class="img_evaluacion_conocimiento">
+					</td>
+					<td class="w-50 centrado">
+						<img src="<?=base_url()?>assets/imgs/demos/pp_candidato_progreso.png" class="img_evaluacion_conocimiento">
+					</td>
+					<td class="w10"></td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="izquierda">
+						<span class="titulo_empresa_gafete">Softura Solutions</span>
+						<br>
+						<span class="texto_ayuda_gafete">Empresa contratista</span>
+					</td>
+					<td class="w10" ></td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td class="w-100" class="izquierda">
+						<span class="titulo_empresa_gafete">Enrique Corona Ricaño</span>
+						<br>
+						<span class="texto_ayuda_gafete">Nombre</span>
+					</td>
+					<td class="w10" rowspan="3">
+						<img src="<?=base_url()?>assets/imgs/demos/wm-seguridad-logo.png" class="img_evaluacion_conocimiento">
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td class="izquierda">
+						<span class="titulo_empresa_gafete">CORE900406HTLRCN08</span>
+						<br>
+						<span class="texto_ayuda_gafete">Nombre</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td class="izquierda">
+						<span class="titulo_empresa_gafete">Desarrollador Web</span>
+						<br>
+						<span class="texto_ayuda_gafete">Puesto</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="centrado">
+						<span class="titulo_empresa_gafete">Calificado</span>
+						<br>
+						<span class="texto_ayuda_gafete">Certificado</span>
+					</td>
+					<td class="w10" ></td>
+				</tr>
+			</table>
+
+		</td>
+
+
+		<td class="centrado" width="50%">
+
+			<!-- credencial frontal -->
+			<table class="bordes_gafete" >
+				<tr>
+					<td colspan="4">
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="centrado">
+						<img src="<?=base_url()?>assets/imgs/demos/wm-soy-lider-seg-logo.png" width="110px">
+					</td>
+					<td class="w10"></td>
+				</tr>
+				
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="izquierda">
+						<span class="titulo_empresa_gafete">EC0470</span><br>
+						<span class="titulo_empresa_gafete">Administración de la seguridad y salud <br>en la obra de construcción</span><br>
+						<span class="texto_ayuda_gafete">Estándar de competencia</span>
+					</td>
+					<td class="w10" ></td>
+				</tr>
+				
+				<tr>
+					<td class="w10"></td>
+					<td class="izquierda">
+						<span class="titulo_empresa_gafete">xxxxxxxxxx</span>
+						<br>
+						<span class="texto_ayuda_gafete">Folio</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td class="izquierda">
+					<span class="titulo_empresa_gafete">31 de octubre 2023</span>
+						<br>
+						<span class="texto_ayuda_gafete">Fecha de aprobación</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="izquierda">
+						<span class="titulo_empresa_gafete">31 de octubre 2023</span>
+						<br>
+						<span class="texto_ayuda_gafete">vigencia</span>
+					</td>
+					<td class="w10" ></td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="titulo_empresa_gafete" >
+						Instructivo de validación
+					</td>
+					<td class="w10" ></td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="izquierda texto_ayuda_gafete_instructivo" >
+						<ol>
+							<li>Consulte en Registro Nacional de Personas<br> con Competencias Certificadas (RENAP)</li>
+							<li>Es de acceso publico y de manera gratuita</li>
+							<li>En <br><a href="">https://conocer.gob.mx/registro-nacional-personas-<br>competencias-certificadas/</a></li>
+							<li>Solo ingresa Folio/CURP del trabajador certificado</li>
+						</ol>
+					</td>
+					<td class="w10" ></td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td class="w10"></td>
+					<td colspan="2" class="centrado">
+						<img src="<?=base_url()?>assets/imgs/logos/logo-civik.png" >
+					</td>
+					<td class="w10"></td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						
+					</td>
+				</tr>
+			</table>
+
 		</td>
 	</tr>
-	
-    <tr>
-        <td class="w10"></td>
-        <td class="w-50 izquierda">
-	   		<img src="<?=base_url()?>assets/imgs/demos/person.png" width="150px" height="150px">	
-        </td>
-        <td class="w-50 centrado">
-            <img src="<?=base_url()?>assets/imgs/demos/pp_candidato_progreso.png" width="150px" height="150px">
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td colspan="2">
-            <span class="titulo_empresa">Softura Solutions S. de R.L.</span>
-            <br><span class="titulo_empresa_descripcion">Empresa</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td class="w-50">
-            <span class="titulo_empresa_small">Enrique Corona Ricaño</span>
-        </td>
-        <td class="w-50" rowspan="6">
-			<img src="<?=base_url()?>assets/imgs/demos/wm-seguridad-logo.png" width="150px" height="150px">
-		</td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td><span class="titulo_empresa_descripcion_small">Nombre</span></td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td class="w-100" colspan="2">
-			<span class="titulo_empresa_small">CORE900101HTLRCN08</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td><span class="titulo_empresa_descripcion_small">CURP</span></td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td class="w-100" colspan="2" >
-		<span class="titulo_empresa_small">Desarollador web</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td><span class="titulo_empresa_descripcion_small">Puesto</span></td>
-        <td class="w10"></td>
-    </tr>
-	<tr>
-        <td class="w10"></td>
-        <td colspan="2" class="centrado">
-            <span class="titulo_empresa">Calificado</span>
-            <br><span class="titulo_empresa_descripcion">Certificado</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
 </table>
-<!-- credencial reverso -->
-<table class="bordes_gafete">
-	<tr>
-		<td colspan="4" class="centrado"><br></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td colspan="2" class="centrado">
-			<img src="<?=base_url()?>assets/imgs/demos/wm-soy-lider-seg-logo.png" width="350px">
-		</td>
-		<td></td>
-	</tr>
-	<tr><!-- columna que le da el tamaño a la credencial WIDTH -->
-        <td class="w10"></td>
-        <td class="w-50 izquierda">
-	   		
-        </td>
-        <td class="w-50 centrado">
-            
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td colspan="2">
-            <span class="titulo_empresa_small_reversa">EC0470 <br>Administración de la seguridad y salud en la obra de construcción</span>
-            <br><span class="titulo_empresa_descripcion_small_reversa">Estándar de competencia</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td class="w-100" colspan="2">
-			<span class="titulo_empresa_small_reversa">XXXXXXXXXX</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td><span class="titulo_empresa_descripcion_small_reversa">Folio</span></td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td class="w-100" colspan="2" >
-		<span class="titulo_empresa_small_reversa">31 de octubre 2023</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td><span class="titulo_empresa_descripcion_small_reversa">Fecha de aprobación</span></td>
-        <td class="w10"></td>
-    </tr>
-	<tr>
-        <td class="w10"></td>
-        <td class="w-100" colspan="2" >
-		<span class="titulo_empresa_small_reversa">31 de octubre 2023</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-    <tr>
-        <td class="w10"></td>
-        <td><span class="titulo_empresa_descripcion_small_reversa">Vigencia</span></td>
-        <td class="w10"></td>
-    </tr>
-	<tr>
-        <td class="w10"></td>
-        <td colspan="2" class="centrado">
-            <span class="titulo_empresa_small_reversa">Instructivo de validación</span>
-        </td>
-        <td class="w10"></td>
-    </tr>
-	<tr>
-	<td class="w10"></td>
-        <td colspan="2" class="izquierda">
-			<ol class="titulo_empresa_descripcion_list izquierda">
-				<li>Consulte en Registro Nacional de Personas con Competencias Certificadas (RENAP)</li>
-				<li>Es de acceso publico y de manera gratuita</li>
-				<li>En <a href="">https://conocer.gob.mx/registro-nacional-personas-competencias-certificadas/</a></li>
-				<li>Solo ingresa Folio/CURP del trabajador</li>
-			</ol>
-			
-        </td>
-        <td class="w10"></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td colspan="2" class="centrado">
-			<img src="<?=base_url()?>assets/imgs/demos/utopia-consultores.png" width="350px">
-		</td>
-		<td></td>
-	</tr>
-</table>
+
+
 
 
 </body>

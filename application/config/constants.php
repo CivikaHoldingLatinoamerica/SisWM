@@ -91,6 +91,7 @@ define('EXTENSIONES_FILES_ATI', 'png|jpg|jpeg|gif|tiff|pdf');
 define('MAX_FILESIZE', 15000000);
 define('RUTA_PDF_TEMP','files_usr/temp/');
 define('RUTA_PDF_PED','files_usr/ped/');
+define('RUTA_QR_FILES','files_usr/qr_generados');
 
 /**
  * constantes para los perfiles de usuario
