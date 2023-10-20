@@ -577,4 +577,19 @@ function old( &$object, $atributo ){
 	return null;
 }
 
+
+function pathDirectorioArchivos($pathArchivos){
+    if ($pathArchivos != '') {
+        $path = explode('/',$pathArchivos );
+        $ruta = '';
+        foreach ($path as $directorio){
+            $ruta .= $directorio;
+            if (!file_exists(FCPATH . $ruta)) {
+                mkdir(FCPATH . $ruta, 0777, true);
+                chmod(FCPATH . $ruta,0777);
+            }
+            $ruta .= '/';
+        }
+    }
+}
 ?>
