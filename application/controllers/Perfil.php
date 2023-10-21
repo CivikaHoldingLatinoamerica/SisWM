@@ -10,6 +10,7 @@ class Perfil extends CI_Controller {
 		parent:: __construct();
 		$this->load->model('CatalogoModel');
 		$this->load->model('DatosDomicilioModel');
+		$this->load->model('DatosEmpresaModel');
 		$this->load->model('UsuarioModel');
 		$this->load->model('PerfilModel');
 		if(sesionActive()){
@@ -287,6 +288,21 @@ class Perfil extends CI_Controller {
 		}
 	}
 
+	public function agregar_modificar_empresa($id_usuario,$id = false){
+		try{
+			$data['id_usuario'] = $id_usuario;
+			if($id){
+				$data['datos_empresa'] = $this->DatosEmpresaModel->obtener_row($id);
+			}
+			$this->load->view('usuarios/agregar_modificar_empresa',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
+		}
+	}
+
 	public function guardar_domicilio($id_usuario,$id = false){
 		try{
 			$post = $this->input->post();
@@ -301,6 +317,33 @@ class Perfil extends CI_Controller {
 				}else{
 					$response['success'] = false;
 					$response['msg'][] = 'No fue posible guardar el domicilio, favor de intentar más tarde';
+				}
+			}else {
+				$response['success'] = false;
+				$response['msg'][] = $validacion_campos['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function guardar_empresa($id_usuario,$id = false){
+		try{
+			$post = $this->input->post();
+			$validacion_campos = Validaciones_Helper::formEmpresa($post);
+			if($validacion_campos['success']){
+				$post['id_usuario'] = $id_usuario;
+				isset($post['vigente']) && $post['vigente'] == 'si' ? $this->DatosEmpresaModel->actualizar_vigente($this->usuario->id_usuario) : false;
+				$guardar_empresa = $this->DatosEmpresaModel->guardar_row($post,$id);
+				if($guardar_empresa){
+					$response['success'] = true;
+					$response['msg'][] = 'Se guardaron los datos de empresa correctamente';
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = 'No fue posible guardar los datos de la empresa, favor de intentar más tarde';
 				}
 			}else {
 				$response['success'] = false;
@@ -348,6 +391,15 @@ class Perfil extends CI_Controller {
 		$this->load->view('perfil/tab_direcciones',$data);
 	}
 
+	public function obtener_tab_empresa($id_usuario = false){
+		$id_usuario ? $id_usuario : $this->usuario->id_usuario;
+		$usuario = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario);
+		$usuario = $this->UsuarioModel->obtener_usuario_by_usr($usuario->usuario);
+		$data['usuario'] = $usuario;
+		$data['datos_empresa'] = $this->PerfilModel->obtener_datos_empresa($id_usuario);
+		$this->load->view('perfil/tab_datos_empresa',$data);
+	}
+
 	public function actualizar_foto_perfil($id_archivo,$id_usuario = false){
 		try{
 			$id_usuario ? $id_usuario : $this->usuario->id_usuario;
@@ -389,6 +441,42 @@ class Perfil extends CI_Controller {
 			$resultado['msg'] = array('No es posible actualizar el archivo del expediente, favor de intentar más tarde');
 		}
 		echo json_encode($resultado);exit;
+	}
+
+	public function eliminar_domicilio($id){
+		try{
+			$eliminar = $this->DatosDomicilioModel->eliminar_row($id);
+			if($eliminar['success']){
+				$response['success'] = true;
+				$response['msg'][] = $eliminar['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $eliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function eliminar_empresa($id){
+		try{
+			$eliminar = $this->DatosEmpresaModel->eliminar_row($id);
+			if($eliminar['success']){
+				$response['success'] = true;
+				$response['msg'][] = $eliminar['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $eliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
 	}
 
 }
