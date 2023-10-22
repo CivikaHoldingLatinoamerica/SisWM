@@ -412,6 +412,34 @@ class Validaciones_Helper {
 		return $result;
 	}
 
+	public static function formEmpresa($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['nombre']) || self::isCampoVacio($data['nombre'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo nombre es requerido';
+		}if(!isset($data['rfc']) || self::isCampoVacio($data['rfc'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo RFC es requerido';
+		}if(!isset($data['domicilio_fiscal']) || self::isCampoVacio($data['domicilio_fiscal'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo domicilio fiscal es requerido';
+		}if(!isset($data['telefono']) || self::isCampoVacio($data['telefono'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo teléfono es requerido';
+		}if(!isset($data['correo']) || self::isCampoVacio($data['correo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo correo es requerido';
+		}if(!isset($data['representante_legal']) || self::isCampoVacio($data['representante_legal'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo representante legal es requerido';
+		}if(!isset($data['representante_trabajadores']) || self::isCampoVacio($data['representante_trabajadores'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo representante trabajadores es requerido';
+		}
+		return $result;
+	}
+
 	public static function formExpedienteDigital($data){
 		$result['success'] = true;
 		$result['msg'] = array();

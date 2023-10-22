@@ -9,15 +9,18 @@
 		<!-- Main content -->
 		<section class="content" id="tablero_estandar_competencia_evaluacion">
 
-			<input type="hidden" id="input_id_estandar_competencia" value="<?=isset($id_estandar_competencia) ? $id_estandar_competencia : ''?>">
+			<input type="hidden" id="input_id_referencia" value="<?=isset($id_referencia) ? $id_referencia : ''?>">
+			<input type="hidden" id="input_tipo_evaluacion" value="<?=isset($tipo_evaluacion) ? $tipo_evaluacion : ''?>">
 
 			<div class="form-group row">
 				<div class="col-sm-6">
 					<button type="button" style="display: none" id="btn_buscar_ec_evaluacion">buscar</button>
 				</div>
 				<div class="col-sm-6 text-right">
-					<?php if(perfil_permiso_operacion_menu('evaluacion.agregar') && !$existe_evaluacion_diagnostica): ?>
-						<button type="button" id="agregar_evaluacion_ec" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-square"></i> Nueva evaluación</button>
+					<?php if(perfil_permiso_operacion_menu('evaluacion.agregar')): ?>
+						<button type="button" id="agregar_evaluacion_ec" class="btn btn-sm btn-outline-success">
+							<i class="fa fa-plus-square"></i> Nueva evaluación
+						</button>
 					<?php endif; ?>
 				</div>
 			</div>
