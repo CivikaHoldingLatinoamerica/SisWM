@@ -94,7 +94,11 @@ class PerfilModel extends CI_Model
 
 	public function obtener_datos_empresa($id_usuario, $vigente = false){
 		try{
-			$consulta = "select * from datos_empresa de where de.eliminado = 'no' and de.id_usuario = $id_usuario";
+			$consulta = "select 
+					de.*, a.nombre as nombre_archivo_logo, a.ruta_directorio as ruta_directorio_logo 
+				from datos_empresa de 
+					inner join archivo a on a.id_archivo = de.id_archivo_logotipo
+				where de.eliminado = 'no' and de.id_usuario = $id_usuario ";
 			if($vigente){
 				$consulta .= " and de.vigente = 'si'";
 				$query = $this->db->query($consulta);

@@ -48,7 +48,10 @@
 							<input type="text" class="form-control" id="input_domicilio" data-rule-required="true"
 								   name="domicilio_fiscal" placeholder="Domicilio de la empresa" value="<?=isset($datos_empresa) ? $datos_empresa->domicilio_fiscal : ''?>">
 						</div>
-						<label for="input_cp" class="col-sm-3 col-form-label">¿Trabajo actual?</label>
+					</div>
+
+					<div class="form-group row">
+						<label for="input_cp" class="col-sm-3 col-form-label">¿La empresa es de su trabajo actual?</label>
 						<div class="col-sm-3">
 							<div class="custom-control custom-radio">
 								<input class="custom-control-input" type="radio" data-rule-required="true" id="input_vigente_si" name="vigente"
@@ -58,6 +61,18 @@
 							<div class="custom-control custom-radio">
 								<input class="custom-control-input" type="radio" id="input_vigente_no" name="vigente" value="no" <?=isset($datos_empresa) && $datos_empresa->vigente == 'no' ? 'checked="checked"':''?>>
 								<label for="input_vigente_no" class="custom-control-label">No</label>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group row">
+								<label for="img_logotipo_emp" class="col-sm-3 col-form-label">Logotipo:</label>
+								<input type="hidden" id="input_id_archivo_logotipo" name="id_archivo_logotipo" value="<?=isset($datos_empresa) ? $datos_empresa->id_archivo_logotipo : ''?>">
+								<input type="file" id="img_logotipo_emp" name="img_logotipo_emp" class="col-sm-3" accept="image/*" >
+								<div id="procesando_img_logotipo_emp" class="col-sm-6">
+									<?php if(isset($archivo_logotipo) && !is_null($archivo_logotipo)): ?>
+										<img src="<?=base_url().$archivo_logotipo->ruta_directorio.$archivo_logotipo->nombre?>" alt="Imágen logotipo empresa" style="max-width: 120px" class="img-fluid img-thumbnail">
+									<?php endif; ?>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -23,7 +23,7 @@
 						<?php endif; ?>
 
 						<div class="row">
-							<div class="col-12 mt-3">
+							<div class="col-10 mt-3">
 								<ul class="ml-4 mb-0 fa-ul">
 									<li class="small"><?=$de->nombre?></li>
 									<li class="small"><?=$de->rfc?></li>
@@ -32,6 +32,9 @@
 									<li class="small"><?=$de->correo?></li>
 									<li class="small"><?=$de->representante_legal?></li>
 									<li class="small"><?=$de->representante_trabajadores?></li>
+									<li class="smal">
+										<img class="profile-user-img img-fluid img-circle img_foto_certificado" src="<?=base_url().$de->ruta_directorio_logo.'/'.$de->nombre_archivo_logo?>" alt="Logotipo empresa">
+									</li>
 								</ul>
 							</div>
 						</div>

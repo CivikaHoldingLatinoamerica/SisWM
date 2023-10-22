@@ -100,6 +100,8 @@ var PerfilCandidato = {
 			function(response){
 				$('#contenedor_modal_primario').html(response);
 				Comun.mostrar_ocultar_modal('#modal_form_empresa',true);
+				Comun.funcion_fileinput('#img_logotipo_emp','Logotipo');
+				PerfilCandidato.iniciar_carga_img_logo_empresa();
 			}
 		);
 	},
@@ -455,6 +457,14 @@ var PerfilCandidato = {
 				}
 			);
 		});
+	},
+
+	iniciar_carga_img_logo_empresa : function(){
+		Comun.iniciar_carga_imagen('#img_logotipo_emp','#procesando_img_logotipo_emp',function(archivo){
+			$('#input_id_archivo_logotipo').val(archivo.id_archivo);
+			var html_img = '<img src="'+base_url + archivo.ruta_directorio + archivo.nombre+'" style="max-width: 120px" class="img-fluid img-thumbnail" alt="Imagen logotipo empresa">';
+			$('#procesando_img_logotipo_emp').html(html_img);
+		})
 	}
 
 };

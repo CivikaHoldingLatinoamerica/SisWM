@@ -8,6 +8,7 @@ class Perfil extends CI_Controller {
 	function __construct()
 	{
 		parent:: __construct();
+		$this->load->model('ArchivoModel');
 		$this->load->model('CatalogoModel');
 		$this->load->model('DatosDomicilioModel');
 		$this->load->model('DatosEmpresaModel');
@@ -293,6 +294,7 @@ class Perfil extends CI_Controller {
 			$data['id_usuario'] = $id_usuario;
 			if($id){
 				$data['datos_empresa'] = $this->DatosEmpresaModel->obtener_row($id);
+				$data['archivo_logotipo'] = $this->ArchivoModel->obtener_row($data['datos_empresa']->id_archivo_logotipo);
 			}
 			$this->load->view('usuarios/agregar_modificar_empresa',$data);
 		}catch (Exception $ex){
