@@ -178,6 +178,11 @@ $(document).ready(function(){
 		var id_entregable = $(this).data('id_entregable');
 		CandidatoEC.eliminarArchivo(id_archivo_instrumento,id_entregable_alumno_archivo,id_entregable)
 	})
+	$(document).on('click','.boton-enviar-entregable',function(){
+		var id_entregable = $(this).data('id_entregable');
+		var id_entregable_formulario = $(this).data('id_entregable_formulario');
+		CandidatoEC.cambiar_estatus_entregable_alumno(id_entregable,2, id_entregable_formulario)
+	})
 
 	if(!window.location.pathname.includes('/estandar_competencia')){
 		CandidatoEC.pasos.evaluacion_diagnostica();
@@ -471,6 +476,17 @@ var CandidatoEC = {
 				$('#tabla_evidencias_'+id_entregable).html(trs);
 			}
 
+		})
+	},
+	cambiar_estatus_entregable_alumno(id_entregable, id_estatus, id_entregable_formulario = null){
+		var id_usuario_alumno = $('#input_id_usuario_alumno').val();
+		Comun.obtener_contenido_peticion_json(base_url +'Entregable/cambiar_estatus/'+id_entregable+'/'+ id_estatus+'/'+id_usuario_alumno+'/'+id_entregable_formulario,{},function (response) {
+			if (response.success) {
+				Comun.mensajes_operacion( ['Evidencia enviada al evaluador'], 'success');
+				CandidatoEC.pasos.evidencias();
+			}else {
+				Comun.mensajes_operacion(response.msg, 'error');
+			}
 		})
 	},
 

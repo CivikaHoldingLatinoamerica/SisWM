@@ -23,7 +23,7 @@
 					<button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Cancelar</button>
 					<button type="button" class="btn btn-outline-success btn-sm" id="guardar_preguntas_abiertas"
 							data-id_cat_pregunta_formulario_abierto="<?=isset($pregunta_abierta) ? $pregunta_abierta->id_cat_pregunta_formulario_abierto : ''?>"
-							data-id_entregable_evidencia="<?=isset($id_entregable_evidencia) ? $id_entregable_evidencia : ''?>" >Aceptar</button>
+							data-id_formulario="<?=isset($id_formulario) ? $id_formulario : ''?>" >Aceptar</button>
 				</div>
 			</form>
 		</div>

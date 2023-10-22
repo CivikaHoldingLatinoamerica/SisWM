@@ -55,10 +55,13 @@ class EntregableECModel extends ModeloBase
 				$this->db->insert_id();
 			}
 
-			$this->db->insert('entregable_has_archivo', array(
-				'id_entregable' => $id,
-				'id_archivo' => $parametros['id_archivo']));
-			$this->db->insert_id();
+			if (isset($parametros['id_archivo'])  && $parametros['id_archivo'] != null){
+				$this->db->insert('entregable_has_archivo', array(
+					'id_entregable' => $id,
+					'id_archivo' => $parametros['id_archivo']));
+				$this->db->insert_id();
+			}
+
 
 
 		} catch (Exception $ex) {
@@ -87,7 +90,6 @@ class EntregableECModel extends ModeloBase
                       where ehi.id_entregable = " . $item->id_entregable;
 			$query = $this->db->query($consulta);
 			$item->instrumentos = $query->result();
-
 		}
 
 		return $data;
@@ -95,29 +97,40 @@ class EntregableECModel extends ModeloBase
 
 	public function obtener_entregables_candidato($id_estandar_competencia, $id_usuario)
 	{
-		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad  from entregable_ec ee "
+		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad ,
+       			(select eea.id_cat_proceso from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = ".$id_usuario.") as id_estatus, ".
+       			"(select ehf.id_entregable_formulario from entregbale_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, ".
+       			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregbale_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = ".$id_usuario.") as id_estatus_formulario "
+			. "from entregable_ec ee "
 			. "join entregable_has_instrumento ehi ON ehi.id_entregable = ee.id_entregable "
 			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
 			. "join estandar_competencia_instrumento eci on eci.id_estandar_competencia_instrumento =eiha.id_estandar_competencia_instrumento "
 			. "join cat_instrumento ci on ci.id_cat_instrumento = eci.id_cat_instrumento "
-			. "where ee.activo and ee.id_estandar_competencia = " . $id_estandar_competencia;
+			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia;
 
 		$query = $this->db->query($consulta);
 		$data = $query->result();
 
 		$entregables = array();
 		foreach ($data as $item) {
+
+			if ($item->tipo_entregable == 'form'){
+				$item->id_estatus = $item-> id_estatus_formulario;
+			}
+
 			$object = (object)array(
 				'id_entregable' => $item->id_entregable,
 				'nombre_entregable' => $item->nombre_entregable,
 				'descripcion' => $item->descripcion,
 				'instrucciones' => $item->instrucciones,
 				'tipo_entregable' => $item->tipo_entregable,
+				'id_estatus' => $item->id_estatus,
+				'id_entregable_formulario' => $item->id_entregable_formulario,
+				'id_usuario' => $id_usuario,
 				'instrumentos' => array(),
 				'archivos' => array(),
 				'comentarios' => array()
 			);
-
 			if (!in_array($object, $entregables)) {
 				$entregables[] = $object;
 			}
@@ -195,5 +208,20 @@ class EntregableECModel extends ModeloBase
 		}
 		return $return;
 
+	}
+
+	public function liberar_entregables($id_estandar_competencia){
+
+		try {
+			$this->db->set('liberado', 'si');
+			$this->db->where('id_estandar_competencia', $id_estandar_competencia);
+			$this->db->update('entregable_ec');
+			$return['success'] = true;
+			$return['msg'] = 'Se liberaron los entregables del estandar de competencia';
+		} catch (Exception $ex) {
+			$return['success'] = false;
+			$return['msg'] = 'Hubo un error en el sistema, favor de intentar más tarde';
+		}
+		return $return;
 	}
 }

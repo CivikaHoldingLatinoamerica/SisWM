@@ -27,7 +27,13 @@
 		<div class="card">
 			<div class="card-body">
 				<?php if (isset($entregables) && sizeof($entregables) != 0): ?>
+
 					<div id="contenedor_entregables" class="row">
+					</div>
+					<div class="row text-right">
+						<div class="col mb-3">
+							<button id="btn-liberar" class="btn btn-outline-success">Liberar</button>
+						</div>
 					</div>
 				<?php else: ?>
 					<div class="row">

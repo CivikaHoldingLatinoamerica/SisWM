@@ -1,7 +1,7 @@
 <?php if (isset($entregables) && sizeof($entregables) != 0): ?>
 		<?php foreach ($entregables as $index => $item): ?>
-			<div class="col-3">
-				<div class="card">
+			<div class="col-3 mb-3">
+				<div class="card" style="height: 100%;">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-10">
@@ -39,13 +39,18 @@
 										if ($item->tipo_entregable == "form") : ?>
 										<a class="dropdown-item" href="<?= base_url().'preguntas_abiertas/'.$item->id_entregable?>">Cargar formulario</a>
 										<?php  endif; ?>
+
+										<?php
+										if ($item->tipo_entregable == "cuest") : ?>
+										<a class="dropdown-item" href="<?= base_url().'evaluacion_entregable/'.$item->id_entregable?>">Cargar cuestionario</a>
+										<?php  endif; ?>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<?php foreach ($item->instrumentos as $i => $instrumento): ?>
-								<div class="lines-2">
+								<div class="col-12 lines-2">
 									<em style="font-size: xx-small" class="fa fa-circle"></em>
 									<span
 										title="La carta descriptiva elaborada."> <?= $instrumento->actividad ?></span>

@@ -6,7 +6,7 @@ class ModeloBase extends CI_Model
 
 	private $table;
 	private $alias;
-	private $primary_key;
+	protected $primary_key;
 	private $criterios;
 
 	function __construct($table,$alias)

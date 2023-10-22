@@ -8,6 +8,7 @@ class entregable extends CI_Controller
 	{
 		parent:: __construct();
 		$this->load->model('EntregableAlumnoArchivoModel');
+		$this->load->model('EcEntregableAlumno');
 		$this->load->model('EntregableECModel');
 		$this->load->model('ActividadIEModel');
 	}
@@ -171,6 +172,41 @@ class entregable extends CI_Controller
 			}else{
 				$response['success'] = false;
 				$response['msg'][] = $eliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+	public function cambiar_estatus($id_entregable, $id_estatus, $id_alumno, $id_formulario){
+		try{
+			$data =  $this->EcEntregableAlumno->cambiar_estatus($id_entregable, $id_alumno, $id_estatus,$id_formulario);
+			if($data['success']){
+				$response['success'] = true;
+				$response['msg'][] = $data['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $data['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function liberar_entregables($id_estandar_competencia){
+		try{
+			$data =  $this->EntregableECModel->liberar_entregables($id_estandar_competencia);
+			if($data['success']){
+				$response['success'] = true;
+				$response['msg'][] = $data['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $data['msg'];
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

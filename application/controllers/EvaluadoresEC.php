@@ -16,6 +16,7 @@ class EvaluadoresEC extends CI_Controller {
 		$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('UsuarioHasECModel');
 		$this->load->model('UsuarioModel');
+		$this->load->model('EntregableECModel');
         if(sesionActive()){
 			$this->usuario = usuarioSession();
         }else{
@@ -153,6 +154,11 @@ class EvaluadoresEC extends CI_Controller {
 				}
 			}
 			//print_r($data);exit;
+
+			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario_alumno);
+
+			$data['entregables'] = $datos;
+
 			$this->load->view('instructor_ec/modal_evidencia_ati_alumno',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -160,6 +166,14 @@ class EvaluadoresEC extends CI_Controller {
 			$response['msg'][] = $ex->getMessage();
 			echo json_encode($response);exit;
 		}
+	}
+
+	public function tablero_evaluador($id_estandar_competencia,$id_usuario_alumno){
+		$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario_alumno);
+
+		$data['entregables'] = $datos;
+
+		$this->load->view('entregables/evaluador/tablero_evidencias_evaluador',$data);
 	}
 
 	public function expediente_candidato($id_estandar_competencia, $id_usuario_alumno){

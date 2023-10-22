@@ -3,7 +3,7 @@
 	<div id="accordion_evidencias">
 		<?php foreach ($entregables as $entregable): ?>
 			<div class="card w-100">
-				<div class="card-header sidebar-dark-primary white" id="headingOne">
+				<div class="card-header sidebar-dark-primary white " id="headingOne">
 					<h5 class="mb-0">
 						<button class="btn btn-link" style="color: white" data-toggle="collapse"
 								data-target="#collapse-evidencia<?= old($entregable, 'id_entregable') ?>"
@@ -23,6 +23,7 @@
 							<?= old($entregable, 'nombre_entregable') ?>
 						</button>
 
+
 						<?php if ($entregable->id_estatus == 1) : ?>
 							<span class="float-right badge badge-pill badge-info">En proceso</span>
 						<?php endif; ?>
@@ -39,6 +40,8 @@
 							<span class="float-right badge badge-pill badge-dark">Pendiente</span>
 						<?php endif; ?>
 					</h5>
+
+
 				</div>
 				<div id="collapse-evidencia<?= old($entregable, 'id_entregable') ?>" class="collapse p-3"
 					 aria-labelledby="headingOne"
@@ -73,85 +76,41 @@
 					<?php endif; ?>
 
 					<?php if ($entregable->tipo_entregable == "prod") : ?>
-
-
-						<?php if ($entregable->id_estatus == 4) : ?>
-							<div class="row">
-								<div class="col-12">
-									<label>Evidecias del candidato</label>
-								</div>
+						<div class="row">
+							<div class="col-12">
+								<label>Evidecias del candidato</label>
 							</div>
+						</div>
 
-							<div class="row">
-								<div class="col-12">
-									<?php if (!empty($entregable->archivos)): ?>
-										<ul>
-											<?php foreach ($entregable->archivos as $index_ae => $archivo): ?>
-												<?php if (is_null($archivo->id_archivo_instrumento)): ?>
-													<li><a href="<?= $archivo->url_video ?>"
-														   target="_blank"><?= $archivo->url_video ?></a></li>
-												<?php else: ?>
-													<li>
-														<a href="<?= base_url() . $archivo->ruta_directorio . $archivo->nombre ?>"
-														   target="_blank"><?= $archivo->nombre ?></a></li>
-												<?php endif; ?>
-											<?php endforeach; ?>
-										</ul>
-									<?php endif; ?>
-								</div>
+						<div class="row">
+							<div class="col-12">
+								<?php if (!empty($entregable->archivos)): ?>
+									<ul>
+										<?php foreach ($entregable->archivos as $index_ae => $archivo): ?>
+											<?php if (is_null($archivo->id_archivo_instrumento)): ?>
+												<li><a href="<?= $archivo->url_video ?>"
+													   target="_blank"><?= $archivo->url_video ?></a></li>
+											<?php else: ?>
+												<li>
+													<a href="<?= base_url() . $archivo->ruta_directorio . $archivo->nombre ?>"
+													   target="_blank"><?= $archivo->nombre ?></a></li>
+											<?php endif; ?>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
 							</div>
-						<?php else: ?>
-							<div class="row">
-								<div class="col-12">
-									<input type="file" id="doc_evidencia_ati_<?= $entregable->id_entregable ?>"
-										   name="doc_evidencia_ati"
-										   data-id_entregable="<?= $entregable->id_entregable ?>"
-										   data-div_procesando="#procesando_doc_evidencia_ati<?= $entregable->id_entregable ?>"
-										   accept="*/*"
-										   class="doc_evidencia_ati_alumno">
-									<div id="procesando_doc_evidencia_ati<?= $entregable->id_entregable ?>"></div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-12">
-
-									<table class="table table-striped">
-										<thead>
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">Archivo</th>
-											<th scope="col"></th>
-										</tr>
-										</thead>
-										<tbody id="tabla_evidencias_<?= $entregable->id_entregable ?>">
-										<?php if (!empty($entregable->archivos)): ?>
-											<?php foreach ($entregable->archivos as $archivo): ?>
-												<tr>
-													<td><?= old($archivo, 'id_archivo_instrumento') ?></td>
-													<td><?= old($archivo, 'nombre') ?></td>
-													<td>
-														<button class="btn btn-sm btn-danger eliminar-archivo-alumno"
-																data-id_archivo_instrumento="<?= old($archivo, 'id_archivo_instrumento') ?>"
-																data-id_entregable="<?= $entregable->id_entregable ?>"
-																data-id_entregable_alumno_archivo="<?= old($archivo, 'id_entregable_alumno_archivo') ?>"
-														><em class="fa fa-trash"></em>
-														</button>
-													</td>
-												</tr>
-											<?php endforeach; ?>
-										<?php endif; ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						<?php endif; ?>
-
+						</div>
 
 
 					<?php endif; ?>
 
+					<div class="row">
+						<div id="contenedor_formulario_<?= $entregable->id_entregable ?>" class="col">
 
-					<?php if ($entregable->id_estatus != 4) : ?>
+						</div>
+					</div>
+
+					<?php if ($entregable->id_estatus != 4) :?>
 						<div class="row">
 							<div class="col-12">
 								<div class="input-group mb-3">
@@ -161,7 +120,7 @@
 									  aria-describedby="button-addon2"></textarea>
 									<div class="input-group-append">
 										<button
-											class="btn btn-outline-success txt_guardar_comentario_candidato_progreso"
+											class="btn btn-outline-success txt_guardar_comentario_instructor"
 											type="button"
 											data-id_body_comentarios="#tbody_comentario_candidato<?= $entregable->id_entregable ?>"
 											data-id_entregable="<?= $entregable->id_entregable ?>"
@@ -171,7 +130,7 @@
 
 							</div>
 						</div>
-					<?php endif; ?>
+					<?php endif;?>
 
 					<div class="row">
 						<div class="col-12">
@@ -196,38 +155,37 @@
 					</div>
 
 
-
 					<div class="row">
-						<div class="col text-right">
-							<?php if ($entregable->tipo_entregable == "form") : ?>
-								<?php if ($entregable->id_estatus == null || $entregable->id_estatus == 3) : ?>
-									<a class="btn btn-sm btn-primary"
-									   href="<?= base_url() . 'respuestas_preguntas_abiertas/' . $entregable->id_entregable ?>">Responder</a>
-								<?php endif; ?>
-
-								<?php if ($entregable->id_estatus == 1 || $entregable->id_estatus == 3) : ?>
-									<button class="btn btn-sm btn-success boton-enviar-entregable"
+							<?php if ($entregable->id_estatus == 2) : ?>
+								<div class="col">
+									<button class="btn btn-sm btn-danger rechazar-entregable"
 											data-id_entregable="<?= $entregable->id_entregable ?>"
 											data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>"
-									>Enviar a evaluador
+									><em
+											class="fa fa-exclamation-circle"></em> Rechazar
 									</button>
+								</div>
+								<div class="col <?= $entregable->tipo_entregable == 'prod' ? 'text-rigth' : 'text-center' ?>">
+									<button class="btn btn-sm btn-success liberar-entregable"
+											data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>"
+											data-id_entregable="<?= $entregable->id_entregable ?>"><em
+											class="fa fa-check-circle"></em> Liberar
+									</button>
+								</div>
+							<?php endif; ?>
+						<?php if ($entregable->tipo_entregable != "prod") : ?>
+							<div class="col text-right">
+								<?php if ($entregable->tipo_entregable == "form") : ?>
+									<button class="btn btn-sm btn-primary mostrar_formulario"
+											data-id_entregable="<?=$entregable->id_entregable?>"
+											data-id_entregable_formulario="<?= $entregable->id_entregable_formulario?>"
+											data-id_usuario="<?=$entregable->id_usuario?>"
+									><em class="fa fa-eye"></em> Revisar respuestas</button>
 								<?php endif; ?>
+							</div>
 
-							<?php endif; ?>
+						<?php endif; ?>
 
-
-
-							<?php if ($entregable->tipo_entregable == "prod" && ($entregable->id_estatus != 4 && $entregable->id_estatus != 2)) : ?>
-
-								<button class="btn btn-sm btn-success boton-enviar-entregable"
-										data-id_entregable="<?= $entregable->id_entregable ?>">Enviar a evaluador
-								</button>
-							<?php endif; ?>
-
-							<?php if ($entregable->tipo_entregable == "cuest") : ?>
-								<a class="btn btn-sm btn-primary">Responder</a>
-							<?php endif; ?>
-						</div>
 					</div>
 
 				</div>

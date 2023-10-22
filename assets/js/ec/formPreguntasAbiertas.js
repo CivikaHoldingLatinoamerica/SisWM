@@ -14,15 +14,21 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click','.modificar_pregunta_abierta',function(){
-		var id_entregable_evidencia = $(this).data('id_entregable_evidencia');
+		var id_formulario = $(this).data('id_formulario');
 		var id_cat_pregunta_formulario_abierto = $(this).data('id_cat_pregunta_formulario_abierto');
-		FormPreguntasAbiertas.agregar_pregunta_abierta(id_entregable_evidencia,id_cat_pregunta_formulario_abierto);
+		FormPreguntasAbiertas.agregar_pregunta_abierta(id_formulario,id_cat_pregunta_formulario_abierto);
 	});
 
 	$(document).on('click','#guardar_preguntas_abiertas',function(){
-		var id_entregable_evidencia = $(this).data('id_entregable_evidencia');
+		var id_formulario = $(this).data('id_formulario');
 		var id_cat_pregunta_formulario_abierto = $(this).data('id_cat_pregunta_formulario_abierto');
-		FormPreguntasAbiertas.guardar_form_registro_pregunta_abierta(id_entregable_evidencia,id_cat_pregunta_formulario_abierto);
+		FormPreguntasAbiertas.guardar_form_registro_pregunta_abierta(id_formulario,id_cat_pregunta_formulario_abierto);
+	});
+
+	$(document).on('click','#enviar_respuetas_preguntas_abiertas',function(){
+		var id_usuario = $(this).data('id_usuario');
+		console.log(id_usuario)
+		FormPreguntasAbiertas.guardar_respuestas_alumno(id_usuario);
 	});
 
 	FormPreguntasAbiertas.iniciar_editor_summernote();
@@ -74,8 +80,9 @@ var FormPreguntasAbiertas = {
 	},
 
 	agregar_pregunta_abierta : function(id_entregable_evidencia,id_cat_pregunta_formulario_abierto = ''){
+		id_formulario = $('#id_formulario').val();
 		Comun.obtener_contenido_peticion_html(
-			base_url + 'PreguntasAbiertas/agregar_pregunta/' + id_entregable_evidencia + '/' + id_cat_pregunta_formulario_abierto,{},
+			base_url + 'PreguntasAbiertas/agregar_pregunta/' + id_formulario + '/' + id_cat_pregunta_formulario_abierto,{},
 			function(response){
 				$('#contenedor_modal_primario').html(response);
 				Comun.tooltips();
@@ -99,14 +106,15 @@ var FormPreguntasAbiertas = {
 		return form_valido;
 	},
 
-	guardar_form_registro_pregunta_abierta : function(id_entregable_evidencia,id_cat_pregunta_formulario_abierto = ''){
+	guardar_form_registro_pregunta_abierta : function(id_formulario,id_cat_pregunta_formulario_abierto = ''){
 		if(FormPreguntasAbiertas.validar_form_pregunta_abierta()){
 			Comun.enviar_formulario_post('#form_guardar_pregunta_abierta',
-				base_url + 'PreguntasAbiertas/guardar_pregunta_abierta/'+id_entregable_evidencia + '/' + id_cat_pregunta_formulario_abierto,function(response){
+				base_url + 'PreguntasAbiertas/guardar_pregunta_abierta/'+id_formulario + '/' + id_cat_pregunta_formulario_abierto,function(response){
 					if(response.success){
 						Comun.mostrar_ocultar_modal('#modal_form_pregunta_abierta',false);
 						Comun.mensajes_operacion(response.msg,'success');
 						//$('#btn_buscar_pregunta_'+id_entregable_evidencia).trigger('click');
+						var id_entregable_evidencia = $("#input_id_entregable_evidencia").val();
 						FormPreguntasAbiertas.obtener_preguntas_formulario(id_entregable_evidencia);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error',5000);
@@ -115,5 +123,22 @@ var FormPreguntasAbiertas = {
 			);
 		}
 	},
+
+	guardar_respuestas_alumno(id_usuario){
+		var id_entregable_formulario = $('#input_id_entregable_formulario').val();
+		Comun.enviar_formulario_post(
+			'#form_respuestas_formulario',
+			base_url + 'PreguntasAbiertas/guardar_respuestas_alumno/'+id_entregable_formulario+'/'+id_usuario,
+			function(response){
+				if(response.success){
+
+					Comun.mensajes_operacion(response.msg,'success');
+				}else{
+					Comun.mensajes_operacion(response.msg,'error',5000);
+				}
+			},
+			{}
+		)
+	}
 
 };

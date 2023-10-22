@@ -36,6 +36,7 @@ class PreguntasAbiertas extends CI_Controller {
 			$data['sidebar'] = 'estandar_competencias';
 			$data['usuario'] = $this->usuario;
 			$data['id_entregable_evidencia'] = $id_entregable_evidencia;
+			$data['id_formulario'] = $this->CatalogoPreguntaFormAbiertoModel->existe_formulario($data);
 			
 			$data['extra_js'] = array(
 				base_url() . 'assets/js/ec/formPreguntasAbiertas.js',
@@ -67,7 +68,7 @@ class PreguntasAbiertas extends CI_Controller {
 			);
 			$data = $this->CatalogoPreguntaFormAbiertoModel->tablero($busqueda);
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_entregable_evidencia);
-			
+
 			$this->load->view('evaluacion/resultado_preguntas_abiertas',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -77,10 +78,10 @@ class PreguntasAbiertas extends CI_Controller {
 		}
 	}
 
-	public function agregar_pregunta($id_entregable_evidencia,$id_cat_pregunta_formulario_abierto = false){
+	public function agregar_pregunta($id_formulario,$id_cat_pregunta_formulario_abierto = false){
 		perfil_permiso_operacion('preguntas_evaluacion.agregar');
 		try{
-			$data['id_entregable_evidencia'] = $id_entregable_evidencia;
+			$data['id_formulario'] = $id_formulario;
 			if($id_cat_pregunta_formulario_abierto){
 				$data['pregunta_abierta'] = $this->CatalogoPreguntaFormAbiertoModel->obtener_row($id_cat_pregunta_formulario_abierto);
 			}
@@ -93,13 +94,13 @@ class PreguntasAbiertas extends CI_Controller {
 		}
 	}
 
-	public function guardar_pregunta_abierta($id_entregable_evidencia,$id_cat_pregunta_formulario_abierto = false){
+	public function guardar_pregunta_abierta($id_formulario,$id_cat_pregunta_formulario_abierto = false){
 		
 		perfil_permiso_operacion('preguntas_evaluacion.agregar');
 		try{
 			$post = $this->input->post();
 			if(isset($post['pregunta_formulario_abierto'])){
-				$guardar_pregunta = $this->CatalogoPreguntaFormAbiertoModel->guardar_pregunta_abierta($post,$id_entregable_evidencia,$id_cat_pregunta_formulario_abierto);
+				$guardar_pregunta = $this->CatalogoPreguntaFormAbiertoModel->guardar_pregunta_abierta($post,$id_formulario,$id_cat_pregunta_formulario_abierto);
 				if($guardar_pregunta['success']){
 					$response['success'] = true;
 					$response['msg'][] = $guardar_pregunta['msg'];
@@ -111,6 +112,37 @@ class PreguntasAbiertas extends CI_Controller {
 				$response['success'] = false;
 				$response['msg'] ="Debe agregar una pregunta";
 			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);exit;
+	}
+
+	public function guardar_respuestas_alumno($id_entregable_formulario, $id_usuario){
+
+
+		try{
+			$post = $this->input->post();
+			$inputs = array();
+
+			foreach ($post as $key => $data ):
+				$inputs[] = (object) array(
+					'respuesta' => $data,
+					'id_cat_pregunta_formulario_abierto' => $key
+				);
+			endforeach;
+
+				$guardar_respuesta = $this->CatalogoPreguntaFormAbiertoModel->guardar_respuesta_pregunta_abierta($inputs,$id_entregable_formulario, $id_usuario);
+				if($guardar_respuesta['success']){
+					$response['success'] = true;
+					$response['msg'][] = $guardar_respuesta['msg'];
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = $guardar_respuesta['msg'];
+				}
+
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -154,10 +186,12 @@ class PreguntasAbiertas extends CI_Controller {
 			$data['id_entregable_evidencia'] = $id_entregable_evidencia;
 
 			$busqueda = array(
-    			'id_entregable_evidencia' => $id_entregable_evidencia
+    			'id_entregable_evidencia' => $id_entregable_evidencia,
+				'usuario' => $this->usuario
 			);
 
 			$data['catalogoPreguntaFormAbiertoModel'] = $this->CatalogoPreguntaFormAbiertoModel->tablero($busqueda);
+			$data['id_entregable_formulario'] = $this->CatalogoPreguntaFormAbiertoModel->existe_formulario($busqueda);
 			//var_dump($data['catalogoPreguntaFormAbiertoModel']['preguntas_abiertas']); exit();
 			$data['extra_js'] = array(
 				base_url() . 'assets/js/ec/formPreguntasAbiertas.js',
@@ -175,6 +209,12 @@ class PreguntasAbiertas extends CI_Controller {
 			$response['msg'][] = $ex->getMessage();
 			echo json_encode($response);exit;
 		}
+	}
+	public function respuesta_alumno($id_entregable_formulario,$id_alumno){
+
+			$data['respuestas'] = $this->CatalogoPreguntaFormAbiertoModel->obtener_respuestas_alumno($id_entregable_formulario,$id_alumno);
+			$this->load->view('evaluacion/tablero_respuestas_alumnos',$data);
+
 	}
 	
 }

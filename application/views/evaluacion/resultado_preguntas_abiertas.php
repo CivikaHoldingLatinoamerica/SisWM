@@ -25,7 +25,7 @@
 								
 									<?php if(perfil_permiso_operacion_menu('preguntas_evaluacion.modificar')): ?>
 										<button class="btn btn-sm btn-outline-primary modificar_pregunta_abierta" data-toggle="tooltip" title="Modificar pregunta"
-												data-id_entregable_evidencia="<?=$pa->id_entregable_evidencia?>" data-id_cat_pregunta_formulario_abierto="<?=$pa->id_cat_pregunta_formulario_abierto?>">
+												data-id_formulario="<?=$pa->id_formulario_abierto?>" data-id_cat_pregunta_formulario_abierto="<?=$pa->id_cat_pregunta_formulario_abierto?>">
 											<i class="fa fa-edit"></i>
 										</button>
 									<?php endif; ?>

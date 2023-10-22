@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="card card-solid mt-3">
-			
+				<input hidden id="id_formulario" value="<?= isset($id_formulario) ? $id_formulario : ''?>">
 				<div class="card-body pb-0">
 					<div id="contenedor_preguntas_abiertas_entregable_<?=$id_entregable_evidencia?>"></div>
 				</div>

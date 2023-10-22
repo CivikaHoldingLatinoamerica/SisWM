@@ -22,6 +22,9 @@ $(document).ready(function (){
 		e.preventDefault();
 		methods.guardar_entregable();
 	});
+	$(document).on('click','#btn-liberar',function(e){
+		methods.liberar_entregables();
+	});
 
 	$(window).scroll(function(){
 		//validamos lo del scroll
@@ -63,13 +66,27 @@ var methods = {
 				if(response.success){
 					Comun.mostrar_ocultar_modal('#modal_form_entregable',false);
 					Comun.mensajes_operacion(response.msg,'success');
-					Comun.recargar_pagina(base_url + 'evidencias_esperadas/1',2000);
+					Comun.recargar_pagina(base_url + 'evidencias_esperadas/'+ methods.idEstandar(),2000);
 					methods.buscarEntregables();
 				}else{
 					Comun.mensajes_operacion(response.msg,'error',5000);
 				}
 			},
 			{id_estandar_comptencia: this.idEstandar()}
+		)
+	},
+
+	liberar_entregables : function (){
+		Comun.obtener_contenido_peticion_json(
+			base_url + 'Entregable/liberar_entregables/'+methods.idEstandar(),
+			{},
+			function(response){
+				if(response.success){
+					Comun.mensajes_operacion(response.msg,'success');
+				}else{
+					Comun.mensajes_operacion(response.msg,'error',5000);
+				}
+			}
 		)
 	},
 	buscarEntregables : function (pagina = 1, registros = 10){
