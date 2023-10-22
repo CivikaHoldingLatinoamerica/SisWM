@@ -649,13 +649,13 @@ class Validaciones_Helper {
 
 	public static function validateFormAll($post, $rules){
 		$result = array(
-			"status" => true,
+			"success" => true,
 			"messages" => array()
 		);
 		
 
 	/* 	$rules = [
-			"campo1" => ["required","maxlengh=10"],
+			"campo1" => ["required","maxlengh"=>10],
 
 			
 		]; */
@@ -666,10 +666,10 @@ class Validaciones_Helper {
 
 				if(in_array("required",$rules[$index] )){
 
-					if(empty(trim($campo)) || $campo == null || $campo == "<p><br></p>"){
-						var_dump('si entrooo');
+					if(empty(trim($campo)) || $campo == null || $campo == "<p><br></p>" || $campo == "<br>"){
+						//var_dump('si entrooo');
 						$result['messages'][$index] = "Campo requerido";
-						$result['status'] = false;
+						$result['success'] = false;
 						continue;
 					}
 					
@@ -678,7 +678,7 @@ class Validaciones_Helper {
 				if(isset($rules[$index]["maxLength"])){					
 					if(strlen($campo) > $rules[$index]["maxLength"]){
 						$result['messages'][$index] = "Campo no debe ser mayor a ". $rules[$index]["maxLength"];
-						$result['status'] = false;
+						$result['success'] = false;
 						continue;
 					}
 				}
