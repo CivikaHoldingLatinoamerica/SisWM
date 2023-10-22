@@ -592,4 +592,40 @@ function pathDirectorioArchivos($pathArchivos){
         }
     }
 }
+
+
+function upload_file_all($file, $values = array()){
+    $options = array(
+        'field' => 'file',
+        'pre' => rand(1000000, 9999999) . '-',
+        'path' => '',
+        'filename' => ''
+    );
+    $options = array_merge($options, $values);
+    //falta agregar subdirectorios en caso de existan
+    if ($options['path'] != '') {
+        $path = explode('/',$options['path'] );
+        $ruta = '';
+        foreach ($path as $directorio){
+            $ruta .= $directorio;
+            if (!file_exists(FCPATH . $ruta)) {
+                mkdir(FCPATH . $ruta, 0777, true);
+                chmod(FCPATH . $ruta,0777);
+            }
+            $ruta .= '/';
+        }
+    }
+
+    $config['upload_path'] = FCPATH . $options['path'];
+    $config['allowed_types'] = EXTENSIONES_FILES_ALL;
+    $config['max_size'] = MAX_FILESIZE;
+    $config['file_name'] = $options['pre'] . remove_caracteres_especiales($file['name']);
+    $CI =& get_instance();
+    $CI->load->library('upload', $config);
+    if (!$CI->upload->do_upload($options['field']))
+        return array('error' => $CI->upload->display_errors() . ' ' . $config['file_name']);
+    else
+        return $CI->upload->data();
+}
+
 ?>

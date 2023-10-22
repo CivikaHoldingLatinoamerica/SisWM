@@ -779,4 +779,57 @@ var Comun = {
 		});
 	},
 
+	iniciar_carga_documento_all : function(input_file,div_procesando,funcion_response,id = false){
+		//funcion para cargar archivo via ajax
+		var nombre_archivo;
+		var id_cat_expediente = 2;
+		$(input_file).fileupload({
+			url : base_url + 'Uploads/uploadFileComunAll',
+			dataType: 'json',
+			start: function (e,data) {
+				$(div_procesando).html(overlay);
+			},
+			//tiempo de ejecucion
+			add: function (e,data) {
+				id_cat_expediente = data.fileInput.data('id_cat_expediente');
+				nombre_archivo = data.fileInput.val().replace("C:\\fakepath\\",""); //use to chrome
+				data.formData = {
+					filename : nombre_archivo
+				};
+				var goUpload = true;
+				var uploadFile = data.files[0];
+				var regExp = "\.(" + extenciones_files_all + ")$";
+				regExp = new RegExp(regExp);
+				if(!regExp.test(uploadFile.name.toLowerCase())){
+					Comun.mensaje_operacion('Archivo no es admitido o no es válido','error');
+					goUpload = false;
+					$(div_procesando).html('');
+				}if(uploadFile.size > 15000000){
+					Comun.mensaje_operacion('El archivo que intenta subir es mayor a 5 Mb','error');
+					goUpload = false;
+					$(div_procesando).html('');
+				}if(goUpload){
+					data.submit();
+				}
+			},
+			done:function (e,data) {
+				if(data.result.success){
+					var archivo = data.result.archivo;
+					funcion_response(archivo,id,div_procesando);
+				}else{
+					Comun.mensaje_operacion(data.result.msg,'error');
+					$(div_procesando).html('');
+				}
+			},
+			error:function (xhr, ajaxOptions, thrownError){
+				Comun.mensaje_operacion('Ocurrio un error al tratar de subir su archivo, favor de intentar más tarde','error');
+			}
+		});
+	},
+
+	removeClassInvalidError(formulario){
+		$("#"+formulario).find(".is-invalid").removeClass("is-invalid");
+		$("#"+formulario).find(".invalid-feedback").remove();
+
+	}
 };

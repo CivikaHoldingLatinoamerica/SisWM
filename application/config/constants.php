@@ -88,6 +88,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 define('EXTENSIONES_FILES_IMG', 'png|jpg|jpeg|gif|tiff');
 define('EXTENSIONES_FILES_PDF', 'pdf');
 define('EXTENSIONES_FILES_ATI', 'png|jpg|jpeg|gif|tiff|pdf');
+define('EXTENSIONES_FILES_ALL', 'png|jpg|jpeg|gif|tiff|pdf|doc|docx|xls|xlsx|ppt|pptx');
 define('MAX_FILESIZE', 15000000);
 define('RUTA_PDF_TEMP','files_usr/temp/');
 define('RUTA_PDF_PED','files_usr/ped/');

@@ -33,6 +33,13 @@
 						<hr>
 					<?php endif; ?>
 
+					<?php if(perfil_permiso_operacion_menu('estandar_competencia.modificar')): ?>
+						<a class="btn btn-sm btn-outline-primary contenidocurso"
+								data-toggle="tooltip" title="Contenido curso"
+								href="<?=base_url()?>campania/<?=$ec->id_estandar_competencia?>"><i class="fa fa-edit"></i>Contenido curso </a>
+					<?php endif; ?>
+
+
 					<?php if(perfil_permiso_operacion_menu('tecnicas_instrumentos.consultar')): ?>
 						<div class="btn-group">
 							<button type="button" class="btn btn-outline-info btn-sm"><i class="fa fa-clipboard-list"></i> Planes del EC</button>
