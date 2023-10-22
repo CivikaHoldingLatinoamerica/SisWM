@@ -71,4 +71,8 @@ class EvaluacionModel extends ModeloBase
 		return $query->row()->total_registros;
 	}
 
+	public function order_by(){
+		return ' order by e.id_evaluacion desc ';
+	}
+
 }

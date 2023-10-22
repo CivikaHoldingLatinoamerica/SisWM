@@ -27,16 +27,21 @@ class EvaluacionEC extends CI_Controller {
         }
     }
 
-	public function index($id_estandar_competencia){
+	public function index($id_estandar_competencia,$tipo='diagnostica'){
     	//tecnicas_instrumentos
 		perfil_permiso_operacion('evaluacion.consultar');
 		try{
-			$data['titulo_pagina'] = 'Evaluación diagnóstica del Estándar de Competencia';
-			$data['migas_pan'] = array(
-				array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
-				array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
-				array('nombre' => 'Evaluaciones de la EC','activo' => true,'url' => '#'),
-			);
+			switch($tipo){
+				default:
+					$data['titulo_pagina'] = 'Evaluación diagnóstica del Estándar de Competencia';
+					$data['migas_pan'] = array(
+						array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
+						array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
+						array('nombre' => 'Evaluaciones de la EC','activo' => true,'url' => '#'),
+					);
+					break;
+			}
+			
 			$data['sidebar'] = 'estandar_competencias';
 			$data['usuario'] = $this->usuario;
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
@@ -194,8 +199,8 @@ class EvaluacionEC extends CI_Controller {
 	}
 
 	public function agregar_modificar_ec($tipo = 'diagnostica',$id_evaluacion = false){
-    	perfil_permiso_operacion('evaluacion.agregar');
-    	try{
+    		perfil_permiso_operacion('evaluacion.agregar');
+    		try{
 			switch ($tipo){
 				case 'diagnostica':
 					$data['tipo'] = EVALUACION_DIAGNOSTICA;

@@ -13,6 +13,7 @@ class UsuarioModel extends ModeloBase
 		parent::__construct('usuario','u');
 		$this->load->model('PerfilModel');
 		$this->load->model('PerfilPermisoModel');
+		$this->load->model('EstandarCompetenciaConvocatoriaModel');
 		if(sesionActive()){
 			$this->usuario = usuarioSession();
 		}
@@ -215,6 +216,23 @@ class UsuarioModel extends ModeloBase
 		}catch (Exception $ex){
 			$resultado['success'] = false;
 			$resultado['msg'] = 'Ocurrio un error al tratar de guardar el candidato';
+		}
+		return $resultado;
+	}
+
+	public function registrar_usuario_convocatoria_login($id_convocatoria,$id_usuario){
+		try{
+			//validar que no exista el registro como candidato inscrito al estandar de competencia de la convocatoria
+			if(!$this->UsuarioHasECModel->existe_registro_usuario_ec_by_convocatoria($id_convocatoria,$id_usuario)){
+				
+			}else{
+				$resultado['success'] = false;
+				$resultado['msg'] = 'Ya cuentas con un registro al Estándar de Competencia que se realizó en alguna convocatoria';
+			}
+
+		}catch (Exception $ex){
+			$resultado['success'] = false;
+			$resultado['msg'] = 'Ocurrio un error al tratar de registrar el usuario al estandar de competencia por medio de la convocatoria';
 		}
 		return $resultado;
 	}

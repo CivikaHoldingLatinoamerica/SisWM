@@ -112,7 +112,8 @@ define('ESTATUS_FINALIZADA',4);
  */
 define('EVALUACION_DIAGNOSTICA',1);
 define('EVALUACION_CUESTIONARIO_INSTRUMENTO',2);
-define('EVALUACION_ENCUESTA_SATISFACCION',3);
+define('EVALUACION_ENTREGABLE',3);
+define('EVALUACION_MODULO',4);
 
 /**
  * constantes para las opciones de pregunta

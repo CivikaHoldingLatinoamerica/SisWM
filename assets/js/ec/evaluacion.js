@@ -5,12 +5,14 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click','#agregar_evaluacion_ec',function(){
-		EvaluacionEC.agregar_modificar_evaluacion_ec();
+		var tipo_evaluacion = $(this).data('tipo_evaluacion');
+		EvaluacionEC.agregar_modificar_evaluacion_ec(tipo_evaluacion);
 	});
 
 	$(document).on('click','.modificar_evaluacion_ec',function(){
 		var id_evaluacion = $(this).data('id_evaluacion');
-		EvaluacionEC.agregar_modificar_evaluacion_ec(id_evaluacion);
+		var tipo_evaluacion = $(this).data('tipo_evaluacion');
+		EvaluacionEC.agregar_modificar_evaluacion_ec(tipo_evaluacion,id_evaluacion);
 	});
 
 	$(document).on('click','#btn_guardar_form_evaluacion_ec',function(){
@@ -62,7 +64,9 @@ $(document).ready(function(){
 		EvaluacionEC.actualizar_secuenciales_preguntas_relaciones();
 	});
 
+
 	EvaluacionEC.obtener_evaluaciones();
+	//EvaluacionEC.iniciar();
 
 });
 
@@ -71,6 +75,10 @@ var EvaluacionEC = {
 	evaluaciones : [],
 
 	complemento_opciones_pregunta : [],
+
+	iniciar : function(){
+		$('#agregar_evaluacion_ec').trigger('click');
+	},
 
 	obtener_evaluaciones : function(){
 		var id_estandar_competencia = $('#input_id_estandar_competencia').val();
@@ -97,9 +105,9 @@ var EvaluacionEC = {
 		);
 	},
 
-	agregar_modificar_evaluacion_ec : function(id_evaluacion = ''){
+	agregar_modificar_evaluacion_ec : function(tipo='diagnostica',id_evaluacion = ''){
 		Comun.obtener_contenido_peticion_html(
-			base_url + 'EvaluacionEC/agregar_modificar_ec/diagnostica/' + id_evaluacion,{},
+			base_url + 'EvaluacionEC/agregar_modificar_ec/'+tipo+'/' + id_evaluacion,{},
 			function(response){
 				$('#contenedor_modal_primario').html(response);
 				Comun.mostrar_ocultar_modal('#modal_form_ec_evaluacion',true);
