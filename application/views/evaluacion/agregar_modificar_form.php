@@ -62,9 +62,7 @@
 
 				</div>
 				<div class="modal-footer justify-content-between">
-					<?php if(isset($evaluacion)): ?>
-						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
-					<?php endif; ?>
+					<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
 					<button type="button" id="btn_guardar_form_evaluacion_ec" data-id_evaluacion="<?=isset($evaluacion) ? $evaluacion->id_evaluacion : ''?>" class="btn btn-sm btn-outline-primary">Guardar</button>
 				</div>
 			</form>

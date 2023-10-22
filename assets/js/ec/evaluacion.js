@@ -5,8 +5,10 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click','#agregar_evaluacion_ec',function(){
-		var tipo_evaluacion = $(this).data('tipo_evaluacion');
-		EvaluacionEC.agregar_modificar_evaluacion_ec(tipo_evaluacion);
+		//var tipo_evaluacion = $(this).data('tipo_evaluacion');
+		var id_referencia = $('#input_id_referencia').val();
+		var tipo_evaluacion = $('#input_tipo_evaluacion').val();
+		EvaluacionEC.agregar_modificar_evaluacion_ec(tipo_evaluacion,id_referencia);
 	});
 
 	$(document).on('click','.modificar_evaluacion_ec',function(){
@@ -81,10 +83,11 @@ var EvaluacionEC = {
 	},
 
 	obtener_evaluaciones : function(){
-		var id_estandar_competencia = $('#input_id_estandar_competencia').val();
+		var id_referencia = $('#input_id_referencia').val();
+		var tipo_evaluacion = $('#input_tipo_evaluacion').val();
 		$('#contenedor_resultados_ec_evaluacion').html(overlay);
 		Comun.obtener_contenido_peticion_html(
-			base_url + 'EvaluacionEC/resultado/' + id_estandar_competencia,{},
+			base_url + 'EvaluacionEC/resultado/'+tipo_evaluacion+'/'+id_referencia,{},
 			function(response){
 				$('#contenedor_resultados_ec_evaluacion').html(response);
 				Comun.tooltips();
@@ -122,10 +125,11 @@ var EvaluacionEC = {
 
 	guardar_form_evaluacion_ec : function(id_evaluacion = ''){
 		if(EvaluacionEC.validar_form_evaluacion_ec()){
-			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
+			var id_referencia = $('#input_id_referencia').val();
+			var tipo_evaluacion = $('#input_tipo_evaluacion').val();
 			Comun.enviar_formulario_post(
 				'#form_agregar_modificar_evaluacion_ec',
-				base_url + 'EvaluacionEC/guardar_evaluacion_ec/' + id_estandar_competencia + '/' + id_evaluacion,
+				base_url + 'EvaluacionEC/guardar_evaluacion_ec/' + tipo_evaluacion + '/' + id_referencia +'/' + id_evaluacion,
 				function(response){
 					if(response.success){
 						Comun.mostrar_ocultar_modal('#modal_form_ec_evaluacion',false);

@@ -57,7 +57,7 @@
 					<?php if(perfil_permiso_operacion_menu('evaluacion.consultar')): ?>
 						<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
 						   title="Evaluación al Estándar de competencia"
-						   href="<?=base_url()?>evaluacion/<?=$ec->id_estandar_competencia?>/diagnostica"><i class="fa fa-file-alt"></i> Evaluación diagnóstica</a>
+						   href="<?=base_url()?>evaluacion_cerrada/<?=EVALUACION_DIAGNOSTICA.'/'.$ec->id_estandar_competencia?>"><i class="fa fa-file-alt"></i> Evaluación diagnóstica</a>
 					<?php endif; ?>
 
 					<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
