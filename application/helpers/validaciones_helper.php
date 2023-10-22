@@ -600,6 +600,21 @@ class Validaciones_Helper {
 		return $result;
 	}
 
+	public static function formCurso($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['nombre_curso']) || self::isCampoVacio($data['nombre_curso'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo nombre es requerido';
+		}if(!isset($data['descripcion']) || self::isCampoVacio($data['descripcion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo descripción es requerido';
+		}
+		return $result;
+	}
+
+
+
 	public static function isCampoVacio($campo){
 		$validacion = false;
 		if(trim($campo) == '' && strlen($campo)){
@@ -631,4 +646,52 @@ class Validaciones_Helper {
 		}
 		return $validacion;
 	}
+
+	public static function validateFormAll($post, $rules){
+		$result =[
+			"status" => true,
+			"messages" =>[]
+		];
+		
+
+	/* 	$rules = [
+			"campo1" => ["required","maxlengh=10"],
+
+			
+		]; */
+
+		foreach($post as $index=>$campo){
+		
+			if(isset($rules[$index])){
+				
+				if(in_array("required",$rules[$index] )){
+					
+					if(empty(trim($campo)) || $campo == null){
+						$result['messages'][$index] = "Campo requerido";
+						$result['status'] = false;
+						
+					}
+					
+				}
+				
+				if(isset($rules[$index]["maxLength"])){					
+					if(strlen($campo) > $rules[$index]["maxLength"]){
+						$result['messages'][$index] = "Campo no debe ser mayor a ". $rules[$index]["maxLength"];
+						$result['status'] = false;
+						
+					}
+				}
+
+				
+
+			}
+		
+		}
+		
+		
+		return $result;
+
+	}
+
+
 }
