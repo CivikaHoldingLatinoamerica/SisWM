@@ -666,7 +666,7 @@ class Validaciones_Helper {
 
 				if(in_array("required",$rules[$index] )){
 
-					if(empty(trim($campo)) || $campo == null || $campo == "<p><br></p>" || $campo == "<br>"){
+					if(empty($campo) || $campo == "<p><br></p>" || $campo == "<br>"){
 						//var_dump('si entrooo');
 						$result['messages'][$index] = "Campo requerido";
 						$result['success'] = false;

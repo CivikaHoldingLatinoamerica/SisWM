@@ -100,25 +100,38 @@ class entregable extends CI_Controller
 
 
 			$post = $this->input->post();
+			$rules = array("tema" => array('required'),
+				'nombre' => array("required","maxLength"=>45),
+				'descripcion' => array("required","maxLength"=>100),
+				'instrucciones' => array("required","maxLength"=>250),
+				'tipo_entregable' => array("required"),
+				'instrumentos' => array("required")
+			);
 
-			$id= false;
-			if (isset($post['id_entregable'])){
-				$id = $post['id_entregable'];
-			}
-			$data = $this->EntregableECModel->guardar_entregable($post,$id);
 
+			$validaciones = Validaciones_Helper::validateFormAll($post, $rules);
 
+			if($validaciones['success']){
+				$id= false;
+				if (isset($post['id_entregable'])){
+					$id = $post['id_entregable'];
+				}
+				$data = $this->EntregableECModel->guardar_entregable($post,$id);
 
+				$data['success'] = true;
 
-			$data['success'] = true;
-
-			if($data['success']){
-				$response['success'] = true;
-				$response['data'] = (object) $post;
-				$response['msg'] = array('Se guardo el entregable correctamente');
-			}else{
+				if($data['success']){
+					$response['success'] = true;
+					$response['data'] = (object) $post;
+					$response['msg'] = array('Se guardo el entregable correctamente');
+				}else{
+					$response['success'] = false;
+					$response['msg'] = array('No fue posible guardar el entregable, favor de intentar más tarde');
+				}
+			}else {
 				$response['success'] = false;
-				$response['msg'] = array('No fue posible guardar el entregable, favor de intentar más tarde');
+				$response['code'] = 400;
+				$response['msg'] = $validaciones['messages'];
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

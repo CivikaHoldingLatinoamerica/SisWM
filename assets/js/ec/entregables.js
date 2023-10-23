@@ -59,6 +59,7 @@ var methods = {
 	},
 
 	guardar_entregable : function (){
+		Comun.removeClassInvalidError('form_agregar_modificar_entregable');
 		Comun.enviar_formulario_post(
 			'#form_agregar_modificar_entregable',
 			base_url + 'Entregable/guardar_entregable',
@@ -69,7 +70,15 @@ var methods = {
 					Comun.recargar_pagina(base_url + 'evidencias_esperadas/'+ methods.idEstandar(),2000);
 					methods.buscarEntregables();
 				}else{
-					Comun.mensajes_operacion(response.msg,'error',5000);
+					if(response.code === 400){
+						$.each(response.msg,function(i,val){
+							$('#'+i).addClass('is-invalid')
+							$('#'+i).after('<span id="input_codigo-error" class="error help-block invalid-feedback">'+val+'</span>');
+						})
+					}
+					else{
+						Comun.mensajes_operacion(response.msg,'error',5000);
+					}
 				}
 			},
 			{id_estandar_comptencia: this.idEstandar()}
