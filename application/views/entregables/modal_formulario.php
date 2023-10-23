@@ -14,7 +14,7 @@
 					<div class="form-group row">
 						<label for="input_nombre" class="col-sm-3 col-form-label">Nombre</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="input_nombre" data-rule-required="true"
+							<input type="text" class="form-control" id="nombre" data-rule-required="true"
 								   name="nombre" placeholder="Nombre del entregable"
 								   value="<?= old($entregable,'nombre')?>">
 						</div>
@@ -39,7 +39,7 @@
 						<div class="col-sm-9">
 							<select type="text" class="form-control" id="tipo_entregable" data-rule-required="true"
 									name="tipo_entregable">
-								<option>Seleccione una opción</option>
+								<option value="">Seleccione una opción</option>
 								<option
 									value="prod" <?= old($entregable, 'tipo_entregable') == 'prod' ? 'selected' : '' ?> >
 									Producto (archivo)
@@ -74,8 +74,7 @@
 						<label for="input_nombre" class="col-sm-3 col-form-label">Intrumentos</label>
 						<div class="col-sm-9">
 							<label for="instrumentos"></label>
-							<select multiple="multiple" class="form-control" id="instrumentos" name="instrumentos[]">}
-
+							<select multiple="multiple" class="form-control" id="instrumentos" name="instrumentos[]">
 								<?php if (isset($instrumentos)): ?>
 									<?php foreach ($instrumentos as $item): ?>
 										<option value="<?= $item->id_ec_instrumento_has_actividad ?>"
