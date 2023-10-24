@@ -24,6 +24,13 @@ class Curso extends CI_Controller {
 		$data['titulo_pagina'] = 'Campañas Walmart';
 		$data['usuario'] = $this->usuario;
 		$data['id_estandar_competencia'] = $id_estandar_competencia;
+		$data['migas_pan'] = array(
+			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
+			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
+			array('nombre' => 'Campañas','activo' =>  true,'url' => '#')
+		);
+
+
 		$data['extra_js'] = array(
 			base_url() . 'assets/js/curso.js',
 			base_url().'assets/frm/fileinput/js/fileinput.js',
@@ -199,6 +206,14 @@ class Curso extends CI_Controller {
 		$data['titulo_pagina'] = 'Campañas Walmart - Administración de Modulos';
 		$data['usuario'] = $this->usuario;
 		$data['id_ec_curso'] = $id_ec_curso;
+
+		$data['migas_pan'] = array(
+			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
+			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
+			array('nombre' => 'Campañas','activo' => false,'url' => base_url().'campania/'.$id_ec_curso),
+			array('nombre' => 'Modulos','activo' => true,'url' => '#'),
+		);
+
 		$data['extra_js'] = array(
 			base_url() . 'assets/js/curso_modulos.js',
 			base_url().'assets/frm/fileinput/js/fileinput.js',
