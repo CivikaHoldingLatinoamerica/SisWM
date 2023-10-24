@@ -67,7 +67,7 @@ var methods = {
 				if(response.success){
 					Comun.mostrar_ocultar_modal('#modal_form_entregable',false);
 					Comun.mensajes_operacion(response.msg,'success');
-					Comun.recargar_pagina(base_url + 'evidencias_esperadas/'+ methods.idEstandar(),2000);
+					// Comun.recargar_pagina(base_url + 'evidencias_esperadas/'+ methods.idEstandar(),2000);
 					methods.buscarEntregables();
 				}else{
 					if(response.code === 400){
@@ -92,6 +92,7 @@ var methods = {
 			function(response){
 				if(response.success){
 					Comun.mensajes_operacion(response.msg,'success');
+					Comun.recargar_pagina(base_url + 'evidencias_esperadas/'+ methods.idEstandar(),1000);
 				}else{
 					Comun.mensajes_operacion(response.msg,'error',5000);
 				}

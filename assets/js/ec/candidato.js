@@ -565,7 +565,7 @@ var CandidatoEC = {
 					base_url + 'Entregable/index_candidato/' + id_estandar_competencia+'/'+id_usuario_alumno,{},
 					function(response){
 						$('#contenedor_pasos_evidencias').html(response);
-						Comun.funcion_fileinput('.54','Evidencia PDF/Imágenes');
+						Comun.funcion_fileinput('.doc_evidencia_ati_alumno','Subir Evidencia');
 						CandidatoEC.inicializar_input_file_entregables();
 						CandidatoEC.procesar_class_calificacion();
 

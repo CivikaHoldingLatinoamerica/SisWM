@@ -55,13 +55,12 @@ class EntregableECModel extends ModeloBase
 				$this->db->insert_id();
 			}
 
-			if (isset($parametros['id_archivo'])  && $parametros['id_archivo'] != null){
+			if (isset($parametros['id_archivo']) && $parametros['id_archivo'] != null) {
 				$this->db->insert('entregable_has_archivo', array(
 					'id_entregable' => $id,
 					'id_archivo' => $parametros['id_archivo']));
 				$this->db->insert_id();
 			}
-
 
 
 		} catch (Exception $ex) {
@@ -83,24 +82,50 @@ class EntregableECModel extends ModeloBase
 		$query = $this->db->query($consulta);
 		$data = $query->result();
 
+		$liberado = false;
+		$validacionLiberar = true;
+
 		foreach ($data as $item) {
+
+			if ($item->liberado == 'si'){
+				$liberado = true;
+			}
 
 			$consulta = "select eiha.actividad from ec_instrumento_has_actividad eiha
                       join entregable_has_instrumento ehi on ehi.id_ec_instrumento_has_actividad = eiha.id_ec_instrumento_has_actividad
                       where ehi.id_entregable = " . $item->id_entregable;
 			$query = $this->db->query($consulta);
 			$item->instrumentos = $query->result();
+
+
+			if ($item->tipo_entregable == 'form') {
+				$consulta = "select pfa.* from pregunta_formulario_abierto pfa ".
+					"join entregable_has_formulario ehf on ehf.id_formulario_abierto = pfa.id_formulario_abierto ".
+					"where ehf.id_entregable  = " . $item->id_entregable . " and pfa.eliminado = 'no'";
+				$query = $this->db->query($consulta);
+				$datos = $query->result();
+				$item->preguntas_cargadas = empty($datos);
+
+				if ($item->preguntas_cargadas){
+					$validacionLiberar = false;
+				}
+			}
+
 		}
 
-		return $data;
+		return array(
+			'data' => $data,
+			'liberado' => $liberado,
+			'btn_liberar' => $validacionLiberar,
+		);
 	}
 
 	public function obtener_entregables_candidato($id_estandar_competencia, $id_usuario)
 	{
 		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad ,
-       			(select eea.id_cat_proceso from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = ".$id_usuario.") as id_estatus, ".
-       			"(select ehf.id_entregable_formulario from entregable_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, ".
-       			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregable_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = ".$id_usuario.") as id_estatus_formulario "
+       			(select eea.id_cat_proceso from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = " . $id_usuario . ") as id_estatus, " .
+			"(select ehf.id_entregable_formulario from entregable_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, " .
+			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregable_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = " . $id_usuario . ") as id_estatus_formulario "
 			. "from entregable_ec ee "
 			. "join entregable_has_instrumento ehi ON ehi.id_entregable = ee.id_entregable "
 			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
@@ -114,8 +139,8 @@ class EntregableECModel extends ModeloBase
 		$entregables = array();
 		foreach ($data as $item) {
 
-			if ($item->tipo_entregable == 'form'){
-				$item->id_estatus = $item-> id_estatus_formulario;
+			if ($item->tipo_entregable == 'form') {
+				$item->id_estatus = $item->id_estatus_formulario;
 			}
 
 			$object = (object)array(
@@ -210,7 +235,8 @@ class EntregableECModel extends ModeloBase
 
 	}
 
-	public function liberar_entregables($id_estandar_competencia){
+	public function liberar_entregables($id_estandar_competencia)
+	{
 
 		try {
 			$this->db->set('liberado', 'si');

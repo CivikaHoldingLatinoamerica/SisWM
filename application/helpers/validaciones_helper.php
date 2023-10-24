@@ -660,12 +660,25 @@ class Validaciones_Helper {
 			
 		]; */
 
+		foreach ($rules as $key => $rule){
+
+			if (!isset($post[$key])){
+				$result['messages'][$key] = "Campo requerido";
+				$result['success'] = false;
+			}
+		}
+
+
 		foreach($post as $index=>$campo){
 		
 			if(isset($rules[$index])){
 
 				if(in_array("required",$rules[$index] )){
-
+					if (is_array($campo) && empty($campo)){
+						$result['messages'][$index] = "Campo requerido";
+						$result['success'] = false;
+						continue;
+					}
 					if(empty($campo) || $campo == "<p><br></p>" || $campo == "<br>"){
 						//var_dump('si entrooo');
 						$result['messages'][$index] = "Campo requerido";
