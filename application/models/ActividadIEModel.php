@@ -299,6 +299,9 @@ class ActividadIEModel extends CI_Model
 	}
 
 	public function obtener_instrumentos_ec_entregable($id_estandar_competencia){
+
+		$catalogo_iinstrumentos = this->obtener_instrumentos_ec($id_estandar_competencia);
+
 		$consulta = 'select eiha.* from ec_instrumento_has_actividad eiha
 	    				join estandar_competencia_instrumento eci on eiha.id_estandar_competencia_instrumento = eci.id_estandar_competencia_instrumento 
 	              		where eci.id_estandar_competencia  = '.$id_estandar_competencia;
