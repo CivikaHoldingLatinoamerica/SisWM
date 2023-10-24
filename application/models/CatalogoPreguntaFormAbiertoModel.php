@@ -32,7 +32,7 @@ class CatalogoPreguntaFormAbiertoModel extends ModeloBase
 
 
 			if (isset($data['usuario'])){
-				$consulta_formulario_entregable = "select id_formulario_abierto, id_entregable_formulario from entregbale_has_formulario where id_entregable = ".$data['id_entregable_evidencia'];
+				$consulta_formulario_entregable = "select id_formulario_abierto, id_entregable_formulario from entregable_has_formulario where id_entregable = ".$data['id_entregable_evidencia'];
 				$formulario_entregable = $this->db->query($consulta_formulario_entregable)->result();
 
 				if ($formulario_entregable){
@@ -71,7 +71,7 @@ class CatalogoPreguntaFormAbiertoModel extends ModeloBase
 	}
 
 	public function existe_formulario($data){
-		$consulta= "select id_formulario_abierto, id_entregable_formulario from entregbale_has_formulario where id_entregable = ".$data['id_entregable_evidencia'];
+		$consulta= "select id_formulario_abierto, id_entregable_formulario from entregable_has_formulario where id_entregable = ".$data['id_entregable_evidencia'];
 		$existe =  $this->db->query($consulta)->row();
 
 		if ($existe){
@@ -83,7 +83,7 @@ class CatalogoPreguntaFormAbiertoModel extends ModeloBase
 			));
 
 			$id_formulario = $this->db->insert_id();
-			$this->db->insert('entregbale_has_formulario',array(
+			$this->db->insert('entregable_has_formulario',array(
 				'id_entregable' => $data['id_entregable_evidencia'],
 				'id_formulario_abierto' => $id_formulario,
 				'liberado' => 0

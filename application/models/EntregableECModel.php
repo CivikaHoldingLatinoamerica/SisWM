@@ -99,8 +99,8 @@ class EntregableECModel extends ModeloBase
 	{
 		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad ,
        			(select eea.id_cat_proceso from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = ".$id_usuario.") as id_estatus, ".
-       			"(select ehf.id_entregable_formulario from entregbale_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, ".
-       			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregbale_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = ".$id_usuario.") as id_estatus_formulario "
+       			"(select ehf.id_entregable_formulario from entregable_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, ".
+       			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregable_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = ".$id_usuario.") as id_estatus_formulario "
 			. "from entregable_ec ee "
 			. "join entregable_has_instrumento ehi ON ehi.id_entregable = ee.id_entregable "
 			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
