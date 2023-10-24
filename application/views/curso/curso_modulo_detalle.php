@@ -39,7 +39,7 @@
 					<label class="col-form-label">Módulos de Campaña</label>
 				</div>
 
-				<?php if (isset($ec_curso_modulo) && is_array($ec_curso_modulo) && sizeof($ec_curso_modulo) != 0): ?>
+				<?php if (isset($ec_curso_modulo['ec_curso_modulo']) && is_array($ec_curso_modulo['ec_curso_modulo']) && sizeof($ec_curso_modulo['ec_curso_modulo']) != 0): ?>				
 					<div class="form-group row">
 						<?php foreach ($ec_curso_modulo['ec_curso_modulo'] as $index=>$eccm): ?>
 							<?php if($eccm->eliminado == 'no'): ?>
@@ -104,7 +104,7 @@
 																		</div>
 
 																		<div class="form-group row">						
-																			<label> Archivo:</label>
+																			<label> Archivo del tema:</label>
 																		</div>
 																		<div class="form-group row">						
 																		<p><a href="<?= base_url().$eccmt->ruta_directorio.$eccmt->nombre?>" target="_blank"><?= $eccmt->nombre ?> </a></p>						

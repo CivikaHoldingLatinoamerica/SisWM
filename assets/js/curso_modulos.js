@@ -5,11 +5,21 @@ $(document).ready(function(){
 	});
 
 
-	$(document).on('click','.agregar_ec_curso_modulo',function(){
+	$(document).on('click','#agregar_ec_curso_modulo',function(){
 		var id_ec_curso = $(this).data('id_ec_curso');
 		CursoModulo.agregar_modificar_ecc_modulo(id_ec_curso);
 	});
 
+	$(document).on('click','#btn_guardar_form_ec_curso_modulo',function(){
+		var id_ec_curso = $(this).data('id_ec_curso');
+		CursoModulo.guardar_ec_curso_modulo(id_ec_curso);
+	});
+	
+	$(document).on('click','.modificar_ec_curso_modulo',function(){
+		var id_ec_curso = $(this).data('id_ec_curso');
+		var id_ec_curso_modulo = $(this).data('id_ec_curso_modulo');
+		CursoModulo.agregar_modificar_ecc_modulo(id_ec_curso,id_ec_curso_modulo);
+	});
 
 	$(document).on('click','.agregar_ec_curso_modulo_temario',function(){
 		var id_ec_curso_modulo = $(this).data('id_ec_curso_modulo');
@@ -55,13 +65,39 @@ var CursoModulo = {
 				$('#contenedor_modal_curso_modulo').html(response);
 				// $('#card_formulario_ati').fadeIn();
 				// $('#card_resultados_ati').fadeOut();
-				Comun.mostrar_ocultar_modal('#modal_form_curso_modulo_temario',true);
+				Comun.mostrar_ocultar_modal('#modal_form_curso_modulo',true);
 				Comun.tooltips();
-				Comun.funcion_fileinput('#archivo_eccmt','Archivo temario');
-				CursoModulo.iniciar_carga_archivo();
-				Comun.iniciar_editor_summernote("#instrucciones", "Describa las instrucciones del curso");
-				Comun.iniciar_editor_summernote("#contenido_curso", "Describa el contenido del curso");
+				
+				Comun.iniciar_editor_summernote("#objetivo_general", "Describa el objetivo general");
+				Comun.iniciar_editor_summernote("#objetivos_especificos", "Describa los objetivos especificos");
 			});
+	},
+
+	guardar_ec_curso_modulo : function(id_ec_curso = ''){
+	
+		Comun.removeClassInvalidError("form_agregar_modificar_ec_curso_modulo");
+		Comun.enviar_formulario_post(
+			'#form_agregar_modificar_ec_curso_modulo',
+			base_url + 'Curso/guardar_form_curso_modulo/' + id_ec_curso,
+			function(response){
+				if(response.success){
+					Comun.mostrar_ocultar_modal('#modal_form_curso_modulo',false);
+					Comun.mensajes_operacion(response.msg,'success');
+					CursoModulo.tablero();
+				}else{
+					if(response.code == 400){
+						$.each(response.msg,function(i,val){			
+							$('#'+i).addClass('is-invalid')			
+							$('#'+i).after('<span id="input_codigo-error" class="error help-block invalid-feedback">'+val+'</span>');
+						})
+					}
+					else{
+					Comun.mensajes_operacion(response.msg,'error',5000);
+					}
+					
+				}
+			}
+		)
 	},
 
 	agregar_modificar_eccm_temario : function(id_ec_curso_modulo,id_ec_curso_modulo_temario = ''){

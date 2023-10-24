@@ -17,7 +17,8 @@
 				</div>
 				<div class="col-sm-6 text-right">
 					<?php if(perfil_permiso_operacion_menu('ec_curso.agregar')) : ?>
-						<button type="button" id="agregar_ec_curso_modulo" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-square"></i> Nuevo modulo</button>
+						<button type="button" id="agregar_ec_curso_modulo" class="btn btn-sm btn-outline-success"
+						data-id_ec_curso="<?=isset($id_ec_curso) ? $id_ec_curso : ''?>"><i class="fa fa-plus-square"></i> Nuevo modulo</button>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -31,9 +32,10 @@
 		</section>
 		<!-- /.content -->
 
-		<div id="contenedor_modal_curso_modulo_temario"></div>
+		
 		<div id="contenedor_modal_curso"></div>
-
+		<div id="contenedor_modal_curso_modulo"></div>
+		<div id="contenedor_modal_curso_modulo_temario"></div>
 	</div>
 	<!-- /.content-wrapper -->
 

@@ -42,33 +42,46 @@
 							<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?></span>							
 						</div>
 						<div class="form-group row">
-							<div class="col-sm-12 text-right">								
-							<?php if(perfil_permiso_operacion_menu('ec_curso.modificar')): ?>
-								<button class="btn btn-outline-primary btn-sm modificar_evaluacion_ec" data-toggle="tooltip"
-										title="Editar la evaluación de la EC"
-										data-id_evaluacion="<?=$eccm->id_ec_curso_modulo?>"
-										type="button" ><i class="fa fa-edit"></i> Editar
-								</button>
-							<?php endif; ?>
-							<?php if(perfil_permiso_operacion_menu('ec_curso.agregar')):?>
-								<button class="btn btn-outline-info btn-sm agregar_ec_curso_modulo_temario" data-toggle="tooltip"
-										title="Agregar temario al módulo"
-										data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
-										type="button" ><i class="fa fa-list-alt"></i> Agregar tema
-								</button>
-							<?php endif; ?>
-							<?php if(perfil_permiso_operacion_menu('ec_curso.consultar')): ?>
-								<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
-								title="Evaluación al Estándar de competencia"
-								href="<?=base_url()?>evaluacion/<?=$ec_curso->id_estandar_competencia?>/modulo"><i class="fa fa-file-alt"></i> Cuestionario de evaluación</a>
-							<?php endif; ?>
-							<?php if(perfil_permiso_operacion_menu('ec_curso.eliminar')):?>
-								<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar evaluacion de la EC"
-										data-msg_confirmacion_general="¿Esta seguro de eliminar la evaluación de la EC?, esta acción no podrá revertirse"
-										data-url_confirmacion_general="<?=base_url()?>EvaluacionEC/eliminar/<?=$eccm->id_ec_curso_modulo?>"
-										data-btn_trigger="#btn_buscar_ec_evaluacion">
-									<i class="fas fa-trash"></i> Eliminar
-								</button>
+							<div class="col-sm-12 text-right">	
+							
+							<?php if($eccm->eliminado == 'si'): ?>
+								<?php if(perfil_permiso_operacion_menu('ec_curso.deseliminar')):?>
+									<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar módulo"
+											data-msg_confirmacion_general="¿Esta seguro de deseliminar el módulo del curso?, esto volverá a activar el módulo"
+											data-url_confirmacion_general="<?=base_url()?>Curso/deseliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
+											data-btn_trigger="#btn_buscar_ec_curso_modulos">
+										<i class="fas fa-trash-restore"></i> Deseliminar
+									</button>
+								<?php endif; ?>
+							<?php else: ?>
+									<?php if(perfil_permiso_operacion_menu('ec_curso.modificar')): ?>
+										<button class="btn btn-outline-primary btn-sm modificar_ec_curso_modulo" data-toggle="tooltip"
+												title="Editar módulo"
+												data-id_ec_curso="<?=$eccm->id_ec_curso?>"
+												data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
+												type="button" ><i class="fa fa-edit"></i> Editar
+										</button>
+									<?php endif; ?>
+									<?php if(perfil_permiso_operacion_menu('ec_curso.agregar')):?>
+										<button class="btn btn-outline-info btn-sm agregar_ec_curso_modulo_temario" data-toggle="tooltip"
+												title="Agregar temario al módulo"
+												data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
+												type="button" ><i class="fa fa-list-alt"></i> Agregar tema
+										</button>
+									<?php endif; ?>
+									<?php if(perfil_permiso_operacion_menu('ec_curso.consultar')): ?>
+										<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
+										title="Evaluación al Estándar de competencia"
+										href="<?=base_url()?>evaluacion/<?=$ec_curso->id_estandar_competencia?>/modulo"><i class="fa fa-file-alt"></i> Cuestionario de evaluación</a>
+									<?php endif; ?>
+									<?php if(perfil_permiso_operacion_menu('ec_curso.eliminar')):?>
+										<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar módulo"
+												data-msg_confirmacion_general="¿Esta seguro de eliminar el módulo del curso?, esta acción no podrá revertirse"
+												data-url_confirmacion_general="<?=base_url()?>Curso/eliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
+												data-btn_trigger="#btn_buscar_ec_curso_modulos">
+											<i class="fas fa-trash"></i> Eliminar
+										</button>
+									<?php endif; ?>
 							<?php endif; ?>
 							</div>
 						</div>
