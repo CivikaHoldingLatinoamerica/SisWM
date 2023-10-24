@@ -9,6 +9,7 @@ class Publico extends CI_Controller {
 	{
 		parent:: __construct();
 		$this->load->model('EstandarCompetenciaConvocatoriaModel');
+		$this->load->model('UsuarioHasECModel');
 		if(sesionActive()){
 			$this->usuario = usuarioSession();
 		}else{
@@ -54,7 +55,34 @@ class Publico extends CI_Controller {
 		try{
 			$tablero = $this->EstandarCompetenciaConvocatoriaModel->tablero(['id_estandar_competencia_convocatoria' => $idEstandarCompetenciaConvocatoria]);
 			$data['estandar_competencia_convocatoria'] = $tablero['estandar_competencia_convocatoria'][0];
+			$data['usuario'] = $this->usuario;
+			$data['existe_usuario_ec'] = false;
+			$buscar = [
+				'id_estandar_competencia' => $data['estandar_competencia_convocatoria']->id_estandar_competencia,
+				'id_usuario' => $this->usuario->id_usuario
+			];
+			$usuario_has_ec_model = $this->UsuarioHasECModel->tablero($buscar);
+			if($usuario_has_ec_model['total_registro'] != 0){
+				$data['existe_usuario_ec'] = true;
+			}
 			$this->load->view('convocatoria_publicada_detalle',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function registrarCandidatoSesion($id_estandar_compentencia_convocatoria){
+		try{
+			if(sesionActive()){
+				$this->usuario = usuarioSession();
+			}else{
+				// lo mandamos a la sesion en caso de que haya caducado
+				redirect(base_url().'login');
+			}
+			$guardar = $this->guardarCandidatoConvocatoria($id_estandar_compentencia_convocatoria,$this->usuario->id_usuario);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -92,27 +120,7 @@ class Publico extends CI_Controller {
 					}
 					//en caso de que sea extranjero se almacenara un codigo nacional conforme a su codigo de identificación oficial
 					$this->UsuarioModel->guardar_datos_usuario($datos_usuario);
-					//para poder devolver el mensaje, hay que obtener el estandar de competencia de la convocatoria
-					//asignar un evaluador correspondiente (hacer un ramdom de evaluadores y tomar uno)
-					//asignamos el candidato al estandar de competencia conforme a la convocatoria
-					$estandar_competencia_convocatoria = $this->EstandarCompetenciaConvocatoriaModel->obtener_row($post['id_estandar_compentencia_convocatoria']);
-					$insert = array(
-						'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
-						'id_usuario' => $guardar_candidato['data']['id_usuario'],
-						//'id_usuario_evaluador' => $instructor->id_usuario,
-						'fecha_registro' => date('Y-m-d')
-					);
-					$insert['id_usuario_evaluador'] = $estandar_competencia_convocatoria->id_usuario;
-					//validamos si existe un instructor que haya registrado la convocatoria
-					if(is_null($estandar_competencia_convocatoria->id_usuario)){
-						$parametros_busqueda = [
-							'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
-							'perfil' => 'instructor'
-						];
-						$instructor = $this->UsuarioHasECModel->obtener_instructor_para_registro_candidato($parametros_busqueda);
-						$insert['id_usuario_evaluador'] = $instructor->id_usuario;
-					}
-					$guardar = $this->UsuarioHasECModel->guardar_row($insert);
+					$guardar = $this->guardarCandidatoConvocatoria($post['id_estandar_compentencia_convocatoria'],$guardar_candidato['data']['id_usuario']);
 					if($guardar['success']){
 						$response['success'] = true;
 						if(isset($post['es_extranjero']) && $post['es_extranjero'] == 1){
@@ -142,6 +150,30 @@ class Publico extends CI_Controller {
 			$response['msg'][] = $ex->getMessage();
 		}
 		echo json_encode($response);exit;
+	}
+
+	private function guardarCandidatoConvocatoria($id_estandar_compentencia_convocatoria,$id_usuario){
+		//para poder devolver el mensaje, hay que obtener el estandar de competencia de la convocatoria
+		//asignar un evaluador correspondiente (hacer un ramdom de evaluadores y tomar uno)
+		//asignamos el candidato al estandar de competencia conforme a la convocatoria
+		$estandar_competencia_convocatoria = $this->EstandarCompetenciaConvocatoriaModel->obtener_row($id_estandar_compentencia_convocatoria);
+		$insert = array(
+			'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
+			'id_usuario' => $id_usuario,
+			//'id_usuario_evaluador' => $instructor->id_usuario,
+			'fecha_registro' => date('Y-m-d')
+		);
+		$insert['id_usuario_evaluador'] = $estandar_competencia_convocatoria->id_usuario;
+		//validamos si existe un instructor que haya registrado la convocatoria
+		if(is_null($estandar_competencia_convocatoria->id_usuario)){
+			$parametros_busqueda = [
+				'id_estandar_competencia' => $estandar_competencia_convocatoria->id_estandar_competencia,
+				'perfil' => 'instructor'
+			];
+			$instructor = $this->UsuarioHasECModel->obtener_instructor_para_registro_candidato($parametros_busqueda);
+			$insert['id_usuario_evaluador'] = $instructor->id_usuario;
+		}
+		return $this->UsuarioHasECModel->guardar_row($insert);
 	}
 
 }

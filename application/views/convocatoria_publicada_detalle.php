@@ -94,8 +94,15 @@
 			</div>
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
-				<a href="<?=base_url()?>registro/<?=$estandar_competencia_convocatoria->id_estandar_competencia_convocatoria?>"
+				<?php if(isset($usuario) && is_object($usuario)): ?>
+					<?php if(isset($existe_usuario_ec) && $existe_usuario_ec): ?>
+						<span class="badge badge-success"></span>Estas registrado</span>
+					<?php else: ?>
+					<?php endif; ?>
+				<?php else: ?>
+					<a href="<?=base_url()?>registro/<?=$estandar_competencia_convocatoria->id_estandar_competencia_convocatoria?>"
 						class="btn btn-sm btn-outline-primary">Registrarme</a>
+				<?php endif; ?>
 			</div>
 		</div>
 		<!-- /.modal-content -->
