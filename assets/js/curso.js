@@ -41,7 +41,7 @@ var Curso = {
 		if(inicial){
 			$('#contenedor_resultados_cursos_ec').html(overlay);
 			Comun.obtener_contenido_peticion_html(
-				base_url + 'Curso/tablero/' + pagina + '/' + registros,
+				base_url + 'curso/tablero/' + pagina + '/' + registros,
 				post,
 				function(response){
 					$('#contenedor_resultados_cursos_ec').html(response);
@@ -52,7 +52,7 @@ var Curso = {
 		}else{
 			$('#overlay_full_page').fadeIn();
 			Comun.obtener_contenido_peticion_html(
-				base_url + 'Curso/tablero/' + pagina + '/' + registros,
+				base_url + 'curso/tablero/' + pagina + '/' + registros,
 				post,
 				function(response){
 					$('#contenedor_resultados_cursos_ec').append(response);
