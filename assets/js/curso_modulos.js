@@ -68,8 +68,8 @@ var CursoModulo = {
 				Comun.mostrar_ocultar_modal('#modal_form_curso_modulo',true);
 				Comun.tooltips();
 				
-				Comun.iniciar_editor_summernote("#objetivo_general", "Describa el objetivo general");
-				Comun.iniciar_editor_summernote("#objetivos_especificos", "Describa los objetivos especificos");
+				Comun.iniciar_editor_summernote_link_video("#objetivo_general", "Describa el objetivo general");
+				Comun.iniciar_editor_summernote_link_video("#objetivos_especificos", "Describa los objetivos especificos");
 			});
 	},
 
@@ -110,15 +110,15 @@ var CursoModulo = {
 				Comun.tooltips();
 				Comun.funcion_fileinput('#archivo_eccmt','Archivo temario');
 				CursoModulo.iniciar_carga_archivo();
-				Comun.iniciar_editor_summernote("#instrucciones", "Describa las instrucciones del curso");
-				Comun.iniciar_editor_summernote("#contenido_curso", "Describa el contenido del curso");
+				Comun.iniciar_editor_summernote_link_video("#instrucciones", "Describa las instrucciones del curso");
+				Comun.iniciar_editor_summernote_link_video("#contenido_curso", "Describa el contenido del curso");
 			});
 	},
 
 	iniciar_carga_archivo : function(){
 		Comun.iniciar_carga_documento_all('#archivo_eccmt','#procesando_archivo_eccmt',function(archivo){
 			$('#id_archivo').val(archivo.id_archivo);
-			var html_img = '<p><a href="' + base_url + archivo.nombre +'" target="_blank"> '+ archivo.nombre +' </a><em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>';
+			var html_img = '<p><a href="' + base_url + archivo.ruta_directorio + archivo.nombre +'" target="_blank"> '+ archivo.nombre +' </a><em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>';
 			$('#procesando_archivo_eccmt').html(html_img);
 		})
 	},

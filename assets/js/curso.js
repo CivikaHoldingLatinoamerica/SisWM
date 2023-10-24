@@ -74,7 +74,7 @@ var Curso = {
 				Comun.tooltips();
 				Comun.funcion_fileinput('#img_banner_ec_curso','Imágen Banner');
 				Curso.iniciar_carga_img_banner();
-				Comun.iniciar_editor_summernote("#txt_que_aprenderas_curso", "Describa lo que aprendera el candidato en el curso");
+				Comun.iniciar_editor_summernote_link_video("#txt_que_aprenderas_curso", "Describa lo que aprendera el candidato en el curso");
 			});
 	},
 
