@@ -61,7 +61,7 @@ var CursoModulo = {
 
 	iniciar_carga_archivo : function(){
 		Comun.iniciar_carga_documento_all('#archivo_eccmt','#procesando_archivo_eccmt',function(archivo){
-			$('#input_id_archivo_ec_curso_modulo_temario').val(archivo.id_archivo);
+			$('#id_archivo').val(archivo.id_archivo);
 			var html_img = '<p><a href="' + base_url + archivo.nombre +'" target="_blank"> '+ archivo.nombre +' </a><em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>';
 			$('#procesando_archivo_eccmt').html(html_img);
 		})
@@ -73,23 +73,7 @@ var CursoModulo = {
 	},
 
 	guardar_ec_curso_modulo_temario : function(id_ec_curso_modulo = ''){
-		/* if(CursoModulo.validar_form_ec_curso_modulo_temario()){
-			Comun.enviar_formulario_post(
-				'#form_agregar_modificar_ec_curso_modulo_temario',
-				base_url + 'Curso/guardar_form_curso_modulo_temario/' + id_ec_curso_modulo,
-				function(response){
-					if(response.success){
-						Comun.mostrar_ocultar_modal('#modal_form_curso_modulo_temario',false);
-						Comun.mensajes_operacion(response.msg,'success');
-						Curso.tablero();
-					}else{
-						Comun.mensajes_operacion(response.msg,'error',5000);
-					}
-				}
-			)
-		}else{
-			Comun.mensaje_operacion('Error, hay campos requeridos','error');
-		} */
+	
 		Comun.removeClassInvalidError("form_agregar_modificar_ec_curso_modulo_temario");
 		Comun.enviar_formulario_post(
 			'#form_agregar_modificar_ec_curso_modulo_temario',
@@ -98,7 +82,7 @@ var CursoModulo = {
 				if(response.success){
 					Comun.mostrar_ocultar_modal('#modal_form_curso_modulo_temario',false);
 					Comun.mensajes_operacion(response.msg,'success');
-					Curso.tablero();
+					CursoModulo.tablero();
 				}else{
 					if(response.code == 400){
 						$.each(response.msg,function(i,val){			

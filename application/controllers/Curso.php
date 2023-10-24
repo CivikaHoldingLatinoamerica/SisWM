@@ -238,12 +238,12 @@ class Curso extends CI_Controller {
     		$data['ec_curso_modulo_temario'] = $this->EcCursoModuloTemarioModel->obtener_row($id_ec_curso_modulo_temario);
 			//$data['ec_curso_modulos'] = (array)$this->EcCursoModuloModel->obtener_ec_curso_modulos($id_ec_curso);
 			//var_dump($data['ec_curso_modulos'],$id_ec_curso); exit();
-			$data['archivo_banner'] = null;
+			$data['archivo'] = null;
 			if(isset($data['ec_curso_modulo_temario']->id_archivo) && !is_null($data['ec_curso_modulo_temario']->id_archivo) && $data['ec_curso_modulo_temario']->id_archivo != ''){
-				$data['archivo_temario'] = $this->ArchivoModel->obtener_archivo($data['ec_curso_modulo_temario']->id_archivo);
+				$data['archivo'] = $this->ArchivoModel->obtener_archivo($data['ec_curso_modulo_temario']->id_archivo);
 			}
 		}
-		//var_dump($data, $id_ec_curso); exit();
+		//var_dump($data, $id_ec_curso_modulo_temario); exit();
     	$this->load->view('curso/agregar_modificar_curso_modulo_temario',$data);
 	}
 
@@ -252,14 +252,15 @@ class Curso extends CI_Controller {
     		try{
 			$post = $this->input->post();
 			$rules = ["tema" => ['required'],
-					'instrucciones' => ["required","maxLength"=>10],
-					'contenido_curso' => ["required","maxLength"=>10]
+					'instrucciones' => ["required"],
+					'contenido_curso' => ["required"],
+					'id_archivo' => ['required']
 				];
 			$validaciones = Validaciones_Helper::validateFormAll($post, $rules);
 			
 			if($validaciones['success']){
-				$id_ec_curso_modulo = $this->input->post("id_ec_curso_modulo") != "" ? $this->input->post("id_ec_curso_modulo") : false;
-				$guardar_ec_curso_modulo_temario = $this->EcCursoModuloTemarioModel->guardar_row($post, $id_ec_curso_modulo);
+				$id_ec_curso_modulo_temario = $this->input->post("id_ec_curso_modulo_temario") != "" ? $this->input->post("id_ec_curso_modulo_temario") : false;
+				$guardar_ec_curso_modulo_temario = $this->EcCursoModuloTemarioModel->guardar_row($post, $id_ec_curso_modulo_temario);
 				if($guardar_ec_curso_modulo_temario['success']){
 					$response['success'] = true;
 					$response['msg'][] = $guardar_ec_curso_modulo_temario['msg'];
@@ -280,4 +281,44 @@ class Curso extends CI_Controller {
 		}
 		echo json_encode($response);exit;
 	}
+
+	public function eliminar_ec_curso_modulo_temario($id_ec_curso_modulo_temario){
+		perfil_permiso_operacion('curso_ec.eliminar');
+		try{
+			$eliminar = $this->EcCursoModuloTemarioModel->eliminar_row($id_ec_curso_modulo_temario);
+			if($eliminar['success']){
+				$response['success'] = true;
+				$response['msg'][] = $eliminar['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $eliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function deseliminar_ec_curso_modulo_temario($id_ec_curso_modulo_temario){
+		perfil_permiso_operacion('curso_ec.deseliminar');
+		try{
+			$deseliminar = $this->EcCursoModuloTemarioModel->deseliminar_row($id_ec_curso_modulo_temario);
+			if($deseliminar['success']){
+				$response['success'] = true;
+				$response['msg'][] = $deseliminar['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $deseliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	
 }
