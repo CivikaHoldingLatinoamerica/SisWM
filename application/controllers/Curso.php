@@ -38,7 +38,7 @@ class Curso extends CI_Controller {
 		);
 				
 		
-		$this->load->view('Curso/tablero_curso',$data);
+		$this->load->view('curso/tablero_curso',$data);
 	}
 
 	public function tablero($pagina = 1, $registros = 5){
@@ -58,7 +58,7 @@ class Curso extends CI_Controller {
 			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
 			//var_dump($data['ec_curso']); exit();
-			$this->load->view('Curso/cursos',$data);
+			$this->load->view('curso/cursos',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -118,6 +118,11 @@ class Curso extends CI_Controller {
 			$data['ec_curso_modulo_model'] = $tablero['ec_curso_modulo_model'][0]; */
 			$ec_curso  = $this->EcCursoModel->obtener_ec_curso($id_ec_curso);
 			$data['ec_curso'] = $ec_curso;
+
+			$busquedaCursoModel = array(
+				'id_ec_curso' => $id_ec_curso
+			);
+			$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
 			//dd($data); exit();
 			$this->load->view('curso/curso_modulo_detalle',$data);
 		}catch (Exception $ex){
@@ -208,7 +213,7 @@ class Curso extends CI_Controller {
 		);
 				
 		
-		$this->load->view('Curso/tablero_curso_modulos',$data);
+		$this->load->view('curso/tablero_curso_modulos',$data);
 	}
 
 	public function tablero_curso_modulos($id_ec_curso){
@@ -216,12 +221,12 @@ class Curso extends CI_Controller {
 		try{
 			$busqueda = array(
 				'id_ec_curso' => $id_ec_curso
-		);
-		$data = $this->EcCursoModuloModel->tablero($busqueda);
+			);
+			$data = $this->EcCursoModuloModel->tablero($busqueda);
 
-		$data['ec_curso'] = $this->EcCursoModel->obtener_row($id_ec_curso);
-		//dd($data);exit;
-		$this->load->view('Curso/resultado_curso_modulos',$data);
+			$data['ec_curso'] = $this->EcCursoModel->obtener_row($id_ec_curso);
+			//dd($data);exit;
+			$this->load->view('curso/resultado_curso_modulos',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

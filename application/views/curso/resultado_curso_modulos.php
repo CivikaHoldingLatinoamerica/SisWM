@@ -81,7 +81,7 @@
 										<div class="card card-<?=$eccmt->eliminado == 'si' ? 'light' : 'info'?> collapsed-card">
 											<div class="card-header">
 												<h3 class="card-title <?=$eccmt->eliminado == 'si' ? 'text-danger' : ''?>">
-													<label> Tema: <?=isset($eccmt->tema) ? $eccmt->tema : "" ?></label>
+													<label> Tema: <?=isset($eccmt->tema) ? $eccmt->tema : "" ?><?=$eccmt->eliminado == 'si' ? '- ELIMINADO' : ''?></label>
 												</h3>
 												<div class="card-tools">
 													<button type="button" class="btn btn-tool" data-card-widget="collapse">
