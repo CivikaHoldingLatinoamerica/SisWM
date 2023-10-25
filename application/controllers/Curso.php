@@ -21,13 +21,13 @@ class Curso extends CI_Controller {
 
 	public function index($id_estandar_competencia)
 	{
-		$data['titulo_pagina'] = 'Campañas Walmart';
+		$data['titulo_pagina'] = 'Módulos de capacitación';
 		$data['usuario'] = $this->usuario;
 		$data['id_estandar_competencia'] = $id_estandar_competencia;
 		$data['migas_pan'] = array(
 			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
-			array('nombre' => 'Campañas','activo' =>  true,'url' => '#')
+			array('nombre' => 'Módulos de capacitación','activo' =>  true,'url' => '#')
 		);
 
 
@@ -203,14 +203,14 @@ class Curso extends CI_Controller {
 
 	public function index_curso_modulos($id_ec_curso)
 	{
-		$data['titulo_pagina'] = 'Campañas Walmart - Administración de Modulos';
+		$data['titulo_pagina'] = 'Módulos de capacitación Walmart - Administración de Modulos';
 		$data['usuario'] = $this->usuario;
 		$data['id_ec_curso'] = $id_ec_curso;
 
 		$data['migas_pan'] = array(
 			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
-			array('nombre' => 'Campañas','activo' => false,'url' => base_url().'campania/'.$id_ec_curso),
+			array('nombre' => 'Módulos de capacitación','activo' => false,'url' => base_url().'campania/'.$id_ec_curso),
 			array('nombre' => 'Modulos','activo' => true,'url' => '#'),
 		);
 

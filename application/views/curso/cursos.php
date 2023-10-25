@@ -18,8 +18,8 @@
 					<?php if(perfil_permiso_operacion_menu('curso_ec.cerrar_liberar')): ?>
 						<?php if($curso->fecha_publicado == null): ?>
 						<br><button type="button" class="btn btn-sm btn-outline-success mb-1 iniciar_confirmacion_operacion"
-								data-toggle="tooltip" title="Publicar Curso"
-								data-msg_confirmacion_general="¿Esta seguro de publicar el curso?; al hacerlo, no podra modificarla y esta acción no podrá revertirse"
+								data-toggle="tooltip" title="Publicar Módulo de capacitación"
+								data-msg_confirmacion_general="¿Esta seguro de publicar el Módulo de capacitación?; al hacerlo, no podra modificarla y esta acción no podrá revertirse"
 								data-url_confirmacion_general="<?=base_url()?>Curso/publicar/<?=$curso->id_ec_curso?>/<?= $curso->id_estandar_competencia ?>"
 								data-btn_trigger="#btn_buscar_ec_curso">
 							<i class="fas fa-eye"></i> Publicar
