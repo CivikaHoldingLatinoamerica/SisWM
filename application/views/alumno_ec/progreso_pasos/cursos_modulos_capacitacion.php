@@ -6,6 +6,7 @@
 				<h4 class="card-title"><b>Módulo de capacitación detalles</b></h4>
 			</div>
 			<div class="card-body">
+			<?php if (isset($ec_curso) && $ec_curso !== false): ?>
 				<div class="form-group row">
 					<div class="col-sm-3"></div>
 					<div class="col-sm-6">
@@ -139,7 +140,10 @@
 				<?php else: ?>
 					<?php $this->load->view('default/sin_datos'); ?>
 				<?php endif; ?>
-				
+			
+			<?php else: ?>
+				<?php $this->load->view('default/sin_datos'); ?>
+			<?php endif; ?>
 
 			</div>
 

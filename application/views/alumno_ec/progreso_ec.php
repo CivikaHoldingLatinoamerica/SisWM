@@ -35,7 +35,7 @@
 									   role="tab" aria-controls="tab_evaluacion_requerimientos" aria-selected="false">
 										<i class="fa fa-list-alt"></i> Plan de evaluación/requerimientos
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':''?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':'disabled'?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
 									   role="tab" aria-controls="tab_modulo_capacitacion" aria-selected="false">
 										<i class="fa fa-book"></i> Módulo de capacitación (33%)
 									</a>
