@@ -75,7 +75,6 @@
 					<?php endif; ?>
 
 					<?php if(perfil_permiso_operacion_menu('estandar_competencia.instructor')): ?>
-						<hr>
 						<button class="btn btn-sm btn-outline-warning btn_instructor_evaluador" data-toggle="tooltip"
 								data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>"
 								title="Ver y/o asignar evaluador"><i class="fa fa-user-tie"></i> Evaluadores</button>

@@ -23,19 +23,20 @@
 						<div class="row">
 							<div class="col-5 col-sm-3">
 								<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-									<a class="nav-link active text-green" id="tab_evaluacion_diagnostica-tab" data-toggle="pill" href="#tab_evaluacion_diagnostica"
+									<a class="nav-link active text-green" id="tab_derechos_obligaciones-tab"  data-toggle="pill" href="#tab_derechos_obligaciones"
+									   role="tab" aria-controls="tab_derechos_obligaciones" aria-selected="false">
+										<i class="fa fa-file-alt"></i> Derechos y obligacionesssssss
+									</a>
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 2 ? 'text-green':'disabled'?>" id="tab_evaluacion_diagnostica-tab" data-toggle="pill" href="#tab_evaluacion_diagnostica"
 									   role="tab" aria-controls="tab_evaluacion_diagnostica" aria-selected="true">
 										<i class="fa fa-tasks"></i> Evaluación diagnóstica
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 1 ? 'text-green':'disabled'?>" id="tab_derechos_obligaciones-tab"  data-toggle="pill" href="#tab_derechos_obligaciones"
-									   role="tab" aria-controls="tab_derechos_obligaciones" aria-selected="false">
-										<i class="fa fa-file-alt"></i> Derechos y obligaciones
-									</a>
+									
 									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 2 ? 'text-green':'disabled'?>" id="tab_evaluacion_requerimientos-tab"  data-toggle="pill" href="#tab_evaluacion_requerimientos"
 									   role="tab" aria-controls="tab_evaluacion_requerimientos" aria-selected="false">
 										<i class="fa fa-list-alt"></i> Plan de evaluación/requerimientos
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':'disabled'?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':''?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
 									   role="tab" aria-controls="tab_modulo_capacitacion" aria-selected="false">
 										<i class="fa fa-book"></i> Módulo de capacitación (33%)
 									</a>

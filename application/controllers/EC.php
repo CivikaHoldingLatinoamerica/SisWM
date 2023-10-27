@@ -215,7 +215,7 @@ class EC extends CI_Controller {
 				$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 				$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
 			}
-			//var_dump($data['evaluacion_instrumento_liberados']);exit;
+			//dd($data);exit;
 			$this->load->view('ec/form_instructores',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

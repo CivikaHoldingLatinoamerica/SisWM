@@ -176,12 +176,15 @@ class AlumnosEC extends CI_Controller {
 			/* $tablero = $this->EcCursoModuloModel->tablero(['id_ec_curso' => $id_ec_curso]);
 			$data['ec_curso_modulo_model'] = $tablero['ec_curso_modulo_model'][0]; */
 			$ec_curso  = $this->EcCursoModel->obtener_ec_curso(false, $id_estandar_competencia, true);
-			$data['ec_curso'] = $ec_curso;
-
-			$busquedaCursoModel = array(
-				'id_ec_curso' => $data['ec_curso'] -> id_ec_curso
-			);
-			$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
+			$data = [];
+			if($ec_curso !== false){
+				$data['ec_curso'] = $ec_curso;
+				//dd($data);exit;
+				$busquedaCursoModel = array(
+					'id_ec_curso' => $data['ec_curso'] -> id_ec_curso
+				);
+				$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
+			}
 			//dd($data); exit();
 			$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
 		}catch (Exception $ex){

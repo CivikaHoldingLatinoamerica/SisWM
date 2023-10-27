@@ -104,18 +104,19 @@ class ActividadIEModel extends CI_Model
 				$result = $query->result();
 				foreach ($result as $r){
 					$r->archivos_videos = $this->obtener_archivos_videos($r->id_ec_instrumento_has_actividad);
-					switch ($r->id_cat_instrumento){
-						case INSTRUMENTO_CUESTIONARIO:
-							$buscar_evaluacion_instrumento = array(
-								'id_ec_instrumento_has_actividad' => $r->id_ec_instrumento_has_actividad,
-								'liberada' => 'si'
-							);
-							$evaluacion_instrumento = $this->ECInstrumentoActividadEvaluacionModel->tablero($buscar_evaluacion_instrumento,0);
-							if($evaluacion_instrumento['total_registros'] == 0){
-								$this->evaluacion_instrumento = false;
-							}
-							break;
-					}
+					//se comenta para que no valide lo de los cuestionario dado que no van aqui alimentados en la nueva version
+					// switch ($r->id_cat_instrumento){
+					// 	case INSTRUMENTO_CUESTIONARIO:
+					// 		$buscar_evaluacion_instrumento = array(
+					// 			'id_ec_instrumento_has_actividad' => $r->id_ec_instrumento_has_actividad,
+					// 			'liberada' => 'si'
+					// 		);
+					// 		$evaluacion_instrumento = $this->ECInstrumentoActividadEvaluacionModel->tablero($buscar_evaluacion_instrumento,0);
+					// 		if($evaluacion_instrumento['total_registros'] == 0){
+					// 			$this->evaluacion_instrumento = false;
+					// 		}
+					// 		break;
+					// }
 				}
 			}
 			return $result;
