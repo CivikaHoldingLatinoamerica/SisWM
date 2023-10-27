@@ -29,7 +29,7 @@ class EcCursoModel extends ModeloBase
 		return $criterios;
 	}
 
-	public function obtener_ec_curso($id_ec_curso){
+	public function obtener_ec_curso($id_ec_curso, $id_estandar_competencia = false, $curso_publicado = false){
 		$consulta = "select 
 		  ecc.id_ec_curso,
 		  ecc.nombre_curso,
@@ -45,8 +45,15 @@ class EcCursoModel extends ModeloBase
 		  a.fecha,
 		  a.tipo
 		from ec_curso ecc
-			inner join archivo a on a.id_archivo = ecc.id_archivo 
-		where ecc.id_ec_curso = $id_ec_curso";
+			inner join archivo a on a.id_archivo = ecc.id_archivo ";
+		if($curso_publicado !== false){
+			$consulta .= " 
+			where ecc.id_estandar_competencia = $id_estandar_competencia
+			and ecc.publicado = 'si'";
+		} else {
+			$consulta .= " 
+			where ecc.id_ec_curso = $id_ec_curso";
+		}
 		$query = $this->db->query($consulta);
 		if($query->num_rows() == 0){
 			return false;

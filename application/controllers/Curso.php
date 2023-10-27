@@ -8,6 +8,7 @@ class Curso extends CI_Controller {
 	function __construct()
 	{
 		parent:: __construct();
+		$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('EcCursoModel');
 		$this->load->model('EcCursoModuloModel');
 		$this->load->model('ArchivoModel');
@@ -24,6 +25,7 @@ class Curso extends CI_Controller {
 		$data['titulo_pagina'] = 'Módulos de capacitación';
 		$data['usuario'] = $this->usuario;
 		$data['id_estandar_competencia'] = $id_estandar_competencia;
+		$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
 		$data['migas_pan'] = array(
 			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),

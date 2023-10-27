@@ -110,8 +110,8 @@ var CursoModulo = {
 				Comun.tooltips();
 				Comun.funcion_fileinput('#archivo_eccmt','Archivo temario');
 				CursoModulo.iniciar_carga_archivo();
-				Comun.iniciar_editor_summernote_link_video("#instrucciones", "Describa las instrucciones del curso");
-				Comun.iniciar_editor_summernote_link_video("#contenido_curso", "Describa el contenido del curso");
+				Comun.iniciar_editor_summernote_link_video("#instrucciones", "Describa las instrucciones del tema");
+				Comun.iniciar_editor_summernote_link_video("#contenido_curso", "Describa el contenido del tema");
 			});
 	},
 

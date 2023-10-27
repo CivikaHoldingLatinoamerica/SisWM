@@ -84,6 +84,10 @@ $(document).ready(function(){
 		CandidatoEC.pasos.evaluacion_requerimientos();
 	});
 
+	$(document).on('click','#tab_modulo_capacitacion-tab',function(){
+		CandidatoEC.pasos.modulo_capacitacion();
+	});
+
 	$(document).on('click','#tab_evidencias-tab',function(){
 		CandidatoEC.pasos.evidencias();
 	});
@@ -192,10 +196,11 @@ $(document).ready(function(){
 		switch (progreso_pasos){
 			case 1: $('#tab_derechos_obligaciones-tab').trigger('click'); break;
 			case 2: $('#tab_evaluacion_requerimientos-tab').trigger('click'); break;
-			case 3: $('#tab_evidencias-tab').trigger('click');break;
-			case 4: $('#tab_jucio_competencia-tab').trigger('click');break;
-			case 5: $('#tab_certificado-tab').trigger('click');break;
-			case 6: $('#tab_encuesta_satisfaccion-tab').trigger('click');break;
+			case 3: $('#tab_modulo_capacitacion-tab').trigger('click'); break;
+			case 4: $('#tab_evidencias-tab').trigger('click');break;
+			case 5: $('#tab_jucio_competencia-tab').trigger('click');break;
+			case 6: $('#tab_certificado-tab').trigger('click');break;
+			case 7: $('#tab_encuesta_satisfaccion-tab').trigger('click');break;
 		}
 		setTimeout(function(){
 			CandidatoEC.pasos.modal_informacion();
@@ -551,6 +556,21 @@ var CandidatoEC = {
 					base_url + 'AlumnosEC/ver_progreso_evaluacion_requerimientos/' + id_estandar_competencia + '/' + id_usuario_alumno + '/' + id_usuario_evaluador,{},
 					function(response){
 						$('#tab_evaluacion_requerimientos').html(response);
+					}
+				)
+			}
+		},
+
+		modulo_capacitacion : function(){
+			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
+			var id_usuario_alumno = $('#input_id_usuario_alumno').val();
+			var id_usuario_evaluador = $('#input_id_usuario_evaluador').val();
+			if($('#tab_modulo_capacitacion').html() == ''){
+				$('#tab_modulo_capacitacion').html(overlay);
+				Comun.obtener_contenido_peticion_html(
+					base_url + 'AlumnosEC/ver_progreso_modulos_capacitacion/' + id_estandar_competencia + '/' + id_usuario_alumno + '/' + id_usuario_evaluador,{},
+					function(response){
+						$('#tab_modulo_capacitacion').html(response);
 					}
 				)
 			}

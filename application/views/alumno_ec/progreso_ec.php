@@ -35,19 +35,23 @@
 									   role="tab" aria-controls="tab_evaluacion_requerimientos" aria-selected="false">
 										<i class="fa fa-list-alt"></i> Plan de evaluación/requerimientos
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':'disabled'?>" id="tab_evidencias-tab"  data-toggle="pill" href="#tab_evidencias"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':''?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
+									   role="tab" aria-controls="tab_modulo_capacitacion" aria-selected="false">
+										<i class="fa fa-book"></i> Módulo de capacitación (33%)
+									</a>
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 4 ? 'text-green':'disabled'?>" id="tab_evidencias-tab"  data-toggle="pill" href="#tab_evidencias"
 									   role="tab" aria-controls="tab_evidencias" aria-selected="false">
 										<i class="fa fa-folder-open"></i> Evidencias
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 4 ? 'text-green':'disabled'?>" id="tab_jucio_competencia-tab"  data-toggle="pill" href="#tab_jucio_competencia"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 5 ? 'text-green':'disabled'?>" id="tab_jucio_competencia-tab"  data-toggle="pill" href="#tab_jucio_competencia"
 									   role="tab" aria-controls="tab_jucio_competencia" aria-selected="false">
 										<i class="fa fa-check-circle"></i> Juicio de competencia
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 5 ? 'text-green':'disabled'?>" id="tab_certificado-tab"  data-toggle="pill" href="#tab_certificado"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 6 ? 'text-green':'disabled'?>" id="tab_certificado-tab"  data-toggle="pill" href="#tab_certificado"
 									   role="tab" aria-controls="tab_certificado" aria-selected="false">
 										<i class="fa fa-certificate"></i> Certificado del EC
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 6 ? 'text-green':'disabled'?>" id="tab_encuesta_satisfaccion-tab"  data-toggle="pill" href="#tab_encuesta_satisfaccion"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 7 ? 'text-green':'disabled'?>" id="tab_encuesta_satisfaccion-tab"  data-toggle="pill" href="#tab_encuesta_satisfaccion"
 									   role="tab" aria-controls="tab_encuesta_satisfaccion" aria-selected="false">
 										<i class="fa fa-question"></i> Encuesta de satisfacción
 									</a>
@@ -60,6 +64,7 @@
 									</div>
 									<div class="tab-pane fade" id="tab_derechos_obligaciones" role="tabpanel" aria-labelledby="tab_derechos_obligaciones-tab"></div>
 									<div class="tab-pane fade" id="tab_evaluacion_requerimientos" role="tabpanel" aria-labelledby="tab_evaluacion_requerimientos-tab"></div>
+									<div class="tab-pane fade" id="tab_modulo_capacitacion" role="tabpanel" aria-labelledby="tab_modulo_capacitacion-tab"></div>
 									<div class="tab-pane fade" id="tab_evidencias" role="tabpanel" aria-labelledby="tab_evidencias-tab">
 										<div id="contenedor_pasos_evidencias"></div>
 									</div>

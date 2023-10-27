@@ -16,7 +16,7 @@
 						</button>
 					<?php endif; ?>
 					<?php if(perfil_permiso_operacion_menu('curso_ec.cerrar_liberar')): ?>
-						<?php if($curso->fecha_publicado == null): ?>
+						<?php if($curso->fecha_publicado == "0000-00-00 00:00:00"): ?>
 						<br><button type="button" class="btn btn-sm btn-outline-success mb-1 iniciar_confirmacion_operacion"
 								data-toggle="tooltip" title="Publicar Módulo de capacitación"
 								data-msg_confirmacion_general="¿Esta seguro de publicar el Módulo de capacitación?; al hacerlo, no podra modificarla y esta acción no podrá revertirse"

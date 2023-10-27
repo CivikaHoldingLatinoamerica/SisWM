@@ -1,6 +1,6 @@
 <?php if (isset($ec_curso)): ?>
 	<div class="form-group row">
-		<label class="col-sm-2 col-form-label">Campaña: </label><span
+		<label class="col-sm-2 col-form-label">Módulo de capacitación: </label><span
 				class="col-sm-10 col-form-label"><?= $ec_curso->nombre_curso ?></span>
 		<label class="col-sm-2 col-form-label">Descripción: </label><span
 			class="col-sm-10 col-form-label"><?= $ec_curso->descripcion ?></span>
@@ -9,7 +9,7 @@
 
 <hr>
 <div class="form-group row">
-	<label class="col-form-label">Módulos de Campaña</label>
+	<label class="col-form-label">Módulos</label>
 </div>
 
 <?php if (isset($ec_curso_modulo) && is_array($ec_curso_modulo) && sizeof($ec_curso_modulo) != 0): ?>
@@ -47,7 +47,7 @@
 							<?php if($eccm->eliminado == 'si'): ?>
 								<?php if(perfil_permiso_operacion_menu('ec_curso.deseliminar')):?>
 									<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar módulo"
-											data-msg_confirmacion_general="¿Esta seguro de deseliminar el módulo del curso?, esto volverá a activar el módulo"
+											data-msg_confirmacion_general="¿Esta seguro de deseliminar el módulo?, esto volverá a activar el módulo"
 											data-url_confirmacion_general="<?=base_url()?>Curso/deseliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
 											data-btn_trigger="#btn_buscar_ec_curso_modulos">
 										<i class="fas fa-trash-restore"></i> Deseliminar
@@ -76,7 +76,7 @@
 									<?php endif; ?>
 									<?php if(perfil_permiso_operacion_menu('ec_curso.eliminar')):?>
 										<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar módulo"
-												data-msg_confirmacion_general="¿Esta seguro de eliminar el módulo del curso?, esta acción no podrá revertirse"
+												data-msg_confirmacion_general="¿Esta seguro de eliminar el módulo?, esta acción no podrá revertirse"
 												data-url_confirmacion_general="<?=base_url()?>Curso/eliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
 												data-btn_trigger="#btn_buscar_ec_curso_modulos">
 											<i class="fas fa-trash"></i> Eliminar
@@ -130,7 +130,7 @@
 													<?php if($eccmt->eliminado == 'si'): ?>
 														<?php if(perfil_permiso_operacion_menu('ec_curso.deseliminar')):?>
 															<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar temario"
-																	data-msg_confirmacion_general="¿Esta seguro de deseliminar el temario del curso?, esto volverá a activar el temario"
+																	data-msg_confirmacion_general="¿Esta seguro de deseliminar el temario del módulo?, esto volverá a activar el temario"
 																	data-url_confirmacion_general="<?=base_url()?>Curso/deseliminar_ec_curso_modulo_temario/<?=$eccmt->id_ec_curso_modulo_temario?>"
 																	data-btn_trigger="#btn_buscar_ec_curso_modulos">
 																<i class="fas fa-trash-restore"></i> Deseliminar
@@ -147,7 +147,7 @@
 															<?php endif; ?>
 															<?php if(perfil_permiso_operacion_menu('ec_curso.eliminar')):?>
 																<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar temario"
-																		data-msg_confirmacion_general="¿Esta seguro de eliminar el temario del curso?, esta acción no podrá revertirse"
+																		data-msg_confirmacion_general="¿Esta seguro de eliminar el temario del módulo?, esta acción no podrá revertirse"
 																		data-url_confirmacion_general="<?=base_url()?>Curso/eliminar_ec_curso_modulo_temario/<?=$eccmt->id_ec_curso_modulo_temario?>"
 																		data-btn_trigger="#btn_buscar_ec_curso_modulos">
 																	<i class="fas fa-trash"></i> Eliminar

@@ -26,6 +26,8 @@ class AlumnosEC extends CI_Controller {
 		$this->load->model('UsuarioHasECModel');
 		$this->load->model('UsuarioHasECProgresoModel');
 		$this->load->model('UsuarioModel');
+		$this->load->model('EcCursoModel');
+		$this->load->model('EcCursoModuloModel');
         if(sesionActive()){
 			$this->usuario = usuarioSession();
         }else{
@@ -161,6 +163,27 @@ class AlumnosEC extends CI_Controller {
 			$data['id_usuario_alumno'] = $id_usuario_alumno;
 			$data['id_usuario_evaluador'] = $id_usuario_evaluador;
 			$this->load->view('alumno_ec/progreso_pasos/evaluacion_requerimientos',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function ver_progreso_modulos_capacitacion($id_estandar_competencia,$id_usuario_alumno,$id_usuario_evaluador){
+		try{
+			/* $tablero = $this->EcCursoModuloModel->tablero(['id_ec_curso' => $id_ec_curso]);
+			$data['ec_curso_modulo_model'] = $tablero['ec_curso_modulo_model'][0]; */
+			$ec_curso  = $this->EcCursoModel->obtener_ec_curso(false, $id_estandar_competencia, true);
+			$data['ec_curso'] = $ec_curso;
+
+			$busquedaCursoModel = array(
+				'id_ec_curso' => $data['ec_curso'] -> id_ec_curso
+			);
+			$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
+			//dd($data); exit();
+			$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
