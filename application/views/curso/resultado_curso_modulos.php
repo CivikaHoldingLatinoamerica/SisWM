@@ -71,8 +71,8 @@
 									<?php endif; ?>
 									<?php if(perfil_permiso_operacion_menu('ec_curso.consultar')): ?>
 										<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
-										title="Evaluación al Estándar de competencia"
-										href="<?=base_url()?>evaluacion/<?=$ec_curso->id_estandar_competencia?>/modulo"><i class="fa fa-file-alt"></i> Cuestionario de evaluación</a>
+										title="Evaluación al Módulo del Estándar de competencia"
+										href="<?=base_url()?>evaluacion_cerrada/<?=EVALUACION_MODULO.'/'.$eccm->id_ec_curso_modulo?>"><i class="fa fa-file-alt"></i> Cuestionario de evaluación</a>
 									<?php endif; ?>
 									<?php if(perfil_permiso_operacion_menu('ec_curso.eliminar')):?>
 										<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar módulo"

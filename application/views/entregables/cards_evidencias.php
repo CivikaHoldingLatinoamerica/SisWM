@@ -50,7 +50,7 @@
 
 										<?php
 										if ($item->tipo_entregable == "cuest") : ?>
-										<a class="dropdown-item" href="<?= base_url().'evaluacion_entregable/'.$item->id_entregable?>">Cargar cuestionario</a>
+										<a class="dropdown-item" href="<?= base_url().'evaluacion_cerrada/'.EVALUACION_ENTREGABLE.'/'.$item->id_entregable?>">Cargar cuestionario</a>
 										<?php  endif; ?>
 									</div>
 

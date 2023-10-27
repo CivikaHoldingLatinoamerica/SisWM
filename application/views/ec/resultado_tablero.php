@@ -59,6 +59,7 @@
 								</a>
 							</div>
 						</div>
+						<br>
 					<?php endif; ?>
 
 					<?php if(perfil_permiso_operacion_menu('evaluacion.consultar')): ?>
