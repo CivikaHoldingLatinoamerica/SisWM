@@ -1642,6 +1642,7 @@ INSERT INTO `cat_modulo` (`id_cat_modulo`, `nombre`, `slug`) VALUES (5, 'Evaluac
 INSERT INTO `cat_modulo` (`id_cat_modulo`, `nombre`, `slug`) VALUES (6, 'Perfiles y permisos', 'perfil_permiso');
 INSERT INTO `cat_modulo` (`id_cat_modulo`, `nombre`, `slug`) VALUES (7, 'Catalogos', 'catalogos');
 INSERT INTO `cat_modulo` (`id_cat_modulo`, `nombre`, `slug`) VALUES (8, 'Preguntas de evaluación', 'preguntas_evaluacion');
+INSERT INTO `cat_modulo` (`id_cat_modulo`, `nombre`, `slug`) VALUES (9, 'Módulos de capacitación', 'ec_curso');
 
 
 
