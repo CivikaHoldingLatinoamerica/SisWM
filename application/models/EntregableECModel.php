@@ -12,6 +12,7 @@ class EntregableECModel extends ModeloBase
 		if (sesionActive()) {
 			$this->usuario = usuarioSession();
 		}
+		$this->primary_key = 'id_entregable';
 	}
 
 	public function guardar_entregable($parametros, $id = false)

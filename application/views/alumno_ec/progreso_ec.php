@@ -25,9 +25,9 @@
 								<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
 									<a class="nav-link active text-green" id="tab_derechos_obligaciones-tab"  data-toggle="pill" href="#tab_derechos_obligaciones"
 									   role="tab" aria-controls="tab_derechos_obligaciones" aria-selected="false">
-										<i class="fa fa-file-alt"></i> Derechos y obligacionesssssss
+										<i class="fa fa-file-alt"></i> Derechos y obligaciones
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 2 ? 'text-green':'disabled'?>" id="tab_evaluacion_diagnostica-tab" data-toggle="pill" href="#tab_evaluacion_diagnostica"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 1 ? 'text-green':'disabled'?>" id="tab_evaluacion_diagnostica-tab" data-toggle="pill" href="#tab_evaluacion_diagnostica"
 									   role="tab" aria-controls="tab_evaluacion_diagnostica" aria-selected="true">
 										<i class="fa fa-tasks"></i> Evaluación diagnóstica
 									</a>
@@ -36,9 +36,9 @@
 									   role="tab" aria-controls="tab_evaluacion_requerimientos" aria-selected="false">
 										<i class="fa fa-list-alt"></i> Plan de evaluación/requerimientos
 									</a>
-									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':''?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
+									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':'disabled'?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
 									   role="tab" aria-controls="tab_modulo_capacitacion" aria-selected="false">
-										<i class="fa fa-book"></i> Módulo de capacitación (33%)
+										<i class="fa fa-book"></i> Módulo de capacitación (0%)
 									</a>
 									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 4 ? 'text-green':'disabled'?>" id="tab_evidencias-tab"  data-toggle="pill" href="#tab_evidencias"
 									   role="tab" aria-controls="tab_evidencias" aria-selected="false">
@@ -60,10 +60,10 @@
 							</div>
 							<div class="col-7 col-sm-9">
 								<div class="tab-content" id="vert-tabs-tabContent">
-									<div class="tab-pane text-left fade active show" id="tab_evaluacion_diagnostica" role="tabpanel" aria-labelledby="tab_evaluacion_diagnostica-tab">
+									<div class="tab-pane fade active show" id="tab_derechos_obligaciones" role="tabpanel" aria-labelledby="tab_derechos_obligaciones-tab"></div>
+									<div class="tab-pane text-left fade" id="tab_evaluacion_diagnostica" role="tabpanel" aria-labelledby="tab_evaluacion_diagnostica-tab">
 										<div id="contenedor_eva_diagnostica"></div>
 									</div>
-									<div class="tab-pane fade" id="tab_derechos_obligaciones" role="tabpanel" aria-labelledby="tab_derechos_obligaciones-tab"></div>
 									<div class="tab-pane fade" id="tab_evaluacion_requerimientos" role="tabpanel" aria-labelledby="tab_evaluacion_requerimientos-tab"></div>
 									<div class="tab-pane fade" id="tab_modulo_capacitacion" role="tabpanel" aria-labelledby="tab_modulo_capacitacion-tab"></div>
 									<div class="tab-pane fade" id="tab_evidencias" role="tabpanel" aria-labelledby="tab_evidencias-tab">

@@ -15,10 +15,13 @@
 						|| $tipo == 'instructor'): ?>
 					<div class="modal-body">
 
-						<div class="callout callout-danger">
-							<h5>Información importante</h5>
-							<p>Para poder registrar el candidato no olvide selecionar el instructor y despues del boton de guardar <button type="button" class="btn btn-sm btn-success" ><i class="fa fa-save"></i></button></p>
-						</div>
+						<?php if(isset($tipo) && $tipo != 'instructor'): ?>
+							<div class="callout callout-danger">
+								<h5>Información importante</h5>
+								<p>Para poder registrar el candidato no olvide selecionar el instructor y despues del boton de guardar <button type="button" class="btn btn-sm btn-success" ><i class="fa fa-save"></i></button></p>
+							</div>
+						<?php endif; ?>
+						
 
 						<?php if(isset($usuarios) && is_array($usuarios) && sizeof($usuarios) > 0): ?>
 							<?php if($tipo == 'alumno'): ?>

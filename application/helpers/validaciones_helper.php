@@ -529,6 +529,25 @@ class Validaciones_Helper {
 		return $result;
 	}
 
+	public static function formEncuestaSatisfacionDerechosObligaciones($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['respuesta']) || sizeof($data['respuesta']) == 0){
+			$result['success'] = false;
+			$result['msg'][] = 'Faltan las respuestas a las preguntas de la encuesta de satisfacción';
+		}else{
+			$index = 0;
+			foreach ($data['respuesta'] as $r){
+				$index++;
+				if(self::isCampoVacio($r)){
+					$result['success'] = false;
+					$result['msg'][] = 'La respuesta de la pregunta '.$index.' es requerido';
+				}
+			}
+		}
+		return $result;
+	}
+
 	public static function formConfigCorreo($data){
 		$result['success'] = true;
 		$result['msg'] = array();
