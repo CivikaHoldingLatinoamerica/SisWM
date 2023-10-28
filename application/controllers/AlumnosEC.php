@@ -137,10 +137,22 @@ class AlumnosEC extends CI_Controller {
 		}
 	}
 
-	public function ver_progreso_derechos_obligaciones(){
+	public function ver_progreso_derechos_obligaciones($id_estandar_competencia,$id_usuario){
 		perfil_permiso_operacion('tecnicas_instrumentos.consultar');
 		try{
-			$this->load->view('alumno_ec/progreso_pasos/derechos_obligaciones');
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' =>$id_estandar_competencia,'id_usuario' => $id_usuario),0);
+			$usuario_has_ec = $usuario_has_ec['usuario_has_estandar_competencia'][0];
+			$data['usuario_has_ec'] = $usuario_has_ec;
+			$data['usuario_has_encuesta_satisfacion'] = $this->UsuarioHasEncuestaModel->encuesta_satisfacion_usuario_ec($usuario_has_ec->id_usuario_has_estandar_competencia);
+			$data['cat_preguntas_encuesta'][] = $this->CatalogoModel->cat_preguntas_encuesta_uno();
+			if(!is_null($data['usuario_has_encuesta_satisfacion'])){
+				foreach ($data['cat_preguntas_encuesta'] as $cpe){
+					$respuesta_candidato = $this->UsuarioHasEncuestaModel->respuesta_candidato_pregunta($cpe->id_cat_preguntas_encuesta,$data['usuario_has_encuesta_satisfacion']->id_usuario_has_encuesta_satisfaccion);
+					$cpe->respuesta = $respuesta_candidato;
+				}
+			}
+			//var_dump($data);exit;
+			$this->load->view('alumno_ec/progreso_pasos/derechos_obligaciones',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

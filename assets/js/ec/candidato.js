@@ -80,6 +80,11 @@ $(document).ready(function(){
 		CandidatoEC.pasos.derechos_obligaciones();
 	});
 
+	$(document).on('click','#tab_evaluacion_diagnostica-tab',function(){
+		CandidatoEC.pasos.evaluacion_diagnostica();
+	});
+
+
 	$(document).on('click','#tab_evaluacion_requerimientos-tab',function(){
 		CandidatoEC.pasos.evaluacion_requerimientos();
 	});
@@ -189,12 +194,12 @@ $(document).ready(function(){
 	})
 
 	if(!window.location.pathname.includes('/estandar_competencia')){
-		CandidatoEC.pasos.evaluacion_diagnostica();
+		CandidatoEC.pasos.derechos_obligaciones();
 		$('a#menu_bars').trigger('click');
 		//validamos en que paso se encuentra el usuario
 		var progreso_pasos = parseInt($('#input_pregreso_pasos').val());
 		switch (progreso_pasos){
-			case 1: $('#tab_derechos_obligaciones-tab').trigger('click'); break;
+			case 1: $('#tab_evaluacion_diagnostica-tab').trigger('click'); break;
 			case 2: $('#tab_evaluacion_requerimientos-tab').trigger('click'); break;
 			case 3: $('#tab_modulo_capacitacion-tab').trigger('click'); break;
 			case 4: $('#tab_evidencias-tab').trigger('click');break;
@@ -535,10 +540,12 @@ var CandidatoEC = {
 		},
 
 		derechos_obligaciones : function(){
+			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
+			var id_usuario_alumno = $('#input_id_usuario_alumno').val();
 			if($('#tab_derechos_obligaciones').html() == ''){
 				$('#tab_derechos_obligaciones').html(overlay);
 				Comun.obtener_contenido_peticion_html(
-					base_url + 'AlumnosEC/ver_progreso_derechos_obligaciones',{},
+					base_url + 'AlumnosEC/ver_progreso_derechos_obligaciones/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
 					function(response){
 						$('#tab_derechos_obligaciones').html(response);
 					}
