@@ -73,8 +73,8 @@ $route['evaluacion_calificacion/(:num)'] = 'AlumnosEC/calificacion_evaluacion/$1
 $route['ver_evaluacion/(:num)'] = 'AlumnosEC/ver_evaluacion/$1';
 $route['encuesta/(:num)/(:num)'] = 'EncuestaSatisfaccion/candidato/$1/$2';
 $route['encuesta_candidato/(:num)/(:num)'] = 'EncuestaSatisfaccion/candidato_lectura/$1/$2';
-$route['campania/(:num)'] = 'Curso/index/$1';
-$route['campania/modulo/(:num)'] = 'Curso/index_curso_modulos/$1';
+$route['modulo_capacitacion/(:num)'] = 'Curso/index/$1';
+$route['modulo_capacitacion/modulo/(:num)'] = 'Curso/index_curso_modulos/$1';
 //rutas para la evaluacion del cuestionario del instrumento
 $route['evaluacion_instrumento/(:num)/(:num)'] = 'AlumnosEC/evaluacion_instrumento/$1/$2';
 $route['403'] = 'admin/sin_permisos';

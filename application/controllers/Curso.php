@@ -208,11 +208,12 @@ class Curso extends CI_Controller {
 		$data['titulo_pagina'] = 'Módulos de capacitación Walmart - Administración de Modulos';
 		$data['usuario'] = $this->usuario;
 		$data['id_ec_curso'] = $id_ec_curso;
+		$data['ec_curso'] = $this->EcCursoModel->obtener_row($id_ec_curso);
 
 		$data['migas_pan'] = array(
 			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
-			array('nombre' => 'Módulos de capacitación','activo' => false,'url' => base_url().'campania/'.$id_ec_curso),
+			array('nombre' => 'Módulos de capacitación','activo' => false,'url' => base_url().'modulo_capacitacion/'.$data['ec_curso']->id_estandar_competencia),
 			array('nombre' => 'Modulos','activo' => true,'url' => '#'),
 		);
 

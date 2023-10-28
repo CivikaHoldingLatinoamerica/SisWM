@@ -26,6 +26,7 @@
 						</button>
 						<?php endif; ?>
 					<?php endif; ?>
+				<?php if($curso->publicado == "no"): ?>
 					<?php if(perfil_permiso_operacion_menu('curso_ec.modificar')): ?>
 						<button type="button" id="modificar_estandar_competencia_curso" class="btn btn-sm btn-outline-info"
 								data-id_estandar_competencia="<?=$curso->id_estandar_competencia ?>"
@@ -35,7 +36,7 @@
 					
 						<a class="btn btn-sm btn-outline-primary contenidocursomodulo"
 								data-toggle="tooltip" title="Contenido curso módulo"
-								href="<?=base_url()?>campania/modulo/<?=$curso->id_ec_curso?>"><i class="fa fa-edit"></i>Contenido módulos </a>
+								href="<?=base_url()?>modulo_capacitacion/modulo/<?=$curso->id_ec_curso?>"><i class="fa fa-edit"></i>Contenido módulos </a>
 					
 					<?php endif; ?>
 					<?php if(perfil_permiso_operacion_menu('curso_ec.eliminar')): ?>
@@ -47,7 +48,8 @@
 							<i class="fas fa-trash"></i> Eliminar
 						</button>
 						<hr>
-					<?php endif; ?>  					
+					<?php endif; ?>  		
+				<?php endif; ?>  	
 				</div>
 			</div>
 		</div>
