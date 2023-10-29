@@ -117,6 +117,7 @@ class AlumnosEC extends CI_Controller {
 			$data['ec_has_evaluacion'] = $this->ECHasEvaluacionModel->obtener_evaluaciones_ec($id_estandar_competencia);
 			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario),0);
 			$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
+			$data['usuario_has_evaluacion_realizada'] = false;
 			foreach ($data['ec_has_evaluacion'] as $eche){
 				$buscar_evaluacion_realizada = array(
 					'id_usuario' => $id_usuario,
@@ -125,8 +126,9 @@ class AlumnosEC extends CI_Controller {
 				);
 				$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_evaluacion_realizada,0);
 				$eche->evaluaciones_realizadas = $usuario_has_evaluacion_realizada['usuario_has_evaluacion_realizada'];
+				$data['usuario_has_evaluacion_realizada'] = $eche->evaluaciones_realizadas != 0;
 			}
-			//var_dump($data['ec_has_evaluacion']);exit;
+			//var_dump($data);exit;
 			//fin apartado de evaluacion diagnostica
 			$this->load->view('alumno_ec/progreso_pasos/evaluacion_diagnostica',$data);
 		}catch (Exception $ex){

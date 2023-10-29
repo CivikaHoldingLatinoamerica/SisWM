@@ -66,6 +66,7 @@ $route['estandar_competencia/convocatoria/(:num)'] = 'ConvocatoriasEC/index/$1';
 $route['tecnicas_instrumentos/(:any)'] = 'TecnicasInstrumentos/index/$1';
 $route['evaluacion_cerrada/(:any)/(:any)'] = 'EvaluacionEC/index/$1/$2';
 $route['evaluacion/(:num)/(:num)'] = 'AlumnosEC/evaluacion/$1/$2';
+$route['evaluacion_diagnostica/(:num)/(:num)'] = 'AlumnosEC/evaluacion/$1/$2';
 $route['cuestionario_ati/(:num)/(:num)'] = 'EvaluacionEC/cuestionario_ati/$1/$2';
 $route['preguntas_abiertas/(:num)'] = 'PreguntasAbiertas/index/$1';
 $route['respuestas_preguntas_abiertas/(:num)'] = 'PreguntasAbiertas/formulario_respuestas/$1';

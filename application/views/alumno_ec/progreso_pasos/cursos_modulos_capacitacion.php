@@ -1,6 +1,6 @@
 <div class="form-group">
 	<div class="col-12">
-		<div class="card">
+		<div class="card card-primary">
 
 		<div class="card-header">
 				<h4 class="card-title"><b>Módulo de capacitación detalles</b></h4>
@@ -126,7 +126,7 @@
 												</div>
 
 											<?php else: ?>
-												<?php $this->load->view('default/sin_datos'); ?>
+												<?php $this->load->view('default/sin_datos_candidato'); ?>
 											<?php endif; ?>
 											</div>
 										</div>
@@ -138,11 +138,11 @@
 					</div>
 
 				<?php else: ?>
-					<?php $this->load->view('default/sin_datos'); ?>
+					<?php $this->load->view('default/sin_datos_candidato'); ?>
 				<?php endif; ?>
 			
 			<?php else: ?>
-				<?php $this->load->view('default/sin_datos'); ?>
+				<?php $this->load->view('default/sin_datos_candidato'); ?>
 			<?php endif; ?>
 
 			</div>
