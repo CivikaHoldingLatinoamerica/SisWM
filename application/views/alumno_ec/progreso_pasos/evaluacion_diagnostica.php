@@ -101,9 +101,14 @@
 </div>
 
 <div class="form-group row">
-	<div class="col-12 text-right">
+	<div class="col-lg-6 text-left">
+		<button type="button" class="btn btn-sm btn-outline-info btn_paso_anterior_pasos" data-anterior_link="#tab_derechos_obligaciones-tab">
+			<i class="fa fa-backward"></i> Anterior
+		</button>
+	</div>
+	<div class="col-6 text-right">
 		<button type="button" <?=sizeof($ecc->evaluaciones_realizadas) != 0 ? '':'disabled="disabled"'?>
-				data-siguiente_link="#tab_derechos_obligaciones-tab" data-numero_paso="1"
+				data-siguiente_link="#tab_evaluacion_requerimientos-tab" data-numero_paso="2"
 				class="btn btn-outline-success guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
 	</div>
 </div>
