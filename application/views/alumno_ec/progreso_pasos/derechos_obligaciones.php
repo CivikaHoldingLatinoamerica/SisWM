@@ -169,7 +169,7 @@
 
 <div class="form-group row justify-content-between">
 	<div class="col-lg-8 text-left">
-		<?php if(isset($usuario_has_encuesta_satisfacion) && is_null($usuario_has_encuesta_satisfacion)): ?>
+		<?php if(!isset($usuario_has_encuesta_satisfacion) || is_null($usuario_has_encuesta_satisfacion)): ?>
 			<div class="callout callout-warning">
 				<h5>Información importante</h5>
 				<p>Para poder ir a la evaluación diagnóstica, es necesario que responda primero la pregunta de la encuesta de satisfacción</p>
