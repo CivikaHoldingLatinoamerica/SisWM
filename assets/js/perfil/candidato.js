@@ -321,7 +321,7 @@ var PerfilCandidato = {
 	iniciar_carga_imagen_perfil : function (id_usuario) {
 		Comun.iniciar_carga_imagen('.img_foto_perfil','#procesando_img_foto_perfil',function(archivo){
 			Comun.obtener_contenido_peticion_json(
-				base_url + 'Perfil/actualizar_foto_perfil/'+archivo.id_archivo,{},
+				base_url + 'Perfil/actualizar_foto_perfil/'+archivo.id_archivo+'/'+id_usuario,{},
 				function(response){
 					if(response.success){
 						Comun.mensajes_operacion(response.msg,'success');
@@ -333,17 +333,17 @@ var PerfilCandidato = {
 				}
 			);
 			//como para los alumnos aplica la foto de certificados se manda el mismo archivo con la funcionalidad del de certificados
-			Comun.obtener_contenido_peticion_json(
-				base_url + 'Perfil/actualizar_expediente_digital/'+archivo.id_archivo+'/2',{},
-				function(response){
-					if(response.success){
-						Comun.mensajes_operacion(response.msg,'success');
-						$('.img_foto_certificado').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
-					}else{
-						Comun.mensajes_operacion(response.msg,'error');
-					}
-				}
-			);
+			// Comun.obtener_contenido_peticion_json(
+			// 	base_url + 'Perfil/actualizar_expediente_digital/'+archivo.id_archivo+'/2',{},
+			// 	function(response){
+			// 		if(response.success){
+			// 			Comun.mensajes_operacion(response.msg,'success');
+			// 			$('.img_foto_certificado').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
+			// 		}else{
+			// 			Comun.mensajes_operacion(response.msg,'error');
+			// 		}
+			// 	}
+			// );
 		})
 	},
 

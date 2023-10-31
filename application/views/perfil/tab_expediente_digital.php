@@ -1,34 +1,28 @@
 <div class="form-group row">
-	<?php if(isset($usuario) && in_array($usuario->perfil,array('root','admin','instructor'))): ?>
-		<!-- Profile Image -->
-		<div class="col-sm-4">
-			<div class="card card-danger card-outline">
-				<div class="card-body box-profile">
-					<div class="text-center">
+	<!-- Profile Image -->
+	<div class="col-sm-4">
+		<div class="card card-danger card-outline">
+			<div class="card-body box-profile">
+				<div class="text-center">
 
-						<img class="profile-user-img img-fluid img-circle img_foto_perfil" style="width: 100px; height: 100px;"
-							 src="<?=isset($foto_perfil) ? base_url($foto_perfil->ruta_directorio.$foto_perfil->nombre) : base_url('/assets/imgs/iconos/admin.png')?>"
-							 alt="Foto de perfil">
-					</div>
+					<img class="profile-user-img img-fluid img-circle img_foto_perfil" style="width: 100px; height: 100px;"
+							src="<?=isset($foto_perfil) ? base_url($foto_perfil->ruta_directorio.$foto_perfil->nombre) : base_url('/assets/imgs/iconos/admin.png')?>"
+							alt="Foto de perfil">
+				</div>
 
-					<h3 class="profile-username text-center">
-						Foto de perfil
-					</h3>
-					<?php if(isset($usuario) && $usuario->perfil == 'alumno'): ?>
-						<p class="text-sm text-muted">Foto digital a color tamaño infantil, de frente, fondo blanco, sin lentes, frente descubierta. (En caso de usar aretes, que estos sean pequeños)</p>
-					<?php else: ?>
-						<p class="text-sm text-muted">Foto digital de libre elección (color, blanco y negro, distintos tamaños, etc), no se usará para los expedientes emitidos por el sistema</p>
-					<?php endif; ?>
-				</div>
-				<!-- /.card-body -->
-				<div class="card-footer text-right">
-					<input type="file" id="img_perfil" name="img_foto_perfil" accept="image/*" class="img_foto_perfil">
-					<div id="procesando_img_foto_perfil"></div>
-				</div>
+				<h3 class="profile-username text-center">
+					Foto de perfil
+				</h3>
+				<p class="text-sm text-muted">Foto digital de libre elección (color, blanco y negro, distintos tamaños, etc), no se usará para los expedientes emitidos por el sistema</p>
 			</div>
-			<!-- /.card -->
+			<!-- /.card-body -->
+			<div class="card-footer text-right">
+				<input type="file" id="img_perfil" name="img_foto_perfil" accept="image/*" class="img_foto_perfil">
+				<div id="procesando_img_foto_perfil"></div>
+			</div>
 		</div>
-	<?php endif;?>
+		<!-- /.card -->
+	</div>
 
 	<?php if(isset($usuario) && in_array($usuario->perfil,array('alumno'))): ?>
 		<!-- foto certificados -->
