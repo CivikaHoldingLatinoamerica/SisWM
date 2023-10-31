@@ -612,7 +612,7 @@ class EvaluacionEC extends CI_Controller {
 	private function resultadoEvaluacionEntregable($id_entregable){
 		$data['entregable_ec'] = $this->EntregableECModel->obtener_row($id_entregable);
 		$busqueda = array(
-			'id_ec_curso_modulo' => $id_entregable,
+			'id_entregable' => $id_entregable,
 			'id_cat_evaluacion' => EVALUACION_ENTREGABLE,
 			'eliminado' => 'no'
 		);

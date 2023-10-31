@@ -17,9 +17,9 @@
 				</div>
 				<div class="col-md-6 text-right">
 					<?php if (isset($liberado) && !$liberado): ?>
-					<button type="button" id="btn_nuevo_entregable" class="btn btn-sm btn-outline-success"><i
-							class="fa fa-plus-square"></i> Nuevo
-					</button>
+						<button type="button" id="btn_nuevo_entregable" class="btn btn-sm btn-outline-success"><i
+								class="fa fa-plus-square"></i> Nuevo
+						</button>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -28,29 +28,8 @@
 
 		<div class="card">
 			<div class="card-body">
-				<?php if (isset($entregables) && sizeof($entregables) != 0): ?>
-
-					<div id="contenedor_entregables" class="row">
-					</div>
-				<?php if (isset($liberado) && !$liberado && isset($btn_liberar) && $btn_liberar): ?>
-					<div class="row text-right">
-						<div class="col mb-3">
-							<button id="btn-liberar" class="btn btn-outline-success">Liberar</button>
-						</div>
-					</div>
-					<?php endif; ?>
-				<?php else: ?>
-					<div class="row">
-						<div class="col">
-							<div class="callout callout-warning">
-								<h5>Lo siento</h5>
-								<p>No se encontro registros de búsqueda</p>
-							</div>
-						</div>
-					</div>
-				<?php endif; ?>
-
-
+				<div id="contenedor_entregables">
+				</div>
 			</div>
 		</div>
 

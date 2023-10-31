@@ -102,9 +102,9 @@ class entregable extends CI_Controller
 
 			$post = $this->input->post();
 			$rules = array(
-				'nombre' => array("required","maxLength"=>45),
-				'descripcion' => array("required","maxLength"=>100),
-				'instrucciones' => array("required","maxLength"=>250),
+				'nombre' => array("required","maxLength"=>150),
+				'descripcion' => array("required","maxLength"=>1000),
+				'instrucciones' => array("required"),
 				'tipo_entregable' => array("required"),
 				'instrumentos' => array("required")
 			);
@@ -153,8 +153,11 @@ class entregable extends CI_Controller
 
 		$this->load->view('entregables/cards_evidencias',$data);
 	}
-	public function obtener_entregable($id,$id_estandar){
-		$data['entregable'] = $this->EntregableECModel->obtener_entregable($id);
+	public function obtener_entregable($id_estandar,$id =0){
+
+		if ($id > 0){
+			$data['entregable'] = $this->EntregableECModel->obtener_entregable($id);
+		}
 
 		$data['instrumentos'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar);
 
@@ -197,7 +200,7 @@ class entregable extends CI_Controller
 		}
 		echo json_encode($response);
 	}
-	public function cambiar_estatus($id_entregable, $id_estatus, $id_alumno, $id_formulario){
+	public function cambiar_estatus($id_entregable, $id_estatus, $id_alumno, $id_formulario = false){
 		try{
 			$data =  $this->EcEntregableAlumno->cambiar_estatus($id_entregable, $id_alumno, $id_estatus,$id_formulario);
 			if($data['success']){
