@@ -125,8 +125,8 @@ class Curso extends CI_Controller {
 		try{
 			/* $tablero = $this->EcCursoModuloModel->tablero(['id_ec_curso' => $id_ec_curso]);
 			$data['ec_curso_modulo_model'] = $tablero['ec_curso_modulo_model'][0]; */
-			$ec_curso  = $this->EcCursoModel->obtener_ec_curso($id_ec_curso);
-			$data['ec_curso'] = $ec_curso;
+			$data['ec_curso'] = $this->EcCursoModel->obtener_ec_curso($id_ec_curso);
+			
 
 			$busquedaCursoModel = array(
 				'id_ec_curso' => $id_ec_curso
@@ -145,6 +145,15 @@ class Curso extends CI_Controller {
 	public function publicar($id_ec_curso, $id_estandar_competencia){
 		perfil_permiso_operacion('curso_ec.consultar');
 		try{
+
+			$dataCursoModuloTemario = $this->EcCursoModel->getCursoModuloTemario($id_ec_curso);
+
+			$result = Validaciones_Helper::validatePublicateModuloCapacitacion($dataCursoModuloTemario);
+
+			if(!$result['success']){
+				echo json_encode($result); exit();
+			}
+			
 			$cambiarCursosPublicadoNO = $this->EcCursoModel->actualizar_row_criterios(array("id_estandar_competencia" => $id_estandar_competencia), array("publicado" => "no"));
 
 			$publicar = $this->EcCursoModel->actualizar(['publicado' => 'si', 'fecha_publicado' => date('Y-m-d H:i:s')],$id_ec_curso);

@@ -714,11 +714,42 @@ class Validaciones_Helper {
 						continue;
 					}
 				}
-
-				
-
 			}
+		}
 		
+		return $result;
+
+	}
+
+	public static function validatePublicateModuloCapacitacion($data_curso){
+
+		$result = array(
+			'success' => true,
+			'msg'=> array()
+		);
+		
+		if($data_curso['success'] && isset($data_curso['ec_curso'])){
+
+			if(isset($data_curso['ec_curso_modulos']) && !empty($data_curso['ec_curso_modulos'])){
+				foreach($data_curso['ec_curso_modulos'] as $modulo){		
+					if(!isset($modulo->ec_curso_modulo_temario) || empty($modulo->ec_curso_modulo_temario)){
+						$result['success']		= false;
+						$result['msg'][]	= "Es necesario agregar por lo menos un temario en el módulo: <strong>".$modulo->descripcion."</strong>.";  
+					}
+
+					if(!isset($modulo->id_evaluacion) || $modulo->id_evaluacion == null){
+						$result['success']		= false;
+						$result['msg'][]	= "Es necesario agregar una evaluación en el módulo: <strong>".$modulo->descripcion."</strong>.";  
+					}
+				}
+
+			} else {
+				$result['success']		= false;
+				$result['msg'][]	= 'Es necesario registrar por lo menos 1 módulo para poder publicar.';
+			}
+		} else {
+			$result['success']		= false;
+			$result['msg'][]	= 'Ocurrio un problema al obtener los datos para realizar la validación. Por favor, intentar mas tarde.';
 		}
 		
 		

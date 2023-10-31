@@ -12,6 +12,7 @@ class EcCursoModel extends ModeloBase
 	{
 		parent::__construct('ec_curso', 'ecc');
 		
+		$this->load->model('EcCursoModuloModel');
 	}
 
 	public function criterios_join()
@@ -60,4 +61,23 @@ class EcCursoModel extends ModeloBase
 		}
 		return $query->row();
 	}
+
+	public function getCursoModuloTemario($id_ec_curso){
+		try{
+			$result['success'] = true;
+
+			$consulta = $this->obtener_row($id_ec_curso);			
+
+			$result["ec_curso"] = $consulta;
+			$result['ec_curso_modulos'] = $this->EcCursoModuloModel->getModuloByCurso($id_ec_curso);
+
+			return $result;
+		}catch (Exception $ex){
+			log_message('error','ec_curso->getCursoModuloTemario');
+			log_message('error',$ex->getMessage());
+			return false;
+		}
+	}
+
+	
 }
