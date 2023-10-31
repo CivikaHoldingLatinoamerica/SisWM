@@ -38,7 +38,7 @@
 									</a>
 									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 3 ? 'text-green':'disabled'?>" id="tab_modulo_capacitacion-tab"  data-toggle="pill" href="#tab_modulo_capacitacion"
 									   role="tab" aria-controls="tab_modulo_capacitacion" aria-selected="false">
-										<i class="fa fa-book"></i> Módulo de capacitación (0%)
+										<i class="fa fa-book"></i> Módulo de capacitación (<?= $progreso_modulos_capacitacion ?>%)
 									</a>
 									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 4 ? 'text-green':'disabled'?>" id="tab_evidencias-tab"  data-toggle="pill" href="#tab_evidencias"
 									   role="tab" aria-controls="tab_evidencias" aria-selected="false">

@@ -75,6 +75,7 @@ class AlumnosEC extends CI_Controller {
 			$progreso_pasos = $this->UsuarioHasECProgresoModel->tablero(array('id_usuario_has_estandar_competencia' => $data['usuario_has_ec']->id_usuario_has_estandar_competencia),0);
 			//iteramos el progreso de pasos para determinar si habilitamos o no los pasos del candidato y calcular su progreso
 			$data['progreso_pasos'] = $progreso_pasos['total_registros'];
+			$data['progreso_modulos_capacitacion']	= $this->ver_progreso_modulos_capacitacion($id_estandar_competencia,$this->usuario->id_usuario,$id_usuario_evaluador,false);
 			//var_dump($progreso_pasos);exit;
 			$this->load->view('alumno_ec/progreso_ec',$data);
 		}catch (Exception $ex){
@@ -187,7 +188,7 @@ class AlumnosEC extends CI_Controller {
 		}
 	}
 
-	public function ver_progreso_modulos_capacitacion($id_estandar_competencia,$id_usuario_alumno,$id_usuario_evaluador){
+	public function ver_progreso_modulos_capacitacion($id_estandar_competencia,$id_usuario_alumno,$id_usuario_evaluador, $isTabResult = true){
 		try{
 			/* $tablero = $this->EcCursoModuloModel->tablero(['id_ec_curso' => $id_ec_curso]);
 			$data['ec_curso_modulo_model'] = $tablero['ec_curso_modulo_model'][0]; */
@@ -205,7 +206,11 @@ class AlumnosEC extends CI_Controller {
 
 			$data['usuario'] = $this->usuario;
 			$data['usuario_has_evaluacion_realizada'] = true;
+			$countModulo 		= 0;
+			$countEvaRealizadas	= 0
 			foreach ($data['ec_curso_modulo']['ec_curso_modulo'] as $eccm){
+				$countModulo++;
+
 				$buscar_evaluacion_realizada = array(
 					'id_usuario' => $this->usuario->id_usuario,
 					'id_ec_curso_modulo' => $eccm->id_ec_curso_modulo,
@@ -216,14 +221,20 @@ class AlumnosEC extends CI_Controller {
 				$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada;
 				if($eccm->evaluaciones_realizadas['total_registros'] == 0){
 					$data['usuario_has_evaluacion_realizada'] = false;
-					continue;
+				} else {
+					$countEvaRealizadas++;
 				}
 			}
-			
-			
+
+			$data['porcentaje_avance'] = ($countEvaRealizadas / $countModulo) * 100;		
 			
 			//var_dump($data); exit();
-			$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
+			if($isTabResult){
+				$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
+			} else {
+				return $data['porcentaje_avance'] ;
+			}
+			
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
