@@ -436,6 +436,9 @@ class Validaciones_Helper {
 		}if(!isset($data['representante_trabajadores']) || self::isCampoVacio($data['representante_trabajadores'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo representante trabajadores es requerido';
+		}if(!isset($data['id_archivo_logotipo']) || self::isCampoVacio($data['id_archivo_logotipo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'La imagen/logitpo de la empresa es requerido';
 		}
 		return $result;
 	}

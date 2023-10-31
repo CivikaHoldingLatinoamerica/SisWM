@@ -4,17 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class AlumnosEC extends CI_Controller {
 
-    private $usuario;
+    	private $usuario;
 
-    function __construct(){
-        parent:: __construct();
+	function __construct(){
+		parent:: __construct();
 		$this->load->model('ArchivoModel');
 		$this->load->model('ActividadIEModel');
-        $this->load->model('EcInstrumentoAlumnoModel');
-        $this->load->model('EcInstrumentoAlumnoComentarioModel');
-        $this->load->model('EcInstrumentoAlumnoEvidenciasModel');
-        $this->load->model('EntregableAlumnoArchivoModel');
-        $this->load->model('ECUsuarioHasExpedientePEDModel');
+		$this->load->model('EcCursoModuloModel');
+		$this->load->model('EcInstrumentoAlumnoModel');
+		$this->load->model('EcInstrumentoAlumnoComentarioModel');
+		$this->load->model('EcInstrumentoAlumnoEvidenciasModel');
+		$this->load->model('EntregableAlumnoArchivoModel');
+		$this->load->model('ECUsuarioHasExpedientePEDModel');
 		$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('ECHasEvaluacionModel');
 		$this->load->model('EvaluacionHasPreguntasModel');
@@ -28,14 +29,14 @@ class AlumnosEC extends CI_Controller {
 		$this->load->model('UsuarioModel');
 		$this->load->model('EcCursoModel');
 		$this->load->model('EcCursoModuloModel');
-        if(sesionActive()){
+		if(sesionActive()){
 			$this->usuario = usuarioSession();
-        }else{
-            $this->usuario = false;
-            http_response_code(401);
+        	}else{
+			$this->usuario = false;
+            	http_response_code(401);
 			redirect(base_url().'login');
-        }
-    }
+        	}
+    	}
 
 	/**
 	 * funciones para ver el progreso del candidado del EC
@@ -598,7 +599,7 @@ class AlumnosEC extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
-	public function evaluacion($id_estandar_competencia,$id_evaluacion){
+	public function evaluacion_diagnostica($id_estandar_competencia,$id_evaluacion){
 		perfil_permiso_operacion('evaluacion.respuesta');
 		try{
 			$data['titulo_pagina'] = 'Mi examen de la EC';
@@ -677,6 +678,168 @@ class AlumnosEC extends CI_Controller {
 			}
 			//var_dump($data);exit;
 			$this->load->view('alumno_ec/examen',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
+		}
+	}
+
+	public function evaluacion_entregable($id_entregable,$id_evaluacion){
+		perfil_permiso_operacion('evaluacion.respuesta');
+		try{
+			$data['titulo_pagina'] = 'Mi examen del entregable ';
+			$data['sidebar'] = 'estandar_competencias';
+			$data['usuario'] = $this->usuario;
+			$data['extra_js'] = array(
+				base_url().'assets/frm/jquery_countdown/jquery.countdown.min.js',
+				base_url().'assets/js/ec/examen.js',
+			);
+			$data['extra_css'] = array(
+				base_url().'assets/css/reloj.css'
+			);
+			$data['estandar_competencia'] = $this->EntregableECModel->obtener_row($id_entregable);
+			var_dump($data);exit;
+			$data['evaluacion'] = $this->EvaluacionModel->obtener_row($id_evaluacion);
+			$ec_has_evaluacion = $this->ECHasEvaluacionModel->tablero(array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'id_evaluacion' => $id_evaluacion,
+				'liberada' => 'si'
+			));
+			//var_dump($ec_has_evaluacion);exit;
+			$data['existe_evaluacion_liberada'] = true;
+			//validamos que exista una evaluacion liberada
+			//apartado para calificaciones
+			$data['tiene_evaluacion_aprobatoria'] = false;
+			$data['puede_realizar_evaluacion'] = true;
+			$evaluacion_preguntas = $this->EvaluacionHasPreguntasModel->tablero(array('id_evaluacion' => $id_evaluacion));
+			$data['ec_has_evaluacion'] = $ec_has_evaluacion['estandar_competencia_has_evaluacion'][0];
+			$data['preguntas_evaluacion'] = $evaluacion_preguntas['preguntas_evaluacion'];
+			//validamos una evaluacion realizada y aprobada
+			$buscar_usuario_has_evaluacion_enviada =  array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'id_estandar_competencia_has_evaluacion' => $data['ec_has_evaluacion']->id_estandar_competencia_has_evaluacion,
+				'id_usuario' => $this->usuario->id_usuario,
+				'enviada' => 'si'
+			);
+			$usuario_has_evaluacion_enviada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion_enviada,0);
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $this->usuario->id_usuario),0);
+			$usuario_has_ec = $usuario_has_ec['usuario_has_estandar_competencia'][0];
+			$data['usuario_has_estandar_competencia'] = $usuario_has_ec;
+			$total_intentos = $data['evaluacion']->intentos;
+			if(is_object($usuario_has_ec) && $usuario_has_ec->intentos_adicionales != 0){
+				$total_intentos += $usuario_has_ec->intentos_adicionales;
+			}
+			if($total_intentos != 0){
+				if($usuario_has_evaluacion_enviada['total_registros'] >= $total_intentos){
+					$data['puede_realizar_evaluacion'] = false;
+				}
+			}
+
+			if($data['puede_realizar_evaluacion']){
+				$buscar_usuario_has_evaluacion = $buscar_usuario_has_evaluacion_enviada;
+				$buscar_usuario_has_evaluacion['enviada'] = 'no';
+				$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion,0);
+				if($usuario_has_evaluacion_realizada['total_registros'] == 0){
+					$buscar_usuario_has_evaluacion['fecha_iniciada'] = date('Y-m-d H:i:s');
+					$this->UsuarioHasEvaluacionRealizadaModel->insertar($buscar_usuario_has_evaluacion);
+					unset($buscar_usuario_has_evaluacion['fecha_iniciada']);
+					$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion);
+				}
+				$data['usuario_has_evaluacion_realizada'] = $usuario_has_evaluacion_realizada['usuario_has_evaluacion_realizada'][0];
+				//respuestas_candidato
+				foreach ($data['preguntas_evaluacion'] as $index => $pe){
+					$opciones = $this->OpcionPreguntaModel->tablero(array('id_banco_pregunta' => $pe->id_banco_pregunta));
+					$opciones_izquierda = array();
+					$opciones_derecha = array();
+					foreach ($opciones['opcion_pregunta'] as $op){
+						$op->archivo_imagen_respuesta = isset($op->id_archivo) && !is_null($op->id_archivo) ? $this->ArchivoModel->obtener_row($op->id_archivo) : false;
+						if($pe->id_cat_tipo_opciones_pregunta == OPCION_RELACIONAL){
+							$op->pregunta_relacional == 'izquierda' ? $opciones_izquierda[] = $op : $opciones_derecha[] = $op;
+						}
+					}
+					$pe->opciones_pregunta = $opciones['opcion_pregunta'];
+					$pe->opciones_pregunta_izq = $opciones_izquierda;
+					$pe->opciones_pregunta_der = $opciones_derecha;
+				}
+			}
+			//var_dump($data);exit;
+			$this->load->view('alumno_ec/examen_entregable',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
+		}
+	}
+
+	public function evaluacion_modulo($id_ec_curso_modulo, $id_evaluacion){
+		perfil_permiso_operacion('evaluacion.respuesta');
+		try{
+			$data['titulo_pagina'] = 'Mi examen del módulo de capacitación';
+			$data['sidebar'] = 'estandar_competencias';
+			$data['usuario'] = $this->usuario;
+			$data['extra_js'] = array(
+				base_url().'assets/frm/jquery_countdown/jquery.countdown.min.js',
+				base_url().'assets/js/ec/modulo/examen.js',
+			);
+			$data['extra_css'] = array(
+				base_url().'assets/css/reloj.css'
+			);
+			$data['ec_curso_modelo'] = $this->EcCursoModuloModel->obtener_row($id_ec_curso_modulo);
+			$data['evaluacion'] = $this->EvaluacionModel->obtener_row($id_evaluacion);
+			//var_dump($ec_has_evaluacion);exit;
+			$data['existe_evaluacion_liberada'] = true;
+			//validamos que exista una evaluacion liberada
+			//apartado para calificaciones
+			$data['tiene_evaluacion_aprobatoria'] = false;
+			$data['puede_realizar_evaluacion'] = true;
+			$evaluacion_preguntas = $this->EvaluacionHasPreguntasModel->tablero(array('id_evaluacion' => $id_evaluacion));
+			$data['preguntas_evaluacion'] = $evaluacion_preguntas['preguntas_evaluacion'];
+			//validamos una evaluacion realizada y aprobada
+			$buscar_usuario_has_evaluacion_enviada =  array(
+				'id_ec_curso_modulo' => $id_ec_curso_modulo,
+				'id_usuario' => $this->usuario->id_usuario,
+				'enviada' => 'si'
+			);
+			$usuario_has_evaluacion_enviada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion_enviada,0);
+			$total_intentos = $data['evaluacion']->intentos;
+			if($total_intentos != 0){
+				if($usuario_has_evaluacion_enviada['total_registros'] >= $total_intentos){
+					$data['puede_realizar_evaluacion'] = false;
+				}
+			}
+			
+			if($data['puede_realizar_evaluacion']){
+				$buscar_usuario_has_evaluacion = $buscar_usuario_has_evaluacion_enviada;
+				$buscar_usuario_has_evaluacion['enviada'] = 'no';
+				$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion,0);
+				if($usuario_has_evaluacion_realizada['total_registros'] == 0){
+					$buscar_usuario_has_evaluacion['fecha_iniciada'] = date('Y-m-d H:i:s');
+					$this->UsuarioHasEvaluacionRealizadaModel->insertar($buscar_usuario_has_evaluacion);
+					unset($buscar_usuario_has_evaluacion['fecha_iniciada']);
+					$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion);
+				}
+				$data['usuario_has_evaluacion_realizada'] = $usuario_has_evaluacion_realizada['usuario_has_evaluacion_realizada'][0];
+				//respuestas_candidato
+				foreach ($data['preguntas_evaluacion'] as $index => $pe){
+					$opciones = $this->OpcionPreguntaModel->tablero(array('id_banco_pregunta' => $pe->id_banco_pregunta));
+					$opciones_izquierda = array();
+					$opciones_derecha = array();
+					foreach ($opciones['opcion_pregunta'] as $op){
+						$op->archivo_imagen_respuesta = isset($op->id_archivo) && !is_null($op->id_archivo) ? $this->ArchivoModel->obtener_row($op->id_archivo) : false;
+						if($pe->id_cat_tipo_opciones_pregunta == OPCION_RELACIONAL){
+							$op->pregunta_relacional == 'izquierda' ? $opciones_izquierda[] = $op : $opciones_derecha[] = $op;
+						}
+					}
+					$pe->opciones_pregunta = $opciones['opcion_pregunta'];
+					$pe->opciones_pregunta_izq = $opciones_izquierda;
+					$pe->opciones_pregunta_der = $opciones_derecha;
+				}
+			}
+			var_dump($data);exit;
+			$this->load->view('alumno_ec/examen_modulo',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

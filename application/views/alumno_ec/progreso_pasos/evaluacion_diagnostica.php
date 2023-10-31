@@ -40,7 +40,7 @@
 									<?php endif; ?>
 									<?php if(isset($usuario) && $usuario->perfil == 'alumno'): ?>
 										<?php if(sizeof($ecc->evaluaciones_realizadas) < $ecc->intentos): ?>
-											<a href="<?=base_url()?>evaluacion/<?=$ecc->id_estandar_competencia.'/'.$ecc->id_evaluacion?>" class="btn btn-sm btn-outline-danger" >
+											<a href="<?=base_url()?>evaluacion_diagnostica/<?=$ecc->id_estandar_competencia.'/'.$ecc->id_evaluacion?>" class="btn btn-sm btn-outline-danger" >
 												<i class="fa fa-check"></i> Realizar examen
 											</a>
 										<?php endif; ?>
