@@ -19,6 +19,10 @@
 			<div class="card-footer text-right">
 				<input type="file" id="img_perfil" name="img_foto_perfil" accept="image/*" class="img_foto_perfil">
 				<div id="procesando_img_foto_perfil"></div>
+				<button id="btn_visor_imagen_perfil" type="button" 
+						data-nombre_archivo="<?=isset($foto_perfil) ? $foto_perfil->nombre : 'Sin foto de perfil' ?>"
+						data-src_image="<?=isset($foto_perfil) ? base_url($foto_perfil->ruta_directorio.$foto_perfil->nombre) : base_url('/assets/imgs/iconos/admin.png')?>"
+						class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver foto</button>
 			</div>
 		</div>
 		<!-- /.card -->
@@ -48,6 +52,10 @@
 					<input type="file" id="img_certificados" data-div_procesando="#procesando_img_foto_certificados" accept="image/*"
 						   data-id_cat_expediente="2" data-img_destino=".img_foto_certificado" name="img_foto_certificado" class="">
 					<div id="procesando_img_foto_certificados"></div>
+					<button id="btn_visor_imagen_foto_certificados" type="button" 
+							data-nombre_archivo="<?=isset($foto_certificados) ? $foto_certificados->nombre : 'Sin foto cargada al sistema' ?>"
+							data-src_image="<?=isset($foto_certificados) ? base_url($foto_certificados->ruta_directorio.$foto_certificados->nombre) : base_url('assets/imgs/logos/no_disponible.png')?>"
+							class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver foto</button>
 				</div>
 			</div>
 			<!-- /.card -->
@@ -78,6 +86,10 @@
 					<input type="file" id="img_firma_digital" data-div_procesando="#procesando_img_firma_digital" accept="image/*"
 						   data-id_cat_expediente="8" data-img_destino=".img_foto_firma" name="img_foto_firma" class="archivo_expediente_imagen">
 					<div id="procesando_img_firma_digital"></div>
+					<button id="btn_visor_imagen_foto_firma_digital" type="button" 
+							data-nombre_archivo="<?=isset($foto_firma) ? $foto_firma->nombre : 'Sin foto cargada al sistema' ?>"
+							data-src_image="<?=isset($foto_firma) ? base_url($foto_firma->ruta_directorio.$foto_firma->nombre) : base_url('assets/imgs/logos/no_disponible.png')?>"
+							class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver firma</button>
 				</div>
 			</div>
 			<!-- /.card -->
@@ -147,6 +159,10 @@
 					<input type="file" id="img_foto_ine_anverso" data-div_procesando="#procesando_img_ine_anverso" accept="image/*"
 						   data-id_cat_expediente="3" data-img_destino=".img_foto_ine_anverso" name="img_foto_ine_anverso" class="">
 					<div id="procesando_img_ine_anverso"></div>
+					<button id="btn_visor_imagen_foto_ine_anverso" type="button" 
+							data-nombre_archivo="<?=isset($foto_ine_anverso) ? $foto_ine_anverso->nombre : 'Sin foto cargada al sistema' ?>"
+							data-src_image="<?=isset($foto_ine_anverso) ? base_url($foto_ine_anverso->ruta_directorio.$foto_ine_anverso->nombre) : base_url('assets/imgs/logos/ine_anverso.jpg')?>"
+							class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver INE</button>
 				</div>
 			</div>
 			<!-- /.card -->
@@ -174,6 +190,10 @@
 					<input type="file" id="img_foto_ine_reverso" data-div_procesando="#procesando_img_ine_anverso" accept="image/*"
 						   data-id_cat_expediente="3" data-img_destino=".img_foto_ine_reverso" name="img_foto_ine_anverso" class="">
 					<div id="procesando_img_ine_anverso"></div>
+					<button id="btn_visor_imagen_foto_ine_reverso" type="button" 
+							data-nombre_archivo="<?=isset($foto_ine_reverso) ? $foto_ine_reverso->nombre : 'Sin foto cargada al sistema' ?>"
+							data-src_image="<?=isset($foto_ine_reverso) ? base_url($foto_ine_reverso->ruta_directorio.$foto_ine_reverso->nombre) : base_url('assets/imgs/logos/ine_reverso.jpg')?>"
+							class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver INE </button>
 				</div>
 			</div>
 			<!-- /.card -->
@@ -224,6 +244,10 @@
 						<input type="file" id="img_foto_cedula_anverso" data-div_procesando="#procesando_img_cedula_anverso" accept="image/*"
 							   data-id_cat_expediente="3" data-img_destino=".img_foto_cedula_anverso" name="img_foto_cedula_anverso" class="">
 						<div id="procesando_img_cedula_anverso"></div>
+						<button id="btn_visor_imagen_foto_cedula_anverso" type="button" 
+							data-nombre_archivo="<?=isset($foto_cedula_anverso) ? $foto_cedula_anverso->nombre : 'Sin foto cargada al sistema' ?>"
+							data-src_image="<?=isset($foto_cedula_anverso) ? base_url($foto_cedula_anverso->ruta_directorio.$foto_cedula_anverso->nombre) : base_url('assets/imgs/logos/no_disponible.png')?>"
+							class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver Cédula </button>
 					</div>
 				</div>
 				<!-- /.card -->
@@ -251,6 +275,10 @@
 						<input type="file" id="img_foto_cedula_reverso" data-div_procesando="#procesando_img_cedula_reverso" accept="image/*"
 							   data-id_cat_expediente="3" data-img_destino=".img_foto_cedula_reverso" name="img_foto_cedula_reverso" class="archivo_expediente_imagen">
 						<div id="procesando_img_cedula_reverso"></div>
+						<button id="btn_visor_imagen_foto_cedula_reverso" type="button" 
+							data-nombre_archivo="<?=isset($foto_cedula_reverso) ? $foto_cedula_reverso->nombre : 'Sin foto cargada al sistema' ?>"
+							data-src_image="<?=isset($foto_cedula_reverso) ? base_url($foto_cedula_reverso->ruta_directorio.$foto_cedula_reverso->nombre) : base_url('assets/imgs/logos/no_disponible.png')?>"
+							class="btn btn-sm btn-success btn_ver_imagen_modal"><i class="fa fa-eye"></i> Ver Cédula </button>
 					</div>
 				</div>
 				<!-- /.card -->

@@ -848,5 +848,10 @@ var Comun = {
 		$("#"+formulario).find(".is-invalid").removeClass("is-invalid");
 		$("#"+formulario).find(".invalid-feedback").remove();
 
+	},
+
+	actualizar_btn_visor_img : function(selectorBtn,archivo){
+		$(selectorBtn).data('nombre_archivo',archivo.nombre);
+		$(selectorBtn).data('src_image',base_url + archivo.ruta_directorio + archivo.nombre);
 	}
 };

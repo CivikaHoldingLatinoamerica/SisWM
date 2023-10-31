@@ -327,6 +327,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_perfil').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$('#procesando_img_foto_perfil').html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_perfil',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -356,6 +357,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_certificado').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$(div_procesando).html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_foto_certificados',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -373,6 +375,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_firma').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$(div_procesando).html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_foto_firma_digital',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -390,6 +393,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_ine_anverso').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$(div_procesando).html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_foto_ine_anverso',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -407,6 +411,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_ine_reverso').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$(div_procesando).html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_foto_ine_reverso',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -424,6 +429,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_cedula_anverso').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$(div_procesando).html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_foto_cedula_anverso',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -441,6 +447,7 @@ var PerfilCandidato = {
 						Comun.mensajes_operacion(response.msg,'success');
 						$('.img_foto_cedula_reverso').attr('src',base_url + archivo.ruta_directorio + archivo.nombre);
 						$(div_procesando).html('');
+						Comun.actualizar_btn_visor_img('#btn_visor_imagen_foto_cedula_reverso',archivo);
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
