@@ -10,7 +10,6 @@ class AlumnosEC extends CI_Controller {
 		parent:: __construct();
 		$this->load->model('ArchivoModel');
 		$this->load->model('ActividadIEModel');
-		$this->load->model('EcCursoModuloModel');
 		$this->load->model('EcInstrumentoAlumnoModel');
 		$this->load->model('EcInstrumentoAlumnoComentarioModel');
 		$this->load->model('EcInstrumentoAlumnoEvidenciasModel');
@@ -788,7 +787,12 @@ class AlumnosEC extends CI_Controller {
 				base_url().'assets/css/reloj.css'
 			);
 			$data['ec_curso_modelo'] = $this->EcCursoModuloModel->obtener_row($id_ec_curso_modulo);
+			$data['ec_curso'] = $this->EcCursoModel->obtener_row($data['ec_curso_modelo']->id_ec_curso);
+			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($data['ec_curso']->id_estandar_competencia);
 			$data['evaluacion'] = $this->EvaluacionModel->obtener_row($id_evaluacion);
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $data['ec_curso']->id_estandar_competencia,'id_usuario' => $this->usuario->id_usuario),0);
+			$usuario_has_ec = $usuario_has_ec['usuario_has_estandar_competencia'][0];
+			$data['usuario_has_estandar_competencia'] = $usuario_has_ec;
 			//var_dump($ec_has_evaluacion);exit;
 			$data['existe_evaluacion_liberada'] = true;
 			//validamos que exista una evaluacion liberada
@@ -838,7 +842,7 @@ class AlumnosEC extends CI_Controller {
 					$pe->opciones_pregunta_der = $opciones_derecha;
 				}
 			}
-			var_dump($data);exit;
+			//var_dump($data);exit;
 			$this->load->view('alumno_ec/examen_modulo',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -908,9 +912,10 @@ class AlumnosEC extends CI_Controller {
 			$response['success'] = false;
 			$response['msg'][] = 'No fue posible guardar las respuestas de su evaluación, favor de intentar más tarde';
 			$guardar = $this->EvaluacionRespuestasUsuarioModel->guardar_respuestas_evaluacion_diagnostica($post);
+			//var_dump($post);
 			if($guardar){
 				$response['success'] = true;
-				$calificacion = $this->EvaluacionRespuestasUsuarioModel->obtener_calificacion_evaluacion($post['id_usuario_has_evaluacion_realizada']);
+				$calificacion = $this->EvaluacionRespuestasUsuarioModel->obtener_calificacion_evaluacion($post['id_usuario_has_evaluacion_realizada'],$post['id_evaluacion']);
 				$response['data'] = $this->data_calificacion($calificacion);
 				$response['data']['evaluacion_sistema'] = 'Tomar capacitación previo a la Evaluación';
 				if($calificacion > 33 && $calificacion <= 66){

@@ -17,7 +17,7 @@
 
 			<div class="card card-solid">
 				<div class="card-body pb-0">
-					<?php if(isset($ec_has_evaluacion) && is_object($ec_has_evaluacion) && $ec_has_evaluacion->liberada == 'si'): ?>
+					<?php if(isset($ec_curso) && is_object($ec_curso) && $ec_curso->publicado == 'si'): ?>
 						<?php if(isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria): ?>
 							<div class="callout callout-success">
 								<h5>Información importante</h5>
@@ -29,7 +29,7 @@
 								<form id="form_evaluacion_examen">
 
 									<input type="hidden" id="id_estandar_competencia" value="<?=$estandar_competencia->id_estandar_competencia?>">
-									<input type="hidden" id="id_evaluacion" value="<?=$evaluacion->id_evaluacion?>">
+									<input type="hidden" id="id_evaluacion" name="id_evaluacion" value="<?=$evaluacion->id_evaluacion?>">
 									<input type="hidden" id="id_usuario_has_evaluacion_realizada" name="id_usuario_has_evaluacion_realizada" value="<?=isset($usuario_has_evaluacion_realizada) ? $usuario_has_evaluacion_realizada->id_usuario_has_evaluacion_realizada : ''?>">
 									<input type="hidden" id="id_usuario_evaluador" name="id_usuario_evaluador" value="<?=isset($usuario_has_estandar_competencia) ? $usuario_has_estandar_competencia->id_usuario_evaluador : ''?>">
 

@@ -13,8 +13,8 @@ $(document).ready(function(){
 		Examen.guardar_form_decision_candidato();
 	});
 
-	//if(es_pruebas == 1 || es_produccion == 1){
-	if(true){
+	if(es_pruebas == 1 || es_produccion == 1){
+	//if(true){
 		//para validar que ya haya realizado la evaluacion el candidato y 
 		$('#menu_lateral_izquierdo').fadeOut();
 		$('#menu_superior').fadeOut();
@@ -200,9 +200,9 @@ var Examen = {
 					'<div class="modal-content">' +
 						'<div class="modal-header">' +
 							'<h4 class="modal-title">Mensaje de confirmación</h4>' +
-							//'<button type="button" class="close btn_cerrar_confirmacion_evaluacion" style="display: none" data-dismiss="modal" aria-label="Close">' +
-							//'<span aria-hidden="true">×</span>' +
-							//'</button>' +
+							// '<button type="button" class="close btn_cerrar_confirmacion_evaluacion" style="display: none" data-dismiss="modal" aria-label="Close">' +
+							// '<span aria-hidden="true">×</span>' +
+							// '</button>' +
 						'</div>' +
 						'<div class="modal-body">' +
 							'<div class="callout callout-success">' +
@@ -212,7 +212,7 @@ var Examen = {
 							'</div>' +
 						'</div>' +
 						'<div class="modal-footer justify-content-between">' +
-							'<a href="'+base_url+'AlumnosEC/ver_progreso/'+id_estandar_competencia+'/'+id_usuario_evaluador+'" style="display: none" class="btn btn-primary btn_cerrar_confirmacion_evaluacion">Cerrar</a> ' +
+							'<a href="'+base_url+'AlumnosEC/ver_progreso/'+id_estandar_competencia+'/'+id_usuario_evaluador+'"class="btn btn-primary btn_cerrar_confirmacion_evaluacion">Cerrar</a> ' +
 						'</div>' +
 					'</div>' +
 					'<!-- /.modal-content -->' +
