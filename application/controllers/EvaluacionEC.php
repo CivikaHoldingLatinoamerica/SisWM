@@ -574,9 +574,11 @@ class EvaluacionEC extends CI_Controller {
 	 * */
 	private function evaluacionEntregable($id_entregable){
 		$data['titulo_pagina'] = 'Evaluación del entregable del Estándar de Competencia';
+		$data['entregable'] = $this->EntregableECModel->obtener_row($id_entregable);
 		$data['migas_pan'] = array(
 			array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 			array('nombre' => 'Estándar de competencias','activo' => false,'url' => base_url().'estandar_competencia'),
+			array('nombre' => 'Entregables esperados','activo' => false,'url' => base_url().'/evidencias_esperadas/'.$data['entregable']->id_estandar_competencia),
 			array('nombre' => 'Evaluaciones de la EC','activo' => true,'url' => '#'),
 		);
 		$data['sidebar'] = 'estandar_competencias';
