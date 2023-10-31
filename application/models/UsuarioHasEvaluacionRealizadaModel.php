@@ -34,6 +34,8 @@ class UsuarioHasEvaluacionRealizadaModel extends ModeloBase
 			$criterios .= " and uher.id_estandar_competencia = ".$data['id_estandar_competencia'];
 		}if(isset($data['id_ec_curso_modulo']) && $data['id_ec_curso_modulo']){
 			$criterios .= " and uher.id_ec_curso_modulo = ".$data['id_ec_curso_modulo'];
+		}if(isset($data['id_entregable_has_evaluacion']) && $data['id_entregable_has_evaluacion']){
+			$criterios .= " and uher.id_entregable_has_evaluacion = ".$data['id_entregable_has_evaluacion'];
 		}
 		return $criterios;
 	}
