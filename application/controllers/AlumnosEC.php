@@ -189,8 +189,9 @@ class AlumnosEC extends CI_Controller {
 		try{
 			/* $tablero = $this->EcCursoModuloModel->tablero(['id_ec_curso' => $id_ec_curso]);
 			$data['ec_curso_modulo_model'] = $tablero['ec_curso_modulo_model'][0]; */
-			$ec_curso  = $this->EcCursoModel->obtener_ec_curso(false, $id_estandar_competencia, true);
 			$data = [];
+			$ec_curso  = $this->EcCursoModel->obtener_ec_curso(false, $id_estandar_competencia, true);
+			
 			if($ec_curso !== false){
 				$data['ec_curso'] = $ec_curso;
 				//dd($data);exit;
@@ -199,6 +200,25 @@ class AlumnosEC extends CI_Controller {
 				);
 				$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
 			}
+
+			$data['usuario'] = $this->usuario;
+			$data['usuario_has_evaluacion_realizada'] = true;
+			foreach ($data['ec_curso_modulo'] as $eccm){
+				$buscar_evaluacion_realizada = array(
+					'id_usuario' => $id_usuario,
+					'id_ec_curso_modulo' => $eccm->id_ec_curso_modulo,
+					'enviada' => 'si'
+				);
+				$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_evaluacion_realizada,0);
+				$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada['usuario_has_evaluacion_realizada'];
+				if($eccm->evaluaciones_realizadas == 0){
+					$data['usuario_has_evaluacion_realizada'] = false;
+					continue;
+				}
+			}
+			
+			
+			
 			//dd($data); exit();
 			$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
 		}catch (Exception $ex){
