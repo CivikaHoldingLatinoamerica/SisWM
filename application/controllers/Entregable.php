@@ -87,6 +87,7 @@ class entregable extends CI_Controller
 			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario);
 
 			$data['entregables'] = $datos;
+			//var_dump($data);exit;
 			$this->load->view('entregables/candidato/evidencias_candidato',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

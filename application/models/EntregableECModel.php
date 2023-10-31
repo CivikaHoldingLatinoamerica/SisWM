@@ -160,6 +160,7 @@ class EntregableECModel extends ModeloBase
 			if (!in_array($object, $entregables)) {
 				$entregables[] = $object;
 			}
+			
 
 		}
 		foreach ($entregables as $item) {
@@ -183,6 +184,12 @@ class EntregableECModel extends ModeloBase
 
 			$query = $this->db->query($consulta);
 			$item->comentarios = $query->result();
+
+			//para obtener la evaluacion
+			$consulta = "select * from entregable_has_evaluacion ehe 
+			where ehe.id_entregable = ".$item->id_entregable;
+			$query = $this->db->query($consulta);
+			$item->evaluacion = $query->row();
 		}
 		return $entregables;
 	}

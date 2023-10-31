@@ -28,6 +28,8 @@ class AlumnosEC extends CI_Controller {
 		$this->load->model('UsuarioModel');
 		$this->load->model('EcCursoModel');
 		$this->load->model('EcCursoModuloModel');
+		$this->load->model('EntregableECModel');
+		$this->load->model('EntregableHasEvaluacionModel');
 		if(sesionActive()){
 			$this->usuario = usuarioSession();
         	}else{
@@ -203,15 +205,16 @@ class AlumnosEC extends CI_Controller {
 
 			$data['usuario'] = $this->usuario;
 			$data['usuario_has_evaluacion_realizada'] = true;
-			foreach ($data['ec_curso_modulo'] as $eccm){
+			foreach ($data['ec_curso_modulo']['ec_curso_modulo'] as $eccm){
 				$buscar_evaluacion_realizada = array(
-					'id_usuario' => $id_usuario,
+					'id_usuario' => $this->usuario->id_usuario,
 					'id_ec_curso_modulo' => $eccm->id_ec_curso_modulo,
 					'enviada' => 'si'
 				);
 				$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_evaluacion_realizada,0);
-				$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada['usuario_has_evaluacion_realizada'];
-				if($eccm->evaluaciones_realizadas == 0){
+				//dd($usuario_has_evaluacion_realizada);exit;
+				$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada;
+				if($eccm->evaluaciones_realizadas['total_registros'] == 0){
 					$data['usuario_has_evaluacion_realizada'] = false;
 					continue;
 				}
@@ -219,7 +222,7 @@ class AlumnosEC extends CI_Controller {
 			
 			
 			
-			//dd($data); exit();
+			//var_dump($data); exit();
 			$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -708,48 +711,42 @@ class AlumnosEC extends CI_Controller {
 	public function evaluacion_entregable($id_entregable,$id_evaluacion){
 		perfil_permiso_operacion('evaluacion.respuesta');
 		try{
-			$data['titulo_pagina'] = 'Mi examen del entregable ';
+			$data['titulo_pagina'] = 'Mi examen del entregable esperado';
 			$data['sidebar'] = 'estandar_competencias';
 			$data['usuario'] = $this->usuario;
 			$data['extra_js'] = array(
 				base_url().'assets/frm/jquery_countdown/jquery.countdown.min.js',
-				base_url().'assets/js/ec/examen.js',
+				base_url().'assets/js/ec/entregable/examen.js',
 			);
 			$data['extra_css'] = array(
 				base_url().'assets/css/reloj.css'
 			);
-			$data['estandar_competencia'] = $this->EntregableECModel->obtener_row($id_entregable);
-			var_dump($data);exit;
+			$data['entregable_ec'] = $this->EntregableECModel->obtener_row($id_entregable);
+			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($data['entregable_ec']->id_estandar_competencia);
 			$data['evaluacion'] = $this->EvaluacionModel->obtener_row($id_evaluacion);
-			$ec_has_evaluacion = $this->ECHasEvaluacionModel->tablero(array(
-				'id_estandar_competencia' => $id_estandar_competencia,
-				'id_evaluacion' => $id_evaluacion,
-				'liberada' => 'si'
-			));
-			//var_dump($ec_has_evaluacion);exit;
+			$entregable_has_evaluacion = $this->EntregableHasEvaluacionModel->tablero([
+				'id_entregable' => $id_entregable,
+				'id_evaluacion' => $id_evaluacion
+			]);
+			//validamos una evaluacion realizada y aprobada
+			$buscar_usuario_has_evaluacion_enviada =  array(
+				'id_entregable_has_evaluacion' => $entregable_has_evaluacion['entregable_has_evaluacion'][0]->id_entregable_has_evaluacion,
+				'id_usuario' => $this->usuario->id_usuario,
+				'enviada' => 'si'
+			);
+			$usuario_has_evaluacion_enviada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion_enviada,0);
 			$data['existe_evaluacion_liberada'] = true;
 			//validamos que exista una evaluacion liberada
 			//apartado para calificaciones
 			$data['tiene_evaluacion_aprobatoria'] = false;
 			$data['puede_realizar_evaluacion'] = true;
 			$evaluacion_preguntas = $this->EvaluacionHasPreguntasModel->tablero(array('id_evaluacion' => $id_evaluacion));
-			$data['ec_has_evaluacion'] = $ec_has_evaluacion['estandar_competencia_has_evaluacion'][0];
 			$data['preguntas_evaluacion'] = $evaluacion_preguntas['preguntas_evaluacion'];
-			//validamos una evaluacion realizada y aprobada
-			$buscar_usuario_has_evaluacion_enviada =  array(
-				'id_estandar_competencia' => $id_estandar_competencia,
-				'id_estandar_competencia_has_evaluacion' => $data['ec_has_evaluacion']->id_estandar_competencia_has_evaluacion,
-				'id_usuario' => $this->usuario->id_usuario,
-				'enviada' => 'si'
-			);
-			$usuario_has_evaluacion_enviada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_usuario_has_evaluacion_enviada,0);
-			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $this->usuario->id_usuario),0);
+			
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $data['entregable_ec']->id_estandar_competencia,'id_usuario' => $this->usuario->id_usuario),0);
 			$usuario_has_ec = $usuario_has_ec['usuario_has_estandar_competencia'][0];
 			$data['usuario_has_estandar_competencia'] = $usuario_has_ec;
 			$total_intentos = $data['evaluacion']->intentos;
-			if(is_object($usuario_has_ec) && $usuario_has_ec->intentos_adicionales != 0){
-				$total_intentos += $usuario_has_ec->intentos_adicionales;
-			}
 			if($total_intentos != 0){
 				if($usuario_has_evaluacion_enviada['total_registros'] >= $total_intentos){
 					$data['puede_realizar_evaluacion'] = false;
