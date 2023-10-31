@@ -128,7 +128,11 @@ var PerfilCandidato = {
 	validar_form_direccion : function(){
 		var form_valido = Comun.validar_form('#form_agregar_modificar_domicilio',Comun.reglas_validacion_form());
 		if(form_valido){
-
+			if($('#input_id_archivo_logotipo').val() == ''){
+				form_valido = false;
+				Comun.mensaje_operacion('El archivo de imagen para el banner es requerido','error');
+				$('#procesando_img_logotipo_emp').html('<span class="badge badge-danger">El banner es requerido</span>')
+			}
 		}
 		return form_valido;
 	},
@@ -136,7 +140,11 @@ var PerfilCandidato = {
 	validar_form_empresa : function(){
 		var form_valido = Comun.validar_form('#form_agregar_modificar_empresa',Comun.reglas_validacion_form());
 		if(form_valido){
-
+			if($('#input_id_archivo_logotipo').val() == ''){
+				form_valido = false;
+				Comun.mensaje_operacion('El archivo de imagen/logitipo de la empresa es requerido','error');
+				$('#procesando_img_logotipo_emp').html('<span class="badge badge-danger">El logo de la empresa es requerido</span>')
+			}
 		}
 		return form_valido;
 	},

@@ -64,7 +64,7 @@
 					<?php if(perfil_permiso_operacion_menu('estandar_competencia.modificar')): ?>
 						<a class="btn btn-sm btn-outline-primary contenidocurso"
 								data-toggle="tooltip" title="Contenido de Módulos de capacitación"
-								href="<?=base_url()?>campania/<?=$ec->id_estandar_competencia?>"><i class="fa fa-edit"></i>Módulos de capacitación </a>
+								href="<?=base_url()?>capacitacion/<?=$ec->id_estandar_competencia?>"><i class="fa fa-edit"></i>Módulos de capacitación </a>
 					<?php endif; ?>
 
 					<?php if(perfil_permiso_operacion_menu('estandar_competencia.consultar')): ?>
