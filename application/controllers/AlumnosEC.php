@@ -228,6 +228,8 @@ class AlumnosEC extends CI_Controller {
 
 			$data['porcentaje_avance'] = ($countEvaRealizadas / $countModulo) * 100;		
 			
+			log_message('error','+++++ AlumnosEC->ver_progreso_modulos_capacitacion');
+			log_message('error',json_encode($data));
 			//var_dump($data); exit();
 			if($isTabResult){
 				$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
