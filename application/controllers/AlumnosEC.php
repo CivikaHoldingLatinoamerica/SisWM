@@ -222,7 +222,9 @@ class AlumnosEC extends CI_Controller {
 			
 			
 			
-			//var_dump($data); exit();
+			//dd($data); exit();
+			log_message('error','+++++ AlumnosEC->ver_progreso_modulos_capacitacion');
+			log_message('error',json_encode($data));
 			$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
