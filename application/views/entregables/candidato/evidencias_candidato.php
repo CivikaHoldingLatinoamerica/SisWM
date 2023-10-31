@@ -17,10 +17,7 @@
 				<?php else: ?>
 					<div class="row">
 						<div class="col">
-							<div class="callout callout-warning">
-								<h5>Lo siento</h5>
-								<p>No se encontro registros de búsqueda</p>
-							</div>
+							<?php $this->load->view('default/sin_datos_candidato'); ?>
 						</div>
 					</div>
 				<?php endif; ?>
