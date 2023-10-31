@@ -207,7 +207,7 @@ class AlumnosEC extends CI_Controller {
 			$data['usuario'] = $this->usuario;
 			$data['usuario_has_evaluacion_realizada'] = true;
 			$countModulo 		= 0;
-			$countEvaRealizadas	= 0
+			$countEvaRealizadas	= 0;
 			foreach ($data['ec_curso_modulo']['ec_curso_modulo'] as $eccm){
 				$countModulo++;
 
