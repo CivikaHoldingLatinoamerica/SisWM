@@ -243,6 +243,25 @@ class EntregableECModel extends ModeloBase
 			$this->db->set('liberado', 'si');
 			$this->db->where('id_estandar_competencia', $id_estandar_competencia);
 			$this->db->update('entregable_ec');
+
+			$consulta = "select eha.id_entregable from entregable_ec eha
+                      where eha.id_estandar_competencia = " . $id_estandar_competencia;
+			$query = $this->db->query($consulta);
+
+			$datos = $query->result();
+
+			$ids = array();
+
+			foreach ($datos as $item){
+				$ids[] = $item->id_entregable;
+			}
+
+			$this->db->set('liberada', 'si');
+			$this->db->where_in('id_entregable', $ids);
+			$this->db->update('entregable_has_evaluacion');
+
+
+
 			$return['success'] = true;
 			$return['msg'] = 'Se liberaron los entregables del estandar de competencia';
 		} catch (Exception $ex) {

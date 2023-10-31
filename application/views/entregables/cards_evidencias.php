@@ -66,6 +66,15 @@
 
 								</div>
 							</div>
+						<?php else:?>
+
+							<?php if ($item->tipo_entregable == "cuest") : ?>
+								<a href="<?= base_url() . 'evaluacion_cerrada/' . EVALUACION_ENTREGABLE . '/' . $item->id_entregable ?>">
+									<em class="fa fa-eye">
+									</em>
+								</a>
+							<?php endif; ?>
+
 						<?php endif; ?>
 					</div>
 					<div class="row">
