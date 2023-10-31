@@ -137,8 +137,6 @@
 			</div>
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
-				<a href="<?=base_url()?>Curso/registro/<?=$ec_curso->id_ec_curso?>"
-						class="btn btn-sm btn-outline-primary">Registrarme</a>
 			</div>
 		</div>
 		<!-- /.modal-content -->

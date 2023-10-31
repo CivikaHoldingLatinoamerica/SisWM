@@ -44,7 +44,7 @@
 						<div class="form-group row">
 							<div class="col-sm-12 text-right">	
 							
-						<?php if($ec_curso->publicado == 'no'): ?>
+						<?php if($ec_curso->fecha_publicado == null): ?>
 							<?php if($eccm->eliminado == 'si'): ?>
 								<?php if(perfil_permiso_operacion_menu('ec_curso.deseliminar')):?>
 									<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar módulo"
@@ -163,7 +163,7 @@
 												
 												<div class="form-group row">
 													<div class="col-sm-12 text-right">	
-												<?php if($ec_curso->publicado == 'no'): ?>
+												<?php if($ec_curso->fecha_publicado == null): ?>
 													<?php if($eccmt->eliminado == 'si'): ?>
 														<?php if(perfil_permiso_operacion_menu('ec_curso.deseliminar')):?>
 															<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar temario"
