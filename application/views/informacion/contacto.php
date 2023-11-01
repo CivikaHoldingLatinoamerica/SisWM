@@ -35,6 +35,10 @@
 										<a href="https://api.whatsapp.com/send?phone=522221233936" target="_blank">222 123 3936</a>
 									</li>
 									<li>
+										<i class="fab fa-whatsapp"></i>
+										<a href="https://api.whatsapp.com/send?phone=522411318840" target="_blank">241 131 8840</a>
+									</li>
+									<li>
 										<i class="fa fa-envelope-o"></i>
 										<a href="mailto:hola.civika@outlook.com?Subject=Información cursos">hola.civika@outlook.com</a>
 									</li>
