@@ -13,7 +13,7 @@
 				<h3 class="profile-username text-center">
 					Foto de perfil
 				</h3>
-				<p class="text-sm text-muted">Foto digital de libre elección (color, blanco y negro, distintos tamaños, etc), no se usará para los expedientes emitidos por el sistema</p>
+				<!-- <p class="text-sm text-muted">Foto digital de libre elección (color, blanco y negro, distintos tamaños, etc), no se usará para los expedientes emitidos por el sistema</p> -->
 			</div>
 			<!-- /.card-body -->
 			<div class="card-footer text-right">

@@ -282,14 +282,22 @@ class EC extends CI_Controller {
 				'id_estandar_competencia' => $id_estandar_competencia,
 				'id_usuario' => $id_usuario
 			);
-			$guardar = $this->UsuarioHasECModel->eliminar_row_criterios($eliminar);
-			if($guardar['success']){
-				$response['success'] = true;
-				$response['msg'][] = 'Se eliminó el registro con éxito';
-			}else{
+			//buscamos primero que no cuenten con progreso para poder eliminar el registro
+			$existe_progreso_pasos = $this->UsuarioHasECModel->existe_progreso_candidato_convocatoria($id_estandar_competencia,$id_usuario);
+			if($existe_progreso_pasos){
 				$response['success'] = false;
-				$response['msg'][] = $guardar['msg'];
+				$response['msg'][] = 'No es posible eliminar el candidato del Estándar de competencia, se detectó avance en la certificación';
+			}else{
+				$guardar = $this->UsuarioHasECModel->eliminar_row_criterios($eliminar);
+				if($guardar['success']){
+					$response['success'] = true;
+					$response['msg'][] = 'Se eliminó el registro con éxito';
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = $guardar['msg'];
+				}
 			}
+			
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
