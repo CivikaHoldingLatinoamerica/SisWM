@@ -115,7 +115,7 @@
 <?php else: ?>
 	<div class="callout callout-danger">
 		<h5>Información importante</h5>
-		<p>No es posible cargar la evidencia de las tecnicas, instrumentos y actividades del estándar de competencia hasta que realize la evaluación diagnóstica</p>
+		<p>No es posible cargar la evidencia de las tÉcnicas, instrumentos y actividades del estándar de competencia hasta que realize la evaluación diagnóstica</p>
 	</div>
 <?php endif; ?>
 
