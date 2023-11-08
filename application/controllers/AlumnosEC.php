@@ -195,46 +195,46 @@ class AlumnosEC extends CI_Controller {
 			$data = [];
 			$ec_curso  = $this->EcCursoModel->obtener_ec_curso(false, $id_estandar_competencia, true);
 			
-			if($ec_curso !== false){
+			if($ec_curso != false){
 				$data['ec_curso'] = $ec_curso;
 				//dd($data);exit;
 				$busquedaCursoModel = array(
 					'id_ec_curso' => $data['ec_curso'] -> id_ec_curso
 				);
 				$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
-			}
-
-			$data['usuario'] = $this->usuario;
-			$data['usuario_has_evaluacion_realizada'] = true;
-			$countModulo 		= 0;
-			$countEvaRealizadas	= 0;
-			foreach ($data['ec_curso_modulo']['ec_curso_modulo'] as $eccm){
-				$countModulo++;
-
-				$buscar_evaluacion_realizada = array(
-					'id_usuario' => $this->usuario->id_usuario,
-					'id_ec_curso_modulo' => $eccm->id_ec_curso_modulo,
-					'enviada' => 'si'
-				);
-				$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_evaluacion_realizada,0);
-				//dd($usuario_has_evaluacion_realizada);exit;
-				$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada;
-				if($eccm->evaluaciones_realizadas['total_registros'] == 0){
-					$data['usuario_has_evaluacion_realizada'] = false;
-				} else {
-					$countEvaRealizadas++;
+				$data['usuario'] = $this->usuario;
+				$data['usuario_has_evaluacion_realizada'] = true;
+				$countModulo 		= 0;
+				$countEvaRealizadas	= 0;
+				foreach ($data['ec_curso_modulo']['ec_curso_modulo'] as $eccm){
+					$countModulo++;
+	
+					$buscar_evaluacion_realizada = array(
+						'id_usuario' => $this->usuario->id_usuario,
+						'id_ec_curso_modulo' => $eccm->id_ec_curso_modulo,
+						'enviada' => 'si'
+					);
+					$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_evaluacion_realizada,0);
+					//dd($usuario_has_evaluacion_realizada);exit;
+					$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada;
+					if($eccm->evaluaciones_realizadas['total_registros'] == 0){
+						$data['usuario_has_evaluacion_realizada'] = false;
+					} else {
+						$countEvaRealizadas++;
+					}
 				}
-			}
-
-			$data['porcentaje_avance'] = ($countEvaRealizadas / $countModulo) * 100;		
+				$data['porcentaje_avance'] = ($countEvaRealizadas / $countModulo) * 100;		
 			
-			log_message('error','+++++ AlumnosEC->ver_progreso_modulos_capacitacion');
-			log_message('error',json_encode($data));
-			//var_dump($data); exit();
-			if($isTabResult){
-				$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
-			} else {
-				return $data['porcentaje_avance'] ;
+				log_message('error','+++++ AlumnosEC->ver_progreso_modulos_capacitacion');
+				log_message('error',json_encode($data));
+				if($isTabResult){
+					$this->load->view('alumno_ec/progreso_pasos/cursos_modulos_capacitacion',$data);
+				} else {
+					return $data['porcentaje_avance'] ;
+				}
+			}else{
+				$data['ec_curso'] = false;
+				$data['ec_curso_modulo'] = [];
 			}
 			
 		}catch (Exception $ex){
