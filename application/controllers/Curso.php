@@ -244,7 +244,7 @@ class Curso extends CI_Controller {
 	}
 
 	public function tablero_curso_modulos($id_ec_curso){
-		perfil_permiso_operacion('ec_curso.consultar');
+		perfil_permiso_operacion('curso_ec.consultar');
 		try{
 			$busqueda = array(
 				'id_ec_curso' => $id_ec_curso
