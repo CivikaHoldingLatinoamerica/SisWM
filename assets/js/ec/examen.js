@@ -79,7 +79,7 @@ var Examen = {
 
 	intento_salir : 0,
 
-	activar_intentos_salida_examen : true,
+	activar_intentos_salida_examen : $('#form_evaluacion_examen').length == 0  ? false : true,
 
 	inicializar_funciones_examen : function(){
 		Examen.ocultar_menu_examen();
@@ -90,6 +90,9 @@ var Examen = {
 
 	ocultar_menu_examen : function(){
 		$('a.nav-link').trigger('click');
+		if(Examen.activar_intentos_salida_examen){
+			$('.main-header').hide();
+		}
 	},
 
 	iniciar_cuenta_atras : function(){
