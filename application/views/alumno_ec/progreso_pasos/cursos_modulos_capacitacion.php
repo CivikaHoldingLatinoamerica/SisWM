@@ -70,7 +70,7 @@
 											</div>
 											<div class="form-group row">
 												<div class="col-sm-12 text-right">	
-													<?php if(perfil_permiso_operacion_menu('ec_curso.consultar')): ?>
+													<?php if(perfil_permiso_operacion_menu('curso_ec.consultar')): ?>
 														<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
 														title="Evaluación del módulo de capacitación"
 														href="<?=base_url().'evaluacion_modulo/'.$eccm->id_ec_curso_modulo.'/'.$eccm->id_evaluacion?>"><i class="fa fa-file-alt"></i> Exámen de evaluación</a>
