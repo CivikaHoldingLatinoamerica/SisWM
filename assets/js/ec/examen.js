@@ -14,7 +14,7 @@ $(document).ready(function(){
 	});
 
 	//if(es_pruebas == 1 || es_produccion == 1){
-	if(true){
+	//if(true){
 		//para validar que ya haya realizado la evaluacion el candidato y 
 		$('#menu_lateral_izquierdo').fadeOut();
 		$('#menu_superior').fadeOut();
@@ -27,17 +27,21 @@ $(document).ready(function(){
 		//modal para mostrar el mensaje
 		$(document).on("mouseleave",function(){
 			if(Examen.activar_intentos_salida_examen){
-				if(Examen.intento_salir <= 1 ){
-					Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, estó ocasionará el marcarlo como realizado y no podrá realizar otro");
-					Examen.intento_salir++;
-				}if(Examen.intento_salir == 2){
-					Examen.intento_salir++;
-					Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación diagnóstica, se pide que marque su selección de la decisión");
-					setTimeout(function(){
-						Examen.enviar_formulario_respuestas();
-						Comun.mostrar_ocultar_modal('#modal_informacion_sistema',false);
-					},5000);
-				}
+				// if(Examen.intento_salir <= 1 ){
+				// 	Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, si reincide más de 2 veces se enviara de forma automatica la evaluación");
+				// 	Examen.intento_salir++;
+				// } if(Examen.intento_salir == 2 ){
+				// 	Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, estó ocasionará el marcarlo como realizado y no podrá realizar otro");
+				// 	Examen.intento_salir++;
+				// }if(Examen.intento_salir == 3){
+				// 	Examen.intento_salir++;
+				// 	Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación diagnóstica, se pide que marque su selección de la decisión");
+				// 	setTimeout(function(){
+				// 		Examen.enviar_formulario_respuestas();
+				// 		Comun.mostrar_ocultar_modal('#modal_informacion_sistema',false);
+				// 	},5000);
+				// }
+				Examen.intento_salida_evaluacion();
 			}
 		});
 
@@ -55,7 +59,7 @@ $(document).ready(function(){
 				Examen.quitar_imprimir_pantalla();
 			}
 		});
-	}
+	// }
 
 	$(document).on("keydown", function(e) {
 		e = e || window.event;
@@ -86,6 +90,7 @@ var Examen = {
 		Examen.iniciar_cuenta_atras();
 		Examen.procesar_class_calificacion();
 		$('.popoverShowImage').trigger('click');
+		Examen.pantalla_completa();
 	},
 
 	ocultar_menu_examen : function(){
@@ -184,6 +189,7 @@ var Examen = {
 						$('#slt_decision_candidato_evaluacion').attr('disabled',true);
 						$('#input_decision_candidato').attr('disabled',true);
 						Comun.mensaje_operacion(response.msg,'success');
+						Examen.quitar_pantalla_completa();
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}
@@ -269,26 +275,31 @@ var Examen = {
 	pantalla_completa : function(){
 		setTimeout(function(){
 			var element = document.documentElement;
-			if(element.requestFullscreen)
+			if(element.requestFullscreen){
 				element.requestFullscreen();
-			else if(element.mozRequestFullScreen != undefined)
+			}
+			else if(element.mozRequestFullScreen != undefined){
 				element.mozRequestFullScreen();
-			else if(element.webkitRequestFullscreen != undefined)
+			}
+			else if(element.webkitRequestFullscreen != undefined){
 				element.webkitRequestFullscreen();
-			else if(element.msRequestFullscreen != undefined)
+			}
+			else if(element.msRequestFullscreen != undefined){
 				element.msRequestFullscreen();
-		},1000)
+			}
+		},500);
 	},
 
 	quitar_pantalla_completa : function(){
-		if(document.exitFullscreen)
+		if(document.exitFullscreen){
 			document.exitFullscreen();
-		else if(document.mozCancelFullScreen)
+		}else if(document.mozCancelFullScreen){
 			document.mozCancelFullScreen();
-		else if(document.webkitExitFullscreen)
+		}else if(document.webkitExitFullscreen){
 			document.webkitExitFullscreen();
-		else if(document.msExitFullscreen)
+		}else if(document.msExitFullscreen){
 			document.msExitFullscreen();
+		}
 	},
 
 	desabilitar_ctrl_actualizacion : function(e){
@@ -343,17 +354,19 @@ var Examen = {
 	},
 
 	intento_salida_evaluacion : function(){
-		if(Examen.intento_salir == 0){
-			Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, estó ocasionará el marcarlo como realizado y no podrá realizar otro");
-		}if(Examen.intento_salir == 1){
-			Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación diagnostica, se pide que marque su selección de la decisión");
-			$('.btn_cerrar_informacion_sistema').fadeOut();
+		Examen.intento_salir++;
+		console.log('**** intento salir: ' + Examen.intento_salir);
+		if(Examen.intento_salir <= 1 ){
+			Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, si reincide más de 2 veces se enviará de forma automática la evaluación");
+		}if(Examen.intento_salir == 2 ){
+			Comun.mostrar_mensaje_advertencia("Se detectó nuevamente que quiere salir del evaluación, estó ocasionará el marcarlo como realizado");
+		}if(Examen.intento_salir == 3){
+			Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación diagnóstica, se pide que marque su selección de la decisión");
 			setTimeout(function(){
 				Examen.enviar_formulario_respuestas();
 				Comun.mostrar_ocultar_modal('#modal_informacion_sistema',false);
 			},5000);
 		}
-		Examen.intento_salir++;
 	}
 
 };
