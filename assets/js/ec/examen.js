@@ -90,7 +90,7 @@ var Examen = {
 		Examen.iniciar_cuenta_atras();
 		Examen.procesar_class_calificacion();
 		$('.popoverShowImage').trigger('click');
-		Examen.pantalla_completa();
+		//Examen.pantalla_completa();
 	},
 
 	ocultar_menu_examen : function(){
@@ -189,7 +189,7 @@ var Examen = {
 						$('#slt_decision_candidato_evaluacion').attr('disabled',true);
 						$('#input_decision_candidato').attr('disabled',true);
 						Comun.mensaje_operacion(response.msg,'success');
-						Examen.quitar_pantalla_completa();
+						//Examen.quitar_pantalla_completa();
 					}else{
 						Comun.mensajes_operacion(response.msg,'error');
 					}

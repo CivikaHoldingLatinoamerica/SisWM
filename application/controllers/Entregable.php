@@ -10,16 +10,17 @@ class entregable extends CI_Controller
 		$this->load->model('EntregableAlumnoArchivoModel');
 		$this->load->model('EcEntregableAlumno');
 		$this->load->model('EntregableECModel');
+		$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('ActividadIEModel');
-	}
-
-	function index($id_estandar_competencia){
 		if(sesionActive()){
 			$this->usuario = usuarioSession();
 		}else{
 			$this->usuario = false;
 			redirect(base_url().'login');
 		}
+	}
+
+	function index($id_estandar_competencia){
 		try{
 			$data['titulo_pagina'] = 'Entregables esperados';
 			$data['migas_pan'] = array(
@@ -43,12 +44,12 @@ class entregable extends CI_Controller
 			);
 			$data['usuario'] = $this->usuario;
 			$data['estandar'] = $id_estandar_competencia;
-
+			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
 
 
 			$data['instrumentos'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar_competencia);
 
-			$datos = $this->EntregableECModel->obtener_entregables(1,10,$id_estandar_competencia);
+			$datos = $this->EntregableECModel->obtener_entregables(1,20,$id_estandar_competencia);
 
 			$data['entregables'] = $datos['data'];
 			$data['liberado'] = $datos['liberado'];
@@ -144,14 +145,17 @@ class entregable extends CI_Controller
 
 	}
 
-	public function obtener_entregables($pagina = 1, $limit = 10){
+	public function obtener_entregables($pagina = 1, $registros = 20){
 		$post = $this->input->post();
-		$datos = $this->EntregableECModel->obtener_entregables($pagina,$limit,$post['id_estandar_competencia']);
+		$datos = $this->EntregableECModel->obtener_entregables($pagina,$registros,$post['id_estandar_competencia']);
 
 		$data['entregables'] = $datos['data'];
 		$data['liberado'] = $datos['liberado'];
 		$data['btn_liberar'] = $datos['btn_liberar'];
-
+		$datos['total_registros'] = $this->EntregableECModel->obtenerTotalRegistrosEntregable($post['id_estandar_competencia']);
+		$data_paginacion = data_paginacion($pagina,$registros,$datos['total_registros']);
+		$data = array_merge($data,$data_paginacion);
+		//var_dump($data);exit;
 		$this->load->view('entregables/cards_evidencias',$data);
 	}
 	public function obtener_entregable($id_estandar,$id =0){

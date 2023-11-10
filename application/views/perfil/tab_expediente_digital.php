@@ -45,7 +45,9 @@
 							<a href="<?=base_url($foto_certificados->ruta_directorio.$foto_certificados->nombre)?>" class="btn btn-sm btn-outline-success" target="_blank"><i class="fa fa-download"></i></a>
 						<?php endif; ?>
 					</h3>
-					<p class="text-sm text-muted">Foto digital a color tamaño infantil, de frente, fondo blanco, sin lentes, frente descubierta. (En caso de usar aretes, que estos sean pequeños)</p>
+					<p class="text-sm text-muted">
+						Foto de para certificados: debe ser tomada con una cámara digital que puede ser la de un smartphone; las características son: el fondo debe de ser el de una pared blanca, el candidato o usuario debe de verse de frente a la cámara; la vestimenta debe de ser con ropa que haga contraste a la pared blanca (ropa obscura o de color, no usar colores claros); no usar gorras, sombreros o algún accesorio que no se aprecie la forma de su cabello; en su caso no usar fleco que obstruya la vista de su rostro; en su caso no utilizar maquillaje y joyería que ambos se observen ostentosos; no utilizar lentes obscuros o de sol ni utilizar sus lentes oftálmicos según sea el caso. La fotografía no se debe de editar, no utilizar filtros, no se permite una selfi, no se puede recortar.  Se muestra un ejemplo de una fotografía tomada con un celular, sin recortar, no utiliza filtros y cumple con las características que estamos solicitando para cumplir con los lineamientos normativos vigentes de la SEP-CONOCER
+					</p>
 				</div>
 				<!-- /.card-body -->
 				<div class="card-footer text-right">
@@ -79,7 +81,9 @@
 							<a href="<?=base_url($foto_firma->ruta_directorio.$foto_firma->nombre)?>" class="btn btn-sm btn-outline-success" target="_blank"><i class="fa fa-download"></i></a>
 						<?php endif; ?>
 					</h3>
-					<p class="text-sm text-muted">Firmar en una hoja blanca lo más parecido a su identificación oficial. Posteriormente escanear en formato de imagen "PNG" (fondo transparente). Puede ver el documento/formato de la firma dando click <a href="<?=base_url()?>assets/docs/firma_digitalizada.pdf" download="">aquí</a> </p>
+					<p class="text-sm text-muted">
+						Firma digitalizada: Subir o adjuntar Imagen PNG con su firma autógrafa, tal cual aparece en su Identificación Oficial con Fotografía; el procedimiento es: firmar en una hoja blanca utilizando bolígrafo azul, fotografiar la firma, recortar la fotografía y subirla o adjuntarla a la plataforma; el personal de la ECE verificará si la firma cuenta con las características necesarias para utilizarlos en todos los documentos que se generaran a través de esta plataforma para conformar su PED
+					</p>
 				</div>
 				<!-- /.card-body -->
 				<div class="card-footer text-right">

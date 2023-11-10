@@ -33,7 +33,7 @@ $(document).ready(function (){
 		if(pagina_select < max_paginacion){
 			if(Math.round($(window).scrollTop()) == Math.round($(document).height() - $(window).height())){
 				pagina_select++;
-				CatSector.buscarSectores(pagina_select);
+				methods.buscarEntregables(false,pagina_select);
 				$('#paginacion_usuario').val(pagina_select);
 			}
 		}
@@ -99,14 +99,26 @@ var methods = {
 			}
 		)
 	},
-	buscarEntregables : function (pagina = 1, registros = 10){
-		$('#contenedor_entregables').html(overlay);
-		Comun.obtener_contenido_peticion_html(
-			base_url +'Entregable/obtener_entregables/'+pagina+'/'+registros,{id_estandar_competencia : this.idEstandar()},
-			function(response){
-				$('#contenedor_entregables').html(response);
-			},
-		);
+	buscarEntregables : function (inicial = true, pagina = 1, registros = 20){
+		if(inicial){
+			$('#contenedor_entregables').html(overlay);
+			Comun.obtener_contenido_peticion_html(
+				base_url +'Entregable/obtener_entregables/'+pagina+'/'+registros,{id_estandar_competencia : this.idEstandar()},
+				function(response){
+					$('#contenedor_entregables').html(response);
+				},
+			);
+		}else{
+			$('#overlay_full_page').fadeIn();
+			Comun.obtener_contenido_peticion_html(
+				base_url +'Entregable/obtener_entregables/'+pagina+'/'+registros,{id_estandar_competencia : this.idEstandar()},
+				function(response){
+					$('#contenedor_entregables').append(response);
+					$('#overlay_full_page').fadeOut();
+				},
+			);
+		}
+		
 	},
 	iniciar_carga_material_apoyo : function(){
 		Comun.iniciar_carga_documento('#material_apoyo','#procesando_material_apoyo',function(archivo){

@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 	$(document).on('click','.modificar_evaluacion_ec',function(){
 		var id_evaluacion = $(this).data('id_evaluacion');
-		var tipo_evaluacion = $(this).data('tipo_evaluacion');
+		var tipo_evaluacion = $('#input_tipo_evaluacion').val();
 		EvaluacionEC.agregar_modificar_evaluacion_ec(tipo_evaluacion,id_evaluacion);
 	});
 

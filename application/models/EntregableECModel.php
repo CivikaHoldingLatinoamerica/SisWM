@@ -277,4 +277,10 @@ class EntregableECModel extends ModeloBase
 		}
 		return $return;
 	}
+
+	public function obtenerTotalRegistrosEntregable($id_estandar_competencia){
+		$this->db->where('id_estandar_competencia',$id_estandar_competencia);
+		$query = $this->db->get('entregable_ec');
+		return $query->num_rows();
+	}
 }

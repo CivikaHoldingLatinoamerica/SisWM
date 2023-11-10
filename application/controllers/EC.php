@@ -9,23 +9,23 @@ class EC extends CI_Controller {
     private $usuario;
 
     function __construct(){
-        parent:: __construct();
-        $this->load->model('ActividadIEModel');
-        $this->load->model('ArchivoModel');
-        $this->load->model('CatalogoModel');
-        $this->load->model('EstandarCompetenciaModel');
+        	parent:: __construct();
+        	$this->load->model('ActividadIEModel');
+        	$this->load->model('ArchivoModel');
+        	$this->load->model('CatalogoModel');
+        	$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('ECHasEvaluacionModel');
-        $this->load->model('UsuarioHasECModel');
-        $this->load->model('UsuarioModel');
-        $this->load->model('UsuarioHasECProgresoModel');
-        $this->load->model('PerfilModel');
-        $this->load->model('PlanRequerimientoModel');
-        if(sesionActive()){
-			$this->usuario = usuarioSession();
-        }else{
-            $this->usuario = false;
-			redirect(base_url().'login');
-        }
+        	$this->load->model('UsuarioHasECModel');
+        	$this->load->model('UsuarioModel');
+        	$this->load->model('UsuarioHasECProgresoModel');
+        	$this->load->model('PerfilModel');
+		$this->load->model('PlanRequerimientoModel');
+		if(sesionActive()){
+				$this->usuario = usuarioSession();
+		}else{
+			$this->usuario = false;
+				redirect(base_url().'login');
+		}
     }
 
     public function index(){

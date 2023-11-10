@@ -26,10 +26,33 @@
 
 		</div>
 
+		<?php if (isset($estandar_competencia)): ?>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">Estándar de competencia: </label><span
+						class="col-sm-10 col-form-label"><?= $estandar_competencia->codigo . ' - ' . $estandar_competencia->titulo ?></span>
+			</div>
+		<?php endif; ?>
+
+		<hr>
+
 		<div class="card">
 			<div class="card-body">
+				<?php if (isset($liberado) && !$liberado && isset($btn_liberar) && $btn_liberar): ?>
+					<div class="row text-right">
+						<div class="col mb-3">
+							<button id="btn-liberar" class="btn btn-outline-success">Liberar</button>
+						</div>
+					</div>
+				<?php endif; ?>
 				<div id="contenedor_entregables">
 				</div>
+				<?php if (isset($liberado) && !$liberado && isset($btn_liberar) && $btn_liberar): ?>
+					<div class="row text-right">
+						<div class="col mb-3">
+							<button id="btn-liberar" class="btn btn-outline-success">Liberar</button>
+						</div>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 

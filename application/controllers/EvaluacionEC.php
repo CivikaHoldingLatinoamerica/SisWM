@@ -234,7 +234,7 @@ class EvaluacionEC extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
-	public function guardar_evaluacion_ec($tipo,$id_referencia,$id_evaluacion = false){
+	public function guardar_evaluacion_ec($tipo,$id_referencia,$id_evaluacion = ''){
 		perfil_permiso_operacion('evaluacion.agregar');
 		try{
 			switch($tipo){
@@ -538,29 +538,42 @@ class EvaluacionEC extends CI_Controller {
 		$post = $this->input->post();
 		$validacion = Validaciones_Helper::formEvaluacionEC($post);
 		if($validacion['success']){
-			$id_evaluacion ? $post['fecha_actualizacion'] = date('Y-m-d H:i:s') : $post['fecha_creacion'] = date('Y-m-d H:i:s');
-			$post['eliminado'] = 'no';
-			//validar si existe una evaluacion diagnostica sin eliminar
-			$busqueda = array(
-				'id_estandar_competencia' => $id_estandar_competencia,
-				'id_cat_evaluacion' => EVALUACION_DIAGNOSTICA,
-				'eliminado' => 'no'
-			);
-			$evaluacion = $this->EvaluacionModel->tablero($busqueda);
-			if($evaluacion['total_registros'] == 0){
-				$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
-				$response['success'] = $guardar['success'];
-				$response['msg'] = array($guardar['msg']);
-				if($guardar['success']){
-					$guardar_ec_eval = $id_evaluacion ? true : $this->EvaluacionModel->guardar_estandar_competencia_evaluacion($id_estandar_competencia,$guardar['id']);
-					if(!$guardar_ec_eval){
-						$response['success'] = false;
-						$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
-					}
+			//se cambia el proceso de registro de datos para cuando se actualiza la informacion
+			if($id_evaluacion != ''){
+				$post['fecha_actualizacion'] = date('Y-m-d H:i:s');
+				$actualizar = $this->EvaluacionModel->actualizar($post,$id_evaluacion);
+				if($actualizar){
+					$response['success'] = true;
+					$response['msg'] = array('Se actualizó la evaluación con exito');
+				}else{
+					$response['success'] = false;
+					$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
 				}
 			}else{
-				$response['success'] = false;
-				$response['msg'][] = 'Existe una evaluación diagnóstica que esta en en proceso de carga o ha sido liberada para el candidato, no es posible agregar una nueva evaluación';	
+				$post['fecha_creacion'] = date('Y-m-d H:i:s');
+				$post['eliminado'] = 'no';
+				//validar si existe una evaluacion diagnostica sin eliminar
+				$busqueda = array(
+					'id_estandar_competencia' => $id_estandar_competencia,
+					'id_cat_evaluacion' => EVALUACION_DIAGNOSTICA,
+					'eliminado' => 'no'
+				);
+				$evaluacion = $this->EvaluacionModel->tablero($busqueda);
+				if($evaluacion['total_registros'] == 0){
+					$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
+					$response['success'] = $guardar['success'];
+					$response['msg'] = array($guardar['msg']);
+					if($guardar['success']){
+						$guardar_ec_eval = $id_evaluacion ? true : $this->EvaluacionModel->guardar_estandar_competencia_evaluacion($id_estandar_competencia,$guardar['id']);
+						if(!$guardar_ec_eval){
+							$response['success'] = false;
+							$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
+						}
+					}
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = 'Existe una evaluación diagnóstica que esta en en proceso de carga o ha sido liberada para el candidato, no es posible agregar una nueva evaluación';	
+				}
 			}
 		}else{
 			$response['success'] = false;
@@ -627,35 +640,46 @@ class EvaluacionEC extends CI_Controller {
 		$this->load->view('evaluacion/entregable/resultado',$data);
 	}
 
-	private function guardarEvaluacionEntregable($id_entregable, $id_evaluacion = false){
+	private function guardarEvaluacionEntregable($id_entregable, $id_evaluacion = ''){
 		$post = $this->input->post();
 		$validacion = Validaciones_Helper::formEvaluacionEC($post);
 		if($validacion['success']){
-			$id_evaluacion ? $post['fecha_actualizacion'] = date('Y-m-d H:i:s') : $post['fecha_creacion'] = date('Y-m-d H:i:s');
-			$evaluacion = $this->EvaluacionModel->existe_evalucion_entregable($id_entregable);
-			//var_dump($evaluacion);exit;
-			if(!$evaluacion){
-				$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
-				$id_evaluacion ? false : $id_evaluacion = $guardar['id'];
-				$response['success'] = $guardar['success'];
-				$response['msg'] = array($guardar['msg']);
-				if($guardar['success']){
-					$guardar_modulo_eva = $this->EntregableHasEvaluacionModel->actualizar_row_criterios(['id_entregable' => $id_entregable],['id_evaluacion' => $id_evaluacion]);
-					if(!$guardar_modulo_eva['success']){
-						$response['success'] = false;
-						$response['msg'] = array('No fue posible guardar la evaluación del entregable seleccionada, favor de intentar más tarde');
-					}else{
-						//asumimos que no existia el registro para actualizar
-						$nuevo = $this->EntregableHasEvaluacionModel->guardar_row(['id_entregable' => $id_entregable,'id_evaluacion' => $id_evaluacion]);
-						if(!$nuevo['success']){
-							$response['success'] = false;
-							$response['msg'] = array('No fue posible guardar la evaluación del entregable seleccionada, favor de intentar más tarde');
-						}
-					}
+			if($id_evaluacion){
+				$post['fecha_actualizacion'] = date('Y-m-d H:i:s');
+				$actualizar = $this->EvaluacionModel->actualizar($post,$id_evaluacion);
+				if($actualizar){
+					$response['success'] = true;
+					$response['msg'] = array('Se actualizó la evaluación con exito');
+				}else{
+					$response['success'] = false;
+					$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
 				}
 			}else{
-				$response['success'] = false;
-				$response['msg'][] = 'Existe una evaluación al entregable esperado que esta en proceso de carga o ha sido liberado al candidato';	
+				$post['fecha_creacion'] = date('Y-m-d H:i:s');
+				$evaluacion = $this->EvaluacionModel->existe_evalucion_entregable($id_entregable);
+				if(!$evaluacion){
+					$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
+					$id_evaluacion ? false : $id_evaluacion = $guardar['id'];
+					$response['success'] = $guardar['success'];
+					$response['msg'] = array($guardar['msg']);
+					if($guardar['success']){
+						$guardar_modulo_eva = $this->EntregableHasEvaluacionModel->actualizar_row_criterios(['id_entregable' => $id_entregable],['id_evaluacion' => $id_evaluacion]);
+						if(!$guardar_modulo_eva['success']){
+							$response['success'] = false;
+							$response['msg'] = array('No fue posible guardar la evaluación del entregable seleccionada, favor de intentar más tarde');
+						}else{
+							//asumimos que no existia el registro para actualizar
+							$nuevo = $this->EntregableHasEvaluacionModel->guardar_row(['id_entregable' => $id_entregable,'id_evaluacion' => $id_evaluacion]);
+							if(!$nuevo['success']){
+								$response['success'] = false;
+								$response['msg'] = array('No fue posible guardar la evaluación del entregable seleccionada, favor de intentar más tarde');
+							}
+						}
+					}
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = 'Existe una evaluación al entregable esperado que esta en proceso de carga o ha sido liberado al candidato';	
+				}
 			}
 		}else{
 			$response['success'] = false;
@@ -719,27 +743,38 @@ class EvaluacionEC extends CI_Controller {
 		$this->load->view('evaluacion/modulo/resultado',$data);
 	}
 
-	private function guardarEvaluacionModulo($id_ec_curso_modulo, $id_evaluacion = false){
+	private function guardarEvaluacionModulo($id_ec_curso_modulo, $id_evaluacion = ''){
 		$post = $this->input->post();
 		$validacion = Validaciones_Helper::formEvaluacionEC($post);
 		if($validacion['success']){
-			$id_evaluacion ? $post['fecha_actualizacion'] = date('Y-m-d H:i:s') : $post['fecha_creacion'] = date('Y-m-d H:i:s');
-			$evaluacion = $this->EvaluacionModel->existe_evaluacion_ec_curso_modulo($id_ec_curso_modulo);
-			//var_dump($evaluacion);exit;
-			if(!$evaluacion){
-				$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
-				$response['success'] = $guardar['success'];
-				$response['msg'] = array($guardar['msg']);
-				if($guardar['success']){
-					$guardar_modulo_eva = $this->EcCursoModuloModel->guardar_row(['id_evaluacion'=>$guardar['id']],$id_ec_curso_modulo);
-					if(!$guardar_modulo_eva['success']){
-						$response['success'] = false;
-						$response['msg'] = array('No fue posible guardar la evaluación del módulo seleccionada, favor de intentar más tarde');
-					}
+			if($id_evaluacion){
+				$post['fecha_actualizacion'] = date('Y-m-d H:i:s');
+				$actualizar = $this->EvaluacionModel->actualizar($post,$id_evaluacion);
+				if($actualizar){
+					$response['success'] = true;
+					$response['msg'] = array('Se actualizó la evaluación con exito');
+				}else{
+					$response['success'] = false;
+					$response['msg'] = array('No fue posible guardar la evaluación con la EC seleccionada, favor de intentar más tarde');
 				}
 			}else{
-				$response['success'] = false;
-				$response['msg'][] = 'Existe una evaluación al modulo que esta en en proceso de carga o ha sido liberado el Contenido del módulo al candidato';	
+				$post['fecha_creacion'] = date('Y-m-d H:i:s');
+				$evaluacion = $this->EvaluacionModel->existe_evaluacion_ec_curso_modulo($id_ec_curso_modulo);
+				if(!$evaluacion){
+					$guardar = $this->EvaluacionModel->guardar_row($post,$id_evaluacion);
+					$response['success'] = $guardar['success'];
+					$response['msg'] = array($guardar['msg']);
+					if($guardar['success']){
+						$guardar_modulo_eva = $this->EcCursoModuloModel->guardar_row(['id_evaluacion'=>$guardar['id']],$id_ec_curso_modulo);
+						if(!$guardar_modulo_eva['success']){
+							$response['success'] = false;
+							$response['msg'] = array('No fue posible guardar la evaluación del módulo seleccionada, favor de intentar más tarde');
+						}
+					}
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = 'Existe una evaluación al modulo que esta en en proceso de carga o ha sido liberado el Contenido del módulo al candidato';	
+				}
 			}
 		}else{
 			$response['success'] = false;

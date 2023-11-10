@@ -1,8 +1,14 @@
-<?php $domicilio = $datos_domicilio->calle . ' No. ' . $datos_domicilio->numero_ext;
-if (!is_null($datos_domicilio->numero_int) && $datos_domicilio->numero_int != '') {
-	$domicilio .= ' int: ' . $datos_domicilio->numero_int;
+<?php $domicilio = '';
+
+if(!is_null($datos_domicilio)){
+	$domicilio .= $datos_domicilio->calle . ' No. ' . $datos_domicilio->numero_ext;
+	if (!is_null($datos_domicilio->numero_int) && $datos_domicilio->numero_int != '') {
+		$domicilio .= ' int: ' . $datos_domicilio->numero_int;
+	}
+	$domicilio .= ', ' . $datos_domicilio->localidad . ', ' . $datos_domicilio->municipio . ', ' . $datos_domicilio->estado . ', CP: ' . $datos_domicilio->codigo_postal;
+}else{
+	$domicilio .= 'Sin datos de domicilio';
 }
-$domicilio .= ', ' . $datos_domicilio->localidad . ', ' . $datos_domicilio->municipio . ', ' . $datos_domicilio->estado . ', CP: ' . $datos_domicilio->codigo_postal;
 ?>
 <div class="modal fade" id="modal_ficha_carta_compromiso_candidato" aria-modal="true" role="dialog">
 	<div class="modal-dialog  modal-dialog-scrollable modal-lg">
