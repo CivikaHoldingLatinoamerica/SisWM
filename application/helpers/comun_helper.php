@@ -296,7 +296,9 @@ function es_development(){
 
 function es_produccion(){
     $es_produccion = false;
-    if($_SERVER['SERVER_NAME'] == 'cursos.civika.edu.mx'){
+    if($_SERVER['SERVER_NAME'] == 'cursos.civika.edu.mx' 
+		|| $_SERVER['SERVER_NAME'] == 'yosoyliderwm.com' 
+		|| $_SERVER['SERVER_NAME'] == 'siiped.civika.com.mx' ){
         $es_produccion = true;
     }
     return $es_produccion;

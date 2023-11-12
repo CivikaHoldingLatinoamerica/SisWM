@@ -622,9 +622,9 @@ class DocsPDF extends CI_Controller {
 				$this->default_pdf_params['margin_top'] = 15;
 				$this->default_pdf_params['margin_bottom'] = 15;
 				$mpdf = $this->pdf->load($this->default_pdf_params);
-				/*if(!es_produccion()){
+				if(!es_produccion()){
 					$mpdf->SetWatermarkText('PED Demo - ECO SOFTyH');
-				}*/
+				}
 				$mpdf->showWatermarkText = true;
 				$data['es_evidencia_imagen'] = $esImg;
 				$data['evidencia'] = $entregable;
