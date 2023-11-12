@@ -31,7 +31,11 @@ var Examen = {
 	activar_intentos_salida_examen : $('#form_evaluacion_examen').length == 0  ? false : true,
 
 	inicializar_msg_examen : function(){
-		Comun.mostrar_ocultar_modal('#modal_confirmar_inicio_examen_confirmacion',true);
+		if($('#tiene_evaluacion_aprobatoria').val() == 'no'){
+			Comun.mostrar_ocultar_modal('#modal_confirmar_inicio_examen_confirmacion',true);
+		}else{
+			$('#div_contenedor_examen').fadeIn(500);
+		}
 	},
 
 	iniciar_examen_candidato : function(){
@@ -171,6 +175,7 @@ var Examen = {
 					$('#dictamen_calificacion').html(response.data.evaluacion_sistema).addClass(response.data.tag);
 					$('#input_id_evaluacion_realizada').val(response.data.id_usuario_has_evaluacion_realizada);
 					Examen.activar_intentos_salida_examen = false;
+					Examen.quitar_pantalla_completa();
 				}else{
 					Comun.mensajes_operacion(response.msg,'error');
 				}
@@ -275,18 +280,15 @@ var Examen = {
 
 	pantalla_completa : function(){
 		setTimeout(function(){
-			var element = document.documentElement;
-			if(element.requestFullscreen){
-				element.requestFullscreen();
-			}
-			else if(element.mozRequestFullScreen != undefined){
-				element.mozRequestFullScreen();
-			}
-			else if(element.webkitRequestFullscreen != undefined){
-				element.webkitRequestFullscreen();
-			}
-			else if(element.msRequestFullscreen != undefined){
-				element.msRequestFullscreen();
+			var elem = document.documentElement;
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.msRequestFullscreen) {
+				elem.msRequestFullscreen();
+			} else if (elem.mozRequestFullScreen) {
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) {
+				elem.webkitRequestFullscreen();
 			}
 		},500);
 	},
@@ -307,6 +309,10 @@ var Examen = {
 		e = e || window.event;
 		console.log(e.keyCode);
 		if(e.keyCode == 116){ //tecla F5
+			e.preventDefault();
+			e.stopPropagation();
+			Examen.intento_salida_evaluacion();
+		}if(e.keyCode == 27){ //tecla ESC
 			e.preventDefault();
 			e.stopPropagation();
 			Examen.intento_salida_evaluacion();
@@ -358,7 +364,7 @@ var Examen = {
 		Examen.intento_salir++;
 		console.log('**** intento salir: ' + Examen.intento_salir);
 		//por lo de la pantalla completa
-		if(Examen.intento_salir <= 2 ){
+		if(Examen.intento_salir == 2 ){
 			Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, si reincide más de 2 veces se enviará de forma automática la evaluación");
 		}if(Examen.intento_salir == 3 ){
 			Comun.mostrar_mensaje_advertencia("Se detectó nuevamente que quiere salir del evaluación, estó ocasionará el marcarlo como realizado");

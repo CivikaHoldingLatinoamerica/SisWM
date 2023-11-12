@@ -683,6 +683,11 @@ class AlumnosEC extends CI_Controller {
 					$data['puede_realizar_evaluacion'] = false;
 				}
 			}
+			foreach($usuario_has_evaluacion_enviada['usuario_has_evaluacion_realizada'] as $index => $uhee){
+				if($uhee->calificacion >= 80){
+					$data['tiene_evaluacion_aprobatoria'] = true;
+				}
+			}
 
 			if($data['puede_realizar_evaluacion']){
 				$buscar_usuario_has_evaluacion = $buscar_usuario_has_evaluacion_enviada;
@@ -986,12 +991,12 @@ class AlumnosEC extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
-	public function calificacion_evaluacion($id_usuario_has_evaluacion_realizada){
-    	try{
-    		$calificacion = $this->EvaluacionRespuestasUsuarioModel->obtener_calificacion_evaluacion($id_usuario_has_evaluacion_realizada);
-    		$response['success'] = true;
-    		$response['msg'][] = 'Se obtuvo la calificación de la evaluacion realizada';
-    		$response['data'] = $this->data_calificacion($calificacion);
+	public function calificacion_evaluacion($id_usuario_has_evaluacion_realizada,$id_evaluacion){
+    		try{
+    			$calificacion = $this->EvaluacionRespuestasUsuarioModel->obtener_calificacion_evaluacion($id_usuario_has_evaluacion_realizada,$id_evaluacion);
+    			$response['success'] = true;
+    			$response['msg'][] = 'Se obtuvo la calificación de la evaluacion realizada';
+    			$response['data'] = $this->data_calificacion($calificacion);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

@@ -18,6 +18,7 @@
 			<div class="card card-solid" id="div_contenedor_examen" style="display: none;">
 				<div class="card-body pb-0">
 					<?php if(isset($ec_has_evaluacion) && is_object($ec_has_evaluacion) && $ec_has_evaluacion->liberada == 'si'): ?>
+						<input type="hidden" id="tiene_evaluacion_aprobatoria" value="<?=isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria ? 'si':'no'?>">
 						<?php if(isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria): ?>
 							<div class="callout callout-success">
 								<h5>Información importante</h5>
@@ -220,7 +221,7 @@
 					<?php else: ?>
 						<div class="callout callout-danger">
 							<h5>Información importante</h5>
-							<p>LO SENTIMOS, La evaluación no se encuentra disponible para contestar, espere ah que algun administrador/instructor del sistema lo libere</p>
+							<p>LO SENTIMOS, La evaluación no se encuentra disponible para contestar, espere ah que algún administrador/instructor del sistema lo libere</p>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -259,19 +260,21 @@
 					</p>
 					<br>
 					<p>Candados y puntos a considerar en esté examen</p>
-					<ol></ol>
-					<br>
-					<p>¿Que no puede hacer?</p>
 					<ol>
-						<li>Realizar una captura de pantalla</li>
-						<li>Copiar las preguntas y/o opciones de las mismas</li>
-						<li>Abrir una ventana, pestaña nueva en el navegador que este usando</li>
-						<li>Abrir un programa externo al navegador, por ejemplo: Word, PowerPoint, etc.</li>
-						<li>Alejar del área de trabajo de este examen</li>
+						<li>Se tomará el examen en pantalla completa </li>
+						<li>No se podrá realizar una captura de pantalla</li>
+						<li>No se puede copiar las preguntas y/o opciones de las mismas</li>
+						<li>No podrá abrir una ventana del navegador o pestaña nueva del navegador que esté usando</li>
+						<li>No podrá abrir un programa externo al navegador, por ejemplo: Word, PowerPoint, etc.</li>
+						<li>No podrá alejar el puntero del ratón del área de trabajo de este examen</li>
 						<?php if(isset($evaluacion->tiempo) && $evaluacion->tiempo != 0 && $evaluacion->tiempo != ''): ?>
 							<li>Contará como tiempo limite de <?=$evaluacion->tiempo?> minutos para responder está evaluación</li>
 						<?php endif; ?>
 					</ol>
+					<br>
+					<p>
+						Si esta de acuerdo en los puntos de esté examen de clic en el botón "Aceptar" para iniciar el proceso de evaluación
+					</p>
 				</div>
 
 				</div>
