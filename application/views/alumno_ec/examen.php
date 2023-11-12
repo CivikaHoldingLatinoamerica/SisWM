@@ -15,7 +15,7 @@
 						class="col-sm-10 col-form-label"><?= $estandar_competencia->codigo . ' - ' . $estandar_competencia->titulo ?></span>
 			</div>
 
-			<div class="card card-solid">
+			<div class="card card-solid" id="div_contenedor_examen" style="display: none;">
 				<div class="card-body pb-0">
 					<?php if(isset($ec_has_evaluacion) && is_object($ec_has_evaluacion) && $ec_has_evaluacion->liberada == 'si'): ?>
 						<?php if(isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria): ?>
@@ -242,5 +242,48 @@
 
 </div>
 <!-- /.content-wrapper -->
+
+<!-- Advertencia para iniciar el examen -->
+<div id="modal_confirmar_inicio_examen">
+	<div class="modal fade" id="modal_confirmar_inicio_examen_confirmacion" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">INFORMACIÓN IMPORTANTE</h4>
+				</div>
+				<div class="modal-body">
+				<div class="callout callout-danger">
+					<p>
+						El siguiente examen que esta a punto de realizar cuenta con distintos candados de seguridad; los cuales, si incurre en ellos, se penalizarán y podría enviarse con las respuestas que haya respondido hasta ese momento;
+						como resultado, es probable que no pase con una calificación satisfactoria
+					</p>
+					<br>
+					<p>Candados y puntos a considerar en esté examen</p>
+					<ol></ol>
+					<br>
+					<p>¿Que no puede hacer?</p>
+					<ol>
+						<li>Realizar una captura de pantalla</li>
+						<li>Copiar las preguntas y/o opciones de las mismas</li>
+						<li>Abrir una ventana, pestaña nueva en el navegador que este usando</li>
+						<li>Abrir un programa externo al navegador, por ejemplo: Word, PowerPoint, etc.</li>
+						<li>Alejar del área de trabajo de este examen</li>
+						<?php if(isset($evaluacion->tiempo) && $evaluacion->tiempo != 0 && $evaluacion->tiempo != ''): ?>
+							<li>Contará como tiempo limite de <?=$evaluacion->tiempo?> minutos para responder está evaluación</li>
+						<?php endif; ?>
+					</ol>
+				</div>
+
+				</div>
+				<div class="modal-footer justify-content-between">
+					<a href="<?=base_url()?>AlumnosEC/ver_progreso/<?=$estandar_competencia->id_estandar_competencia.'/'.$usuario_has_estandar_competencia->id_usuario_evaluador?>" class="btn btn-sm btn-outline-danger">No acepto</a>
+					<button type="button" id="btn_confirmar_inicio_examen" class="btn btn-sm btn-outline-success">Aceptar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+</div>
 
 <?php $this->load->view('default/footer'); ?>

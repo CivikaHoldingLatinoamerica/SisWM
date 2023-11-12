@@ -660,7 +660,7 @@ class AlumnosEC extends CI_Controller {
 			//apartado para calificaciones
 			$data['tiene_evaluacion_aprobatoria'] = false;
 			$data['puede_realizar_evaluacion'] = true;
-			$evaluacion_preguntas = $this->EvaluacionHasPreguntasModel->tablero(array('id_evaluacion' => $id_evaluacion));
+			$evaluacion_preguntas = $this->EvaluacionHasPreguntasModel->tableroExamen(array('id_evaluacion' => $id_evaluacion));
 			$data['ec_has_evaluacion'] = $ec_has_evaluacion['estandar_competencia_has_evaluacion'][0];
 			$data['preguntas_evaluacion'] = $evaluacion_preguntas['preguntas_evaluacion'];
 			//validamos una evaluacion realizada y aprobada

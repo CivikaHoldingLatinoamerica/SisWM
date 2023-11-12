@@ -33,6 +33,21 @@ class EvaluacionHasPreguntasModel extends ModeloBase
 		}
 	}
 
+	public function tableroExamen($data){
+		try{
+			$consulta = $this->obtener_query_base().' '.$this->criterios_busqueda($data).' order by rand()';
+			$query = $this->db->query($consulta);
+			$retorno['success'] = true;
+			$retorno['preguntas_evaluacion'] = $query->result();
+			$retorno['total_registros'] = $this->obtener_total_registros($data);
+			return $retorno;
+		}catch (Exception $ex){
+			log_message('error',$this->table.'->tablero');
+			log_message('info',$ex->getMessage());
+			return false;
+		}
+	}
+
 	public function obtener_query_base(){
 		$consulta = "select 
 			  ehp.*,bp.pregunta,ctop.id_cat_tipo_opciones_pregunta, ctop.nombre tipo_pregunta
