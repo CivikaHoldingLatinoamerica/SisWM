@@ -62,7 +62,7 @@ class ModeloBase extends CI_Model
 		try{
 			$return['success'] = false;
 			$return['msg'] = 'Hubo un error en el sistema, favor de intentar más tarde';
-			if($id !== false){
+			if($id !== false && $id !== ''){
 				if($this->actualizar($data,$id)){
 					$return['success'] = true;
 					$return['msg'] = 'Se actualizó el registro con exito';
