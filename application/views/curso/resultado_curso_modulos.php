@@ -30,7 +30,7 @@
 					<!-- /.card-header -->
 					<div class="card-body" style="display: <?= $index == 0 ? 'block' : 'none'?>;">
 						<div class="form-group row">
-							<label> Objetvo general:</label>					
+							<label> Objetivo general:</label>					
 						</div>
 						<div class="form-group row">
 							<?=isset($eccm->objetivo_general) ? $eccm->objetivo_general : ''?>						
