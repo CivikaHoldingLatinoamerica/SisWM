@@ -46,7 +46,9 @@
 									<div class="card card-<?=$eccm->eliminado == 'si' ? 'light' : 'primary'?> <?= $index == 0 ? "" : "collapsed-card"?>">
 										<div class="card-header">
 											<h3 class="card-title <?=$eccm->eliminado == 'si' ? 'text-danger' : ''?>">
-												<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+												<div class="col-lg-12">
+													<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+												</div>
 											</h3>
 											<div class="card-tools">
 												<button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -60,13 +62,17 @@
 												<label> Objetivo general:</label>					
 											</div>
 											<div class="form-group row">
-												<?=isset($eccm->objetivo_general) ? $eccm->objetivo_general : ''?>						
+												<div class="col-lg-12">
+													<?=isset($eccm->objetivo_general) ? $eccm->objetivo_general : ''?>						
+												</div>
 											</div>
 											<div class="form-group row">						
 												<label> Objetivos especificos:</label>
 											</div>
-											<div class="form-group row">						
-												<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?></span>							
+											<div class="form-group row">
+												<div class="col-lg-12">					
+													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?></span>							
+												</div>
 											</div>
 											<div class="form-group row">
 												<div class="col-sm-12 text-right">	
@@ -102,13 +108,17 @@
 																			<label> Innstrucciones:</label>
 																		</div>
 																		<div class="form-group row">
-																			<?=isset($eccmt->instrucciones) ? $eccmt->instrucciones : ''?>						
+																			<div class="col-lg-12">
+																				<?=isset($eccmt->instrucciones) ? $eccmt->instrucciones : ''?>						
+																			</div>
 																		</div>
 																		<div class="form-group row">						
 																			<label> Contenido curso:</label>
 																		</div>
-																		<div class="form-group row">						
-																			<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?></span>							
+																		<div class="form-group row">		
+																			<div class="col-lg-12">				
+																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?></span>							
+																			</div>
 																		</div>
 
 																		<div class="form-group row">						
