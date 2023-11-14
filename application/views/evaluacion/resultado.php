@@ -98,7 +98,7 @@
 								<?php if(perfil_permiso_operacion_menu('evaluacion.cerrar_liberar')):?>
 									<button type="button" class="btn btn-sm btn-outline-dark iniciar_confirmacion_operacion" data-toggle="tooltip" title="Liberar evaluación para los candidatos"
 											data-msg_confirmacion_general="¿Esta seguro que desea liberar la evaluación? con esta operación ya no podrá editar la evaluación ni las preguntas del mismo y dejara disponible la evaluación para los candidatos"
-											data-url_confirmacion_general="<?=base_url()?>EvaluacionEC/liberar/<?=$e->id_estandar_competencia_has_evaluacion?>"
+											data-url_confirmacion_general="<?=base_url()?>EvaluacionEC/liberar/<?=$e->id_evaluacion.'/'.$e->id_estandar_competencia_has_evaluacion?>"
 											data-btn_trigger="#btn_buscar_ec_evaluacion">
 										<i class="fas fa-sign-out-alt"></i> Liberar
 									</button>
