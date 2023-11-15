@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal_form_entregable" aria-modal="true" role="dialog">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title"><?= isset($entregable) ? 'Modificar Entregable' : 'Agregar Entregable' ?> </h4>
@@ -58,7 +58,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="input_nombre" class="col-sm-3 col-form-label">Material de de apoyo </label>
+						<label for="input_nombre" class="col-sm-3 col-form-label">Material de apoyo </label>
 						<div class="col-sm-9">
 							<input type="hidden" id="input_material_apoyo" name="id_archivo"
 								   value="<?= isset($entregable->id_archivo) ? $entregable->id_archivo : '' ?>">

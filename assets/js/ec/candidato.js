@@ -69,6 +69,20 @@ $(document).ready(function(){
 		var numero_paso = $(this).data('numero_paso');
 		var siguiente_link = $(this).data('siguiente_link');
 		CandidatoEC.guardar_progreso_paso(id_usuario_has_estandar_competencia,numero_paso,siguiente_link);
+		if(numero_paso == 3){
+			//quitamos el candado de que puede ingresar de igual manera al modulo de evidencias
+			Comun.obtener_contenido_peticion_json(
+				base_url + 'AlumnosEC/guardar_progreso_pasos/'+id_usuario_has_estandar_competencia+'/'+'4',{},
+				function(response){
+					if(!response.success){
+						Comun.mensajes_operacion(response.msg,'error');
+					}else{
+						//habilitamos el siguiente link correspondiente
+						$('#tab_evidencias-tab').removeClass('disabled').addClass('text-green');
+					}
+				}
+			);
+		}
 		//apartado para habilitar el siguiente link
 	});
 
@@ -572,7 +586,7 @@ var CandidatoEC = {
 			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
 			var id_usuario_alumno = $('#input_id_usuario_alumno').val();
 			var id_usuario_evaluador = $('#input_id_usuario_evaluador').val();
-			if($('#tab_modulo_capacitacion').html() == ''){
+			//if($('#tab_modulo_capacitacion').html() == ''){
 				$('#tab_modulo_capacitacion').html(overlay);
 				Comun.obtener_contenido_peticion_html(
 					base_url + 'AlumnosEC/ver_progreso_modulos_capacitacion/' + id_estandar_competencia + '/' + id_usuario_alumno + '/' + id_usuario_evaluador,{},
@@ -580,7 +594,7 @@ var CandidatoEC = {
 						$('#tab_modulo_capacitacion').html(response);
 					}
 				)
-			}
+			//}
 		},
 
 		evidencias : function (){

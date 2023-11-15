@@ -1,4 +1,5 @@
 <?php if(isset($ec_curso) && is_array($ec_curso) && !empty($ec_curso)): ?>
+	<input type="hidden" id="sin_registros_cursos" value="no">
 	<?php foreach($ec_curso as $index => $curso): ?>
 		<?php if($curso->eliminado == 'no'): ?>
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
@@ -7,7 +8,6 @@
 				<div class="card-body">
 					<h5 class="card-title"><b><?=$curso->nombre_curso?> </b></h5>
 					<p class="card-text"><?=$curso->descripcion?> </p>
-					<p class="card-text"><b>Publicado:</b> <?=$curso->publicado?> </p>
 				</div>
 				<div class="card-footer text-right">
 					<?php if(perfil_permiso_operacion_menu('curso_ec.consultar')): ?>
@@ -15,17 +15,7 @@
 							<i class="fa fa-eye"></i> Ver detalle
 						</button>
 					<?php endif; ?>
-					<?php if(perfil_permiso_operacion_menu('curso_ec.cerrar_liberar')): ?>
-						<?php if($curso->fecha_publicado == null): ?>
-						<br><button type="button" class="btn btn-sm btn-outline-success mb-1 iniciar_confirmacion_operacion"
-								data-toggle="tooltip" title="Publicar Módulo de capacitación"
-								data-msg_confirmacion_general="¿Esta seguro de publicar el Módulo de capacitación?; al hacerlo, no podra modificarla y esta acción no podrá revertirse"
-								data-url_confirmacion_general="<?=base_url()?>Curso/publicar/<?=$curso->id_ec_curso?>/<?= $curso->id_estandar_competencia ?>"
-								data-btn_trigger="#btn_buscar_ec_curso">
-							<i class="fas fa-eye"></i> Publicar
-						</button>
-						<?php endif; ?>
-					<?php endif; ?>
+					
 				<?php if($curso->fecha_publicado == null): ?>
 					<?php if(perfil_permiso_operacion_menu('curso_ec.modificar')): ?>
 						<button type="button" id="modificar_estandar_competencia_curso" class="btn btn-sm btn-outline-info"
@@ -88,6 +78,7 @@
 
 	<?php endforeach; ?>
 <?php else: ?>
+	<input type="hidden" id="sin_registros_cursos" value="si">
 	<div class="card card-solid" id="card_resultados_convocatoria_ec">
 		<div class="card-body pb-0">
 			<div class="form-group row">

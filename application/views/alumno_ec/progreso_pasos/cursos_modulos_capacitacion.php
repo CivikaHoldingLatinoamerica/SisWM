@@ -1,3 +1,16 @@
+<div class="row form-group" >
+	<div class="col-lg-12" >
+		<div class="callout callout-success">
+			<h5>Información importante</h5>
+			<p>Tiene la posibilidad de ir al apartado de Evidencias, sin la necesidad de realizar el plan de capacitación; se conoce como: Evaluación Directa </p>
+			<?php if(isset($existen_modulos_en_carga) && $existen_modulos_en_carga): ?>
+				<hr>
+				Se detectó en el sistema, que el evaluador sigue cargando el contenido de la capacitación al Estándar de Competencia; espere un tiempo más para que queden liberados al 100% y poder pasar al siguente apartado
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+
 <div class="form-group">
 	<div class="col-12">
 		<div class="card card-primary">
@@ -46,7 +59,9 @@
 									<div class="card card-<?=$eccm->eliminado == 'si' ? 'light' : 'primary'?> <?= $index == 0 ? "" : "collapsed-card"?>">
 										<div class="card-header">
 											<h3 class="card-title <?=$eccm->eliminado == 'si' ? 'text-danger' : ''?>">
-												<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+												<div class="col-lg-12">
+													<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+												</div>
 											</h3>
 											<div class="card-tools">
 												<button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -57,18 +72,19 @@
 										<!-- /.card-header -->
 										<div class="card-body" style="display: <?= $index == 0 ? 'block' : 'none'?>;">
 											<div class="form-group row">
-												<label> Objetvo general:</label>					
+												<label> Objetivo general:</label>					
 											</div>
 											<div class="form-group row">
 												<div class="col-lg-12">
-													<?=isset($eccm->objetivo_general) ? $eccm->objetivo_general : ''?>
+                          <?=isset($eccm->objetivo_general) ? $eccm->objetivo_general : ''?>
 												</div>
 											</div>
 											<div class="form-group row">						
 												<label> Objetivos especificos:</label>
 											</div>
-											<div class="form-group row">						
-												<div class="col-lg-12">
+											<div class="form-group row">
+												<div class="col-lg-12">					
+
 													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>
 												</div>
 											</div>
@@ -103,7 +119,7 @@
 																	<!-- /.card-header -->
 																	<div class="card-body" style="display: none;">
 																		<div class="form-group row">
-																			<label> Innstrucciones:</label>
+																			<label> Instrucciones:</label>
 																		</div>
 																		<div class="form-group row">
 																			<div class="col-lg-12">
@@ -113,10 +129,10 @@
 																		<div class="form-group row">						
 																			<label> Contenido curso:</label>
 																		</div>
-																		<div class="form-group row">
-																			<div class="col-lg-12">
+																		<div class="form-group row">		
+																			<div class="col-lg-12">				
 																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>
-																			</div>						
+																			</div>
 																		</div>
 
 																		<div class="form-group row">						
@@ -157,14 +173,6 @@
 
 			<div class="form-group row">
 
-				<div class="col-lg-8 text-left">
-					<?php if(isset($usuario_has_evaluacion_realizada) && !$usuario_has_evaluacion_realizada): ?>
-						<div class="callout callout-warning">
-							<h5>Información importante</h5>
-							<p>Para poder ir al apartado de Evidencias, es necesario que responda primero las evaluaciones de cada módulo</p>
-						</div>
-					<?php endif ?>
-				</div>
 				<div class="col-12 text-right">
 					<button type="button"
 							data-siguiente_link="#tab_evidencias-tab" data-numero_paso="4" id="btn_siguiente_tab_modulo_capacitacion"

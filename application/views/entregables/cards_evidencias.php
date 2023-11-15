@@ -24,61 +24,56 @@
 									<?php endif; ?>
 									<?= $item->nombre ?></h5>
 							</div>
-							<?php if ($item->liberado == 'no'): ?>
-								<div class="col-2">
-									<div class="dropdown">
-										<button id="edit" class="btn btn-sm btn-light dropdown-toggle" type="button"
-												data-toggle="dropdown" aria-expanded="fal|">
-											<em class="fa fa-ellipsis-v">
-												<?php if (isset($item->preguntas_cargadas) && $item->preguntas_cargadas) : ?>
-													<em style="color: var(--yellow)"
-														title="Aun hace falta cargar las preguntas del formulario"
-														class=" fa fa-exclamation-circle"></em>
-												<?php endif; ?>
-											</em>
-										</button>
+							
+							<div class="col-2">
+								<div class="dropdown">
+									<button id="edit" class="btn btn-sm btn-light dropdown-toggle" type="button"
+											data-toggle="dropdown" aria-expanded="fal|">
+										<em class="fa fa-ellipsis-v">
+											<?php if (isset($item->preguntas_cargadas) && $item->preguntas_cargadas) : ?>
+												<em style="color: var(--yellow)"
+													title="Aun hace falta cargar las preguntas del formulario"
+													class=" fa fa-exclamation-circle"></em>
+											<?php endif; ?>
+										</em>
+									</button>
 
-										<div class="dropdown-menu">
-											<a class="dropdown-item modificar_entregable"
+									<div class="dropdown-menu">
+										<a class="dropdown-item modificar_entregable"
 											data-id="<?= $item->id_entregable ?>" href="#">Editar</a>
-											<a class="dropdown-item iniciar_confirmacion_operacion"
+										<a class="dropdown-item iniciar_confirmacion_operacion"
 											data-msg_confirmacion_general="¿Esta seguro de eliminar el entregable?, esta acción no podrá revertirse"
 											data-url_confirmacion_general="<?= base_url() ?>Entregable/eliminar/<?= $item->id_entregable ?>"
 											data-btn_trigger="#btn_buscar_entregables"
-											href="#">Eliminar</a>
-											<?php
-											if ($item->tipo_entregable == "form") : ?>
-												<a class="dropdown-item"
-												href="<?= base_url() . 'preguntas_abiertas/' . $item->id_entregable ?>">Cargar
-													formulario
-													<?php if (isset($item->preguntas_cargadas) && $item->preguntas_cargadas) : ?>
-														<em style="color: var(--yellow)"
-															title="Aun hace falta cargar las preguntas del formulario"
-															class="  fa fa-exclamation-circle"></em>
-													<?php endif; ?>
-												</a>
-											<?php endif; ?>
+											href="#">
+											Eliminar
+										</a>
+										<?php if(isset($item->liberado) && $item->liberado == 'no'): ?>
+											<a class="dropdown-item  iniciar_confirmacion_operacion"
+														data-msg_confirmacion_general="¿Esta seguro de liberar el entregable?, esta acción no podrá revertirse"
+														data-url_confirmacion_general="<?= base_url() ?>Entregable/liberar/<?= $item->id_entregable ?>"
+														data-btn_trigger="#btn_buscar_entregables">Liberar</a>
+										<?php endif ?>
+										<?php
+										if ($item->tipo_entregable == "form") : ?>
+											<a class="dropdown-item" href="<?= base_url() . 'preguntas_abiertas/' . $item->id_entregable ?>">Cargar formulario
+												<?php if (isset($item->preguntas_cargadas) && $item->preguntas_cargadas) : ?>
+													<em style="color: var(--yellow)"
+														title="Aun hace falta cargar las preguntas del formulario"
+														class="  fa fa-exclamation-circle"></em>
+												<?php endif; ?>
+											</a>
+										<?php endif; ?>
 
-											<?php
-											if ($item->tipo_entregable == "cuest") : ?>
-												<a class="dropdown-item"
-												href="<?= base_url() . 'evaluacion_cerrada/' . EVALUACION_ENTREGABLE . '/' . $item->id_entregable ?>">Cargar
-													cuestionario</a>
-											<?php endif; ?>
-										</div>
-
+										<?php if ($item->tipo_entregable == "cuest") : ?>
+											<a class="dropdown-item" href="<?= base_url() . 'evaluacion_cerrada/' . EVALUACION_ENTREGABLE . '/' . $item->id_entregable ?>">
+												Cargar cuestionario
+											</a>
+										<?php endif; ?>
 									</div>
+
 								</div>
-							<?php else:?>
-
-								<?php if ($item->tipo_entregable == "cuest") : ?>
-									<a href="<?= base_url() . 'evaluacion_cerrada/' . EVALUACION_ENTREGABLE . '/' . $item->id_entregable ?>">
-										<em class="fa fa-eye">
-										</em>
-									</a>
-								<?php endif; ?>
-
-							<?php endif; ?>
+							</div>
 						</div>
 						<div class="row">
 							<?php foreach ($item->instrumentos as $i => $instrumento): ?>
@@ -89,6 +84,12 @@
 								</div>
 							<?php endforeach; ?>
 						</div>
+
+						<?php if(isset($item->liberado) && $item->liberado == 'si'): ?>
+							<span class="badge badge-success">Entregable liberado</span>
+						<?php endif; ?>
+						
+						
 					</div>
 				</div>
 			</div>
@@ -96,13 +97,5 @@
 	</div>
 		
 <?php else: ?>
-	<div class="row">
-		<div class="col">
-			<div class="callout callout-warning">
-				<h5>Lo siento</h5>
-				<p>No se encontro registros de búsqueda</p>
-			</div>
-		</div>
-	</div>
-
+	<?php $this->load->view('default/sin_datos'); ?>
 <?php endif; ?>

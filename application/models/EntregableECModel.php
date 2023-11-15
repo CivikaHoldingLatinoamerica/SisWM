@@ -194,6 +194,13 @@ class EntregableECModel extends ModeloBase
 		return $entregables;
 	}
 
+	public function existenEntregablesPorLiberar($id_estandar_competencia){
+		$this->db->where('id_estandar_competencia',$id_estandar_competencia);
+		$this->db->where('liberado','no');
+		$this->db->where('activo',true);
+		$query = $this->db->get('entregable_ec');
+		return $query->num_rows() != 0;
+	}
 	public function obtener_entregable($id)
 	{
 		$consulta = "select * from entregable_ec ee where ee.id_entregable = " . $id;

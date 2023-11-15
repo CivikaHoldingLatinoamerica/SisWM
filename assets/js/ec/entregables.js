@@ -123,7 +123,7 @@ var methods = {
 	iniciar_carga_material_apoyo : function(){
 		Comun.iniciar_carga_documento('#material_apoyo','#procesando_material_apoyo',function(archivo){
 			$('#input_material_apoyo').val(archivo.id_archivo);
-			var html_img = '<p>archivo.nombre <em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>';
+			var html_img = '<p>'+archivo.nombre+'<em class="fa fa-times-circle eliminar_archivo" style="color: red"></em></p>';
 			$('#procesando_material_apoyo').html(html_img);
 		})
 	},

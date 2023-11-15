@@ -20,6 +20,14 @@
 					<div class="card-header">
 						<h3 class="card-title <?=$eccm->eliminado == 'si' ? 'text-danger' : ''?>">
 							<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+							<?php if(isset($eccm->liberado) && $eccm->liberado == 'no'): ?>
+								<button class="btn btn-sm btn-dark iniciar_confirmacion_operacion"
+									data-msg_confirmacion_general="¿Esta seguro de liberar el módulo de capacitación?, esta acción no podrá revertirse"
+									data-url_confirmacion_general="<?= base_url() ?>Curso/liberar_modulo/<?=$eccm->id_ec_curso_modulo?>"
+									data-btn_trigger="#btn_buscar_ec_curso_modulos" type="button"><i class="fas fa-sign-out-alt"></i> Liberar</button>
+							<?php else: ?>
+								<span class="badge badge-success" >Módulo liberado</span>
+							<?php endif ?>
 						</h3>
 						<div class="card-tools">
 							<button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -40,55 +48,65 @@
 						<div class="form-group row">						
 							<label> Objetivos especificos:</label>
 						</div>
-						<div class="form-group row">						
+						<div class="form-group row">	
 							<div class="col-lg-12">							
-								<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>
+								<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>		
 							</div>
 						</div>
 						<div class="form-group row">
 							<div class="col-sm-12 text-right">	
-							
-						<?php if($ec_curso->fecha_publicado == null): ?>
-							<?php if($eccm->eliminado == 'si'): ?>
-								<?php if(perfil_permiso_operacion_menu('curso_ec.deseliminar')):?>
-									<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar módulo"
-											data-msg_confirmacion_general="¿Esta seguro de deseliminar el módulo?, esto volverá a activar el módulo"
-											data-url_confirmacion_general="<?=base_url()?>Curso/deseliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
-											data-btn_trigger="#btn_buscar_ec_curso_modulos">
-										<i class="fas fa-trash-restore"></i> Deseliminar
-									</button>
-								<?php endif; ?>
-							<?php else: ?>
-									<?php if(perfil_permiso_operacion_menu('curso_ec.modificar')): ?>
-										<button class="btn btn-outline-primary btn-sm modificar_ec_curso_modulo" data-toggle="tooltip"
-												title="Editar módulo"
-												data-id_ec_curso="<?=$eccm->id_ec_curso?>"
-												data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
-												type="button" ><i class="fa fa-edit"></i> Editar
-										</button>
-									<?php endif; ?>
-									<?php if(perfil_permiso_operacion_menu('curso_ec.agregar')):?>
-										<button class="btn btn-outline-info btn-sm agregar_ec_curso_modulo_temario" data-toggle="tooltip"
-												title="Agregar temario al módulo"
-												data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
-												type="button" ><i class="fa fa-list-alt"></i> Agregar tema
-										</button>
-									<?php endif; ?>
-									<?php if(perfil_permiso_operacion_menu('curso_ec.consultar')): ?>
-										<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
-										title="Evaluación al Módulo del Estándar de competencia"
-										href="<?=base_url()?>evaluacion_cerrada/<?=EVALUACION_MODULO.'/'.$eccm->id_ec_curso_modulo?>"><i class="fa fa-file-alt"></i> Cuestionario de evaluación</a>
-									<?php endif; ?>
-									<?php if(perfil_permiso_operacion_menu('curso_ec.eliminar')):?>
-										<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar módulo"
-												data-msg_confirmacion_general="¿Esta seguro de eliminar el módulo?, esta acción no podrá revertirse"
-												data-url_confirmacion_general="<?=base_url()?>Curso/eliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
+								<?php if($eccm->eliminado == 'si'): ?>
+									<?php if(perfil_permiso_operacion_menu('curso_ec.deseliminar')):?>
+										<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Deseliminar módulo"
+												data-msg_confirmacion_general="¿Esta seguro de deseliminar el módulo?, esto volverá a activar el módulo"
+												data-url_confirmacion_general="<?=base_url()?>Curso/deseliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
 												data-btn_trigger="#btn_buscar_ec_curso_modulos">
-											<i class="fas fa-trash"></i> Eliminar
+											<i class="fas fa-trash-restore"></i> Deseliminar
 										</button>
 									<?php endif; ?>
-							<?php endif; ?>
-						<?php endif; ?>
+								<?php else: ?>
+										<div class="row form-group" >
+											<div class="col-lg-12 text-right" >
+												<?php if(isset($eccm->liberado) && $eccm->liberado == 'no'): ?>
+													<button class="btn btn-sm btn-outline-dark iniciar_confirmacion_operacion"
+														data-msg_confirmacion_general="¿Esta seguro de liberar el módulo de capacitación?, esta acción no podrá revertirse"
+														data-url_confirmacion_general="<?= base_url() ?>Curso/liberar_modulo/<?=$eccm->id_ec_curso_modulo?>"
+														data-btn_trigger="#btn_buscar_ec_curso_modulos" type="button"><i class="fas fa-sign-out-alt"></i> Liberar</button>
+												<?php else: ?>
+													<span class="badge badge-success" >Módulo liberado</span>
+												<?php endif ?>
+											</div>
+										</div>
+										
+										<?php if(perfil_permiso_operacion_menu('curso_ec.modificar')): ?>
+											<button class="btn btn-outline-primary btn-sm modificar_ec_curso_modulo" data-toggle="tooltip"
+													title="Editar módulo"
+													data-id_ec_curso="<?=$eccm->id_ec_curso?>"
+													data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
+													type="button" ><i class="fa fa-edit"></i> Editar
+											</button>
+										<?php endif; ?>
+										<?php if(perfil_permiso_operacion_menu('curso_ec.agregar')):?>
+											<button class="btn btn-outline-info btn-sm agregar_ec_curso_modulo_temario" data-toggle="tooltip"
+													title="Agregar temario al módulo"
+													data-id_ec_curso_modulo="<?=$eccm->id_ec_curso_modulo?>"
+													type="button" ><i class="fa fa-list-alt"></i> Agregar tema
+											</button>
+										<?php endif; ?>
+										<?php if(perfil_permiso_operacion_menu('curso_ec.consultar')): ?>
+											<a class="btn btn-sm btn-outline-dark" data-toggle="tooltip"
+											title="Evaluación al Módulo del Estándar de competencia"
+											href="<?=base_url()?>evaluacion_cerrada/<?=EVALUACION_MODULO.'/'.$eccm->id_ec_curso_modulo?>"><i class="fa fa-file-alt"></i> Cuestionario de evaluación</a>
+										<?php endif; ?>
+										<?php if(perfil_permiso_operacion_menu('curso_ec.eliminar')):?>
+											<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar módulo"
+													data-msg_confirmacion_general="¿Esta seguro de eliminar el módulo?, esta acción no podrá revertirse"
+													data-url_confirmacion_general="<?=base_url()?>Curso/eliminar_ec_curso_modulo/<?=$eccm->id_ec_curso_modulo?>"
+													data-btn_trigger="#btn_buscar_ec_curso_modulos">
+												<i class="fas fa-trash"></i> Eliminar
+											</button>
+										<?php endif; ?>
+								<?php endif; ?>
 							</div>
 						</div>
 						<div id="contenedor_ec_curso_modulo_temas_<?=$eccm->id_ec_curso_modulo?>">
@@ -148,16 +166,16 @@
 													<label> Instrucciones:</label>
 												</div>
 												<div class="form-group row">
-													<div class="col-lg-12">
+													<div class="col-lg-12">	
 														<?=isset($eccmt->instrucciones) ? $eccmt->instrucciones : ''?>
 													</div>
 												</div>
 												<div class="form-group row">						
 													<label> Contenido curso:</label>
 												</div>
-												<div class="form-group row">						
-													<div class="col-lg-12">
-														<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>
+												<div class="form-group row">		
+													<div class="col-lg-12">					
+														<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>							
 													</div>
 												</div>
 

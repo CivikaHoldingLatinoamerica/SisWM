@@ -9,10 +9,9 @@
 			</div>
 			<form id="form_agregar_modificar_ec_curso">
 				
-				<input type="hidden" name="id_ec_curso"
-					value="<?= isset($ec_curso->id_ec_curso) ? $ec_curso->id_ec_curso : '' ?>">
-				<input type="hidden" name="id_estandar_competencia"
-					value="<?= isset($id_estandar_competencia) ? $id_estandar_competencia : '' ?>">
+				<input type="hidden" name="id_ec_curso" value="<?= isset($ec_curso->id_ec_curso) ? $ec_curso->id_ec_curso : '' ?>">
+				<input type="hidden" name="id_estandar_competencia" value="<?= isset($id_estandar_competencia) ? $id_estandar_competencia : '' ?>">
+				<input type="hidden" name="publicado" value="<?= isset($ec_curso->publicado) ? $ec_curso->publicado : 'si' ?>">
 				
 				<div class="modal-body">
 					

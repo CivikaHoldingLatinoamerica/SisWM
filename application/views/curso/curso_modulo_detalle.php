@@ -28,10 +28,11 @@
 				</div>
 
 				<div class="form-group row">
-					<div class="col-sm-12">
-						<label for="input_textarea_proposito" class="col-form-label"><i class="fa fa-book"></i> ¿Que aprenderas?:</label>
-						<div class="col-lg-12">
-							<?=$ec_curso->que_aprenderas?>
+						<div class="col-sm-12">
+							<label for="input_textarea_proposito" class="col-form-label"><i class="fa fa-book"></i> ¿Que aprenderas?:</label>
+							<div class="col-lg-12">
+								<?=$ec_curso->que_aprenderas?>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -48,7 +49,9 @@
 									<div class="card card-<?=$eccm->eliminado == 'si' ? 'light' : 'primary'?> <?= $index == 0 ? "" : "collapsed-card"?>">
 										<div class="card-header">
 											<h3 class="card-title <?=$eccm->eliminado == 'si' ? 'text-danger' : ''?>">
-												<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+												<div class="col-lg-12">
+													<label> Descripción: <?=isset($eccm->descripcion) ? $eccm->descripcion : "" ?></label>
+												</div>
 											</h3>
 											<div class="card-tools">
 												<button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -59,7 +62,7 @@
 										<!-- /.card-header -->
 										<div class="card-body" style="display: <?= $index == 0 ? 'block' : 'none'?>;">
 											<div class="form-group row">
-												<label> Objetvo general:</label>					
+												<label> Objetivo general:</label>					
 											</div>
 											<div class="form-group row">
 												<div class="col-lg-12">
@@ -69,8 +72,8 @@
 											<div class="form-group row">						
 												<label> Objetivos especificos:</label>
 											</div>
-											<div class="form-group row">						
-												<div class="col-lg-12">
+											<div class="form-group row">
+												<div class="col-lg-12">						
 													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>
 												</div>
 											</div>
@@ -96,7 +99,7 @@
 																	<!-- /.card-header -->
 																	<div class="card-body" style="display: none;">
 																		<div class="form-group row">
-																			<label> Innstrucciones:</label>
+																			<label> Instrucciones:</label>
 																		</div>
 																		<div class="form-group row">
 																			<div class="col-lg-12">
@@ -106,8 +109,8 @@
 																		<div class="form-group row">						
 																			<label> Contenido curso:</label>
 																		</div>
-																		<div class="form-group row">
-																			<div class="col-lg-12">
+																		<div class="form-group row">		
+																			<div class="col-lg-12">				
 																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>
 																			</div>
 																		</div>
@@ -116,7 +119,7 @@
 																			<label> Archivo del tema:</label>
 																		</div>
 																		<div class="form-group row">						
-																		<p><a href="<?= base_url().$eccmt->ruta_directorio.$eccmt->nombre?>" target="_blank"><?= $eccmt->nombre ?> </a></p>						
+																			<p><a href="<?= base_url().$eccmt->ruta_directorio.$eccmt->nombre?>" target="_blank"><?= $eccmt->nombre ?> </a></p>						
 																		</div>
 																	</div>
 																</div>

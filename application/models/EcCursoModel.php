@@ -26,6 +26,8 @@ class EcCursoModel extends ModeloBase
 		$criterios = ' where 1=1';
 		if(isset($data['id_estandar_competencia']) && $data['id_estandar_competencia'] != ''){
 			$criterios .= " and ecc.id_estandar_competencia = ".$data['id_estandar_competencia'];
+		}if(isset($data['eliminado']) && $data['eliminado'] != ''){
+			$criterios .= " and ecc.eliminado = '".$data['eliminado']."'";
 		}
 		return $criterios;
 	}
@@ -50,7 +52,7 @@ class EcCursoModel extends ModeloBase
 		if($curso_publicado !== false){
 			$consulta .= " 
 			where ecc.id_estandar_competencia = $id_estandar_competencia
-			and ecc.publicado = 'si'";
+			and ecc.publicado = 'si' and ecc.eliminado='no'";
 		} else {
 			$consulta .= " 
 			where ecc.id_ec_curso = $id_ec_curso";
