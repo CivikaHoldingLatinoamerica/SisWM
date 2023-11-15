@@ -1,3 +1,16 @@
+<div class="row form-group" >
+	<div class="col-lg-12" >
+		<div class="callout callout-success">
+			<h5>Información importante</h5>
+			<p>Tiene la posibilidad de ir al apartado de Evidencias, sin la necesidad de realizar el plan de capacitación; se conoce como: Evaluación Directa </p>
+			<?php if(isset($existen_modulos_en_carga) && $existen_modulos_en_carga): ?>
+				<hr>
+				Se detectó en el sistema, que el evaluador sigue cargando el contenido de la capacitación al Estándar de Competencia; espere un tiempo más para que queden liberados al 100% y poder pasar al siguente apartado
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+
 <div class="form-group">
 	<div class="col-12">
 		<div class="card card-primary">
@@ -105,7 +118,7 @@
 																	<!-- /.card-header -->
 																	<div class="card-body" style="display: none;">
 																		<div class="form-group row">
-																			<label> Innstrucciones:</label>
+																			<label> Instrucciones:</label>
 																		</div>
 																		<div class="form-group row">
 																			<div class="col-lg-12">
@@ -159,14 +172,6 @@
 
 			<div class="form-group row">
 
-				<div class="col-lg-8 text-left">
-					<?php if(isset($usuario_has_evaluacion_realizada) && !$usuario_has_evaluacion_realizada): ?>
-						<div class="callout callout-warning">
-							<h5>Información importante</h5>
-							<p>Para poder ir al apartado de Evidencias, es necesario que responda primero las evaluaciones de cada módulo</p>
-						</div>
-					<?php endif ?>
-				</div>
 				<div class="col-12 text-right">
 					<button type="button"
 							data-siguiente_link="#tab_evidencias-tab" data-numero_paso="4" id="btn_siguiente_tab_modulo_capacitacion"

@@ -88,7 +88,8 @@ class entregable extends CI_Controller
 			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario);
 
 			$data['entregables'] = $datos;
-			//var_dump($data);exit;
+			$data['entregables_por_liberar'] = $this->EntregableECModel->existenEntregablesPorLiberar($id_estandar_competencia);
+			//var_dump($data);
 			$this->load->view('entregables/candidato/evidencias_candidato',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -178,6 +179,24 @@ class entregable extends CI_Controller
 			}else{
 				$response['success'] = false;
 				$response['msg'][] = $eliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function liberar($id){
+		try{
+			$actualizar =  $this->EntregableECModel->actualizar(['liberado' => 'si'],$id);
+			if($actualizar){
+				$response['success'] = true;
+				$response['msg'][] = 'Se libero el entregable correctamente';
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = 'No fue posible liberar el entregable correctamente';
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

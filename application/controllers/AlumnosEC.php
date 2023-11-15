@@ -199,13 +199,24 @@ class AlumnosEC extends CI_Controller {
 				$data['ec_curso'] = $ec_curso;
 				//dd($data);exit;
 				$busquedaCursoModel = array(
-					'id_ec_curso' => $data['ec_curso'] -> id_ec_curso
+					'id_ec_curso' => $data['ec_curso'] -> id_ec_curso,
+					'liberado' => 'si',
+					'eliminado' => 'no'
 				);
 				$data['ec_curso_modulo'] = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
+				$busquedaCursoModel = array(
+					'id_ec_curso' => $data['ec_curso'] -> id_ec_curso,
+					'liberado' => 'no',
+					'eliminado' => 'no'
+				);
+				$ec_curso_modulo_en_carga = $this->EcCursoModuloModel->tablero($busquedaCursoModel);
+				$data['existen_modulos_en_carga'] = $ec_curso_modulo_en_carga['total_registros'] != 0;
 				$data['usuario'] = $this->usuario;
 				$data['usuario_has_evaluacion_realizada'] = true;
 				$countModulo 		= 0;
 				$countEvaRealizadas	= 0;
+				$data['porcentaje_avance'] = 0;
+				//var_dump($data['ec_curso']);
 				foreach ($data['ec_curso_modulo']['ec_curso_modulo'] as $eccm){
 					$countModulo++;
 	
@@ -222,8 +233,8 @@ class AlumnosEC extends CI_Controller {
 					} else {
 						$countEvaRealizadas++;
 					}
-				}
-				$data['porcentaje_avance'] = ($countEvaRealizadas / $countModulo) * 100;		
+					$data['porcentaje_avance'] = ($countEvaRealizadas / $countModulo) * 100;
+				}		
 			
 				log_message('error','+++++ AlumnosEC->ver_progreso_modulos_capacitacion');
 				log_message('error',json_encode($data));

@@ -21,14 +21,14 @@ class EcCursoModuloModel extends ModeloBase
 		$criterios = ' where 1=1';
 		if(isset($data['id_ec_curso']) && $data['id_ec_curso'] != ''){
 			$criterios .= " and eccm.id_ec_curso = ".$data['id_ec_curso'];
-		}
-
-		if(isset($data['id_evaluacion']) && $data['id_evaluacion']){
+		}if(isset($data['id_evaluacion']) && $data['id_evaluacion']){
 			$criterios .= " and eccm.id_evaluacion = ".$data['id_evaluacion'];
-		}
-
-		if(isset($data['id_evaluacion_not_null']) && $data['id_evaluacion_not_null']){
+		}if(isset($data['id_evaluacion_not_null']) && $data['id_evaluacion_not_null']){
 			$criterios .= " and eccm.id_evaluacion IS NOT NULL";
+		}if(isset($data['liberado']) && $data['liberado']){
+			$criterios .= " and eccm.liberado = '".$data['liberado']."'";
+		}if(isset($data['eliminado']) && $data['eliminado']){
+			$criterios .= " and eccm.eliminado = '".$data['eliminado']."'";
 		}
 
 		return $criterios;

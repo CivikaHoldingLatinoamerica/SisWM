@@ -21,19 +21,23 @@
 		<div class="col-md-12 text-left">
 			<label class="col-sm-2 col-form-label">Estándar de competencia: </label><span
 					class="col-sm-10 col-form-label"><?= $estandar_competencia->codigo . ' - ' . $estandar_competencia->titulo ?></span>
+				
+			<input type="hidden" id="total_registros" value="<?=isset($total_registros) ? $total_registros : 0?>">
 		</div>
 		<div class="container-fluid mb-12">
 			
 			<div class="col-md-12 text-right">
 				<?php if(perfil_permiso_operacion_menu('curso_ec.agregar')): ?>
-					<button type="button" id="agregar_estandar_competencia_curso" class="btn btn-md btn-outline-success"
+					<button type="button" id="agregar_estandar_competencia_curso" style="display:none;" class="btn btn-md btn-outline-success"
 							data-id_estandar_competencia="<?=isset($id_estandar_competencia) ? $id_estandar_competencia : ''?>" >
 						<i class="fa fa-plus-square"></i> Nuevo módulo de capacitación</button>
 				<?php endif; ?>
 			</div>
 		</div>
 		
-		<div class="row" id="contenedor_resultados_cursos_ec"></div>
+		<div class="row" id="contenedor_resultados_cursos_ec">
+			<?php $this->load->view('curso/cursos'); ?>
+		</div>
 
 	</section>
 	<!-- /.content -->

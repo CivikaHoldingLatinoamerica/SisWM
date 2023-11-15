@@ -27,11 +27,18 @@ $(document).ready(function(){
 	});
 
 	Curso.tablero();
+	//Curso.iniciar_carga_datos();
 
 });
 
 var Curso = {
 
+	iniciar_carga_datos : function(){
+		var total_registros = $('#total_registros').val();
+		if(total_registros == 0){
+			$('#agregar_estandar_competencia_curso').trigger('click');
+		}
+	},
 	
 	tablero : function(inicial = true,pagina = 1, registros = 5){
 		var post = {
@@ -45,6 +52,10 @@ var Curso = {
 				post,
 				function(response){
 					$('#contenedor_resultados_cursos_ec').html(response);
+					var sin_registros = $('#sin_registros_cursos') != undefined && $('#sin_registros_cursos').val() == 'si';
+					if(sin_registros){
+						$('#agregar_estandar_competencia_curso').trigger('click');
+					}
 					Comun.tooltips();
 					$('.popoverShowHTML').trigger('click');
 				}
@@ -56,6 +67,10 @@ var Curso = {
 				post,
 				function(response){
 					$('#contenedor_resultados_cursos_ec').append(response);
+					var sin_registros = $('#sin_registros_cursos') != undefined && $('#sin_registros_cursos').val() == 'si';
+					if(sin_registros){
+						$('#agregar_estandar_competencia_curso').trigger('click');
+					}
 					Comun.tooltips();
 					$('.popoverShowHTML').trigger('click');
 					$('#overlay_full_page').fadeOut();
@@ -127,5 +142,6 @@ var Curso = {
 		);
 	},
 
+	
 
 }

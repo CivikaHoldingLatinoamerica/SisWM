@@ -99,7 +99,7 @@
 																	<!-- /.card-header -->
 																	<div class="card-body" style="display: none;">
 																		<div class="form-group row">
-																			<label> Innstrucciones:</label>
+																			<label> Instrucciones:</label>
 																		</div>
 																		<div class="form-group row">
 																			<div class="col-lg-12">

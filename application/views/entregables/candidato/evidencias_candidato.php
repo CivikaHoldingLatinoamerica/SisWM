@@ -5,6 +5,12 @@
 		<p>
 			A continuación carga tus evidencias conforme a las instrucciones correspondientes, para poder pasar al paso de "Juicio de Competencia", es necesario entragar todas las evidencias y esten en estatus de "FINALIZADA"
 		</p>
+		<?php if(isset($entregables_por_liberar) && $entregables_por_liberar): ?>
+			<hr>
+			<p>
+				Se detectó en el sistema, que el evaluador sigue cargando evidencias esperadas al Estándar de Competencia; espere un tiempo más para que queden liberadas al 100% y poder pasar al siguente apartado
+			</p>
+		<?php endif; ?>
 	</div>
 	<section class="content" id="tablero-evidencias_candidato">
 		<div class="card">

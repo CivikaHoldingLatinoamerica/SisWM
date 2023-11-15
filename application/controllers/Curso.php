@@ -45,8 +45,16 @@ class Curso extends CI_Controller {
 		$data['extra_css'] = array(
 			base_url().'assets/frm/adm_lte/plugins/summernote/summernote-bs4.min.css',
 		);
-				
-		
+		/**
+		 * se cambia la funcionalidad para lo del modulo de capacitación
+		 * por lo siguiente
+		 * 1. solo deberia existir un curso de capacitación, por tanto se inserta un registro vacio para lo del estandar y pueda modificarlo el usuario posteriormente
+		 * 2. en caso de que no exista hbilitar el boton de nuevo curso para que registre los datos el usuario y se persista en la BD
+		 * 3. en caso de que exista el row del curso entonces quitaremos el boton de nuevo curso
+		 * 4. cargaremos lo registros desde el principio con lo que registre el usuario en la pantalla de incial
+		 * 5. ya no sera necesario publicar el curso dado estas reglas, pero se dejara listo para en caso de que se implemente dicha funcionalidad
+		 */
+		//var_dump($data);exit;		
 		$this->load->view('curso/tablero_curso',$data);
 	}
 
@@ -58,15 +66,16 @@ class Curso extends CI_Controller {
 				'publicado' => 'si'
 			]; */
 			$post['id_estandar_competencia'] = $this->input->post("id_estandar_competencia");
-			if(!is_null($this->usuario) && in_array($this->usuario->perfil,array('instructor','alumno'))){
-				$post['id_usuario'] = $this->usuario->id_usuario;
-			}
+			$post['eliminado'] = 'no';
+			// if(!is_null($this->usuario) && in_array($this->usuario->perfil,array('instructor','alumno'))){
+			// 	$post['id_usuario'] = $this->usuario->id_usuario;
+			// }
 			$data = $this->EcCursoModel->tablero($post,$pagina,$registros);
 			//var_dump($data); exit();
 			$data['usuario'] = $this->usuario;
 			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
-			//var_dump($data['ec_curso']); exit();
+			//var_dump($data); exit();
 			$this->load->view('curso/cursos',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -79,9 +88,9 @@ class Curso extends CI_Controller {
 
 	public function agregar_modificar_curso($id_estandar_competencia, $id_ec_curso = false){
 		perfil_permiso_operacion('curso_ec.agregar');
-    	$data = array("id_estandar_competencia" => $id_estandar_competencia);
+    		$data = array("id_estandar_competencia" => $id_estandar_competencia);
 		
-    	if($id_ec_curso !== false){
+    		if($id_ec_curso !== false){
     		$data['ec_curso'] = $this->EcCursoModel->obtener_row($id_ec_curso);
 			//$data['ec_curso_modulos'] = (array)$this->EcCursoModuloModel->obtener_ec_curso_modulos($id_ec_curso);
 			//var_dump($data['ec_curso_modulos'],$id_ec_curso); exit();
@@ -91,7 +100,7 @@ class Curso extends CI_Controller {
 			}
 		}
 		//var_dump($data, $id_ec_curso); exit();
-    	$this->load->view('curso/agregar_modificar_curso',$data);
+    		$this->load->view('curso/agregar_modificar_curso',$data);
 	}
 
 	public function guardar_form($id_estandar_competencia = false){
@@ -214,6 +223,7 @@ class Curso extends CI_Controller {
 
 	public function index_curso_modulos($id_ec_curso)
 	{
+		//var_dump('aqui toy');exit;
 		$data['titulo_pagina'] = 'Módulos de capacitación Walmart - Administración de Modulos';
 		$data['usuario'] = $this->usuario;
 		$data['id_ec_curso'] = $id_ec_curso;
@@ -264,15 +274,15 @@ class Curso extends CI_Controller {
 
 	public function agregar_modificar_curso_modulo($id_ec_curso, $id_ec_curso_modulo = false){
 		perfil_permiso_operacion('curso_ec.agregar');
-    	$data = array("id_ec_curso" => $id_ec_curso);
+    		$data = array("id_ec_curso" => $id_ec_curso);
 		
-    	if($id_ec_curso_modulo !== false){
-    		$data['ec_curso_modulo'] = $this->EcCursoModuloModel->obtener_row($id_ec_curso_modulo);
+    		if($id_ec_curso_modulo !== false){
+    			$data['ec_curso_modulo'] = $this->EcCursoModuloModel->obtener_row($id_ec_curso_modulo);
 			
 			//var_dump($data['ec_curso_modulos'],$id_ec_curso); exit();
 		}
 		//var_dump($data); exit();
-    	$this->load->view('curso/agregar_modificar_curso_modulo',$data);
+    		$this->load->view('curso/agregar_modificar_curso_modulo',$data);
 	}
 
 	public function guardar_form_curso_modulo($id_ec_curso = false){
@@ -338,6 +348,25 @@ class Curso extends CI_Controller {
 			}else{
 				$response['success'] = false;
 				$response['msg'][] = $deseliminar['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
+	public function liberar_modulo($id_ec_curso_modulo){
+		perfil_permiso_operacion('curso_ec.agregar');
+		try{
+			$actualizar = $this->EcCursoModuloModel->actualizar(['liberado' => 'si'],$id_ec_curso_modulo);
+			if($actualizar){
+				$response['success'] = true;
+				$response['msg'][] = 'Se liberó el módulo correctamente, ya sera visible para los candidatos';
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = 'No se liberó el módulo, favor de intentar más tarde';
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

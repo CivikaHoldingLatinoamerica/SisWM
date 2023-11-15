@@ -16,12 +16,10 @@
 					<button type="button" style="display: none" id="btn_buscar_ec_curso_modulos">buscar</button>
 				</div>
 				<div class="col-sm-6 text-right">
-				<?php if($ec_curso->publicado == 'no'): ?>
-					<?php if(perfil_permiso_operacion_menu('curso_ec.agregar')) : ?>
-						<button type="button" id="agregar_ec_curso_modulo" class="btn btn-sm btn-outline-success"
+				<?php if(perfil_permiso_operacion_menu('curso_ec.agregar')) : ?>
+					<button type="button" id="agregar_ec_curso_modulo" class="btn btn-sm btn-outline-success"
 						data-id_ec_curso="<?=isset($id_ec_curso) ? $id_ec_curso : ''?>"><i class="fa fa-plus-square"></i> Nuevo modulo</button>
-					<?php endif; ?>
-				<?php endif;?>
+				<?php endif; ?>
 				</div>
 			</div>
 

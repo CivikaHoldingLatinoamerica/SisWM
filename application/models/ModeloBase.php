@@ -41,6 +41,7 @@ class ModeloBase extends CI_Model
 			}
 			$consulta = $this->obtener_query_base().' '.$this->criterios_join().' '.$this->criterios_busqueda($data).' '.$this->group_by().' '.$this->order_by().' '.$sql_limit;
 			$query = $this->db->query($consulta);
+			//var_dump($consulta);
 			$retorno['success'] = true;
 			$retorno[$this->table] = $query->result();
 			$retorno['total_registros'] = $this->obtener_total_registros($data);
