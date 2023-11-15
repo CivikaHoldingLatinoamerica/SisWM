@@ -45,7 +45,10 @@
 <?php else: ?>
 	<div class="row">
 		<div class="col">
-			<?php $this->load->view('default/sin_datos_candidato'); ?>
+			<div class="callout callout-success">
+				<h5>Información importante</h5>
+				La capacitación - alineación; está siendo atendida por medios sincrónicos externos a este sistema. La capacitación - alineación asincrónica próximamente...
+			</div>
 		</div>
 	</div>
 <?php endif; ?>
