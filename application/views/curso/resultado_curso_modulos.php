@@ -33,7 +33,7 @@
 							<label> Objetivo general:</label>					
 						</div>
 						<div class="form-group row">
-							<div class= col-lg-12">
+							<div class="col-lg-12">
 								<?=isset($eccm->objetivo_general) ? $eccm->objetivo_general : ''?>					
 							</div>
 						</div>
