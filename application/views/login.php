@@ -26,9 +26,9 @@
 
 
 	<!-- icono -->
-	<link href="<?=base_url()?>assets/imgs/logos/icono_ckv.png" rel="shortcut icon">
+	<link href="<?=base_url()?>assets/imgs/logos/icono.png" rel="shortcut icon">
 
-	<title>Certificaciones Civika</title>
+	<title>Certificaciones WalMart Civika</title>
 </head>
 <body class="hold-transition login-page">
 <div id="backgroundImage" class="fullscreen-bg"></div>
@@ -36,7 +36,7 @@
 	<!-- /.login-logo -->
 	<div class="card card-outline">
 		<div class="card-header text-center">
-			<img src="<?=base_url()?>assets/imgs/logos/icono_ckv.png" width="40px" height="40px" /> <span class="h3">Certificaciones Civika</span>
+			<img src="<?=base_url()?>assets/imgs/logos/icono.png" width="40px" height="40px" /> <span class="h3">Certificaciones WalMart</span>
 		</div>
 		<div class="card-body">
 			<p class="login-box-msg">Ingrese sus datos para iniciar sesión</p>
