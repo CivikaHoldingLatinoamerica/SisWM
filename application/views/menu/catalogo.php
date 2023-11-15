@@ -1,6 +1,6 @@
 <?php if(perfil_permiso_operacion_menu('catalogos.modificar')):?>
-	<li class="nav-item <?=isset($sidebar) && in_array($sidebar,array('cat_bienvenida','cat_sectores')) ? ' menu-is-opening menu-open':''?>" >
-		<a href="<?=base_url()?>usuario" class="nav-link nav-link-wm <?=isset($sidebar) && in_array($sidebar,array('cat_bienvenida','cat_sectores')) ? ' active':''?>">
+	<li class="nav-item <?=isset($sidebar) && in_array($sidebar,array('cat_bienvenida','cat_sectores','cat_ocupaciones')) ? ' menu-is-opening menu-open':''?>" >
+		<a href="<?=base_url()?>usuario" class="nav-link nav-link-wm <?=isset($sidebar) && in_array($sidebar,array('cat_bienvenida','cat_sectores','cat_ocupaciones')) ? ' active':''?>">
 			<i class="nav-icon fas fa-list"></i>
 			<p>
 				Catalogos
@@ -20,6 +20,12 @@
 					<p>Sectores</p>
 				</a>
 			</li>
+			<!-- <li class="nav-item">
+				<a href="<?=base_url()?>catalogos/ocupaciones" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'cat_ocupaciones' ? 'active':''?>">
+					<i class="nav-icon fas fa-book"></i>
+					<p>Nacional de ocupaciones</p>
+				</a>
+			</li> -->
 		</ul>
 	</li>
 <?php endif; ?>

@@ -25,7 +25,7 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
-		$data['titulo_pagina'] = 'BIENVENIDO al Sistema Integral PED';
+		$data['titulo_pagina'] = 'BIENVENIDO al Sistema Integral de Información PED';
 		$data['usuario'] = $this->usuario;
 		switch ($this->usuario->perfil){
 			case 'alumno':

@@ -28,13 +28,13 @@
 				</div>
 
 				<div class="form-group row">
-					
 						<div class="col-sm-12">
 							<label for="input_textarea_proposito" class="col-form-label"><i class="fa fa-book"></i> ¿Que aprenderas?:</label>
 							<div class="col-lg-12">
 								<?=$ec_curso->que_aprenderas?>
 							</div>
 						</div>
+					</div>
 				</div>
 
 				<div class="form-group row">
@@ -74,7 +74,7 @@
 											</div>
 											<div class="form-group row">
 												<div class="col-lg-12">						
-													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?></span>							
+													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>
 												</div>
 											</div>
 											
@@ -111,7 +111,7 @@
 																		</div>
 																		<div class="form-group row">		
 																			<div class="col-lg-12">				
-																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>							
+																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>
 																			</div>
 																		</div>
 

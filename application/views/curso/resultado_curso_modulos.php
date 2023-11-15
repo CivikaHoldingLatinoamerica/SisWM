@@ -51,7 +51,7 @@
 						<div class="form-group row">	
 							<div class="col-lg-12">							
 								<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>		
-							</div>					
+							</div>
 						</div>
 						<div class="form-group row">
 							<div class="col-sm-12 text-right">	
@@ -168,7 +168,7 @@
 												<div class="form-group row">
 													<div class="col-lg-12">	
 														<?=isset($eccmt->instrucciones) ? $eccmt->instrucciones : ''?>
-													</div>						
+													</div>
 												</div>
 												<div class="form-group row">						
 													<label> Contenido curso:</label>

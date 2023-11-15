@@ -531,6 +531,7 @@ class EvaluacionEC extends CI_Controller {
 		);
 		$data = $this->EvaluacionModel->tablero($busqueda);
 		$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
+		//var_dump($data);exit;
 		$this->load->view('evaluacion/resultado',$data);
 	}
 
