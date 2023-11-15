@@ -71,7 +71,7 @@
 											</div>
 											<div class="form-group row">
 												<div class="col-lg-12">					
-													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?></span>							
+													<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>
 												</div>
 											</div>
 											<div class="form-group row">
@@ -117,7 +117,7 @@
 																		</div>
 																		<div class="form-group row">		
 																			<div class="col-lg-12">				
-																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?></span>							
+																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>
 																			</div>
 																		</div>
 

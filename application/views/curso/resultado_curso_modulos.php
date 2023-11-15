@@ -41,8 +41,8 @@
 							<label> Objetivos especificos:</label>
 						</div>
 						<div class="form-group row">	
-							<div class= col-lg-12">							
-								<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?></span>		
+							<div class="col-lg-12">							
+								<?=isset($eccm->objetivos_especificos) ? $eccm->objetivos_especificos : ''?>		
 							</div>					
 						</div>
 						<div class="form-group row">
@@ -148,7 +148,7 @@
 													<label> Instrucciones:</label>
 												</div>
 												<div class="form-group row">
-													<div class= col-lg-12">	
+													<div class="col-lg-12">	
 														<?=isset($eccmt->instrucciones) ? $eccmt->instrucciones : ''?>
 													</div>						
 												</div>
@@ -156,8 +156,8 @@
 													<label> Contenido curso:</label>
 												</div>
 												<div class="form-group row">		
-													<div class= col-lg-12">					
-														<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?></span>							
+													<div class="col-lg-12">					
+														<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>							
 													</div>
 												</div>
 

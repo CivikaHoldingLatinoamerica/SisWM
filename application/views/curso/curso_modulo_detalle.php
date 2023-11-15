@@ -31,7 +31,9 @@
 					
 						<div class="col-sm-12">
 							<label for="input_textarea_proposito" class="col-form-label"><i class="fa fa-book"></i> ¿Que aprenderas?:</label>
-							<div><?=$ec_curso->que_aprenderas?></div>
+							<div class="col-lg-12">
+								<?=$ec_curso->que_aprenderas?>
+							</div>
 						</div>
 				</div>
 
@@ -109,7 +111,7 @@
 																		</div>
 																		<div class="form-group row">		
 																			<div class="col-lg-12">				
-																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?></span>							
+																				<?=isset($eccmt->contenido_curso) ? $eccmt->contenido_curso : ''?>							
 																			</div>
 																		</div>
 
@@ -117,7 +119,7 @@
 																			<label> Archivo del tema:</label>
 																		</div>
 																		<div class="form-group row">						
-																		<p><a href="<?= base_url().$eccmt->ruta_directorio.$eccmt->nombre?>" target="_blank"><?= $eccmt->nombre ?> </a></p>						
+																			<p><a href="<?= base_url().$eccmt->ruta_directorio.$eccmt->nombre?>" target="_blank"><?= $eccmt->nombre ?> </a></p>						
 																		</div>
 																	</div>
 																</div>
