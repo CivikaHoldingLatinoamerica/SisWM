@@ -2,10 +2,12 @@
 	<div class="col-lg-12" >
 		<div class="callout callout-success">
 			<h5>Información importante</h5>
-			<p>Tiene la posibilidad de ir al apartado de Evidencias, sin la necesidad de realizar el plan de capacitación; se conoce como: Evaluación Directa </p>
+			<p>
+			El Sistema Integral de Información para la conformación del Portafolios de Evidencias Digital (SII-PED) le permite realizar de forma simultánea la capacitación - alineación o la revisión y envió de la evidencia o evidencias esperadas. La Entidad de certificación y Evaluación (ECE) Esta generando diversos programas educativos a los que puede acceder.
+			</p>
 			<?php if(isset($existen_modulos_en_carga) && $existen_modulos_en_carga): ?>
 				<hr>
-				Se detectó en el sistema, que el evaluador sigue cargando el contenido de la capacitación al Estándar de Competencia; espere un tiempo más para que queden liberados al 100% y poder pasar al siguente apartado
+				La capacitación - alineación; está siendo atendida por medios sincrónicos externos a este sistema. La capacitación - alineación asincrónica próximamente...
 			<?php endif; ?>
 		</div>
 	</div>

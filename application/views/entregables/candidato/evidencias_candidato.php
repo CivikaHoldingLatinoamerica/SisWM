@@ -3,12 +3,30 @@
 	<div class="callout callout-success">
 		<h5>Información importante</h5>
 		<p>
-			A continuación carga tus evidencias conforme a las instrucciones correspondientes, para poder pasar al paso de "Juicio de Competencia", es necesario entragar todas las evidencias y esten en estatus de "FINALIZADA"
+			A continuación, cargue sus evidencias conforme a las instrucciones correspondientes.
+		</p>
+		<p>
+			Importante es necesario entregar cada una de las evidencias solicitadas en este apartado ya que no podrán ser modificadas posterior al envió.
+		</p>
+		<p>
+			La evaluación de las evidencias se hace de forma conjunta al Finalizar el envió; te solicitamos no contactar al evaluador, ya que su papel es EVALUAR y no asesorar la conformación del portafolio de evidencias; utiliza los medios sincrónicos externos a este sistema para aclarar todas tus dudas. 
+		</p>
+		<p>
+			Los cuestionarios; conforman la evidencia de conocimientos.
+		</p>
+		<p>
+			Las guías de observación y listas de cotejo; conforman la evidencia de desempeños y productos.
+		</p>
+		<p>
+			Al finalizar la conformación de las evidencias serán evaluadas por el Evaluador.
+		</p>
+		<p>
+			El Grupo de Dictamen; dictaminará el portafolio de evidencias y ratificará el juicio emitido por el Evaluador; llegará una notificación de Juicio de Competencia, mismo que podrás observar en el apartado con el mismo nombre cuando esta haya sido emitida y ratificada.
 		</p>
 		<?php if(isset($entregables_por_liberar) && $entregables_por_liberar): ?>
 			<hr>
 			<p>
-				Se detectó en el sistema, que el evaluador sigue cargando evidencias esperadas al Estándar de Competencia; espere un tiempo más para que queden liberadas al 100% y poder pasar al siguente apartado
+			La capacitación - alineación; está siendo atendida por medios sincrónicos externos a este sistema. La capacitación - alineación asincrónica próximamente...
 			</p>
 		<?php endif; ?>
 	</div>
