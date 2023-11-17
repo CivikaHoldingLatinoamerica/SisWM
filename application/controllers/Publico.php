@@ -19,7 +19,11 @@ class Publico extends CI_Controller {
 
 	public function index()
 	{
-		$data['titulo_pagina'] = 'Walmart Certificaciones Civika';
+		if(es_yosoyliderwm()){
+			$data['titulo_pagina'] = 'Walmart Certificaciones Civika';
+		}else{
+			$data['titulo_pagina'] = 'Certificaciones Civika';
+		}
 		$data['usuario'] = $this->usuario;
 		$data['extra_js'] = array(
 			base_url() . 'assets/js/convocatorias_publicas.js',

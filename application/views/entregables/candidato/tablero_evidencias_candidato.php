@@ -2,8 +2,8 @@
 
 	<div id="accordion_evidencias">
 		<?php foreach ($entregables as $entregable): ?>
-			<div class="card w-100">
-				<div class="card-header sidebar-dark-primary white" id="headingOne">
+			<div class="card card-info w-100">
+				<div class="card-header " id="headingOne">
 					<h5 class="mb-0">
 						<button class="btn btn-link" style="color: white" data-toggle="collapse"
 								data-target="#collapse-evidencia<?= old($entregable, 'id_entregable') ?>"

@@ -3,7 +3,11 @@
 	<strong>Copyright &copy; 2023 - Civika Holding.</strong>
 	Todos los derechos reservados
 	<div class="float-right d-none d-sm-inline-block">
-		<b>Version</b> 1.0.0
+		<?php if(es_yosoyliderwm()): ?>
+			<b>Version</b> 1.0.0
+		<?php else: ?>
+			<b>Version</b> 1.0.0
+		<?php endif; ?>
 	</div>
 </footer>
 

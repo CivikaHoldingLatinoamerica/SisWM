@@ -19,16 +19,20 @@
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/frm/adm_lte/dist/css/adminlte.min.css">
 
-	<link href="<?= base_url() ?>assets/css/comun.css" rel="stylesheet">
-
 	<!-- CSS para el plugin de las notificaciones del sistema -->
 	<link href="<?=base_url()?>assets/frm/watnotif/css/bubble/watnotif.right-top-bubble.min.css" rel="stylesheet" type="text/css">
 
-
-	<!-- icono -->
-	<link href="<?=base_url()?>assets/imgs/logos/icono.png" rel="shortcut icon">
-
-	<title>Certificaciones WalMart Civika</title>
+	<?php if(es_yosoyliderwm()): ?>
+		<link href="<?= base_url() ?>assets/css/comun.css" rel="stylesheet">
+		<!-- icono -->
+		<link href="<?=base_url()?>assets/imgs/logos/icono.png" rel="shortcut icon">
+		<title>Certificaciones WM MXCAM - Cívika</title>
+	<?php else: ?>
+		<link href="<?= base_url() ?>assets/css/comun_siiped.css" rel="stylesheet">
+		<!-- icono -->
+		<link href="<?=base_url()?>assets/imgs/logos/icono_ckv.png" rel="shortcut icon">
+		<title>Certificaciones Cívika</title>
+	<?php endif; ?>
 </head>
 <body class="hold-transition login-page">
 <div id="backgroundImage" class="fullscreen-bg"></div>
@@ -36,7 +40,11 @@
 	<!-- /.login-logo -->
 	<div class="card card-outline">
 		<div class="card-header text-center">
-			<img src="<?=base_url()?>assets/imgs/logos/icono.png" width="40px" height="40px" /> <span class="h3">Certificaciones WalMart</span>
+			<?php if(es_yosoyliderwm()): ?>
+				<img src="<?=base_url()?>assets/imgs/logos/icono.png" width="40px" height="40px" /> <span class="h3">Certificaciones WalMart</span>
+			<?php else: ?>
+				<img src="<?=base_url()?>assets/imgs/logos/icono_ckv.png" width="40px" height="40px" /> <span class="h3">Certificaciones Civika</span>
+			<?php endif; ?>
 		</div>
 		<div class="card-body">
 			<p class="login-box-msg">Ingrese sus datos para iniciar sesión</p>
