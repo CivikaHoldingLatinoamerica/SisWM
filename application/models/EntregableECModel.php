@@ -155,7 +155,8 @@ class EntregableECModel extends ModeloBase
 				'id_usuario' => $id_usuario,
 				'instrumentos' => array(),
 				'archivos' => array(),
-				'comentarios' => array()
+				'comentarios' => array(),
+				'entregable_has_archivo' => array()
 			);
 			if (!in_array($object, $entregables)) {
 				$entregables[] = $object;
@@ -190,6 +191,11 @@ class EntregableECModel extends ModeloBase
 			where ehe.id_entregable = ".$item->id_entregable;
 			$query = $this->db->query($consulta);
 			$item->evaluacion = $query->row();
+
+			/**
+			 * para los archivos del entregable que se subieron en el admin
+			 */
+			$item->entregable_has_archivo = $this->obtenerEntregableHasArchivos($item->id_entregable);
 		}
 		return $entregables;
 	}
@@ -289,5 +295,19 @@ class EntregableECModel extends ModeloBase
 		$this->db->where('id_estandar_competencia',$id_estandar_competencia);
 		$query = $this->db->get('entregable_ec');
 		return $query->num_rows();
+	}
+
+	/**
+	 * funcioens privadas al entregable
+	 */
+
+	private function obtenerEntregableHasArchivos($id_entregable){
+		$consulta = "select 
+				* 
+			from entregable_has_archivo ehc 
+				inner join archivo a on a.id_archivo = ehc.id_archivo
+			where ehc.id_entregable = $id_entregable";
+		$query = $this->db->query($consulta);
+		return $query->result();
 	}
 }
