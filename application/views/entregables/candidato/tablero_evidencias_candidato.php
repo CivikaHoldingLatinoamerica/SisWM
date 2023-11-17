@@ -74,6 +74,19 @@
 
 					<?php if ($entregable->tipo_entregable == "prod") : ?>
 
+						<?php if(isset($entregable->entregable_has_archivo) && is_array($entregable->entregable_has_archivo) && !empty($entregable->entregable_has_archivo)): ?>
+							<div class="row form-grupo">
+								<b>Material de apoyo:</b>
+								<div class="col-lg-12" >
+									<?php foreach ($entregable->entregable_has_archivo as $index => $archivo): ?>
+										<ul >
+											<li><a href="<?=base_url().$archivo->ruta_directorio.$archivo->nombre?>" target="_blank"><?=$archivo->nombre?></a></li>
+										</ul>
+									<?php endforeach; ?>
+									
+								</div>
+							</div>
+						<?php endif; ?>
 
 						<?php if ($entregable->id_estatus == 4) : ?>
 							<div class="row">
