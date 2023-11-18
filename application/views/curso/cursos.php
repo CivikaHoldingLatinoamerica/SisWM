@@ -16,7 +16,6 @@
 						</button>
 					<?php endif; ?>
 					
-				<?php if($curso->fecha_publicado == null): ?>
 					<?php if(perfil_permiso_operacion_menu('curso_ec.modificar')): ?>
 						<button type="button" id="modificar_estandar_competencia_curso" class="btn btn-sm btn-outline-info"
 								data-id_estandar_competencia="<?=$curso->id_estandar_competencia ?>"
@@ -39,7 +38,6 @@
 						</button>
 						<hr>
 					<?php endif; ?>  		
-				<?php endif; ?>  	
 				</div>
 			</div>
 		</div>
