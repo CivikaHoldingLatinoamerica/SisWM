@@ -93,6 +93,10 @@ class UsuarioHasECModel extends ModeloBase
 		}
 	}
 
+	public function order_by(){
+		return ' order by du.curp asc ';
+	}
+
 	public function obtener_instructor_para_registro_candidato($data){
 		try{
 			$consulta = $this->obtener_query_base().$this->criterios_busqueda($data)." ORDER BY RAND() limit 1";

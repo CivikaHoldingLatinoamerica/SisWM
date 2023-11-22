@@ -34,13 +34,23 @@
 									</select>
 								</div>
 							<?php endif; ?>
+							<div class="form-group row" >
+								<div class="col-sm-3"></div>
+								<div class="col-sm-9">
+									<?php if(isset($tipo) && $tipo == 'instructor'): ?>
+										<input id="input_filtro_instructores_candidatos" type="text" class="form-control" placeholder="Escriba nombre(s) del instructor">
+									<?php else: ?>
+										<input id="input_filtro_instructores_candidatos" type="text" class="form-control" placeholder="Escriba nombre(s) del candidato">
+									<?php endif; ?>
+								</div>
+							</div>
 							<div class="form-group row">
 								<label for="instructores_alumnos_disponibles" class="col-sm-3 col-form-label"><?=isset($tipo) && $tipo == 'instructor' ? 'Evaluadores':'Candidatos'?></label>
 								<div class="col-sm-9">
-									<select id="instructores_alumnos_disponibles" class="custom-select form-control-border slt_instructor_alumno_ec"
+									<select id="instructores_alumnos_disponibles" multiple class="custom-select form-control-border slt_instructor_alumno_ec"
 											data-tipo="<?=$tipo?>"
 											name="instructor_alumno_id_usuario">
-										<option value="">-- Seleccione --</option>
+										<!-- <option value="">-- Seleccione --</option> -->
 										<?php if(isset($usuarios)): ?>
 											<?php foreach ($usuarios as $instructor): ?>
 												<option id="instructor_alumno<?=$instructor->id_usuario?>" data-foto_perfil="<?=$instructor->foto_perfil?>"

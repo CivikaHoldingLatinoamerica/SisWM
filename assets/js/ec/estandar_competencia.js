@@ -34,8 +34,8 @@ $(document).ready(function () {
 		EstandarCompetencia.ver_asignar_instructor_alumno_ec(id_estandar_competencia,'alumno');
 	});
 
-	$(document).on('change','.slt_instructor_alumno_ec',function(){
-		var id_usuario = $(this).val();
+	$(document).on('click','.slt_instructor_alumno_ec',function(){
+		var id_usuario = $(this).val()[0];
 		var tipo = $(this).data('tipo');
 		EstandarCompetencia.add_row_instructor_alumno_ec(id_usuario,tipo);
 	});
@@ -64,8 +64,14 @@ $(document).ready(function () {
 	$(document).on('click','.eliminar_usuario_ec',function(){
 		var row_eliminar = $(this);
 		row_eliminar.closest('tr').remove();
-		var opcion = $('option#instructor_alumno'+row_eliminar.data('id_usuario'));
-		opcion.show();
+		// var opcion = $('option#instructor_alumno'+row_eliminar.data('id_usuario'));
+		// opcion.show();
+		//se cambia lo del volver a mostrar este usuario una vez se elimina
+		var foto_perfil = $(this).data('foto_perfil');
+		var nombre_usuario = $(this).data('nombre_usuario');
+		var id_usuario = $(this).data('id_usuario');
+		var html_opcion_regreso = '<option id="instructor_alumno'+id_usuario+'" data-foto_perfil="'+foto_perfil+'" value="'+id_usuario+'" >'+nombre_usuario+'</option>';
+		$('#instructores_alumnos_disponibles').append(html_opcion_regreso);
 	});
 
 	//EstandarCompetencia.tablero();
@@ -207,6 +213,7 @@ var EstandarCompetencia = {
 							procesar_select ? EstandarCompetencia.procesar_select_evaluador(u_ec.id_usuario) : false;
 						});
 					}
+					EstandarCompetencia.filtro_instructores_candidatos_slt();
 				}else{
 					Comun.mensajes_operacion(response.msg,'error',5000);
 				}
@@ -275,7 +282,7 @@ var EstandarCompetencia = {
 			slt_instructores_asignados +
 			'<td class="text-center">' +
 			'	<button '+style_btn_guardar+' id="btn_guardar_asignacion_'+id_usuario+'" type="button" class="btn btn-sm btn-success btn_guardar_candidato_con_instructor" data-tipo_guardar="'+tipo+'" data-id_usuario="'+id_usuario+'"><i class="fa fa-save"></i></button>' +
-			'	<button style="display:none" class="eliminar_usuario_ec" data-id_usuario="'+id_usuario+'" id="btn_eliminar_usuario_ec_'+id_usuario+'"></button>' +
+			'	<button style="display:none" type="button" class="eliminar_usuario_ec" data-foto_perfil="'+opcion.data("foto_perfil")+'" data-nombre_usuario="'+opcion.html()+'" data-id_usuario="'+id_usuario+'" id="btn_eliminar_usuario_ec_'+id_usuario+'"></button>' +
 			'	<button '+style_btn_eliminar+' id="btn_eliminar_asignacion_'+id_usuario+'" type="button" class="btn btn-sm btn-danger iniciar_confirmacion_operacion" ' +
 			'		data-toggle="tooltip" title="Eliminar instructor" ' +
 			'		data-msg_confirmacion_general="¿Esta seguro de eliminar el usuario seleccionado del EC?, esta acción no podrá revertirse" ' +
@@ -285,6 +292,7 @@ var EstandarCompetencia = {
 			'</td>' +
 			'</tr>';
 		$('#tbody_instructores_alumnos_ec').append(html_row);
+		opcion.remove();//eliminamos del select para que no aparezca de nuevo para el filtro
 		$('#instructores_alumnos_disponibles').val('');
 		if(id_usuario_evaluador != false && id_usuario_evaluador != undefined){
 			$('#btn_guardar_asignacion_'+id_usuario).closest('tr').find('select.slt_usuarios_evaluadores_asignados').val(id_usuario_evaluador);
@@ -296,7 +304,7 @@ var EstandarCompetencia = {
 			base_url + 'Notificaciones/guardar_notificacion/0/enviada',{
 				destinatarios : [id_usuario],
 				asunto : 'Asignación Estándar de Competencia en el sistema PED',
-				mensaje : 'Hola muy buenas tardes, se le informa que se le asigno un Estándar de Competencia en el sistema integral PED, favor de revisar en el tablero de Estándar de competencia en la opción de listado'
+				mensaje : 'Hola muy buen día, se le informa que se le asignó un Estándar de Competencia en el sistema integral PED, favor de revisar en el tablero de Estándar de competencia en la opción de listado'
 			},
 			function(response){
 				if(response.success){
@@ -361,6 +369,15 @@ var EstandarCompetencia = {
 			var html_img = '<img src="'+base_url + archivo.ruta_directorio + archivo.nombre+'" style="max-width: 120px" class="img-fluid img-thumbnail" alt="Imagen banner EC">';
 			$('#procesando_img_banner_ec').html(html_img);
 		})
-	}
+	},
+
+	filtro_instructores_candidatos_slt : function(){
+		$('#input_filtro_instructores_candidatos').on('keyup',function(){
+			var filtro = $(this).val().toLowerCase();
+			$('#instructores_alumnos_disponibles option').filter(function(){
+			   $(this).toggle($(this).text().toLowerCase().indexOf(filtro) > -1);
+		    });
+		});
+	 },
 
 };
