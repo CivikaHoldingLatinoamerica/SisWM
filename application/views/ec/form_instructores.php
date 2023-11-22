@@ -45,7 +45,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="instructores_alumnos_disponibles" class="col-sm-3 col-form-label"><?=isset($tipo) && $tipo == 'instructor' ? 'Evaluadores':'Candidatos'?></label>
+								<label class="col-sm-3 col-form-label"><?=isset($tipo) && $tipo == 'instructor' ? 'Evaluadores':'Candidatos'?></label>
 								<div class="col-sm-9">
 									<select id="instructores_alumnos_disponibles" multiple class="custom-select form-control-border slt_instructor_alumno_ec"
 											data-tipo="<?=$tipo?>"
