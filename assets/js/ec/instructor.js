@@ -102,7 +102,12 @@ $(document).ready(function(){
 		var id_entregable_formulario = $(this).data('id_entregable_formulario');
 		var id_usuario = $(this).data('id_usuario');
 		EvaluadoresEC.obtener_formulario_alumno(id_entregable_formulario,id_usuario, id_entregable)
-	})
+	});
+
+	$(document).on('click','#btn_buscar_alumnos_ec',function(){
+		var id_estandar_competencia = $('#val_id_estandar_competencia').val();
+		EvaluadoresEC.cargar_alumnos_estandar_competencia(true,id_estandar_competencia);
+	});
 
 
 	//funcionalidad para el paginado por scroll
@@ -134,10 +139,13 @@ var EvaluadoresEC = {
 	},
 
 	cargar_alumnos_estandar_competencia : function(inicial = true, id_estandar_competencia,pagina = 1, limit = 5){
+		var post = {
+			busqueda : $('#input_buscar_alumnos_ec').val()
+		};
 		if(inicial){
 			$('#contenedor_resultado_tablero_alumnos_ec').html(overlay);
 			Comun.obtener_contenido_peticion_html(
-				base_url + 'EvaluadoresEC/tablero_alumnos/'+id_estandar_competencia+'/'+pagina+'/'+limit,{},
+				base_url + 'EvaluadoresEC/tablero_alumnos/'+id_estandar_competencia+'/'+pagina+'/'+limit,post,
 				function(response){
 					$('#contenedor_resultado_tablero_alumnos_ec').html(response);
 				}
@@ -145,7 +153,7 @@ var EvaluadoresEC = {
 		}else{
 			$('#overlay_full_page').fadeIn();
 			Comun.obtener_contenido_peticion_html(
-				base_url + 'EvaluadoresEC/tablero_alumnos/'+id_estandar_competencia+'/'+pagina+'/'+limit,{},
+				base_url + 'EvaluadoresEC/tablero_alumnos/'+id_estandar_competencia+'/'+pagina+'/'+limit,post,
 				function(response){
 					$('#contenedor_resultado_tablero_alumnos_ec').append(response);
 					$('#overlay_full_page').fadeOut();

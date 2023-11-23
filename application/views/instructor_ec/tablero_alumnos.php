@@ -9,13 +9,28 @@
 	<!-- Main content -->
 	<section class="content" id="tablero_estandar_competencia">
 
-		<?php if (isset($estandar_competencia)): ?>
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">Estándar de competencia: </label><span
-						class="col-sm-10 col-form-label"><?= $estandar_competencia->codigo . ' - ' . $estandar_competencia->titulo ?></span>
+		<div class="container-fluid mb-3">
+			<?php if (isset($estandar_competencia)): ?>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Estándar de competencia: </label><span
+							class="col-sm-10 col-form-label"><?= $estandar_competencia->codigo . ' - ' . $estandar_competencia->titulo ?></span>
+				</div>
+				<input type="hidden" id="val_id_estandar_competencia" value="<?=$estandar_competencia->id_estandar_competencia?>">
+			<?php endif; ?>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group">
+						<input type="text" id="input_buscar_alumnos_ec" class="form-control form-control-lg" name="busqueda" placeholder="Escribe algo para buscar">
+						<div class="input-group-append">
+							<button type="button" id="btn_buscar_alumnos_ec" class="btn btn-lg btn-default">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+					<small class="form-text text-muted">Escribe algun texto de referencia, puedes buscar entre nombre, apellidos, correo, telefono o CURP; cuando termines pulsa en el boton del icono de buscar</small>
+				</div>
 			</div>
-			<input type="hidden" id="val_id_estandar_competencia" value="<?=$estandar_competencia->id_estandar_competencia?>">
-		<?php endif; ?>
+		</div>
 
 		<div class="card card-solid">
 			<div class="card-body pb-0">

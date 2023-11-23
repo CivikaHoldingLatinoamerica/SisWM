@@ -53,19 +53,33 @@ class UsuarioHasECModel extends ModeloBase
 	/**
 	 * consulta para los intructores que veran que alumnos estan registrados a la EC
 	 */
-	public function alumnos_inscritos_ec($id_estandar_competencia,$id_perfil = PERFIL_ALUMNO,$pagina = 1,$registros = 10){
+	public function alumnos_inscritos_ec($datosBusqueda,$pagina = 1,$registros = 10){
 		try{
 			$sql_limit = " limit ".(($pagina*$registros)-$registros).",$registros";
 			if($pagina == 0){
 				$sql_limit = '';
 			}
 			$consulta = "select 
-			  du.*,uhec.*
+			  	du.*,uhec.*
 			from usuario_has_estandar_competencia uhec
-			  inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
-			  inner join datos_usuario du on du.id_usuario = uhec.id_usuario
-			where uhp.id_cat_perfil = $id_perfil
-			  and uhec.id_estandar_competencia = $id_estandar_competencia order by uhec.id_usuario asc $sql_limit ";
+			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
+			  	inner join datos_usuario du on du.id_usuario = uhec.id_usuario
+			where 1=1 and uhp.id_cat_perfil = ".$datosBusqueda['usuario_perfil']."
+			  	and uhec.id_estandar_competencia = ".$datosBusqueda['id_estandar_competencia'];
+			if(isset($datosBusqueda['id_usuario_evaluador']) && $datosBusqueda['id_usuario_evaluador'] != ''){
+				$consulta .= " and uhec.id_usuario_evaluador = ".$datosBusqueda['id_usuario_evaluador'];
+			}if(isset($datosBusqueda['busqueda']) && $datosBusqueda['busqueda'] != ''){
+				$datosBusqueda['busqueda'] = strtoupper($datosBusqueda['busqueda']);
+				$consulta .= " and (
+					UPPER(du.nombre) like '%".$datosBusqueda['busqueda']."%' or
+					UPPER(du.apellido_p) like '%".$datosBusqueda['busqueda']."%' or
+					UPPER(du.apellido_m) like '%".$datosBusqueda['busqueda']."%' or
+					UPPER(du.correo) like '%".$datosBusqueda['busqueda']."%' or
+					UPPER(du.telefono) like '%".$datosBusqueda['busqueda']."%' or
+					UPPER(du.curp) like '%".$datosBusqueda['busqueda']."%'
+				)";
+			}
+			$consulta .= " order by uhec.id_usuario asc $sql_limit ";
 			$query = $this->db->query($consulta);
 			return $query->result();
 		}catch (Exception $ex){

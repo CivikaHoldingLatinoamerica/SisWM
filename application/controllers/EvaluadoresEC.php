@@ -68,7 +68,16 @@ class EvaluadoresEC extends CI_Controller {
 	public function tablero_alumnos($id_estandar_competencia,$pagina = 1,$limit = 5){
 		perfil_permiso_operacion('estandar_competencia.alumno');
 		try{
-			$instructores_asignados = $this->UsuarioHasECModel->alumnos_inscritos_ec($id_estandar_competencia,PERFIL_ALUMNO,$pagina,$limit);
+			$post = $this->input->post();
+			$datosBusqueda = array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'usuario_perfil' => PERFIL_ALUMNO,
+				'busqueda' => isset($post['busqueda']) && $post['busqueda'] != '' ? $post['busqueda'] : ''
+			);
+			if(in_array($this->usuario->perfil,array('instructor'))){
+				$datosBusqueda['id_usuario_evaluador'] = $this->usuario->id_usuario;
+			}
+			$instructores_asignados = $this->UsuarioHasECModel->alumnos_inscritos_ec($datosBusqueda,$pagina,$limit);
 			$data['alumnos_ec'] = $instructores_asignados;
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
 			$data['total_registros'] = $this->UsuarioHasECModel->total_registros_alumnos_inscritos_ec($id_estandar_competencia,PERFIL_ALUMNO);

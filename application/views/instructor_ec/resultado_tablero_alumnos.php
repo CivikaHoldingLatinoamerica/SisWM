@@ -4,14 +4,14 @@
 <?php if(isset($alumnos_ec) && sizeof($alumnos_ec) != 0): ?>
 	<?php foreach ($alumnos_ec as $index => $aec): ?>
 		<tr>
-			<td><?=$aec->id_usuario?></td>
+			<td><?=$index + 1?></td>
 			<td><?=$aec->nombre.' '.$aec->apellido_p.' '.$aec->apellido_m?></td>
 			<td><?=$aec->curp?></td>
 			<td>
 				<ul>
 					<li><label>Correo: </label><?=$aec->correo?></li>
-					<li><label>Celular: </label><?=$aec->celular?></li>
-					<li><label>Telefono: </label><?=$aec->telefono?></li>
+					<li><label>Celular: </label><?=$aec->celular != '' ? $aec->celular : ' Sin dato'?></li>
+					<li><label>Telefono: </label><?=$aec->telefono != '' ? $aec->telefono : ' Sin dato'?></li>
 				</ul>
 			</td>
 			<td>
@@ -36,22 +36,26 @@
 							</a>
 						</div>
 					</div>
-					<button class="btn btn-sm btn-outline-warning btn_evaluaciones_alumno" data-toggle="tooltip"
+					<br>
+					<button class="btn btn-sm btn-outline-warning btn_evaluaciones_alumno mt-1" data-toggle="tooltip"
 							data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
 							data-id_usuario="<?=$aec->id_usuario?>" data-es_evaluacion="no"
 							title="Cédula de evaluación"><i class="fa fa-check-circle"></i> Cédula de evaluación</button>
 				<?php endif; ?>
 				<?php if(perfil_permiso_operacion_menu('tecnicas_instrumentos.consultar')): ?>
-					<button class="btn btn-sm btn-outline-info btn_evidencia_ati_alumno" data-toggle="tooltip"
+					<br>
+					<button class="btn btn-sm btn-outline-info btn_evidencia_ati_alumno mt-1" data-toggle="tooltip"
 							data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
 							data-id_usuario="<?=$aec->id_usuario?>"
 							title="Evidencia de trabajo por parte del candidato"><i class="fa fa-clipboard-list"></i> Evidencia de trabajo</button>
-					<button class="btn btn-sm btn-outline-danger btn_cargar_expediente_alumno" data-toggle="tooltip"
+					<br>
+					<button class="btn btn-sm btn-outline-danger btn_cargar_expediente_alumno mt-1" data-toggle="tooltip"
 							data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
 							data-id_usuario="<?=$aec->id_usuario?>"
 							data-id_usuario_instructor="<?=$aec->id_usuario_evaluador?>"
 							title="Carga del expediente del candidato"><i class="fa fa-upload"></i> Expediente digital</button>
-					<button class="btn btn-sm btn-outline-success generar_portafolio_evidencia" data-toggle="tooltip"
+					<br>
+					<button class="btn btn-sm btn-outline-success generar_portafolio_evidencia mt-1" data-toggle="tooltip"
 							data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
 							data-id_usuario_alumno="<?=$aec->id_usuario?>"
 							data-id_usuario_instructor="<?=$aec->id_usuario_evaluador?>"
