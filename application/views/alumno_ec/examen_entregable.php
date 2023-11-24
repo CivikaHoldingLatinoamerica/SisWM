@@ -15,9 +15,11 @@
 						class="col-sm-10 col-form-label"><?= $entregable_ec->nombre?></span>
 			</div>
 
-			<div class="card card-solid">
+			<div class="card card-solid" id="div_contenedor_examen" style="display: none;">
 				<div class="card-body pb-0">
 					<?php if(isset($entregable_ec) && is_object($entregable_ec) && $entregable_ec->liberado == 'si'): ?>
+						<input type="hidden" id="tiene_evaluacion_aprobatoria" value="<?=isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria ? 'si':'no'?>">
+						<input type="hidden" id="puede_realizar_evaluacion" value="<?=isset($puede_realizar_evaluacion) && $puede_realizar_evaluacion ? 'si':'no'?>">
 						<?php if(isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria): ?>
 							<div class="callout callout-success">
 								<h5>Información importante</h5>
@@ -242,5 +244,49 @@
 
 </div>
 <!-- /.content-wrapper -->
+<!-- Advertencia para iniciar el examen -->
+<div id="modal_confirmar_inicio_examen">
+	<div class="modal fade" id="modal_confirmar_inicio_examen_confirmacion" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-dialog-centered modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">INFORMACIÓN IMPORTANTE</h4>
+				</div>
+				<div class="modal-body">
+				<div class="callout callout-danger">
+					<p>
+						El siguiente examen que esta a punto de realizar cuenta con distintos candados de seguridad; los cuales, si incurre en ellos, se penalizarán y podría enviarse con las respuestas que haya respondido hasta ese momento;
+						como resultado, es probable que no pase con una calificación satisfactoria
+					</p>
+					<br>
+					<p>Candados y puntos a considerar en esté examen</p>
+					<ol>
+						<li>Se tomará el examen en pantalla completa </li>
+						<li>No se podrá realizar una captura de pantalla</li>
+						<li>No se puede copiar las preguntas y/o opciones de las mismas</li>
+						<li>No podrá abrir una ventana del navegador o pestaña nueva del navegador que esté usando</li>
+						<li>No podrá abrir un programa externo al navegador, por ejemplo: Word, PowerPoint, etc.</li>
+						<li>No podrá alejar el puntero del ratón del área de trabajo de este examen</li>
+						<?php if(isset($evaluacion->tiempo) && $evaluacion->tiempo != 0 && $evaluacion->tiempo != ''): ?>
+							<li>Contará como tiempo limite de <?=$evaluacion->tiempo?> minutos para responder está evaluación</li>
+						<?php endif; ?>
+					</ol>
+					<br>
+					<p>
+						Si esta de acuerdo en los puntos de esté examen de clic en el botón "Aceptar" para iniciar el proceso de evaluación
+					</p>
+				</div>
+
+				</div>
+				<div class="modal-footer justify-content-between">
+					<a href="<?=base_url()?>AlumnosEC/ver_progreso/<?=$estandar_competencia->id_estandar_competencia.'/'.$usuario_has_estandar_competencia->id_usuario_evaluador?>" class="btn btn-sm btn-outline-danger">No acepto</a>
+					<button type="button" id="btn_confirmar_inicio_examen" class="btn btn-sm btn-outline-success">Aceptar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+</div>
 
 <?php $this->load->view('default/footer'); ?>

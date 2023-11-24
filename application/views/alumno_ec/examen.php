@@ -19,6 +19,7 @@
 				<div class="card-body pb-0">
 					<?php if(isset($ec_has_evaluacion) && is_object($ec_has_evaluacion) && $ec_has_evaluacion->liberada == 'si'): ?>
 						<input type="hidden" id="tiene_evaluacion_aprobatoria" value="<?=isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria ? 'si':'no'?>">
+						<input type="hidden" id="puede_realizar_evaluacion" value="<?=isset($puede_realizar_evaluacion) && $puede_realizar_evaluacion ? 'si':'no'?>">
 						<?php if(isset($tiene_evaluacion_aprobatoria) && $tiene_evaluacion_aprobatoria): ?>
 							<div class="callout callout-success">
 								<h5>Información importante</h5>

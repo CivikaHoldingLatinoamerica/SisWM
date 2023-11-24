@@ -140,9 +140,9 @@ class EntregableECModel extends ModeloBase
 		$entregables = array();
 		foreach ($data as $item) {
 
-			if ($item->tipo_entregable == 'form') {
-				$item->id_estatus = $item->id_estatus_formulario;
-			}
+			// if ($item->tipo_entregable == 'form') {
+			// 	$item->id_estatus = $item->id_estatus_formulario;
+			// }
 
 			$object = (object)array(
 				'id_entregable' => $item->id_entregable,

@@ -12,6 +12,8 @@ class EcEntregableAlumno  extends ModeloBase
 	public function cambiar_estatus($id_entregable, $id_alumno, $id_estatus,$id_entregable_formulario = false){
 
 		try {
+			//pasamos por la funcion  de si existe el registro del entregable
+			$this->registroEntregable($id_entregable,$id_alumno);
 			$this->db->set('id_cat_proceso', $id_estatus);
 			$this->db->where('id_entregable', $id_entregable);
 			$this->db->where('id_usuario', $id_alumno);
@@ -32,5 +34,14 @@ class EcEntregableAlumno  extends ModeloBase
 		}
 		return $return;
 
+	}
+
+	private function registroEntregable($id_entregable,$id_alumno){
+		$this->db->where('id_entregable', $id_entregable);
+		$this->db->where('id_usuario', $id_alumno);
+		$query = $this->db->get('ec_entregable_alumno');
+		if($query->num_rows() == 0){
+			$this->insertar(['id_entregable' => $id_entregable,'id_usuario' => $id_alumno,'id_cat_proceso' => ESTATUS_EN_CAPTURA]);
+		}
 	}
 }

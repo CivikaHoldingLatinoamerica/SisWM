@@ -89,7 +89,7 @@ class entregable extends CI_Controller
 
 			$data['entregables'] = $datos;
 			$data['entregables_por_liberar'] = $this->EntregableECModel->existenEntregablesPorLiberar($id_estandar_competencia);
-			//var_dump($data);
+			//var_dump($data);exit;
 			$this->load->view('entregables/candidato/evidencias_candidato',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -224,8 +224,11 @@ class entregable extends CI_Controller
 		}
 		echo json_encode($response);
 	}
-	public function cambiar_estatus($id_entregable, $id_estatus, $id_alumno, $id_formulario = false){
+	public function cambiar_estatus($id_entregable, $id_estatus, $id_alumno, $id_formulario = ''){
 		try{
+			if($id_formulario == ''){
+				$id_formulario = false;
+			};
 			$data =  $this->EcEntregableAlumno->cambiar_estatus($id_entregable, $id_alumno, $id_estatus,$id_formulario);
 			if($data['success']){
 				$response['success'] = true;

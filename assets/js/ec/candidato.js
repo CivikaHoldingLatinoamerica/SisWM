@@ -502,7 +502,7 @@ var CandidatoEC = {
 
 		})
 	},
-	cambiar_estatus_entregable_alumno(id_entregable, id_estatus, id_entregable_formulario = null){
+	cambiar_estatus_entregable_alumno(id_entregable, id_estatus, id_entregable_formulario = ''){
 		var id_usuario_alumno = $('#input_id_usuario_alumno').val();
 		Comun.obtener_contenido_peticion_json(base_url +'Entregable/cambiar_estatus/'+id_entregable+'/'+ id_estatus+'/'+id_usuario_alumno+'/'+id_entregable_formulario,{},function (response) {
 			if (response.success) {

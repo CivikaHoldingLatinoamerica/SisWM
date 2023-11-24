@@ -959,7 +959,7 @@ class AlumnosEC extends CI_Controller {
 			$response['success'] = false;
 			$response['msg'][] = 'No fue posible guardar las respuestas de su evaluación, favor de intentar más tarde';
 			$guardar = $this->EvaluacionRespuestasUsuarioModel->guardar_respuestas_evaluacion_diagnostica($post);
-			//var_dump($post);
+			//var_dump($post);exit;
 			if($guardar){
 				$response['success'] = true;
 				$calificacion = $this->EvaluacionRespuestasUsuarioModel->obtener_calificacion_evaluacion($post['id_usuario_has_evaluacion_realizada'],$post['id_evaluacion']);

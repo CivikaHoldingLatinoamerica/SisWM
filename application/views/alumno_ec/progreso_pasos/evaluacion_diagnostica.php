@@ -79,9 +79,7 @@
 											</i>
 										</td>
 										<td>
-											<button data-id_usuario_has_evaluacion_realizada="<?=$er->id_usuario_has_evaluacion_realizada?>" class="btn btn-success btn-sm ver_evaluacion_respuestas_candidato">
-												<i class="fa fa-clipboard-list"></i>Ver evaluación
-											</button>
+											
 										</td>
 									</tr>
 								<?php endforeach; ?>

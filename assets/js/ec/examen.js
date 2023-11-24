@@ -31,7 +31,7 @@ var Examen = {
 	activar_intentos_salida_examen : $('#form_evaluacion_examen').length == 0  ? false : true,
 
 	inicializar_msg_examen : function(){
-		if($('#tiene_evaluacion_aprobatoria').val() == 'no'){
+		if($('#tiene_evaluacion_aprobatoria').val() == 'no' && $('#puede_realizar_evaluacion').val() == 'si'){
 			Comun.mostrar_ocultar_modal('#modal_confirmar_inicio_examen_confirmacion',true);
 		}else{
 			$('#div_contenedor_examen').fadeIn(500);

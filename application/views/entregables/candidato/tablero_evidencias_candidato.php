@@ -114,17 +114,20 @@
 								</div>
 							</div>
 						<?php else: ?>
-							<div class="row">
-								<div class="col-12">
-									<input type="file" id="doc_evidencia_ati_<?= $entregable->id_entregable ?>"
-										   name="doc_evidencia_ati"
-										   data-id_entregable="<?= $entregable->id_entregable ?>"
-										   data-div_procesando="#procesando_doc_evidencia_ati<?= $entregable->id_entregable ?>"
-										   accept="*/*"
-										   class="doc_evidencia_ati_alumno">
-									<div id="procesando_doc_evidencia_ati<?= $entregable->id_entregable ?>"></div>
+							<?php if ($entregable->id_estatus == null || $entregable->id_estatus == 1 || $entregable->id_estatus == 3) : ?>
+								<div class="row">
+									<div class="col-12">
+										<input type="file" id="doc_evidencia_ati_<?= $entregable->id_entregable ?>"
+											name="doc_evidencia_ati"
+											data-id_entregable="<?= $entregable->id_entregable ?>"
+											data-div_procesando="#procesando_doc_evidencia_ati<?= $entregable->id_entregable ?>"
+											accept="*/*"
+											class="doc_evidencia_ati_alumno">
+										<div id="procesando_doc_evidencia_ati<?= $entregable->id_entregable ?>"></div>
+									</div>
 								</div>
-							</div>
+							<?php endif; ?>
+							
 							<div class="row">
 								<div class="col-12">
 
@@ -143,12 +146,14 @@
 													<td><?= old($archivo, 'id_archivo_instrumento') ?></td>
 													<td><?= old($archivo, 'nombre') ?></td>
 													<td>
-														<button class="btn btn-sm btn-danger eliminar-archivo-alumno"
-																data-id_archivo_instrumento="<?= old($archivo, 'id_archivo_instrumento') ?>"
-																data-id_entregable="<?= $entregable->id_entregable ?>"
-																data-id_entregable_alumno_archivo="<?= old($archivo, 'id_entregable_alumno_archivo') ?>"
-														><em class="fa fa-trash"></em>
-														</button>
+														<?php if ($entregable->id_estatus == null || $entregable->id_estatus == 1 || $entregable->id_estatus == 3) : ?>
+															<button class="btn btn-sm btn-danger eliminar-archivo-alumno"
+																	data-id_archivo_instrumento="<?= old($archivo, 'id_archivo_instrumento') ?>"
+																	data-id_entregable="<?= $entregable->id_entregable ?>"
+																	data-id_entregable_alumno_archivo="<?= old($archivo, 'id_entregable_alumno_archivo') ?>"
+															><em class="fa fa-trash"></em>
+															</button>
+														<?php endif; ?>
 													</td>
 												</tr>
 											<?php endforeach; ?>
@@ -164,7 +169,7 @@
 					<?php endif; ?>
 
 
-					<?php if ($entregable->id_estatus != 4) : ?>
+					<?php if ($entregable->id_estatus == null || $entregable->id_estatus == 1 || $entregable->id_estatus == 3) : ?>
 						<div class="row">
 							<div class="col-12">
 								<div class="input-group mb-3">
@@ -213,31 +218,28 @@
 					<div class="row">
 						<div class="col text-right">
 							<?php if ($entregable->tipo_entregable == "form") : ?>
-								<?php if ($entregable->id_estatus == null || $entregable->id_estatus == 3) : ?>
-									<a class="btn btn-sm btn-primary"
-									   href="<?= base_url() . 'respuestas_preguntas_abiertas/' . $entregable->id_entregable ?>">Responder</a>
-								<?php endif; ?>
-
-								<?php if ($entregable->id_estatus == 1 || $entregable->id_estatus == 3) : ?>
+								<?php if ($entregable->id_estatus == null || $entregable->id_estatus == 1 || $entregable->id_estatus == 3) : ?>
 									<button class="btn btn-sm btn-success boton-enviar-entregable"
 											data-id_entregable="<?= $entregable->id_entregable ?>"
 											data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>"
 									>Enviar a evaluador
 									</button>
+									<a class="btn btn-sm btn-primary"
+									   href="<?= base_url() . 'respuestas_preguntas_abiertas/' . $entregable->id_entregable ?>">Responder</a>
 								<?php endif; ?>
 
 							<?php endif; ?>
 
 
 
-							<?php if ($entregable->tipo_entregable == "prod" && ($entregable->id_estatus != 4 && $entregable->id_estatus != 2)) : ?>
+							<?php if ($entregable->tipo_entregable == "prod" && ($entregable->id_estatus == null || $entregable->id_estatus == 1 || $entregable->id_estatus == 3)) : ?>
 
 								<button class="btn btn-sm btn-success boton-enviar-entregable"
 										data-id_entregable="<?= $entregable->id_entregable ?>">Enviar a evaluador
 								</button>
 							<?php endif; ?>
 
-							<?php if ($entregable->tipo_entregable == "cuest") : ?>
+							<?php if ($entregable->tipo_entregable == "cuest" && ($entregable->id_estatus == null || $entregable->id_estatus == 1 || $entregable->id_estatus == 3)) : ?>
 								<button class="btn btn-sm btn-success boton-enviar-entregable"
 										data-id_entregable="<?= $entregable->id_entregable ?>">Enviar a evaluador
 								</button>
