@@ -41,7 +41,7 @@
 								<table class="table table-striped">
 									<thead>
 									<tr>
-										<th>ID usuario</th>
+										<th>ID</th>
 										<th>Nombre del alumno</th>
 										<th>CURP</th>
 										<th>Datos de contacto</th>

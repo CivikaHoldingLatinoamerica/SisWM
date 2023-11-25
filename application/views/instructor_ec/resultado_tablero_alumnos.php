@@ -4,7 +4,7 @@
 <?php if(isset($alumnos_ec) && sizeof($alumnos_ec) != 0): ?>
 	<?php foreach ($alumnos_ec as $index => $aec): ?>
 		<tr>
-			<td><?=$index + 1?></td>
+			<td><?=$aec->id_usuario?></td>
 			<td><?=$aec->nombre.' '.$aec->apellido_p.' '.$aec->apellido_m?></td>
 			<td><?=$aec->curp?></td>
 			<td>

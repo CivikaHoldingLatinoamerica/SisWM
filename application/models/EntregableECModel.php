@@ -187,10 +187,13 @@ class EntregableECModel extends ModeloBase
 			$item->comentarios = $query->result();
 
 			//para obtener la evaluacion
-			$consulta = "select * from entregable_has_evaluacion ehe 
-			where ehe.id_entregable = ".$item->id_entregable;
+			$consulta = "select 
+				* 
+			from entregable_has_evaluacion ehe 
+				inner join usuario_has_evaluacion_realizada uher on uher.id_entregable_has_evaluacion = ehe.id_entregable_has_evaluacion
+			where ehe.id_entregable = ".$item->id_entregable." and uher.id_usuario = $id_usuario";
 			$query = $this->db->query($consulta);
-			$item->evaluacion = $query->row();
+			$item->evaluacion = $query->result();
 
 			/**
 			 * para los archivos del entregable que se subieron en el admin

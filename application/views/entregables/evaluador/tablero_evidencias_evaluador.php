@@ -110,7 +110,7 @@
 						</div>
 					</div>
 
-					<?php if ($entregable->id_estatus != 4) :?>
+					<?php if ($entregable->id_estatus == ESTATUS_ENVIADA) :?>
 						<div class="row">
 							<div class="col-12">
 								<div class="input-group mb-3">
@@ -166,7 +166,46 @@
 									><em class="fa fa-eye"></em> Revisar respuestas</button>
 								<?php endif; ?>
 							</div>
-
+							<?php if($entregable->tipo_entregable == 'cuest'): ?>
+								<hr>
+								<div class="col-12 table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Inicio</th>
+												<th>Fin</th>
+												<th>Calificacion</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php if(isset($entregable->evaluacion) && is_array($entregable->evaluacion) && !empty($entregable->evaluacion)): ?>
+												<?php foreach($entregable->evaluacion as $index => $eva): ?>
+													<tr>
+														<td><?=$index + 1?></td>
+														<td><span><?=fechaHoraBDToHTML($eva->fecha_iniciada)?></span></td>
+														<td><span><?=fechaHoraBDToHTML($eva->fecha_enviada)?></span></td>
+														<td>
+														<span class="span_calificacion_evidencia" data-calificacion="<?=$eva->calificacion?>"><?=$eva->calificacion?></span>
+														</td>
+														<td>
+															<button class="btn btn-success btn-sm ver_evaluacion_respuestas_candidato"
+																data-id_usuario_has_evaluacion_realizada="<?=$eva->id_usuario_has_evaluacion_realizada?>" >
+																<i class="fa fa-clipboard-list"></i>Ver evaluación
+															</button>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											<?php else: ?>
+												<tr >
+													<td class="text-center" colspan="5">Sin evaluaciones registradas</td>
+												</tr>
+											<?php endif; ?>
+										</tbody>
+									</table>
+								</div>
+							<?php endif; ?>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == 2) : ?>
 							<div class="col-6 text-left">

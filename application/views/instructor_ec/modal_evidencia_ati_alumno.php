@@ -15,6 +15,7 @@
 					<span class="col-lg-5"><?=$usuario_alumno->curp?></span>
 				</div>
 				<input id="id_alumno" hidden value="<?= $usuario_alumno->id_usuario?>">
+				<input id="ati_revisados_liberados" hidden value="<?= $ati_revisados_liberados? 'si':'no'?>">
 				<div class="form-group row">
 					<?php if(isset($estandar_competencia_instrumento) && is_array($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0): ?>
 						<!-- para agregar la fecha de liberación de los ATI por el evaluador -->
@@ -34,14 +35,14 @@
 									<form id="form_acuerdos_evaluacion">
 										<label>Acuerdo para el desarrollo de la evaluación</label>
 										<div class="form-group row">
-											<label for="input_date_fecha_envio_ati" class="col-lg-3">Fecha envio: </label>
+											<label for="input_fecha_evidencia_ati" class="col-lg-3">Fecha envio: </label>
 											<div class="col-lg-3">
 												<input type="date" id="input_fecha_evidencia_ati" class="form-control" data-rule-required="true"
 														name="fecha_evidencia_ati"
 														placeholder="Fecha del plan de evidencia" value="<?=$usuario_has_ec->fecha_evidencia_ati?>">
 												<small class="form-text text-muted text-red" id="error_fecha_evidencia" style="display: none" >Sabados y Domingos no estan disponibles</small>
 											</div>
-											<label for="input_date_fecha_envio_ati" class="col-lg-3">Hora envio: </label>
+											<label for="input_hora_evidencia_ati" class="col-lg-3">Hora envio: </label>
 											<div class="col-lg-3">
 												<input type="time" id="input_hora_evidencia_ati" placeholder="Hora del plan" data-rule-required="true"
 														name="hora_evidencia_ati"
@@ -92,7 +93,7 @@
 
 						<div class="col-lg-12" id="div_leyend_fecha_envio_ati" <?=isset($ati_revisados_liberados) && $ati_revisados_liberados ? 'style="display:none"':''?>>
 							<div class="alert alert-light">
-								Entregables en proceso de carga por el candidato o en revisión o sin liberar, no se puede actualizar la fecha de entrega
+								Entregables en proceso de carga por el candidato, en revisión o sin liberar, no se puede actualizar la fecha de entrega
 							</div>
 						</div>
 						<input type="hidden" id="numero_instrumentos_ati" value="<?=sizeof($estandar_competencia_instrumento)?>">

@@ -103,6 +103,35 @@ class EvaluadoresEC extends CI_Controller {
 			$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec_alumno($id_estandar_competencia,$id_usuario_alumno);
 			//echo print_r($data['estandar_competencia_instrumento']);exit;
+			$data['ati_revisados_liberados'] = false;
+			$data['id_estandar_compentencia'] = $id_estandar_competencia;
+			$data['id_usuario_alumno'] = $id_usuario_alumno;
+			$data['usuario_alumno'] = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario_alumno);
+			
+
+			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario_alumno);
+
+			$data['entregables'] = $datos;
+			//var_dump($data['entregables']);exit;
+			$this->load->view('instructor_ec/modal_evidencia_ati_alumno',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function evidencia_ati_alumno_old($id_estandar_competencia, $id_usuario_alumno){
+		perfil_permiso_operacion('tecnicas_instrumentos.consultar');
+		try{
+			$this->load->model('EvaluacionModel');
+			$this->load->model('ECInstrumentoActividadEvaluacionModel');
+			$this->load->model('UsuarioHasEvaluacionRealizadaModel');
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario_alumno),0,10);
+			$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
+			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec_alumno($id_estandar_competencia,$id_usuario_alumno);
+			//echo print_r($data['estandar_competencia_instrumento']);exit;
 			$data['ati_revisados_liberados'] = true;
 			$data['id_estandar_compentencia'] = $id_estandar_competencia;
 			$data['id_usuario_alumno'] = $id_usuario_alumno;

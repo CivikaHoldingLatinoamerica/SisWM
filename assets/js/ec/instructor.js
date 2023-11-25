@@ -169,19 +169,25 @@ var EvaluadoresEC = {
 				$('#contenedor_modal_primario').html(response);
 				Comun.tooltips();
 				Comun.mostrar_ocultar_modal('#modal_evidencia_ati_alumno',true);
-				//determinamos el navegador para cambiar el mensaje de ayuda de la hora
-				if(bowser.name != undefined && bowser.name == 'Firefox'){
-					$('.smal_hora_envio').html('Formato de 24 hrs');
-				}else{
-					$('.smal_hora_envio').html('Formato de 12 hrs');
-				}
-				Comun.desabilitar_fines_semana_calendario('#input_fecha_evidencia_ati','#error_fecha_evidencia');
-				Comun.desabilitar_fines_semana_calendario('#input_fecha_revision_ati','#error_fecha_revision');
-				var fecha_evidencia = $('#input_fecha_evidencia_ati').val();
-				if(fecha_evidencia != ''){
-					var dia_max_revision = Comun.sumar_dias_habiles_calendario(fecha_evidencia,8); //obtener la fecha limite
-					$('#input_fecha_revision_ati').attr('min',fecha_evidencia);
-					$('#input_fecha_revision_ati').attr('max',dia_max_revision);
+				$('.span_calificacion_evidencia').each(function(){
+					var calificacion = $(this).data('calificacion');
+					$(this).addClass(EvaluadoresEC.obtener_class_calificacion(calificacion));
+				});
+				if($('#ati_revisados_liberados').val() == 'si'){
+					//determinamos el navegador para cambiar el mensaje de ayuda de la hora
+					if(bowser.name != undefined && bowser.name == 'Firefox'){
+						$('.smal_hora_envio').html('Formato de 24 hrs');
+					}else{
+						$('.smal_hora_envio').html('Formato de 12 hrs');
+					}
+					Comun.desabilitar_fines_semana_calendario('#input_fecha_evidencia_ati','#error_fecha_evidencia');
+					Comun.desabilitar_fines_semana_calendario('#input_fecha_revision_ati','#error_fecha_revision');
+					var fecha_evidencia = $('#input_fecha_evidencia_ati').val();
+					if(fecha_evidencia != ''){
+						var dia_max_revision = Comun.sumar_dias_habiles_calendario(fecha_evidencia,8); //obtener la fecha limite
+						$('#input_fecha_revision_ati').attr('min',fecha_evidencia);
+						$('#input_fecha_revision_ati').attr('max',dia_max_revision);
+					}
 				}
 			}
 		);
@@ -354,6 +360,7 @@ var EvaluadoresEC = {
 				$('#contenedor_modal_sedundario').html(response);
 				EvaluadoresEC.procesar_class_calificacion();
 				Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion',false);
+				Comun.mostrar_ocultar_modal('#modal_evidencia_ati_alumno',false);
 				Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion_respuestas',true);
 			}
 		)
@@ -362,6 +369,7 @@ var EvaluadoresEC = {
 	regresar_modal_evaluacion_usuario : function(){
 		Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion_respuestas',false);
 		Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion',true);
+		Comun.mostrar_ocultar_modal('#modal_evidencia_ati_alumno',true);
 	},
 
 	procesar_class_calificacion : function(){
