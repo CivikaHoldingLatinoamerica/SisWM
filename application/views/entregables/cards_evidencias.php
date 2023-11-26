@@ -97,5 +97,7 @@
 	</div>
 		
 <?php else: ?>
-	<?php $this->load->view('default/sin_datos'); ?>
+	<?php if($pagina_select == 1): ?>
+		<?php $this->load->view('default/sin_datos'); ?>
+	<?php endif; ?>
 <?php endif; ?>

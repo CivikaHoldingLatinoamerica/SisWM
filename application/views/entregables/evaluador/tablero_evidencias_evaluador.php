@@ -208,20 +208,18 @@
 							<?php endif; ?>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == 2) : ?>
+							<div class="col-12" >
+								<div class="callout callout-success">
+									<h5>Aviso importante</h5>
+									<p>Recuerde que puede realizar un comentario al candidato antes de liberar/rechazar su entregable</p>
+								</div>
+							</div>
 							<div class="col-6 text-left">
-								<?php if ($entregable->tipo_entregable != "cuest") : ?>
-									<button class="btn btn-sm btn-danger rechazar-entregable"
-											data-id_entregable="<?= $entregable->id_entregable ?>"
-											data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>">
-											<em class="fa fa-exclamation-circle"></em> Rechazar
-									</button>
-								<?php else: ?>
-									<div class="callout callout-success">
-										<h5>Recordatorio</h5>
-										<p>Recuerde que puede realizar un comentario al candidato antes de liberar su entregable</p>
-									</div>
-
-								<?php endif; ?>
+								<button class="btn btn-sm btn-danger rechazar-entregable"
+										data-id_entregable="<?= $entregable->id_entregable ?>"
+										data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>">
+										<em class="fa fa-exclamation-circle"></em> Rechazar
+								</button>
 							</div>
 							<div class="col-6 text-right">
 								<button class="btn btn-sm btn-success liberar-entregable"

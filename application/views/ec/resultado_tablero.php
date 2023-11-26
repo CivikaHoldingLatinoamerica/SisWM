@@ -113,9 +113,11 @@
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>
-	<tr>
-		<td colspan="5" class="text-center">
-			Sin registros encontrados
-		</td>
-	</tr>
+	<?php if($pagina_select == 1): ?>
+		<tr>
+			<td colspan="5" class="text-center">
+				Sin registros encontrados
+			</td>
+		</tr>
+	<?php endif; ?>
 <?php endif; ?>
