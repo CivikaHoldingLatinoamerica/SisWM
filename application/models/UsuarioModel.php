@@ -341,7 +341,8 @@ class UsuarioModel extends ModeloBase
 	public function nuevo_usuario($data,$perfil = 'admin'){
 		try{
 			//obtenemos el usuario conforme al perfil
-			$usuario = $perfil != 'candidato' ? $this->obtener_usuario_by_usr($data['correo']) : $this->obtener_usuario_by_usr($data['curp']);
+			$usuario = $perfil != 'candidato' ? $this->obtener_usuario_by_usr($data['correo']) : $this->obtener_usuario_by_usr(substr($data['curp'],0,10));
+			// /var_dump($usuario);exit;
 			if(is_object($usuario)){
 				$resultado['success'] = false;
 				$resultado['msg'] = $perfil != 'candidato' ? 'Error, existe un usuario con el correo proporcionado' : 'Error, existe un candidato con el CURP proporcionado';
@@ -403,7 +404,7 @@ class UsuarioModel extends ModeloBase
 			from usuario u
 			  inner join usuario_has_perfil uhp on uhp.id_usuario = u.id_usuario
 			  left join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
-			where u.usuario = '$usuario' limit 1";
+			where u.usuario = '$usuario' and u.eliminado='no' limit 1";
 		$query = $this->db->query($consulta);
 		if($query->num_rows() == 0){
 			return false;

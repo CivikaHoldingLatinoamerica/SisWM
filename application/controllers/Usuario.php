@@ -240,7 +240,6 @@ class Usuario extends CI_Controller {
 					break;
 				case 'candidato':
 					$validacion_campos = Validaciones_Helper::formUsuarioCandidato($post,$id_usuario);
-					//var_dump($post);exit;
 					if($validacion_campos['success']){
 						$guardar_candidato = $this->UsuarioModel->guardar_usuario_candidato($post,$id_usuario);
 						if($guardar_candidato['success']){
