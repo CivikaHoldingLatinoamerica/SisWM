@@ -19,10 +19,11 @@ class Publico extends CI_Controller {
 
 	public function index()
 	{
+		//$data['titulo_pagina'] = 'BIENVENIDO al Sistema Integral de Información PED';
 		if(es_yosoyliderwm()){
-			$data['titulo_pagina'] = 'Walmart Certificaciones Civika';
+			$data['titulo_pagina'] = 'BIENVENIDO al Sistema Integral de información PED - Walmart Certificaciones Civika';
 		}else{
-			$data['titulo_pagina'] = 'Certificaciones Civika';
+			$data['titulo_pagina'] = 'BIENVENIDO al Sistema Integral de información PED - Certificaciones Civika';
 		}
 		$data['usuario'] = $this->usuario;
 		$data['extra_js'] = array(

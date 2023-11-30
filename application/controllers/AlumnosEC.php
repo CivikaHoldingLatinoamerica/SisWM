@@ -76,8 +76,11 @@ class AlumnosEC extends CI_Controller {
 			//iteramos el progreso de pasos para determinar si habilitamos o no los pasos del candidato y calcular su progreso
 			$data['progreso_pasos'] = $progreso_pasos['total_registros'];
 			$data['progreso_modulos_capacitacion']	= $this->ver_progreso_modulos_capacitacion($id_estandar_competencia,$this->usuario->id_usuario,$id_usuario_evaluador,false);
-			//var_dump($progreso_pasos);exit;
-			$this->load->view('alumno_ec/progreso_ec',$data);
+			//$this->load->view('alumno_ec/progreso_ec',$data);
+			$html = $this->load->view('alumno_ec/progreso_ec',$data,true);
+			echo $html;exit;
+
+			//var_dump($html);exit;
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

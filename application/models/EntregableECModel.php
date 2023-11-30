@@ -195,6 +195,12 @@ class EntregableECModel extends ModeloBase
 			$query = $this->db->query($consulta);
 			$item->evaluacion = $query->result();
 
+			$consulta = "select 
+					* 
+				from entregable_has_evaluacion ehe 
+				where ehe.id_entregable = ".$item->id_entregable." limit 1" ;
+			$query = $this->db->query($consulta);
+			$item->evaluacion_a_realizar = $query->row();
 			/**
 			 * para los archivos del entregable que se subieron en el admin
 			 */

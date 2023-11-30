@@ -154,7 +154,7 @@
 <!-- js extras y secundarios se cargan conforme al modulo-->
 <?php if (isset($extra_js)): ?>
 	<?php foreach ($extra_js as $js): ?>
-		<script src="<?=$js?>?ver=<?php echo uniqid(); ?>"></script>
+		<script src="<?=$js?><?=es_produccion() ? '?ver='.uniqid() : ''; ?>"></script>
 	<?php endforeach;?>
 <?php endif;?>
 

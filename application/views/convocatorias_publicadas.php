@@ -23,18 +23,4 @@
 			</div>
 		</div>
 	<?php endforeach; ?>
-<?php else: ?>
-	<div class="card card-solid" id="card_resultados_convocatoria_ec">
-		<div class="card-body pb-0">
-			<div class="form-group row">
-				<div class="callout callout-warning col-md-12">
-					<h5>Aviso IMPORTANTE</h5>
-					<p>
-						En este momento no contamos con convocatorias vigentes o se está cargando la información 
-						de los Estándares de Competencia por parte de la entidad certificadora y/o el evaluador
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
 <?php endif ?>
