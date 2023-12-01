@@ -36,7 +36,6 @@
 									</button>
 								<?php endif; ?>
 							<?php else: ?>
-								<?php if($ec_curso->publicado == 'no'): ?>
 									<?php if(perfil_permiso_operacion_menu('evaluacion.modificar')): ?>
 										<button class="btn btn-outline-primary btn-sm modificar_evaluacion_ec" data-toggle="tooltip"
 												title="Editar la evaluación de la EC"
@@ -51,6 +50,7 @@
 												type="button" ><i class="fa fa-list-alt"></i> Agregar pregunta
 										</button>
 									<?php endif; ?>
+								<?php if($ec_curso->publicado == 'no'): ?>
 									<?php if(perfil_permiso_operacion_menu('evaluacion.eliminar')):?>
 										<button type="button" class="btn btn-sm btn-outline-danger iniciar_confirmacion_operacion" data-toggle="tooltip" title="Eliminar evaluacion de la EC"
 												data-msg_confirmacion_general="¿Esta seguro de eliminar la evaluación de la EC?, esta acción no podrá revertirse"
