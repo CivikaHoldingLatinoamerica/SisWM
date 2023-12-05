@@ -81,5 +81,31 @@ class EcCursoModel extends ModeloBase
 		}
 	}
 
+	public function obtenerModulosEvaluacionCandidato($id_estandar_competencia,$id_usuario){
+		try{
+			$consulta = "select 
+				ec.nombre_curso,
+				ecm.descripcion descripcion_modulo,
+				e.titulo,
+				e.tiempo,
+				ecm.id_evaluacion,
+				uher.fecha_iniciada,
+				uher.fecha_enviada,
+				uher.calificacion
+			from ec_curso_modulo ecm 
+				inner join ec_curso ec on ec.id_ec_curso = ecm.id_ec_curso
+				inner join usuario_has_evaluacion_realizada uher on uher.id_ec_curso_modulo = ecm.id_ec_curso_modulo
+				inner join evaluacion e on e.id_evaluacion = ecm.id_evaluacion 
+			where ec.id_estandar_competencia = $id_estandar_competencia
+				and uher.id_usuario = $id_usuario;";
+			$query = $this->db->query($consulta);
+			return $query->result();
+		}catch (Exception $ex){
+			log_message('error','ec_curso->obtenerModulosEvaluacionCandidato');
+			log_message('error',$ex->getMessage());
+			return false;
+		}
+	}
+
 	
 }

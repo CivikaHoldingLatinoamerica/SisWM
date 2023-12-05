@@ -25,19 +25,19 @@
 
 
 						<?php if ($entregable->id_estatus == 1) : ?>
-							<span class="float-right badge badge-pill badge-info">En proceso</span>
+							<span class="float-right badge badge-pill badge-info estatus_entregable">En proceso</span>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == 2) : ?>
-							<span class="float-right badge badge-pill badge-light">Enviada</span>
+							<span class="float-right badge badge-pill badge-light estatus_entregable">Enviada</span>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == 3) : ?>
-							<span class="float-right badge badge-pill badge-warning">Con Observaciones</span>
+							<span class="float-right badge badge-pill badge-warning estatus_entregable">Con Observaciones</span>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == 4) : ?>
-							<span class="float-right badge badge-pill badge-success">Liberada</span>
+							<span class="float-right badge badge-pill badge-success estatus_entregable">Liberada</span>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == null) : ?>
-							<span class="float-right badge badge-pill badge-dark">Pendiente</span>
+							<span class="float-right badge badge-pill badge-dark estatus_entregable">Pendiente</span>
 						<?php endif; ?>
 					</h5>
 

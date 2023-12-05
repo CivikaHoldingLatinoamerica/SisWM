@@ -13,6 +13,12 @@ $(document).ready(function(){
 		EvaluadoresEC.ver_evaluaciones_alumno(id_estandar_competencia,id_usuario,es_evaluacion);
 	});
 
+	$(document).on('click','.btn_evaluaciones_modulo_alumno',function () {
+		var id_estandar_competencia = $(this).data('id_estandar_competencia');
+		var id_usuario = $(this).data('id_usuario');
+		EvaluadoresEC.ver_evaluaciones_modulo_alumno(id_estandar_competencia,id_usuario);
+	});
+
 	$(document).on('click','.btn_encuesta_satisfaccion_lectura',function(){
 		var id_estandar_competencia = $(this).data('id_estandar_competencia');
 		var id_usuario = $(this).data('id_usuario');
@@ -173,22 +179,7 @@ var EvaluadoresEC = {
 					var calificacion = $(this).data('calificacion');
 					$(this).addClass(EvaluadoresEC.obtener_class_calificacion(calificacion));
 				});
-				if($('#ati_revisados_liberados').val() == 'si'){
-					//determinamos el navegador para cambiar el mensaje de ayuda de la hora
-					if(bowser.name != undefined && bowser.name == 'Firefox'){
-						$('.smal_hora_envio').html('Formato de 24 hrs');
-					}else{
-						$('.smal_hora_envio').html('Formato de 12 hrs');
-					}
-					Comun.desabilitar_fines_semana_calendario('#input_fecha_evidencia_ati','#error_fecha_evidencia');
-					Comun.desabilitar_fines_semana_calendario('#input_fecha_revision_ati','#error_fecha_revision');
-					var fecha_evidencia = $('#input_fecha_evidencia_ati').val();
-					if(fecha_evidencia != ''){
-						var dia_max_revision = Comun.sumar_dias_habiles_calendario(fecha_evidencia,8); //obtener la fecha limite
-						$('#input_fecha_revision_ati').attr('min',fecha_evidencia);
-						$('#input_fecha_revision_ati').attr('max',dia_max_revision);
-					}
-				}
+				EvaluadoresEC.validar_input_fecha_envio_ati_instructor();
 			}
 		);
 	},
@@ -196,6 +187,35 @@ var EvaluadoresEC = {
 	ver_evaluaciones_alumno : function(id_estandar_competencia,id_usuario_alumno,es_evaluacion){
 		Comun.obtener_contenido_peticion_html(
 			base_url + 'EvaluacionEC/resultados_evaluacion_usuario/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
+			function(response){
+				$('#contenedor_modal_primario').html(response);
+				Comun.tooltips();
+				$('.span_calificacion_evidencia').each(function(){
+					var calificacion = $(this).data('calificacion');
+					$(this).addClass(EvaluadoresEC.obtener_class_calificacion(calificacion));
+				});
+				$('input.calificacion_alta').each(function () {
+					var id_index = $(this).data('id_index');
+					var calificacion_alta = $(this).val();
+					$('span#span_calificacion_alta_'+id_index).html(calificacion_alta).addClass(EvaluadoresEC.obtener_class_calificacion(calificacion_alta));
+				});
+				if(es_evaluacion){
+					$('#titulo_modal_evidencia').html('Evaluación Diagnóstica');
+					$('#modal_tablero_evaluacion_diagnostica').show();
+					$('#modal_tablero_cedula_evaluacion').hide();
+				}else{
+					$('#titulo_modal_evidencia').html('Cédula de evaluación');
+					$('#modal_tablero_evaluacion_diagnostica').hide();
+					$('#modal_tablero_cedula_evaluacion').show();
+				}
+				Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion',true);
+			}
+		);
+	},
+
+	ver_evaluaciones_modulo_alumno : function(id_estandar_competencia,id_usuario_alumno,es_evaluacion = false){
+		Comun.obtener_contenido_peticion_html(
+			base_url + 'EvaluacionEC/resultados_evaluacion_modulo_usuario/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
 			function(response){
 				$('#contenedor_modal_primario').html(response);
 				Comun.tooltips();
@@ -388,19 +408,46 @@ var EvaluadoresEC = {
 	},
 
 	validar_input_fecha_envio_ati_instructor : function(){
-		var num_archivos = $('span.evidencia_alumno_ati_span').length;
-		var span_evidencia_alumno_ati = $('span.evidencia_alumno_ati_span');
+		// var num_archivos = $('span.evidencia_alumno_ati_span').length;
+		// var span_evidencia_alumno_ati = $('span.evidencia_alumno_ati_span');
+		// var num_archivos_finalizados = 0;
+		// span_evidencia_alumno_ati.each(function(index,elm){
+		// 	var span_leyen = $(elm).html();
+		// 	span_leyen == 'Finalizada' ? num_archivos_finalizados++ : false;
+		// });
+		// $('#div_input_fecha_envio_ati').fadeOut();
+		// $('#div_leyend_fecha_envio_ati').fadeIn();
+		// if(num_archivos == num_archivos_finalizados){
+		// 	$('#div_input_fecha_envio_ati').fadeIn();
+		// 	$('#div_leyend_fecha_envio_ati').fadeOut();
+		// 	Comun.mensaje_operacion('Se finalizaron las evidencias de trabajo del candidato, es posible registrar los acuerdos de la evaluación (aparece al principio de está ventana emergente)','success',5000);
+		// }
+		var numero_entregables = parseInt($('#numero_entregables').val());
+		var span_evidencia_alumno_ati = $('span.estatus_entregable');
 		var num_archivos_finalizados = 0;
 		span_evidencia_alumno_ati.each(function(index,elm){
 			var span_leyen = $(elm).html();
-			span_leyen == 'Finalizada' ? num_archivos_finalizados++ : false;
+			span_leyen == 'Liberada' ? num_archivos_finalizados++ : false;
 		});
-		$('#div_input_fecha_envio_ati').fadeOut();
-		$('#div_leyend_fecha_envio_ati').fadeIn();
-		if(num_archivos == num_archivos_finalizados){
+		if(numero_entregables == num_archivos_finalizados){
 			$('#div_input_fecha_envio_ati').fadeIn();
 			$('#div_leyend_fecha_envio_ati').fadeOut();
-			Comun.mensaje_operacion('Se finalizaron las evidencias de trabajo del candidato, es posible registrar los acuerdos de la evaluación (aparece al principio de está ventana emergente)','success',5000);
+			if($('#input_fecha_evidencia_ati').val() == ''){
+				Comun.mensaje_operacion('Se finalizaron las evidencias de trabajo del candidato, es posible registrar los acuerdos de la evaluación (aparece al principio de está ventana emergente)','success',5000);
+			}
+			if(bowser.name != undefined && bowser.name == 'Firefox'){
+				$('.smal_hora_envio').html('Formato de 24 hrs');
+			}else{
+				$('.smal_hora_envio').html('Formato de 12 hrs');
+			}
+			Comun.desabilitar_fines_semana_calendario('#input_fecha_evidencia_ati','#error_fecha_evidencia');
+			Comun.desabilitar_fines_semana_calendario('#input_fecha_revision_ati','#error_fecha_revision');
+			var fecha_evidencia = $('#input_fecha_evidencia_ati').val();
+			if(fecha_evidencia != ''){
+				var dia_max_revision = Comun.sumar_dias_habiles_calendario(fecha_evidencia,8); //obtener la fecha limite
+				$('#input_fecha_revision_ati').attr('min',fecha_evidencia);
+				$('#input_fecha_revision_ati').attr('max',dia_max_revision);
+			}
 		}
 	},
 
@@ -529,7 +576,7 @@ var EvaluadoresEC = {
 		Comun.obtener_contenido_peticion_json(base_url +'Entregable/cambiar_estatus/'+id_entregable+'/'+ id_estatus+'/'+id_usuario_alumno+'/'+id_entregable_formulario,{},function (response) {
 			if (response.success) {
 				Comun.mensajes_operacion( ['Evidencia actualizada'], 'success');
-				EvaluadoresEC.obtener_tablero()
+				EvaluadoresEC.obtener_tablero();
 			}else {
 				Comun.mensajes_operacion(response.msg, 'error');
 			}
@@ -552,7 +599,8 @@ var EvaluadoresEC = {
 		var id_usuario_alumno = $('#id_alumno').val();
 		Comun.obtener_contenido_peticion_html(base_url+'EvaluadoresEC/tablero_evaluador/'+id_estandar_competencia+'/'+id_usuario_alumno,{}, function (response) {
 			$('#div_leyend_fecha_envio_ati_tablero').empty();
-				$('#div_leyend_fecha_envio_ati_tablero').html(response)
+			$('#div_leyend_fecha_envio_ati_tablero').html(response);
+			EvaluadoresEC.validar_input_fecha_envio_ati_instructor();
 		})
 	}
 

@@ -486,6 +486,23 @@ class EvaluacionEC extends CI_Controller {
 		}
 	}
 
+	public function resultados_evaluacion_modulo_usuario($id_estandar_competencia,$id_usuario){
+		perfil_permiso_operacion('evaluacion.consultar');
+		try{
+			$this->load->model('EcCursoModel');
+			$data['evaluacion_modulo_usuario'] = $this->EcCursoModel->obtenerModulosEvaluacionCandidato($id_estandar_competencia,$id_usuario);
+			$data['usuario'] = $this->usuario;
+			$data['id_usuario_alumno'] = $id_usuario;
+			var_dump($data);exit;
+			$this->load->view('evaluacion/modal_evidencia',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
+		}
+	}
+
 	/**
 	 * evaluacion cerrada para la evaluacion diagnostica
 	 * */

@@ -16,6 +16,7 @@
 				</div>
 				<input id="id_alumno" hidden value="<?= $usuario_alumno->id_usuario?>">
 				<input id="ati_revisados_liberados" hidden value="<?= $ati_revisados_liberados? 'si':'no'?>">
+				<input id="numero_entregables" hidden value="<?= sizeof($entregables)?>">
 				<div class="form-group row">
 					<?php if(isset($estandar_competencia_instrumento) && is_array($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0): ?>
 						<!-- para agregar la fecha de liberación de los ATI por el evaluador -->

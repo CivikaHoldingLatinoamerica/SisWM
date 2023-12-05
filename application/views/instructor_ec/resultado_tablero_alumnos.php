@@ -29,6 +29,13 @@
 							   data-toggle="tooltip" title="Evaluacion(es) diagnoósticas del candidato">
 								Evaluación diagnóstica
 							</a>
+							<a role="button" class="dropdown-item btn_evaluaciones_modulo_alumno" href="#"
+							   data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+							   data-id_usuario="<?=$aec->id_usuario?>"
+							   data-es_evaluacion="si"
+							   data-toggle="tooltip" title="Evaluacion(es) módulo de capacitación del candidato">
+								Evaluación módulo de capacitación
+							</a>
 							<a role="button" class="dropdown-item btn_encuesta_satisfaccion_lectura" data-toggle="tooltip" title="Ver encuesta de satisfacción"
 							   data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
 							   data-id_usuario="<?=$aec->id_usuario?>" href="#">
