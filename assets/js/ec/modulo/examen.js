@@ -13,8 +13,45 @@ $(document).ready(function(){
 		Examen.guardar_form_decision_candidato();
 	});
 
-	if(es_pruebas == 1 || es_produccion == 1){
-	//if(true){
+	$(document).on('click','#btn_confirmar_inicio_examen',function(){
+		Examen.pantalla_completa();
+		Examen.iniciar_examen_candidato();
+		Comun.mostrar_ocultar_modal('#modal_confirmar_inicio_examen_confirmacion',false);
+	});
+
+	//Examen.inicializar_funciones_examen();
+	Examen.inicializar_msg_examen();
+
+});
+
+var Examen = {
+
+	intento_salir : 0,
+
+	activar_intentos_salida_examen : $('#form_evaluacion_examen').length == 0  ? false : true,
+
+	inicializar_msg_examen : function(){
+		if($('#tiene_evaluacion_aprobatoria').val() == 'no' && $('#puede_realizar_evaluacion').val() == 'si'){
+			Comun.mostrar_ocultar_modal('#modal_confirmar_inicio_examen_confirmacion',true);
+		}else{
+			$('#div_contenedor_examen').fadeIn(500);
+		}
+	},
+
+	iniciar_examen_candidato : function(){
+		Examen.ocultar_menu_examen();
+		Examen.iniciar_cuenta_atras();
+		Examen.procesar_class_calificacion();
+		$('.popoverShowImage').trigger('click');
+		Examen.pantalla_completa();
+		$('#div_contenedor_examen').fadeIn(500);
+		setTimeout(() => {
+			Examen.candados_examen_modulo();
+		},500);
+	},
+
+	candados_examen_modulo : function(){
+		
 		//para validar que ya haya realizado la evaluacion el candidato y 
 		$('#menu_lateral_izquierdo').fadeOut();
 		$('#menu_superior').fadeOut();
@@ -27,17 +64,7 @@ $(document).ready(function(){
 		//modal para mostrar el mensaje
 		$(document).on("mouseleave",function(){
 			if(Examen.activar_intentos_salida_examen){
-				if(Examen.intento_salir <= 1 ){
-					Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, estó ocasionará el marcarlo como realizado y no podrá realizar otro");
-					Examen.intento_salir++;
-				}if(Examen.intento_salir == 2){
-					Examen.intento_salir++;
-					Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación diagnóstica, se pide que marque su selección de la decisión");
-					setTimeout(function(){
-						Examen.enviar_formulario_respuestas();
-						Comun.mostrar_ocultar_modal('#modal_informacion_sistema',false);
-					},5000);
-				}
+				Examen.intento_salida_evaluacion();
 			}
 		});
 
@@ -55,41 +82,28 @@ $(document).ready(function(){
 				Examen.quitar_imprimir_pantalla();
 			}
 		});
-	}
 
-	$(document).on("keydown", function(e) {
-		e = e || window.event;
-		console.log(e.keyCode);
-		//combinacion teclas CTRL + tecla
-		if (e.ctrlKey) {
-			var c = e.which || e.keyCode;
-			if (c == 67) { // + C
-				e.preventDefault();
-				e.stopPropagation();
-				Comun.mostrar_mensaje_advertencia("Error, por razones de seguridad no esta permitido copiar información de la evaluación");
+		$(document).on("keydown", function(e) {
+			e = e || window.event;
+			console.log(e.keyCode);
+			//combinacion teclas CTRL + tecla
+			if (e.ctrlKey) {
+				var c = e.which || e.keyCode;
+				if (c == 67) { // + C
+					e.preventDefault();
+					e.stopPropagation();
+					Comun.mostrar_mensaje_advertencia("Error, por razones de seguridad no esta permitido copiar información de la evaluación");
+				}
 			}
-		}
-	});
-
-	Examen.inicializar_funciones_examen();
-
-});
-
-var Examen = {
-
-	intento_salir : 0,
-
-	activar_intentos_salida_examen : true,
-
-	inicializar_funciones_examen : function(){
-		Examen.ocultar_menu_examen();
-		Examen.iniciar_cuenta_atras();
-		Examen.procesar_class_calificacion();
-		$('.popoverShowImage').trigger('click');
+		});
 	},
+	
 
 	ocultar_menu_examen : function(){
 		$('a.nav-link').trigger('click');
+		if(Examen.activar_intentos_salida_examen){
+			$('.main-header').hide();
+		}
 	},
 
 	iniciar_cuenta_atras : function(){
@@ -103,13 +117,6 @@ var Examen = {
 			Examen.evento_transcurrido_tiempo(milisegundo);
 			$('#reloj_contador').countdown(limite_envio,function(event){
 				var reloj = '<i class="fa fa-clock"></i> <span id="horas">%H</span>:<span id="minutos">%M</span>:<span id="segundos">%S</span>';
-				/*var reloj = '' +
-					'<div class="inner">' +
-					'<span id="horas">%H</span>:<span id="minutos">%M</span>:<span id="segundos">%S</span>' +
-					'</div>' +
-					'<div class="icon">' +
-					'	<i class="fa fa-clock"></i>' +
-					'</div>';*/
 				$(this).html(event.strftime(reloj));
 			});
 		}
@@ -162,6 +169,7 @@ var Examen = {
 					$('#dictamen_calificacion').html(response.data.evaluacion_sistema).addClass(response.data.tag);
 					$('#input_id_evaluacion_realizada').val(response.data.id_usuario_has_evaluacion_realizada);
 					Examen.activar_intentos_salida_examen = false;
+					Examen.quitar_pantalla_completa();
 				}else{
 					Comun.mensajes_operacion(response.msg,'error');
 				}
@@ -206,8 +214,8 @@ var Examen = {
 						'</div>' +
 						'<div class="modal-body">' +
 							'<div class="callout callout-success">' +
-								'<p>Muchas felicidades al responder el cuestionario del módulo de capacitación'+
-								'Con base en la cantidad de respuestas correctas su calificación es de: <label class="" id="calificación_evaluacion"></label>' +
+								'<p>Muchas gracias por realizar la evaluacion del módulo de capacitación '+
+									'Con base en la cantidad de respuestas correctas su calificación es de: <label class="" id="calificación_evaluacion"></label>' +
 								'</p>' +
 							'</div>' +
 						'</div>' +
@@ -239,27 +247,29 @@ var Examen = {
 
 	pantalla_completa : function(){
 		setTimeout(function(){
-			var element = document.documentElement;
-			if(element.requestFullscreen)
-				element.requestFullscreen();
-			else if(element.mozRequestFullScreen != undefined)
-				element.mozRequestFullScreen();
-			else if(element.webkitRequestFullscreen != undefined)
-				element.webkitRequestFullscreen();
-			else if(element.msRequestFullscreen != undefined)
-				element.msRequestFullscreen();
-		},1000)
+			var elem = document.documentElement;
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.msRequestFullscreen) {
+				elem.msRequestFullscreen();
+			} else if (elem.mozRequestFullScreen) {
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) {
+				elem.webkitRequestFullscreen();
+			}
+		},500);
 	},
 
 	quitar_pantalla_completa : function(){
-		if(document.exitFullscreen)
+		if(document.exitFullscreen){
 			document.exitFullscreen();
-		else if(document.mozCancelFullScreen)
+		}else if(document.mozCancelFullScreen){
 			document.mozCancelFullScreen();
-		else if(document.webkitExitFullscreen)
+		}else if(document.webkitExitFullscreen){
 			document.webkitExitFullscreen();
-		else if(document.msExitFullscreen)
+		}else if(document.msExitFullscreen){
 			document.msExitFullscreen();
+		}
 	},
 
 	desabilitar_ctrl_actualizacion : function(e){
@@ -314,17 +324,20 @@ var Examen = {
 	},
 
 	intento_salida_evaluacion : function(){
-		if(Examen.intento_salir == 0){
-			Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, estó ocasionará el marcarlo como realizado y no podrá realizar otro");
-		}if(Examen.intento_salir == 1){
-			Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación diagnostica, se pide que marque su selección de la decisión");
-			$('.btn_cerrar_informacion_sistema').fadeOut();
+		Examen.intento_salir++;
+		console.log('**** intento salir: ' + Examen.intento_salir);
+		//por lo de la pantalla completa
+		if(Examen.intento_salir == 2 ){
+			Comun.mostrar_mensaje_advertencia("Se detectó que quiere salir del evaluación, si reincide más de 2 veces se enviará de forma automática la evaluación");
+		}if(Examen.intento_salir == 3 ){
+			Comun.mostrar_mensaje_advertencia("Se detectó nuevamente que quiere salir del evaluación, estó ocasionará el marcarlo como realizado");
+		}if(Examen.intento_salir == 4){
+			Comun.mostrar_mensaje_advertencia("Se enviará de forma automática la evaluación del entregable");
 			setTimeout(function(){
 				Examen.enviar_formulario_respuestas();
 				Comun.mostrar_ocultar_modal('#modal_informacion_sistema',false);
 			},5000);
 		}
-		Examen.intento_salir++;
 	}
 
 };
