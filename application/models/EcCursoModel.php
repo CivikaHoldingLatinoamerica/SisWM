@@ -89,6 +89,7 @@ class EcCursoModel extends ModeloBase
 				e.titulo,
 				e.tiempo,
 				ecm.id_evaluacion,
+				uher.id_usuario_has_evaluacion_realizada,
 				uher.fecha_iniciada,
 				uher.fecha_enviada,
 				uher.calificacion

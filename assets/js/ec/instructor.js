@@ -213,7 +213,7 @@ var EvaluadoresEC = {
 		);
 	},
 
-	ver_evaluaciones_modulo_alumno : function(id_estandar_competencia,id_usuario_alumno,es_evaluacion = false){
+	ver_evaluaciones_modulo_alumno : function(id_estandar_competencia,id_usuario_alumno){
 		Comun.obtener_contenido_peticion_html(
 			base_url + 'EvaluacionEC/resultados_evaluacion_modulo_usuario/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
 			function(response){
@@ -228,16 +228,7 @@ var EvaluadoresEC = {
 					var calificacion_alta = $(this).val();
 					$('span#span_calificacion_alta_'+id_index).html(calificacion_alta).addClass(EvaluadoresEC.obtener_class_calificacion(calificacion_alta));
 				});
-				if(es_evaluacion){
-					$('#titulo_modal_evidencia').html('Evaluación Diagnóstica');
-					$('#modal_tablero_evaluacion_diagnostica').show();
-					$('#modal_tablero_cedula_evaluacion').hide();
-				}else{
-					$('#titulo_modal_evidencia').html('Cédula de evaluación');
-					$('#modal_tablero_evaluacion_diagnostica').hide();
-					$('#modal_tablero_cedula_evaluacion').show();
-				}
-				Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion',true);
+				Comun.mostrar_ocultar_modal('#modal_evidencia_evaluacion_modulo',true);
 			}
 		);
 	},

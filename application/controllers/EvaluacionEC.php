@@ -493,8 +493,8 @@ class EvaluacionEC extends CI_Controller {
 			$data['evaluacion_modulo_usuario'] = $this->EcCursoModel->obtenerModulosEvaluacionCandidato($id_estandar_competencia,$id_usuario);
 			$data['usuario'] = $this->usuario;
 			$data['id_usuario_alumno'] = $id_usuario;
-			var_dump($data);exit;
-			$this->load->view('evaluacion/modal_evidencia',$data);
+			//var_dump($data);exit;
+			$this->load->view('evaluacion/modal_evidencia_modulo',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

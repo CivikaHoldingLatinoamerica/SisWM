@@ -926,6 +926,12 @@ class AlumnosEC extends CI_Controller {
 				$entregable_has_evaluacion = $this->EntregableHasEvaluacionModel->obtener_row($evaluacion_realizada->id_entregable_has_evaluacion);
 				$id_evaluacion = $entregable_has_evaluacion->id_evaluacion;
 			}
+			//para la evaluacion de un modulo
+			if(!is_null($evaluacion_realizada->id_ec_curso_modulo) && $evaluacion_realizada->id_ec_curso_modulo != ''){
+				$this->load->model('EcCursoModuloModel');
+				$ec_curso_modulo = $this->EcCursoModuloModel->obtener_row($evaluacion_realizada->id_ec_curso_modulo);
+				$id_evaluacion = $ec_curso_modulo->id_evaluacion;
+			}
 			$data['evaluacion'] = $this->EvaluacionModel->obtener_row($id_evaluacion);
 			$evaluacion_preguntas = $this->EvaluacionHasPreguntasModel->tablero(array('id_evaluacion' => $id_evaluacion));
 			$data['preguntas_evaluacion'] = $evaluacion_preguntas['preguntas_evaluacion'];
