@@ -3,7 +3,8 @@
  */
 .nav-link.active,
 .bg-primary,
-.btn-primary{
+.btn-primary,
+.alert-primary{
 	background-color: #0d7bb2 !important;
 	background-image: none !important;
 } 

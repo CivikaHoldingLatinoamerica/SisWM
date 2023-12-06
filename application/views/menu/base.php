@@ -20,6 +20,7 @@
 				<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 					<!-- opciones del menu para los usuarios -->
 					<?php $this->load->view('menu/catalogo'); ?>
+					<?php $this->load->view('menu/reportes'); ?>
 					<?php $this->load->view('menu/configuracion'); ?>
 					<?php $this->load->view('menu/usuario'); ?>
 					<?php $this->load->view('menu/estandar_competencia'); ?>

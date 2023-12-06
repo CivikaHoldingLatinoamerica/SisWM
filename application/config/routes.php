@@ -99,6 +99,12 @@ $route['catalogos/sectores'] = 'Catalogos/sectores';
 //$route['catalogos/ocupaciones'] = 'Catalogos/nacional_ocupaciones';
 
 /**
+ * rutas para los reportes
+ */
+$route['reportes/empresa'] = 'Reportes/empresa';
+$route['reportes/candidatos'] = 'Reportes/candidato';
+
+/**
  * rutas para los perfiles y usuarios
  */
 $route['perfil_permisos'] = 'PerfilPermiso/index';

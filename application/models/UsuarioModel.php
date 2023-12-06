@@ -433,7 +433,7 @@ class UsuarioModel extends ModeloBase
   				inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
 			  	left join datos_usuario du on du.id_usuario = u.id_usuario 
 			where cp.slug <> 'root' ";
-		if($this->usuario->perfil == 'root'){
+		if($this->usuario->perfil == 'root' && $perfil != 'alumno'){
 			$consulta .= " and u.eliminado in('no','si') ";
 		}else{
 			$consulta .= " and u.eliminado = 'no' ";
