@@ -16,7 +16,8 @@
 		"mpdf/mpdf": "^8.0",
 		"iio/libmergepdf": "4.0",
 		"setasign/fpdf": "^1.8",
-		"setasign/fpdi": "^2.3"
+		"setasign/fpdi": "^2.3",
+		"phpoffice/phpspreadsheet": "^1.12"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

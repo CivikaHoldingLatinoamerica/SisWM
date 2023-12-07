@@ -102,6 +102,7 @@ $route['catalogos/sectores'] = 'Catalogos/sectores';
  * rutas para los reportes
  */
 $route['reportes/empresa'] = 'Reportes/empresa';
+$route['reportes/empresa/descargar'] = 'Reportes/descargar_reporte_empresa';
 $route['reportes/candidatos'] = 'Reportes/candidato';
 
 /**

@@ -279,6 +279,11 @@ function getRouteFilesComun(){
     return $route;
 }
 
+function getRouteFileReportes(){
+	$route = 'files_reportes/'.date('Y').'/'.date('m').'/'.date('d').'/';
+	return $route;
+}
+
 function getRouteFilesDirectorio(){
     $route = 'files_uploads/'.date('Y').'/'.date('m').'/'.date('d').'/';
     //$route = 'files_uploads/';
