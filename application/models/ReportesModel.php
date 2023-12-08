@@ -55,10 +55,10 @@ class ReportesModel extends ModeloBase
 			$params = strtoupper($params);
 			$consulta = "select 
 					ec.codigo codigo_ec, ec.titulo titulo_ec,
-					du.apellido_p, du.apellido_m, du.nombre, du.curp, du.correo, du.celular,
+					du.nombre, du.apellido_p, du.apellido_m,du.correo, du.curp, du.celular,
 					de.nombre nombre_empresa, upper(de.rfc) rfc_empresa,
 					if(uhec.jucio_evaluacion is null,'En proceso', upper(uhec.jucio_evaluacion)) as juicio_evaluacion,
-					(select if(count(*) = 0,0, ((count(*) / 7) * 100)) from usuario_has_ec_progreso uhep where uhep.id_usuario_has_estandar_competencia = uhec.id_usuario_has_estandar_competencia) progreso
+					format((select if(count(*) = 0,0, ((count(*) / 7) * 100)) from usuario_has_ec_progreso uhep where uhep.id_usuario_has_estandar_competencia = uhec.id_usuario_has_estandar_competencia),'N2') progreso
 				from usuario u
 					inner join datos_empresa de on de.id_usuario = u.id_usuario 
 					inner join datos_usuario du on du.id_usuario = u.id_usuario 
@@ -74,8 +74,7 @@ class ReportesModel extends ModeloBase
 					UPPER(du.apellido_m) like '%".$params."%' OR
 					UPPER(du.curp) like '%".$params."%' OR
 					UPPER(de.nombre) like '%".$params."%' OR
-					UPPER(de.rfc) like '%".$params."%' OR
-					UPPER(de.rfc) like '%".$params."%' OR
+					UPPER(de.rfc) like '%".$params."%'
 				)";
 			}
 			//$consulta .= ' group by upper(de.rfc)';

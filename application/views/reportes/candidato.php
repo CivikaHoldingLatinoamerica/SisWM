@@ -19,7 +19,7 @@
 							</button>
 						</div>
 					</div>
-					<small class="form-text text-muted">Escribe algun texto de referencia, puedes buscar entre nombre, apellidos del candidato, código o nombre del EC , empresa o RFC; cuando termines pulsa en el boton del icono de buscar</small>
+					<small class="form-text text-muted">Escribe algun texto de referencia, puedes buscar entre nombre, apellidos, CURP del candidato; código o nombre del EC , empresa o RFC; cuando termines pulsa en el boton del icono de buscar</small>
 				</div>
 			</div>
 

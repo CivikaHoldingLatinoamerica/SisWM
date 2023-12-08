@@ -35,7 +35,9 @@
 								<tr>
 									<td><?=$re->rfc_empresa?></td>
 									<td><?=$re->nombre_empresa?></td>
-									<td><span class="badge badge-primary" ><?=$re->proceso_evaluacion?></span></td>
+									<td>
+										<span class="badge badge-<?=$re->proceso_evaluacion != 'Finalizada' ? 'primary':'success'?>" ><?=$re->proceso_evaluacion?></span>
+									</td>
 									<td>
 										<ul>
 											<li>Candidatos registrados: <span class="badge badge-primary" ><?=$re->candidatos_registrados_empresa?></span></li>
