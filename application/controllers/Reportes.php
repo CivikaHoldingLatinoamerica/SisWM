@@ -21,11 +21,10 @@ class Reportes extends CI_Controller
 		}
 	}
 
-	public function empresa()
-	{
+	public function empresa(){
 		perfil_permiso_operacion('reportes_ped.consultar');
 		try{
-			$data['titulo_pagina'] = 'Reportes empresa';
+			$data['titulo_pagina'] = 'Reportes por empresa';
 			$data['migas_pan'] = array(
 				array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
 				array('nombre' => 'Reportes empresa','activo' => true,'url' => '#'),
@@ -85,7 +84,65 @@ class Reportes extends CI_Controller
 	}
 
 	public function candidato(){
+		perfil_permiso_operacion('reportes_ped.consultar');
+		try{
+			$data['titulo_pagina'] = 'Reportes por candidatos';
+			$data['migas_pan'] = array(
+				array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
+				array('nombre' => 'Reportes candidatos','activo' => true,'url' => '#'),
+			);
+			$data['sidebar'] = 'reporte_candidato';
+			$data['usuario'] = $this->usuario;
+			$data['extra_js'] = array(
+				base_url().'assets/js/report/candidato.js',
+			);
+			$data['extra_css'] = array(
+				//base_url().'assets/frm/fileinput/css/fileinput.css',
+			);
+			$this->load->view('reportes/candidato',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
 
+	public function tablero_candidato(){
+		perfil_permiso_operacion('reportes_ped.consultar');
+		try{
+			$get = $this->input->get();
+			$params = isset($get['params']) && $get['params'] != '' ? $get['params'] : false;
+			$data['reporte_candidato'] = $this->ReportesModel->obtener_reporte_alumno(true,$params);
+			$this->load->view('reportes/resultado_candidato',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function descargar_reporte_candidato(){
+		try{
+			$get = $this->input->get();
+			$params = isset($get['params']) && $get['params'] != '' ? $get['params'] : false;
+			$data = $this->ReportesModel->obtener_reporte_alumno(false,$params);
+			if(is_array($data) && !empty($data)){
+				switch($get['tipo_reporte']){
+					case 'excel':
+						$this->candidatoExcel($data);
+						break;
+				};
+			}else{
+				echo 'Sin registros encontrados';exit;
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
 	}
 
 	/**
@@ -119,6 +176,47 @@ class Reportes extends CI_Controller
 			$ruta_reportes = getRouteFileReportes();
 			subdirectorios_files($ruta_reportes);
 			$nombreArchivoExcel = date('His').'-reporte_empresa.xlsx';
+			$excel = FCPATH.$ruta_reportes.$nombreArchivoExcel;
+			$writer->save($excel);
+			//para descargar el
+			$this->descargarExcel($excel,$nombreArchivoExcel);
+
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	private function candidatoExcel($data){
+		try{
+			/**
+			 * preparamos los datos para vaciarlos al excel
+			 */
+			$encabezados = $this->obtenerEncabezados($data[0]);
+			$hoja = new Spreadsheet();
+			$activeWorksheet = $hoja->getActiveSheet();
+			//$activeWorksheet->setCellValue('A1', 'reporte empresa');
+			//agregamos los encabezados a la hoja
+			$charInicial = 65; //para iniciar con la letra A
+			foreach($encabezados as $index => $e){
+				$activeWorksheet->setCellValue(chr($charInicial+$index).'1', $e);
+			}
+			//vaciado de los datos
+			$renglonInicio = 2;
+			foreach($data as $registro){ //iteracion para los registros
+				$index_columna = 0;
+				foreach($registro as $info_columna){//iteración para las columnas de informacipon
+					$activeWorksheet->setCellValue(chr($charInicial+$index_columna).''.$renglonInicio, $info_columna);	
+					$index_columna++;
+				}
+				$renglonInicio++;
+			}
+			$writer = new Xlsx($hoja);
+			$ruta_reportes = getRouteFileReportes();
+			subdirectorios_files($ruta_reportes);
+			$nombreArchivoExcel = date('His').'-reporte_candidato.xlsx';
 			$excel = FCPATH.$ruta_reportes.$nombreArchivoExcel;
 			$writer->save($excel);
 			//para descargar el

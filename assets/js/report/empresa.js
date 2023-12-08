@@ -4,6 +4,13 @@ $(document).ready(function() {
 		Reportes.buscar_reporte_empresa();
 	});
 
+	$(document).on('click','#btn_empresa_excel',function(){
+		Reportes.descargar_excel_empresa();
+	});
+
+	// $('#btn_empresa_excel').click(function(){
+	// 	Reportes.descargar_excel_empresa();
+	// });
 	
 
 	Reportes.iniciar_tablero_empresa();
@@ -23,9 +30,7 @@ var Reportes = {
 			base_url + 'Reportes/tablero_empresa?params='+params_busqueda ,{},
 			function(response){
 				$('#contenedor_resultados_reporte_empresa').html(response);
-				$('#btn_empresa_excel').click(function(){
-					Reportes.descargar_excel_empresa();
-				});
+				
 			}
 		);
 	},

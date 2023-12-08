@@ -2,7 +2,10 @@
 	<div class="row">
 		<div class="form-group col-lg-12" >
 			<div class="alert alert-primary" >
-				El siguiente tablero solo mostrará los ultimos 10 registros del reporte, para obtenerlo completo de click en el boton de descargar 
+				<ul>
+					<li>El siguiente tablero solo mostrará los ultimos 20 registros del reporte ordenados por empresa registrada y de forma descendente, para obtenerlo completo de click en el boton de descargar </li>
+					<li>Si realizaste el reporte con un filtro con el campo anterior, se generará con dicho filtro</li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -26,7 +29,7 @@
 							<th>Candidatos</th>
 						</tr>
 						</thead>
-						<tbody id="contenedor_resultados_reporte_empresa">
+						<tbody >
 						<?php if(isset($reporte_empresa) && is_array($reporte_empresa) && !empty($reporte_empresa)): ?>
 							<?php foreach($reporte_empresa as $index => $re): ?>
 								<tr>

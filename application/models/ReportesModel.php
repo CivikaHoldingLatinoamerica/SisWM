@@ -50,4 +50,45 @@ class ReportesModel extends ModeloBase
 		return $data;
 	}
 
+	public function obtener_reporte_alumno($para_vista = false,$params = false){
+		try{
+			$params = strtoupper($params);
+			$consulta = "select 
+					ec.codigo codigo_ec, ec.titulo titulo_ec,
+					du.apellido_p, du.apellido_m, du.nombre, du.curp, du.correo, du.celular,
+					de.nombre nombre_empresa, upper(de.rfc) rfc_empresa,
+					if(uhec.jucio_evaluacion is null,'En proceso', upper(uhec.jucio_evaluacion)) as juicio_evaluacion,
+					(select if(count(*) = 0,0, ((count(*) / 7) * 100)) from usuario_has_ec_progreso uhep where uhep.id_usuario_has_estandar_competencia = uhec.id_usuario_has_estandar_competencia) progreso
+				from usuario u
+					inner join datos_empresa de on de.id_usuario = u.id_usuario 
+					inner join datos_usuario du on du.id_usuario = u.id_usuario 
+					inner join usuario_has_estandar_competencia uhec on uhec.id_usuario = u.id_usuario
+					inner join estandar_competencia ec on ec.id_estandar_competencia = uhec.id_estandar_competencia
+				where 1=1";
+			if($params != false){
+				$consulta .= " and (
+					UPPER(ec.codigo) like '%".$params."%' OR
+					UPPER(ec.titulo) like '%".$params."%' OR
+					UPPER(du.nombre) like '%".$params."%' OR
+					UPPER(du.apellido_p) like '%".$params."%' OR
+					UPPER(du.apellido_m) like '%".$params."%' OR
+					UPPER(du.curp) like '%".$params."%' OR
+					UPPER(de.nombre) like '%".$params."%' OR
+					UPPER(de.rfc) like '%".$params."%' OR
+					UPPER(de.rfc) like '%".$params."%' OR
+				)";
+			}
+			//$consulta .= ' group by upper(de.rfc)';
+			if($para_vista != false){
+				$consulta .= " order by u.id_usuario desc
+				limit 20";
+			}
+			$query = $this->db->query($consulta);
+			return $query->result();
+		}catch (Exception $ex){
+			$data = [];
+		}
+		return $data;
+	}
+
 }

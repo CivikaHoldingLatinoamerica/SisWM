@@ -15,7 +15,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="<?=base_url()?>reportes/candidatos" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'reporte_candidato' ? 'active':''?>">
+				<a href="<?=base_url()?>reportes/candidato" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'reporte_candidato' ? 'active':''?>">
 					<i class="nav-icon fas fa-user-tag"></i>
 					<p>Reporte por candidatos</p>
 				</a>
