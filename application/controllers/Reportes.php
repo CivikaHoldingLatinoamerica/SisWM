@@ -50,7 +50,9 @@ class Reportes extends CI_Controller
 	public function tablero_empresa(){
 		perfil_permiso_operacion('reportes_ped.consultar');
 		try{
-			$data['reporte_empresa'] = $this->ReportesModel->obtener_reporte_empresa(true);
+			$get = $this->input->get();
+			$params = isset($get['params']) && $get['params'] != '' ? $get['params'] : false;
+			$data['reporte_empresa'] = $this->ReportesModel->obtener_reporte_empresa(true,$params);
 			$this->load->view('reportes/resultado_empresa',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -63,7 +65,8 @@ class Reportes extends CI_Controller
 	public function descargar_reporte_empresa(){
 		try{
 			$get = $this->input->get();
-			$data = $this->ReportesModel->obtener_reporte_empresa();
+			$params = isset($get['params']) && $get['params'] != '' ? $get['params'] : false;
+			$data = $this->ReportesModel->obtener_reporte_empresa(false,$params);
 			if(is_array($data) && !empty($data)){
 				switch($get['tipo_reporte']){
 					case 'excel':
@@ -94,14 +97,33 @@ class Reportes extends CI_Controller
 			 * preparamos los datos para vaciarlos al excel
 			 */
 			$encabezados = $this->obtenerEncabezados($data[0]);
-			var_dump($encabezados);exit;
 			$hojaEmpresa = new Spreadsheet();
 			$activeWorksheet = $hojaEmpresa->getActiveSheet();
-			$activeWorksheet->setCellValue('A1', 'reporte empresa');
+			//$activeWorksheet->setCellValue('A1', 'reporte empresa');
+			//agregamos los encabezados a la hoja
+			$charInicial = 65;
+			foreach($encabezados as $index => $e){
+				$activeWorksheet->setCellValue(chr($charInicial+$index).'1', $e);
+			}
+			//vaciado de los datos
+			$renglonInicio = 2;
+			foreach($data as $registro){ //iteracion para los registros
+				$index_columna = 0;
+				foreach($registro as $info_columna){//iteración para las columnas de informacipon
+					$activeWorksheet->setCellValue(chr($charInicial+$index_columna).''.$renglonInicio, $info_columna);	
+					$index_columna++;
+				}
+				$renglonInicio++;
+			}
 			$writer = new Xlsx($hojaEmpresa);
 			$ruta_reportes = getRouteFileReportes();
 			subdirectorios_files($ruta_reportes);
-			$writer->save(FCPATH.$ruta_reportes.date('His').'-reporte_empresa.xlsx');
+			$nombreArchivoExcel = date('His').'-reporte_empresa.xlsx';
+			$excel = FCPATH.$ruta_reportes.$nombreArchivoExcel;
+			$writer->save($excel);
+			//para descargar el
+			$this->descargarExcel($excel,$nombreArchivoExcel);
+
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -116,5 +138,23 @@ class Reportes extends CI_Controller
 			$encabezados[] = $columna;
 		}
 		return $encabezados;
+	}
+
+	private function descargarExcel($fileExcel,$nameFileExcel){
+		try{
+			ob_end_clean();
+			header('Content-Disposition: attachment; filename=' . $nameFileExcel );
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Length: ' . filesize($fileExcel));
+			header('Content-Transfer-Encoding: binary');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			readfile($fileExcel);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
 	}
 }
