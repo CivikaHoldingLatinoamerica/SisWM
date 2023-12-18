@@ -23,9 +23,19 @@ class DatosEmpresaModel extends ModeloBase
 		$criterios = ' where 1=1';
 		if(isset($data['id_usuario']) && $data['id_usuario'] != ''){
 			$criterios .= " and de.id_usuario = ".$data['id_usuario'];
+		}if(isset($data['rfc']) && $data['rfc'] != ''){
+			$criterios .= " and upper(de.rfc) like '%".strtoupper($data['rfc'])."%'";
 		}
 		return $criterios;
 	}
 
+	public function obtenerEmpresaDesdeRFC($rfc){
+		$rfc = strtoupper($rfc);
+		$this->db->where('rfc',$rfc);
+		$query = $this->db->get('datos_empresa');
+		if($query->num_rows() != 0){
+			return $query->row();
+		}return null;
+	}
 
 }

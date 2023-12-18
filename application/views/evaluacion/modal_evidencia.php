@@ -23,62 +23,86 @@
 
 							<div class="card-body">
 
-								<form id="form_resultados_evaluacion">
-									<div class="form-group row">
-										<div class="col-lg-6">
-											<label for="txt_mejores_practicas" class="col-form-label">Mejores practicas:</label>
-											<textarea class="form-control" id="txt_mejores_practicas" placeholder="Describa las mejores practicas"
-													  data-rule-required="true" name="mejores_practicas"><?=$usuario_has_ec->mejores_practicas?></textarea>
+								<?php if(isset($entregables_por_liberar_evaluador) && !$entregables_por_liberar_evaluador 
+									&& isset($entregables_pendientes_candidato) && !$entregables_pendientes_candidato): ?>
+									<form id="form_resultados_evaluacion">
+										<div class="form-group row">
+											<div class="col-lg-6">
+												<label for="txt_mejores_practicas" class="col-form-label">Mejores practicas:</label>
+												<textarea class="form-control" id="txt_mejores_practicas" placeholder="Describa las mejores practicas"
+														data-rule-required="true" name="mejores_practicas"><?=$usuario_has_ec->mejores_practicas?></textarea>
+											</div>
+											<div class="col-lg-6">
+												<label for="txt_areas_oportunidad" class="col-form-label">Áreas de oportunidad:</label>
+												<textarea class="form-control" id="txt_areas_oportunidad" placeholder="Describa las áreas de oportunidad"
+														data-rule-required="true" name="areas_oportunidad"><?=$usuario_has_ec->areas_oportunidad?></textarea>
+											</div>
 										</div>
-										<div class="col-lg-6">
-											<label for="txt_areas_oportunidad" class="col-form-label">Áreas de oportunidad:</label>
-											<textarea class="form-control" id="txt_areas_oportunidad" placeholder="Describa las áreas de oportunidad"
-													  data-rule-required="true" name="areas_oportunidad"><?=$usuario_has_ec->areas_oportunidad?></textarea>
+										<div class="form-group row">
+											<div class="col-lg-6">
+												<label for="txt_criterios_no_cubiertos" class="col-form-label">Criterios de evaluación no cubiertos:</label>
+												<textarea class="form-control" id="txt_criterios_no_cubiertos" placeholder="Describa los criterios de evaluación no cubiertos por el candidato"
+														data-rule-required="true" name="criterio_no_cubiertos"><?=$usuario_has_ec->criterio_no_cubiertos?></textarea>
+											</div>
+											<div class="col-lg-6">
+												<label for="txt_recomendaciones" class="col-form-label">Recomendaciones:</label>
+												<textarea class="form-control" id="txt_recomendaciones" placeholder="Describa las recomendaciones de la evaluación"
+														data-rule-required="true" name="recomendaciones"><?=$usuario_has_ec->recomendaciones?></textarea>
+											</div>
 										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-lg-6">
-											<label for="txt_criterios_no_cubiertos" class="col-form-label">Criterios de evaluación no cubiertos:</label>
-											<textarea class="form-control" id="txt_criterios_no_cubiertos" placeholder="Describa los criterios de evaluación no cubiertos por el candidato"
-													  data-rule-required="true" name="criterio_no_cubiertos"><?=$usuario_has_ec->criterio_no_cubiertos?></textarea>
-										</div>
-										<div class="col-lg-6">
-											<label for="txt_recomendaciones" class="col-form-label">Recomendaciones:</label>
-											<textarea class="form-control" id="txt_recomendaciones" placeholder="Describa las recomendaciones de la evaluación"
-													  data-rule-required="true" name="recomendaciones"><?=$usuario_has_ec->recomendaciones?></textarea>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label for="input_jucio_evaluacion_c" class="col-sm-2 col-form-label">Juicio de evaluación</label>
-										<div class="col-sm-4">
-											<div class="form-group row">
-												<div class="col-lg-6">
-													<div class="custom-control custom-radio">
-														<input class="custom-control-input" type="radio" data-rule-required="true" id="input_jucio_evaluacion_c"
-															   name="jucio_evaluacion" value="competente" <?=isset($usuario_has_ec) && $usuario_has_ec->jucio_evaluacion == 'competente' ? 'checked="checked"':''?>>
-														<label for="input_jucio_evaluacion_c" class="custom-control-label">Competente</label>
+										<div class="form-group row">
+											<label for="input_jucio_evaluacion_c" class="col-sm-2 col-form-label">Juicio de evaluación</label>
+											<div class="col-sm-4">
+												<div class="form-group row">
+													<div class="col-lg-6">
+														<div class="custom-control custom-radio">
+															<input class="custom-control-input" type="radio" data-rule-required="true" id="input_jucio_evaluacion_c"
+																name="jucio_evaluacion" value="competente" <?=isset($usuario_has_ec) && $usuario_has_ec->jucio_evaluacion == 'competente' ? 'checked="checked"':''?>>
+															<label for="input_jucio_evaluacion_c" class="custom-control-label">Competente</label>
+														</div>
 													</div>
-												</div>
-												<div class="col-lg-6">
-													<div class="custom-control custom-radio">
-														<input class="custom-control-input" type="radio" id="input_jucio_evaluacion_nc" name="jucio_evaluacion"
-															   value="no_competente"  <?=isset($usuario_has_ec) && $usuario_has_ec->jucio_evaluacion == 'no_competente' ? 'checked="checked"':''?>>
-														<label for="input_jucio_evaluacion_nc" class="custom-control-label">No competente</label>
+													<div class="col-lg-6">
+														<div class="custom-control custom-radio">
+															<input class="custom-control-input" type="radio" id="input_jucio_evaluacion_nc" name="jucio_evaluacion"
+																value="no_competente"  <?=isset($usuario_has_ec) && $usuario_has_ec->jucio_evaluacion == 'no_competente' ? 'checked="checked"':''?>>
+															<label for="input_jucio_evaluacion_nc" class="custom-control-label">No competente</label>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
+										<div class="form-group row">
+											<label class="col-sm-3">Observaciones del candidato:</label>
+											<span class="col-sm-9"><?=$usuario_has_ec->observaciones_candidato?></span>
+										</div>
+									</form>
+									<div class="col-lg-12 text-right">
+										<button type="button" id="btn_update_resultados_evaluacion"
+												data-id_usuario_has_estandar_competencia="<?=$usuario_has_ec->id_usuario_has_estandar_competencia?>"
+												class="btn btn-sm btn-outline-success"><i class="fa fa-save"></i> Guardar resultados</button>
 									</div>
-									<div class="form-group row">
-										<label class="col-sm-3">Observaciones del candidato:</label>
-										<span class="col-sm-9"><?=$usuario_has_ec->observaciones_candidato?></span>
-									</div>
-								</form>
-								<div class="col-lg-12 text-right">
-									<button type="button" id="btn_update_resultados_evaluacion"
-											data-id_usuario_has_estandar_competencia="<?=$usuario_has_ec->id_usuario_has_estandar_competencia?>"
-											class="btn btn-sm btn-outline-success"><i class="fa fa-save"></i> Guardar resultados</button>
-								</div>
+								<?php else: ?>
+									<?php if(isset($entregables_por_liberar_evaluador) && $entregables_por_liberar_evaluador ): ?>
+										<div class="form-group row" >
+											<div class="col-lg-12" >
+												<div class="callout callout-warning">
+													<h5>Mensaje del sistema</h5>
+													<p>Se encontró en el sistema que, que las evidencias esperadas existe alguna que no se encuentra liberada hacia el candidato; regrese al apartado de evidencias y libere y/o eliminé las faltantes.</p>
+												</div>
+											</div>
+										</div>
+									<?php endif; ?>
+									<?php if(isset($entregables_pendientes_candidato) && $entregables_pendientes_candidato): ?>
+										<div class="form-group row" >
+											<div class="col-lg-12" >
+												<div class="callout callout-danger">
+													<h5>Mensaje del sistema</h5>
+													<p>Se encontró en el sistema que, las evidencias esperadas para su dictaminación de la certificación se encuentra en proceso de entrega, revisión y/o liberación entre el instructor y candidato, una vez finalizada podrá capturar los resultados.</p>
+												</div>
+											</div>
+										</div>
+									<?php endif; ?>
+								<?php endif; ?>
 
 							</div>
 						</div>

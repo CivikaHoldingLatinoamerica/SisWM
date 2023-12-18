@@ -1,5 +1,8 @@
 <?php if (isset($entregables) && sizeof($entregables) != 0): ?>
-
+	<?php 
+		$entregables_total = sizeof($entregables);
+		$entregables_liberados = 0;
+	?>
 	<div id="accordion_evidencias">
 		<?php foreach ($entregables as $entregable): ?>
 			<div class="card card-info w-100">
@@ -33,6 +36,7 @@
 							<span class="float-right badge badge-pill badge-warning">Con Observaciones</span>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == 4) : ?>
+							<?php $entregables_liberados++; ?>
 							<span class="float-right badge badge-pill badge-success">Liberada</span>
 						<?php endif; ?>
 						<?php if ($entregable->id_estatus == null) : ?>
@@ -252,5 +256,6 @@
 			</div>
 		<?php endforeach; ?>
 	</div>
-
+	<input type="hidden" id="numero_actividades" value="<?=$entregables_total?>" > 
+	<input type="hidden" id="numero_actividades_finalizadas" value="<?=$entregables_liberados?>" > 
 <?php endif; ?>

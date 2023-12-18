@@ -183,15 +183,18 @@
 
 			</div>
 
-			<div class="form-group row">
-
-				<div class="col-12 text-right">
-					<button type="button"
-							data-siguiente_link="#tab_evidencias-tab" data-numero_paso="4" id="btn_siguiente_tab_modulo_capacitacion"
-							<?=isset($usuario_has_evaluacion_realizada) && !$usuario_has_evaluacion_realizada ? 'disabled="disabled"':''?>
-							class="btn btn-outline-success guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
+			<div class="form-group row justify-content-between">
+				<div class="col-lg-6 text-left">
+					<button type="button" class="btn btn-sm btn-outline-info btn_paso_anterior_pasos" data-anterior_link="#tab_evaluacion_requerimientos-tab">
+						<i class="fa fa-backward"></i> Anterior
+					</button>
 				</div>
-			</div> 
+				<div class="col-lg-6 text-right">
+					<button type="button"
+								data-siguiente_link="#tab_evidencias-tab" data-numero_paso="4" id="btn_siguiente_tab_modulo_capacitacion"
+								class="btn btn-outline-success guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

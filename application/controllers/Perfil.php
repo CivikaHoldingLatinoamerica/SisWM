@@ -362,6 +362,29 @@ class Perfil extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function obtenerDatosExistenteEmpresa(){
+		try{
+			$post = $this->input->post();
+			$response['success'] = true;
+			$response['msg'][] = 'Se encontro el registro correctamente';
+			if(isset($post['rfc_buscar']) && $post['rfc_buscar'] != ''){
+				$empresaEncontrada = $this->DatosEmpresaModel->obtenerEmpresaDesdeRFC($post['rfc_buscar']);
+				if($empresaEncontrada != null){
+					$response['data']['empresa_encontrada'] = $empresaEncontrada;
+					$response['data']['archivo_logotipo'] = $this->ArchivoModel->obtener_row($empresaEncontrada->id_archivo_logotipo);
+				}else{
+					$response['success'] = false;
+					$response['msg'][] = 'Se encontro el registro correctamente';
+				}
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
 	public function obtener_tab_curriculum($id_usuario = false){
 		$id_usuario ? $id_usuario : $this->usuario->id_usuario;
 		$data['datos_usuario'] = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario);

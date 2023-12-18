@@ -9,19 +9,27 @@
 			</div>
 			<form id="form_agregar_modificar_empresa">
 				<div class="modal-body">
+					<div class="form-group row" id="contenedor_mensaje_empresa_encontrada" style="display: none;" >
+						<div class="col-lg-12" >
+							<div class="callout callout-success">
+								<h5>Mensaje del sistema</h5>
+								<p>Detectamos en el sistema, que ya existe un registro de una empresa con el RFC proprocionado, se precargará en el formulario los datos y de clic en el botón de guardar</p>
+							</div>
+						</div>
+					</div>
 					<div class="form-group row">
+						<label for="input_rfc" class="col-sm-3 col-form-label">RFC</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="input_rfc" data-rule-required="true" name="rfc" placeholder="RFC (YYY010101123)" value="<?=isset($datos_empresa) ? $datos_empresa->rfc : ''?>">
+						</div>
 						<label for="input_nombre" class="col-sm-3 col-form-label">Nombre</label>
 						<div class="col-sm-3">
 							<input type="text" class="form-control" id="input_nombre" data-rule-required="true"
 								   name="nombre" placeholder="Nombre de la la empresa" value="<?=isset($datos_empresa) ? $datos_empresa->nombre : ''?>">
 						</div>
-						<label for="input_rfc" class="col-sm-3 col-form-label">RFC</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="input_rfc" data-rule-required="true" name="rfc" placeholder="RFC" value="<?=isset($datos_empresa) ? $datos_empresa->rfc : ''?>">
-						</div>
 					</div>
 					<div class="form-group row">
-						<label for="input_telefono" class="col-sm-3 col-form-label">Telefono</label>
+						<label for="input_telefono" class="col-sm-3 col-form-label">Teléfono</label>
 						<div class="col-sm-3">
 							<input type="text" class="form-control" id="input_telefono" data-rule-required="true" 
 								   name="telefono" placeholder="Teléfono de la la empresa" value="<?=isset($datos_empresa) ? $datos_empresa->telefono : ''?>">
@@ -51,7 +59,15 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="input_cp" class="col-sm-3 col-form-label">¿La empresa es de su trabajo actual?</label>
+						<label for="input_domicilio" class="col-sm-3 col-form-label">Cargo</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="input_cargo" data-rule-required="true"
+								   name="cargo" placeholder="Cargo que desempeña" value="<?=isset($datos_empresa) ? $datos_empresa->cargo : ''?>">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="input_vigente_si" class="col-sm-3 col-form-label">¿La empresa es de su trabajo actual?</label>
 						<div class="col-sm-3">
 							<div class="custom-control custom-radio">
 								<input class="custom-control-input" type="radio" data-rule-required="true" id="input_vigente_si" name="vigente"

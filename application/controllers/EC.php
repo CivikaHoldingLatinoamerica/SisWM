@@ -30,7 +30,7 @@ class EC extends CI_Controller {
 
     public function index(){
 		perfil_permiso_operacion('estandar_competencia.consultar');
-    	try{
+    		try{
 			$array_busqueda = array();
 			if(in_array($this->usuario->perfil,array('instructor','alumno'))){
 				$array_busqueda['id_usuario'] = $this->usuario->id_usuario;

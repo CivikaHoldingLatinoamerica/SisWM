@@ -32,7 +32,7 @@
 				<div class="modal-body">
 					<input type="hidden" id="url_confirmacion_general">
 					<input type="hidden" id="btn_trigger_success" >
-					<label id="msg_confirmacion_general"></label>
+					<strong id="msg_confirmacion_general"></strong>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">No</button>

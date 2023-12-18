@@ -556,7 +556,7 @@ var CandidatoEC = {
 		derechos_obligaciones : function(){
 			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
 			var id_usuario_alumno = $('#input_id_usuario_alumno').val();
-			if($('#tab_derechos_obligaciones').html() == ''){
+			//if($('#tab_derechos_obligaciones').html() == ''){
 				$('#tab_derechos_obligaciones').html(overlay);
 				Comun.obtener_contenido_peticion_html(
 					base_url + 'AlumnosEC/ver_progreso_derechos_obligaciones/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
@@ -564,7 +564,7 @@ var CandidatoEC = {
 						$('#tab_derechos_obligaciones').html(response);
 					}
 				)
-			}
+			//}
 		},
 
 		evaluacion_requerimientos : function(){
@@ -614,6 +614,11 @@ var CandidatoEC = {
 							$('#contenedor_pasos_evidencias').find('button.guardar_progreso_pasos').removeAttr('disabled');
 						}
 						Comun.tooltips();
+						//actualizacion para habilitar o no el boton siguiente
+						if($('#numero_actividades').val() != $('#numero_actividades_finalizadas').val()){
+							$('#btn_siguiente_tab_modulo_juicio_competencia').attr('disabled',true);
+							$('#seccion_aviso_paso_juicio_competencia').show();
+						}
 					}
 				);
 			//}
@@ -625,7 +630,7 @@ var CandidatoEC = {
 			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
 			var id_usuario_alumno = $('#input_id_usuario_alumno').val();
 			var id_usuario_evaluador = $('#input_id_usuario_evaluador').val();
-			if($('#contenedor_pasos_juicio_competencia').html() == ''){
+			//if($('#contenedor_pasos_juicio_competencia').html() == ''){
 				$('#contenedor_pasos_juicio_competencia').html(overlay);
 				Comun.obtener_contenido_peticion_html(
 					base_url + 'AlumnosEC/ver_progreso_juicio_evaluacion/' + id_estandar_competencia + '/' + id_usuario_alumno + '/' + id_usuario_evaluador,{},
@@ -633,7 +638,7 @@ var CandidatoEC = {
 						$('#contenedor_pasos_juicio_competencia').html(response);
 					}
 				);
-			}
+			//}
 		},
 
 		certificado_ec : function(){

@@ -42,6 +42,38 @@
 		</div>
 
 	</section>
+
+	<?php if(isset($entregables_por_liberar) && $entregables_por_liberar): ?>
+		<div class="row">
+			<div class="col">
+				<div class="callout callout-danger">
+					<h5>Información importante</h5>
+					Como la capacitación se esta llevando por medios sincrónicos externos al sistema, existen entregables por ser liberados por el evaluador; en el momento que todas las evidencias esperadas esten revisadas y liberadas, podrá pasar al siguiente paso
+				</div>
+			</div>
+		</div>
+	<?php else: ?>
+		<div id="seccion_aviso_paso_juicio_competencia" class="form-group row" style="display: none;" >
+			<div class="col-12">
+				<div class="callout callout-danger">
+					<h5>Información importante</h5>
+					Para poder continuar al siguiente paso es necesario que se finalice y libere los entregables esperados
+				</div>
+			</div>
+		</div>
+		<div class="form-group row justify-content-between">
+			<div class="col-lg-6 text-left">
+				<button type="button" class="btn btn-sm btn-outline-info btn_paso_anterior_pasos" data-anterior_link="#tab_modulo_capacitacion-tab">
+					<i class="fa fa-backward"></i> Anterior
+				</button>
+			</div>
+			<div class="col-lg-6 text-right">
+			<button type="button"
+						data-siguiente_link="#tab_jucio_competencia-tab" data-numero_paso="5" id="btn_siguiente_tab_modulo_juicio_competencia"
+						class="btn btn-outline-success guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
+			</div>
+		</div>
+	<?php endif; ?>
 <?php else: ?>
 	<div class="row">
 		<div class="col">

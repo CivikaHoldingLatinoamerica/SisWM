@@ -477,6 +477,16 @@ class EvaluacionEC extends CI_Controller {
 			$data['usuario'] = $this->usuario;
 			$data['id_usuario_alumno'] = $id_usuario;
 			//print_r($data['ec_has_evaluacion']);exit;
+			//se integra la validacion para la parte de si ya es posible dictaminar el competente o no competente
+			$entregables = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario);
+			$data['entregables_por_liberar_evaluador'] = $this->EntregableECModel->existenEntregablesPorLiberar($id_estandar_competencia);
+			$data['entregables_pendientes_candidato'] = false;
+			foreach($entregables as $e){
+				if($e->id_estatus != ESTATUS_FINALIZADA){
+					$data['entregables_pendientes_candidato'] = true;
+					break;//terminamos el ciclo
+				}
+			}
 			$this->load->view('evaluacion/modal_evidencia',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

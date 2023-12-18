@@ -30,52 +30,52 @@
 
 								<div class="active tab-pane" id="mi_informacion">
 									<div class="form-group row">
-										<label class="col-sm-3">Usuario del sistema</label>
+										<strong class="col-sm-3">Usuario del sistema</strong>
 										<span class="col-sm-9"><?=isset($usuario) ? $usuario->usuario : ''?></span>
 									</div>
 									<?php if(isset($datos_usuario)):?>
 										<div class="form-group row">
-											<label class="col-sm-3">Nombre</label>
+											<strong class="col-sm-3">Nombre</strong>
 											<span class="col-sm-9"><?=$datos_usuario->nombre ?> <?=$datos_usuario->apellido_p?> <?=$datos_usuario->apellido_m?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">CURP</label>
+											<strong class="col-sm-3">CURP</strong>
 											<span class="col-sm-9"><?=$datos_usuario->curp ?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Genero</label>
+											<strong class="col-sm-3">Genero</strong>
 											<span class="col-sm-9"><?=$datos_usuario->genero == 'm' ? 'Masculino' : 'Femenino'?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Cumpleaños</label>
+											<strong class="col-sm-3">Cumpleaños</strong>
 											<span class="col-sm-9"><?=isset($datos_usuario->fecha_nacimiento) && ($datos_usuario->fecha_nacimiento != '' || $datos_usuario->fecha_nacimiento == '0000-00-00') ? fecha_castellano_sin_anio($datos_usuario->fecha_nacimiento) : 'Sin dato'?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Lugar de nacimiento</label>
+											<strong class="col-sm-3">Lugar de nacimiento</strong>
 											<span class="col-sm-9"><?=$datos_usuario->lugar_nacimiento?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Nacionalidad:</label>
+											<strong class="col-sm-3">Nacionalidad:</strong>
 											<span class="col-sm-9"><?=$datos_usuario->nacionalidad?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Número de celular:</label>
+											<strong class="col-sm-3">Número de celular:</strong>
 											<span class="col-sm-9"><?=$datos_usuario->celular?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Número de casa:</label>
+											<strong class="col-sm-3">Número de casa:</strong>
 											<span class="col-sm-9"><?=$datos_usuario->telefono?></span>
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Sector productivo de trabajo:</label>
+											<strong class="col-sm-3">Sector productivo de trabajo:</strong>
 											<span class="col-sm-9"><?=isset($datos_usuario->sector_productivo) ? $datos_usuario->sector_productivo : 'Sin datos'?></span>
 										</div>
 										<div class="form-group row">

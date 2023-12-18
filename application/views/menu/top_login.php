@@ -43,7 +43,7 @@
 		<span class="badge badge-warning navbar-badge numero_notificaciones"></span>
 	</a>
 	<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-		<label class="dropdown-item dropdown-header"><span class="numero_notificaciones"></span> Notificationes</label>
+		<strong class="dropdown-item dropdown-header"><span class="numero_notificaciones"></span> Notificationes</strong>
 		<div class="dropdown-divider"></div>
 		<div id="contenedor_notificaciones_no_leidas_menu"></div>
 		<div class="dropdown-divider"></div>

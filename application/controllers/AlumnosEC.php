@@ -156,10 +156,11 @@ class AlumnosEC extends CI_Controller {
 			if(!is_null($data['usuario_has_encuesta_satisfacion'])){
 				foreach ($data['cat_preguntas_encuesta'] as $cpe){
 					$respuesta_candidato = $this->UsuarioHasEncuestaModel->respuesta_candidato_pregunta($cpe->id_cat_preguntas_encuesta,$data['usuario_has_encuesta_satisfacion']->id_usuario_has_encuesta_satisfaccion);
+					//var_dump($respuesta_candidato);exit;
 					$cpe->respuesta = $respuesta_candidato;
 				}
 			}
-			//var_dump($data);exit;
+			//var_dump($data);
 			$this->load->view('alumno_ec/progreso_pasos/derechos_obligaciones',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -229,7 +230,7 @@ class AlumnosEC extends CI_Controller {
 						'enviada' => 'si'
 					);
 					$usuario_has_evaluacion_realizada = $this->UsuarioHasEvaluacionRealizadaModel->tablero($buscar_evaluacion_realizada,0);
-					//dd($usuario_has_evaluacion_realizada);exit;
+					//var_dump($usuario_has_evaluacion_realizada);exit;
 					$eccm->evaluaciones_realizadas = $usuario_has_evaluacion_realizada;
 					if($eccm->evaluaciones_realizadas['total_registros'] == 0){
 						$data['usuario_has_evaluacion_realizada'] = false;
@@ -464,6 +465,7 @@ class AlumnosEC extends CI_Controller {
 			$data['id_usuario_alumno'] = $id_usuario_alumno;
 			$data['id_usuario_evaluador'] = $id_usuario_evaluador;
 			//fin apartado de evaluacion diagnostica
+			//var_dump($data);exit;
 			$this->load->view('alumno_ec/progreso_pasos/juicio_competencia',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

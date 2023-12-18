@@ -27,7 +27,9 @@ class UsuarioHasEncuestaModel extends ModeloBase
 		$this->db->where('id_cat_preguntas_encuesta',$id_pregunta);
 		$this->db->where('id_usuario_has_encuesta_satisfaccion',$id_usuario_has_encuesta);
 		$query = $this->db->get('usuario_has_respuesta_encuesta');
-		return $query->row()->respuesta;
+		if($query->num_rows() != 0){
+			return $query->row()->respuesta;
+		}return null;
 	}
 
 	public function guardar_respuestas_candidato_derechos_obligaciones($id_usuario_has_ec,$data){

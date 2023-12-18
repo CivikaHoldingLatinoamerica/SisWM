@@ -4,7 +4,7 @@
 	Todos los derechos reservados
 	<div class="float-right d-none d-sm-inline-block">
 		<?php if(es_yosoyliderwm()): ?>
-			<b>Version</b> 1.0.0
+			<b>Version</b> 1.1.0
 		<?php else: ?>
 			<b>Version</b> 1.0.0
 		<?php endif; ?>
@@ -36,7 +36,7 @@
 				<div class="modal-body">
 					<input type="hidden" id="url_confirmacion_general">
 					<input type="hidden" id="btn_trigger_success" >
-					<label id="msg_confirmacion_general"></label>
+					<strong id="msg_confirmacion_general"></strong>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">Cancelar</button>
@@ -60,7 +60,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<label id="msg_informacion_advertencia"></label>
+					<strong id="msg_informacion_advertencia"></strong>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-success btn_cerrar_informacion_sistema" data-dismiss="modal">Cerrar</button>

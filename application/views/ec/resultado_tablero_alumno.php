@@ -46,6 +46,11 @@
 		</div>
 	<?php endforeach; ?>
 <?php else: ?>
-	<?php $this->load->view('default/sin_datos_candidato'); ?>
+	<div class="col-lg-12" >
+		<div class="callout callout-warning">
+			<h5>Mensaje del sistema</h5>
+			<p>Actualmente no cuenta con alguna asignación para una certificación de Estándar de competencia</p>
+		</div>
+	</div>
 <?php endif; ?>
 <!-- /.card-body -->

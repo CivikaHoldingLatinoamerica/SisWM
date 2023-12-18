@@ -110,7 +110,7 @@
 					<h4 class="modal-title">Mensaje de confirmación</h4>
 				</div>
 				<div class="modal-body">
-					<label id="msg_informacion_advertencia"></label>
+					<strong id="msg_informacion_advertencia"></strong>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" id="btn_aceptar_registro_convocatoria" class="btn btn-sm btn-outline-primary">Aceptar</button>
