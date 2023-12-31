@@ -59,10 +59,26 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="input_domicilio" class="col-sm-3 col-form-label">Cargo</label>
+						<label for="input_domicilio" class="col-sm-3 col-form-label">Puesto</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="input_cargo" data-rule-required="true"
-								   name="cargo" placeholder="Cargo que desempeña" value="<?=isset($datos_empresa) ? $datos_empresa->cargo : ''?>">
+								   name="cargo" placeholder="Puesto que desempeña" value="<?=isset($datos_empresa) ? $datos_empresa->cargo : ''?>">
+						</div>
+					</div>
+
+					<div class="form-group row" >
+						<label for="input_ocupacion_especifica" class="col-sm-3 col-form-label">Ocupación especifica</label>
+						<div class="col-sm-9" >
+						<select class="custom-select" id="input_ocupacion_especifica" data-rule-required="true" name="id_cat_ocupacion_especifica">
+							<option value="">--Seleccione--</option>
+							<?php foreach ($cat_ocupacion_especifica as $coe): ?>
+								<optgroup label="<?=$coe->clave_area_subarea.'-'.$coe->denominacion?>">
+									<?php foreach($coe->coe_child as $coe_child): ?>
+										<option value="<?=$coe_child->id_cat_ocupacion_especifica?>" <?=isset($datos_empresa->id_cat_ocupacion_especifica) && $datos_empresa->id_cat_ocupacion_especifica == $coe_child->id_cat_ocupacion_especifica ? 'selected="selected"':'' ?> ><?=$coe_child->clave_area_subarea.'-'.$coe_child->denominacion?></option>
+									<?php endforeach; ?>
+								</optgroup>
+							<?php endforeach; ?>
+						</select>
 						</div>
 					</div>
 
@@ -90,6 +106,35 @@
 									<?php endif; ?>
 								</div>
 							</div>
+						</div>
+					</div>
+
+					<hr>
+					Categoria / especialidad
+					<div class="form-group row">
+						<label for="input_supervision" class="col-sm-3 col-form-label">Supervisión</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="input_supervision" data-rule-required="true"
+								   name="supervision" placeholder="Supervisión" value="<?=isset($datos_empresa) ? $datos_empresa->supervision : ''?>">
+						</div>
+						
+						<label for="input_cri" class="col-sm-3 col-form-label">CRI</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="input_cri" data-rule-required="true"
+								   name="cri" placeholder="CRI" value="<?=isset($datos_empresa) ? $datos_empresa->cri : ''?>">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="input_contratista" class="col-sm-3 col-form-label">Contratista asociada</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="input_contratista" data-rule-required="true"
+								   name="contratista" placeholder="Contratista asociado Walmart" value="<?=isset($datos_empresa) ? $datos_empresa->contratista : ''?>">
+						</div>
+
+						<label for="input_subcontratista" class="col-sm-3 col-form-label">Subcontratista Asociado</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="input_subcontratista" data-rule-required="true"
+								   name="subcontratista" placeholder="Subcontratista Asociado Walmart" value="<?=isset($datos_empresa) ? $datos_empresa->subcontratista : ''?>">
 						</div>
 					</div>
 					

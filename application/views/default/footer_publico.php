@@ -56,7 +56,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<label id="msg_informacion_advertencia"></label>
+					<strong id="msg_informacion_advertencia"></strong>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-success btn_cerrar_informacion_sistema" data-dismiss="modal">Cerrar</button>

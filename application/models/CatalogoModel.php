@@ -96,4 +96,20 @@ class CatalogoModel extends CI_Model
 		return $query->result();
 	}
 
+	public function cat_ocupacion_especifica(){
+		$this->db->where('id_cat_ocupacion_especifica_parent',null);
+		$query = $this->db->get('cat_ocupacion_especifica');
+		$result = $query->result();
+		foreach($result as $r){
+			$r->coe_child = $this->cat_ocupacion_especifica_child($r->id_cat_ocupacion_especifica);
+		}
+		return $result;
+	}
+
+	public function cat_ocupacion_especifica_child($id_cat_ocupacion_especifica_parent){
+		$this->db->where('id_cat_ocupacion_especifica_parent',$id_cat_ocupacion_especifica_parent);
+		$query = $this->db->get('cat_ocupacion_especifica');
+		return $query->result();
+	}
+
 }
