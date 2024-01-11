@@ -60,8 +60,13 @@ class EC extends CI_Controller {
 				//sacar el instructor asignado al EC
 				foreach ($data['estandar_competencia'] as $index => $ec){
 					$ec->instructor = $this->EstandarCompetenciaModel->obtener_instructor_ec($ec->id_estandar_competencia,$ec->id_usuario_evaluador);
-					$foto_perfil = $this->PerfilModel->foto_perfil($ec->instructor->id_usuario);
-					$ec->instructor->foto_perfil = base_url() . $foto_perfil->ruta_directorio . $foto_perfil->nombre;
+					if($ec->instructor != null){
+						$foto_perfil = isset($ec->instructor->id_usuario) ? $this->PerfilModel->foto_perfil($ec->instructor->id_usuario) : false;
+						$ec->instructor->foto_perfil = false;
+						if(is_object($foto_perfil)){
+							$ec->instructor->foto_perfil = base_url() . $foto_perfil->ruta_directorio . $foto_perfil->nombre;
+						}
+					}
 					$progreso_pasos = $this->UsuarioHasECProgresoModel->tablero(array('id_usuario_has_estandar_competencia' => $ec->id_usuario_has_estandar_competencia),0);
 					//iteramos el progreso de pasos para determinar si habilitamos o no los pasos del candidato y calcular su progreso
 					$ec->progreso_pasos = $progreso_pasos['total_registros'];
@@ -75,7 +80,6 @@ class EC extends CI_Controller {
 				$data['extra_js'][] = base_url().'assets/frm/fileupload/js/jquery.iframe-transport.js';
 				$data['extra_js'][] = base_url().'assets/frm/fileupload/js/jquery.fileupload.js';
 			}
-			//var_dump($data);exit;
 			$this->load->view('ec/tablero',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
