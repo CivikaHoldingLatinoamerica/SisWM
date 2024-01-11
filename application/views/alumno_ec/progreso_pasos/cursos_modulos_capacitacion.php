@@ -5,16 +5,6 @@
 			<p>
 			El Sistema Integral de Información para la Conformación del Portafolios de Evidencias Digital (SII-PED) le permite realizar de forma simultánea la capacitación - alineación o la revisión y envió de la evidencia o evidencias esperadas. La Entidad de Certificación y Evaluación (ECE) Esta generando diversos programas educativos a los que puede acceder.
 			</p>
-			<hr>
-			<p>
-				Estimado Alumno/Candidato ponemos a su disposición el siguiente link de Zoom para unirse a las capacitaciones que se llevarán a cabo de forma sincrónica de lunes a viernes en un horario de las 20:00 Hora del Centro de México
-				<a href="https://us02web.zoom.us/j/84205305220?pwd=SUsrTGhVUjhZamFNWHhDK2w5MXBJUT09" target="_blank" ></a>
-					<button class="btn btn-sm btn-outline-success">Unirse</button>
-				</a>
-				<br><b>Nota:</b> En caso de pedirle datos el zoom serian los siguientes:
-				<br><b>Id de reunión: </b>842 0530 5220
-				<br><b>Código de acceso: </b>219375
-			</p>
 			<?php if(isset($existen_modulos_en_carga) && $existen_modulos_en_carga): ?>
 				<hr>
 				La capacitación - alineación; está siendo atendida por medios sincrónicos externos a este sistema. La capacitación - alineación asincrónica próximamente...
