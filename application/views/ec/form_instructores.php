@@ -10,9 +10,8 @@
 			<form id="form_agregar_modificar_ec_ati">
 				<input id="estandar_competencia_instructor" type="hidden" value="<?=isset($id_estandar_competencia) ? $id_estandar_competencia : ''?>">
 				<?php if((isset($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0
-							
 							&& isset($instructores_asignados) && sizeof($instructores_asignados) != 0)
-						|| $tipo == 'instructor'): ?>
+							|| $tipo == 'instructor'): ?>
 					<div class="modal-body">
 
 						<?php if(isset($tipo) && $tipo != 'instructor'): ?>
@@ -73,7 +72,7 @@
 							</div>
 							<div class="form-group row">
 								<div class="card-body table-responsive p-0" id="table_otras_actividades">
-									<table class="table table-head-fixed text-nowrap">
+									<table class="table table-head-fixed text-nowrap" id="table_asignaciones_evaluador_instructor">
 										<thead>
 										<tr>
 											<th></th>

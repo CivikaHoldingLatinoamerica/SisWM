@@ -25,6 +25,15 @@ class DatosEmpresaModel extends ModeloBase
 			$criterios .= " and de.id_usuario = ".$data['id_usuario'];
 		}if(isset($data['rfc']) && $data['rfc'] != ''){
 			$criterios .= " and upper(de.rfc) like '%".strtoupper($data['rfc'])."%'";
+		}if(isset($data['busqueda']) && $data['busqueda'] != ''){
+			$criterios .= " and (
+				upper(de.nombre) like '%".strtoupper($data['busqueda'])."%' OR
+				upper(de.nombre_corto) like '%".strtoupper($data['busqueda'])."%' OR
+				upper(de.rfc) like '%".strtoupper($data['busqueda'])."%' OR
+				upper(de.domicilio_fiscal) like '%".strtoupper($data['busqueda'])."%' OR
+				upper(de.telefono) like '%".strtoupper($data['busqueda'])."%' OR
+				upper(de.correo) like '%".strtoupper($data['busqueda'])."%'
+			)";
 		}
 		return $criterios;
 	}

@@ -97,6 +97,7 @@ $route['evidencias_esperadas/candidato/(:num)'] = 'Entregable/index_candidato/$1
 $route['catalogos/msg-bienvenida'] = 'Catalogos/bienvenida';
 $route['catalogos/sectores'] = 'Catalogos/sectores';
 //$route['catalogos/ocupaciones'] = 'Catalogos/nacional_ocupaciones';
+$route['catalogos/empresa'] = 'Catalogos/datos_empresa';
 
 /**
  * rutas para los reportes

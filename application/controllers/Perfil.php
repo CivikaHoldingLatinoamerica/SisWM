@@ -201,13 +201,14 @@ class Perfil extends CI_Controller {
 		$data['tipo_usuario'] = $tipo != 'instructor' ? $tipo : 'evaluador';
 		//$data['cat_sector_productivo'] = $this->CatalogoModel->cat_sector_productivo();
 		$data['cat_sector_ec'] = $this->CatalogoModel->get_catalogo('cat_sector_ec');
+		$data['cat_ocupacion_especifica'] = $this->CatalogoModel->cat_ocupacion_especifica();
 		if($id_usuario){
 			$data['usuario'] = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario);
 			$data['usuario']->id_usuario = $id_usuario;
 			$data['modificacion_from_perfil'] = $is_admin;
 			$data['id_usuario_sesion'] = $this->usuario->id_usuario;
 		}
-		//dd($data);exit;
+		//var_dump($data);exit;
 		$this->load->view('usuarios/agregar_modifiar_usr',$data);
 	}
 
@@ -295,7 +296,6 @@ class Perfil extends CI_Controller {
 	public function agregar_modificar_empresa($id_usuario,$id = false){
 		try{
 			$data['id_usuario'] = $id_usuario;
-			$data['cat_ocupacion_especifica'] = $this->CatalogoModel->cat_ocupacion_especifica();
 			if($id){
 				$data['datos_empresa'] = $this->DatosEmpresaModel->obtener_row($id);
 				$data['archivo_logotipo'] = $this->ArchivoModel->obtener_row($data['datos_empresa']->id_archivo_logotipo);

@@ -46,15 +46,24 @@ class EC extends CI_Controller {
 			$data_paginacion = data_paginacion(1,5,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
 			$data['extra_js'] = array(
-				base_url() . 'assets/js/ec/estandar_competencia.js',
 				base_url().'assets/frm/fileinput/js/fileinput.js',
 				base_url().'assets/frm/fileupload/js/vendor/jquery.ui.widget.js',
 				base_url().'assets/frm/fileupload/js/jquery.iframe-transport.js',
 				base_url().'assets/frm/fileupload/js/jquery.fileupload.js',
+				base_url().'assets/frm/adm_lte/plugins/datatables/jquery.dataTables.min.js',
+				base_url().'assets/frm/adm_lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
+				base_url().'assets/frm/adm_lte/plugins/datatables-responsive/js/dataTables.responsive.js',
+				base_url().'assets/frm/adm_lte/plugins/datatables-responsive/js/responsive.bootstrap4.js',
+				base_url().'assets/frm/adm_lte/plugins/datatables-buttons/js/dataTables.buttons.min.js',
+				base_url().'assets/frm/adm_lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js',
+				base_url().'assets/js/ec/estandar_competencia.js',
 			);
 			$data['extra_css'] = array(
 				base_url().'assets/frm/fileinput/css/fileinput.css',
 				base_url().'assets/frm/fileupload/css/jquery.fileupload.css',
+				base_url().'assets/frm/adm_lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
+				base_url().'assets/frm/adm_lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
+				base_url().'assets/frm/adm_lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css',
 			);
 			if($this->usuario->perfil == 'alumno'){
 				//sacar el instructor asignado al EC
@@ -120,15 +129,15 @@ class EC extends CI_Controller {
 
 	public function agregar_modifcar($id_estandar_competencia = false){
 		perfil_permiso_operacion('estandar_competencia.agregar');
-    	$data = array();
-    	if($id_estandar_competencia){
-    		$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
-			$data['archivo_banner'] = null;
-			if(isset($data['estandar_competencia']->id_archivo) && !is_null($data['estandar_competencia']->id_archivo) && $data['estandar_competencia']->id_archivo != ''){
-				$data['archivo_banner'] = $this->ArchivoModel->obtener_archivo($data['estandar_competencia']->id_archivo);
+		$data = array();
+		if($id_estandar_competencia){
+			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
+				$data['archivo_banner'] = null;
+				if(isset($data['estandar_competencia']->id_archivo) && !is_null($data['estandar_competencia']->id_archivo) && $data['estandar_competencia']->id_archivo != ''){
+					$data['archivo_banner'] = $this->ArchivoModel->obtener_archivo($data['estandar_competencia']->id_archivo);
+				}
 			}
-		}
-    	$this->load->view('ec/agregar_modificar_ec',$data);
+		$this->load->view('ec/agregar_modificar_ec',$data);
 	}
 
 	public function guardar_form($id_estandar_competencia = false){
@@ -308,13 +317,13 @@ class EC extends CI_Controller {
 
 	public function agregar_modificar_plan_requerimientos($id_estandar_competencia){
 		perfil_permiso_operacion('tecnicas_instrumentos.agregar');
-    	try{
-    		$data['id_estandar_competencia'] = $id_estandar_competencia;
-    		//falta el data una vez implementado la BD
+    		try{
+    			$data['id_estandar_competencia'] = $id_estandar_competencia;
+    			//falta el data una vez implementado la BD
 			$estandar_competencia_has_requerimientos = $this->PlanRequerimientoModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia),0,10);
 			$data['estandar_competencia_has_requerimientos'] = $estandar_competencia_has_requerimientos['estandar_competencia_has_requerimientos'];
 			//var_dump($data);exit;
-    		$this->load->view('ec/agregar_modificar_plan_requerimientos',$data);
+    			$this->load->view('ec/agregar_modificar_plan_requerimientos',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -325,8 +334,8 @@ class EC extends CI_Controller {
 
 	public function guardar_form_plan_requerimientos($id_estandar_competencia){
 		perfil_permiso_operacion('tecnicas_instrumentos.agregar');
-    	try{
-    		$post = $this->input->post();
+    		try{
+    			$post = $this->input->post();
 			$validaciones = Validaciones_Helper::formPlanRequerimiento($post);
 			if($validaciones['success']){
 				$guardar = $this->PlanRequerimientoModel->guardar_registros($post,$id_estandar_competencia);
@@ -347,6 +356,10 @@ class EC extends CI_Controller {
 			$response['msg'][] = $ex->getMessage();
 		}
 		echo json_encode($response);exit;
+	}
+
+	public function agregar_modificar_grupos(){
+		
 	}
 
 }

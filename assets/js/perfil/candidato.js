@@ -314,16 +314,17 @@ var PerfilCandidato = {
 
 	obtener_empresa_rfc : function(){
 		$('#contenedor_mensaje_empresa_encontrada').fadeOut();
-		$('#input_nombre').val('');
-		$('#input_telefono').val('');
-		$('#input_correo').val('');
-		$('#input_representante_legal').val('');
-		$('#input_representante_trabajadores').val('');
-		$('#input_domicilio').val('');
-		$('#input_cargo').val('');
-		$('#id_archivo_logotipo').val();
-		$('#input_vigente_si').removeAttr('checked');
-		$('#input_vigente_no').removeAttr('checked');
+		$('#input_nombre').val('').attr('readonly',false);
+		$('#input_nombre_corto').val('').attr('readonly',false);
+		$('#input_telefono').val('').attr('readonly',false);
+		$('#input_correo').val('').attr('readonly',false);
+		$('#input_representante_legal').val('').attr('readonly',false);
+		$('#input_representante_trabajadores').val('').attr('readonly',false);
+		$('#input_domicilio').val('').attr('readonly',false);
+		$('#input_cargo').val('').attr('readonly',false);
+		$('#id_archivo_logotipo').val().attr('readonly',false);
+		$('#input_vigente_si').removeAttr('checked').attr('readonly',false);
+		$('#input_vigente_no').removeAttr('checked').attr('readonly',false);
 		$('#procesando_img_logotipo_emp').html('');
 		var post = {
 			rfc_buscar : $('#input_rfc').val()
@@ -334,15 +335,16 @@ var PerfilCandidato = {
 				if(response_json.success){
 					//obtenemos los datos de la empresa encontrada en el formulario
 					$('#contenedor_mensaje_empresa_encontrada').fadeIn();
-					$('#input_nombre').val(response_json.data.empresa_encontrada.nombre);
-					$('#input_telefono').val(response_json.data.empresa_encontrada.telefono);
-					$('#input_correo').val(response_json.data.empresa_encontrada.correo);
-					$('#input_representante_legal').val(response_json.data.empresa_encontrada.representante_legal);
-					$('#input_representante_trabajadores').val(response_json.data.empresa_encontrada.representante_trabajadores);
-					$('#input_domicilio').val(response_json.data.empresa_encontrada.domicilio_fiscal);
-					$('#input_cargo').val(response_json.data.empresa_encontrada.cargo);
-					$('#id_archivo_logotipo').val(response_json.data.empresa_encontrada.id_archivo_logotipo);
-					response_json.data.empresa_encontrada.vigente == 'si' ? $('#input_vigente_si').attr('checked',true) : $('#input_vigente_no').attr('checked',true);
+					$('#input_nombre').val(response_json.data.empresa_encontrada.nombre).attr('readonly',true);
+					$('#input_nombre_corto').val(response_json.data.empresa_encontrada.nombre_corto).attr('readonly',true);
+					$('#input_telefono').val(response_json.data.empresa_encontrada.telefono).attr('readonly',true);
+					$('#input_correo').val(response_json.data.empresa_encontrada.correo).attr('readonly',true);
+					$('#input_representante_legal').val(response_json.data.empresa_encontrada.representante_legal).attr('readonly',true);
+					$('#input_representante_trabajadores').val(response_json.data.empresa_encontrada.representante_trabajadores).attr('readonly',true);
+					$('#input_domicilio').val(response_json.data.empresa_encontrada.domicilio_fiscal).attr('readonly',true);
+					$('#input_cargo').val(response_json.data.empresa_encontrada.cargo).attr('readonly',true);
+					$('#id_archivo_logotipo').val(response_json.data.empresa_encontrada.id_archivo_logotipo).attr('readonly',true);
+					response_json.data.empresa_encontrada.vigente == 'si' ? $('#input_vigente_si').attr('checked',true).attr('readonly',true) : $('#input_vigente_no').attr('checked',true).attr('readonly',true);
 					var html_img_logotipo = '<img src="'+base_url+response_json.data.archivo_logotipo.ruta_directorio+response_json.data.archivo_logotipo.nombre+'" alt="Imágen logotipo empresa" style="max-width: 120px" class="img-fluid img-thumbnail">';
 					$('#procesando_img_logotipo_emp').html(html_img_logotipo);
 				}

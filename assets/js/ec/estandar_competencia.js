@@ -90,6 +90,10 @@ $(document).ready(function () {
 		}
 	});
 
+	$(document).on('click','.btn_asignacion_grupos',function(){
+		var id_estandar_competencia = $(this).data('id_estandar_competencia');
+	});
+
 	//funcionalidad para el paginado por scroll
 	$(window).scroll(function(){
 		//validamos lo del scroll
@@ -214,6 +218,7 @@ var EstandarCompetencia = {
 						});
 					}
 					EstandarCompetencia.filtro_instructores_candidatos_slt();
+					//EstandarCompetencia.procesar_data_table_asignaciones();
 				}else{
 					Comun.mensajes_operacion(response.msg,'error',5000);
 				}
@@ -350,6 +355,20 @@ var EstandarCompetencia = {
 		}
 	},
 
+	agregar_modificar_grupos_estandar : function(){
+		Comun.obtener_contenido_peticion_html(
+			base_url + 'EC/agregar_modificar_grupos/'+id_estandar_competencia,{},
+			function(response){
+				$('#contenedor_modal_primario').html(response);
+				Comun.mostrar_ocultar_modal('#modal_form_grupo_ec',true);
+			}
+		);
+	},
+
+	guardar_grupo_ec : function(){
+
+	},
+
 	validar_form_plan_requerimientos : function(){
 		var form_valido = Comun.validar_form('#form_agregar_modificar_plan_requerimientos',Comun.reglas_validacion_form());
 		//validaciones secundarias
@@ -378,6 +397,19 @@ var EstandarCompetencia = {
 			   $(this).toggle($(this).text().toLowerCase().indexOf(filtro) > -1);
 		    });
 		});
-	 },
+	},
+
+	procesar_data_table_asignaciones : function(){
+		$('#table_asignaciones_evaluador_instructor').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"ordering": true,
+			"info": true,
+			"autoWidth": false,
+			"responsive": true,
+		});
+	}
+
 
 };

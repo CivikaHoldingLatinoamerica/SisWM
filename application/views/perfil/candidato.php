@@ -76,7 +76,12 @@
 
 										<div class="form-group row">
 											<strong class="col-sm-3">Sector productivo de trabajo:</strong>
-											<span class="col-sm-9"><?=isset($datos_usuario->sector_productivo) ? $datos_usuario->sector_productivo : 'Sin datos'?></span>
+											<span class="col-sm-9"><?=isset($datos_usuario->sector_productivo) ? $datos_usuario->sector_productivo : 'Sin dato'?></span>
+										</div>
+
+										<div class="form-group row">
+											<strong class="col-sm-3">Ocupación específica:</strong>
+											<span class="col-sm-9"><?=isset($datos_usuario->ocupacion_especifica) ? $datos_usuario->ocupacion_especifica : 'Sin dato'?></span>
 										</div>
 										<div class="form-group row">
 											<div class="col-sm-12 text-right">

@@ -103,11 +103,13 @@ class UsuarioModel extends ModeloBase
 		$consulta = "select 
 			  u.usuario,u.activo,u.perfil,
 			  du.*,u.id_usuario, cna.nombre as nivel_academico,
-			  csp.nombre as sector_productivo
+			  csp.nombre as sector_productivo,
+			  concat(coe.clave_area_subarea,' - ',coe.denominacion) as ocupacion_especifica
 			from usuario u
 			  left join datos_usuario du on du.id_usuario = u.id_usuario
 			  left join cat_nivel_academico cna on cna.id_cat_nivel_academico = du.id_cat_nivel_academico
 			  left join cat_sector_ec csp on csp.id_cat_sector_ec = du.id_cat_sector_ec
+			  left join cat_ocupacion_especifica coe on coe.id_cat_ocupacion_especifica = du.id_cat_ocupacion_especifica
 			where u.id_usuario = $id_usuario";
 		$query = $this->db->query($consulta);
 		return $query->row();

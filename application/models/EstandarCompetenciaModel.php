@@ -101,7 +101,10 @@ class EstandarCompetenciaModel extends ModeloBase
 		$criterios = ' where 1=1';
 		if(isset($data['busqueda']) && $data['busqueda'] != ''){
 			$data['busqueda'] = strtoupper($data['busqueda']);
-			$criterios .= " and (UPPER(ec.codigo) like '%".$data['busqueda']."%' OR UPPER(ec.titulo) LIKE '%".$data['busqueda']."%')";
+			$criterios .= " and (
+					UPPER(ec.codigo) like '%".$data['busqueda']."%' OR 
+					UPPER(ec.titulo) LIKE '%".$data['busqueda']."%'
+				)";
 		}if($this->usuario->perfil <> 'root'){
 			$criterios .= " and ec.eliminado = 'no'";
 		}if(isset($data['id_usuario']) && $data['id_usuario'] != ''){ //para buscar por los EC asignados a los usuarios instructor y alumno

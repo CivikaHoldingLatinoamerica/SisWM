@@ -266,4 +266,67 @@ class Catalogos extends CI_Controller
 			exit;
 		}
 	}
+
+	/**
+	 * apartado de datos de empresa registrados por los usuarios candidatos
+	 */
+	public function datos_empresa(){
+		if (sesionActive()) {
+			$this->usuario = usuarioSession();
+		} else {
+			$this->usuario = false;
+			redirect(base_url() . 'login');
+		}
+		try {
+			$this->load->model('DatosEmpresaModel');
+			$data = $this->DatosEmpresaModel->tablero([],1,10);
+			$data['titulo_pagina'] = 'Datos de empresa (registradas por Candidatos)';
+			$data['migas_pan'] = array(
+				array('nombre' => 'Inicio', 'activo' => false, 'url' => base_url()),
+				array('nombre' => 'Catalogos', 'activo' => false, 'url' => '#'),
+				array('nombre' => 'Datos de empresa', 'activo' => true, 'url' => '#'),
+			);
+			$data['sidebar'] = 'cat_empresa';
+			$data['usuario'] = $this->usuario;
+			$data['extra_js'] = array(
+				
+				base_url() . 'assets/js/catalogos/datos_empresa.js',
+			);
+			$data['extra_css'] = array(
+				
+			);
+			
+			$data_paginacion = data_paginacion(1,5,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+			//var_dump($data);exit;
+			$this->load->view('catalogo/empresa/datos_empresa', $data);
+		} catch (Exception $ex) {
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
+			exit;
+		}
+	}
+
+	public function datos_empresa_resultado_tablero($pagina = 1, $registros = 10){
+		try{
+			$this->load->model('DatosEmpresaModel');
+			$params_busqueda = $this->input->post();
+			
+			$data = $this->DatosEmpresaModel->tablero($params_busqueda,$pagina,$registros);
+			$data['usuario'] = $this->usuario;
+			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+			$this->load->view('catalogo/empresa/resultado_tablero', $data);
+		}catch (Exception $ex) {
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
+			exit;
+		}
+	}
+
+	
 }

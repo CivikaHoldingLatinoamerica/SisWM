@@ -112,4 +112,10 @@ class CatalogoModel extends CI_Model
 		return $query->result();
 	}
 
+	public function cat_area_tematica(){
+		$query = $this->db->get('cat_area_tematica');
+		return $query->result();
+	}
+	
+
 }

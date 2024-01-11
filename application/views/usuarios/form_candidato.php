@@ -112,3 +112,19 @@
 		</select>
 	</div>
 </div>
+
+<div class="form-group row">
+	<label for="input_ocupacion_especifica" class="col-sm-3 col-form-label">Ocupación específicaaaa</label>
+	<div class="col-sm-9" >
+		<select class="custom-select" id="input_ocupacion_especifica" data-rule-required="true" name="id_cat_ocupacion_especifica">
+			<option value="">--Seleccione--</option>
+			<?php foreach ($cat_ocupacion_especifica as $coe): ?>
+				<optgroup label="<?=$coe->clave_area_subarea.'-'.$coe->denominacion?>">
+					<?php foreach($coe->coe_child as $coe_child): ?>
+						<option value="<?=$coe_child->id_cat_ocupacion_especifica?>" <?=isset($usuario->id_cat_ocupacion_especifica) && $usuario->id_cat_ocupacion_especifica == $coe_child->id_cat_ocupacion_especifica ? 'selected="selected"':'' ?> ><?=$coe_child->clave_area_subarea.'-'.$coe_child->denominacion?></option>
+					<?php endforeach; ?>
+				</optgroup>
+			<?php endforeach; ?>
+		</select>
+	</div>
+</div>
