@@ -32,7 +32,7 @@
 					<div class="col-12">
 						<div class="callout callout-info">
 							<h5>Información importante</h5>
-							<p>Los datos mostrados en el siguiente tablero fueron registrados por los candidatos, razón por la cual únicamente podrá actualizar los datos</p>
+							<p>Los datos mostrados en el siguiente tablero fueron registrados por los candidatos, razón por la cual únicamente podrá actualizar la información</p>
 						</div>
 					</div>
 				</div>
@@ -44,6 +44,7 @@
 								<table class="table table-striped">
 									<thead>
 									<tr>
+										<th>¿Quien registro?</th>
 										<th>RFC</th>
 										<th>Nombre corto/largo</th>
 										<th>Contacto</th>

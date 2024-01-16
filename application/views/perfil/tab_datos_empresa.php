@@ -2,6 +2,7 @@
 	<div class="col-sm-12 text-right">
 		<button type="button" class="btn btn-sm btn-outline-success btn_modificar_empresa"
 				data-id_usuario="<?=$usuario->id_usuario?>"
+				data-from_catalogo="no"
 				data-id_datos_empresa="" id="btn_agregar_empresa">
 			<i class="fa fa-plus"> Agregar</i>
 		</button>
@@ -43,6 +44,7 @@
 						<div class="text-right">
 							<button type="button" class="btn btn-outline-info btn-sm btn_modificar_empresa" data-id_datos_empresa="<?=$de->id_datos_empresa?>"
 									data-id_usuario="<?=$usuario->id_usuario?>"
+									data-from_catalogo="no"
 									data-toggle="tooltip" title="Modificar empresa">
 								<i class="fas fa-edit"></i>
 							</button>

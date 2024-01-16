@@ -69,8 +69,8 @@
 						</div>
 					</div>
 
-					<div class="form-group row">
-						<label for="input_domicilio" class="col-sm-3 col-form-label">Puesto</label>
+					<div class="form-group row" id="contenedor_puesto_empresa">
+						<label for="input_cargo" class="col-sm-3 col-form-label">Puesto</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="input_cargo" data-rule-required="true"
 								   name="cargo" placeholder="Puesto que desempeña" value="<?=isset($datos_empresa) ? $datos_empresa->cargo : ''?>">
@@ -78,8 +78,8 @@
 					</div>
 
 					<div class="form-group row">
-						<label for="input_vigente_si" class="col-sm-3 col-form-label">¿La empresa es de su trabajo actual?</label>
-						<div class="col-sm-3">
+						<label for="input_vigente_si" class="col-sm-3 col-form-label input_empresa_actual_usuario">¿La empresa es de su trabajo actual?</label>
+						<div class="col-sm-3 input_empresa_actual_usuario">
 							<div class="custom-control custom-radio">
 								<input class="custom-control-input" type="radio" data-rule-required="true" id="input_vigente_si" name="vigente"
 									   value="si" <?=isset($datos_empresa) && $datos_empresa->vigente == 'si' ? 'checked="checked"':''?>>
@@ -101,6 +101,18 @@
 									<?php endif; ?>
 								</div>
 							</div>
+						</div>
+					</div>
+
+					<div class="form-group row" id="contenedor_empresa_categoria_admin" style="display: none;" >
+						<label for="input_id_cat_categoria_empresa" class="col-sm-3 col-form-label">¿Categoria o especialidad?</label>
+						<div class="col-sm-9">
+							<select class="custom-select" id="input_id_cat_categoria_empresa" data-rule-required="true" name="id_cat_categoria_empresa">
+								<option value="">--Seleccione--</option>
+								<?php foreach ($cat_categoria_empresa as $cce): ?>
+									<option value="<?=$cce->id_cat_categoria_empresa?>" <?=isset($datos_empresa->id_cat_categoria_empresa) && $datos_empresa->id_cat_categoria_empresa == $cce->id_cat_categoria_empresa ? 'selected="selected"':'' ?> ><?=$cce->nombre?></option>
+								<?php endforeach; ?>
+							</select>
 						</div>
 					</div>
 					

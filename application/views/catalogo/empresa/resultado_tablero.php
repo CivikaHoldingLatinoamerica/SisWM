@@ -4,12 +4,10 @@
 <?php if(isset($datos_empresa) && is_array($datos_empresa) && !empty($datos_empresa)): ?>
 	<?php foreach($datos_empresa as $index => $de): ?>
 		<tr>
-			<td>
-				<?=$de->rfc?>
-			</td>
-			<td>
-				<?=$de->nombre_corto?> / <?=$de->nombre?>
-			</td>
+			
+			<td><span class="badge badge-primary"><?=$de->usuario?></span></td>
+			<td><?=$de->rfc?></td>
+			<td><?=$de->nombre_corto?> / <?=$de->nombre?></td>
 			<td>
 				<ul>
 					<li>Domicilio: <?=$de->domicilio_fiscal?></li>
@@ -24,12 +22,17 @@
 				</ul>
 			</td>
 			<td>
-				<button type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></button>
+				<button type="button" class="btn btn-outline-info btn-sm btn_modificar_empresa" data-id_datos_empresa="<?=$de->id_datos_empresa?>"
+						data-id_usuario="<?=$usuario->id_usuario?>"
+						data-from_catalogo="si"
+						data-toggle="tooltip" title="Modificar empresa">
+					<i class="fas fa-edit"></i>
+				</button>
 			</td>
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="5">Sin registros encontrados</td>
+		<td colspan="6">Sin registros encontrados</td>
 	</tr>
 <?php endif ?>

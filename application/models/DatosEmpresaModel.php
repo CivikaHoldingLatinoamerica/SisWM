@@ -14,6 +14,18 @@ class DatosEmpresaModel extends ModeloBase
 		}
 	}
 
+	public function criterios_join(){
+		return " inner join usuario u on u.id_usuario = de.id_usuario ";
+	}
+
+	public function order_by(){
+		return " order by de.rfc asc ";
+	}
+
+	// public function group_by(){
+	// 	return " group by de.rfc ";
+	// }
+
 	public function actualizar_vigente($id_usuario){
 		$this->db->where('id_usuario',$id_usuario);
 		return $this->db->update('datos_empresa',array('vigente' => 'no'));
@@ -26,6 +38,7 @@ class DatosEmpresaModel extends ModeloBase
 		}if(isset($data['rfc']) && $data['rfc'] != ''){
 			$criterios .= " and upper(de.rfc) like '%".strtoupper($data['rfc'])."%'";
 		}if(isset($data['busqueda']) && $data['busqueda'] != ''){
+			$criterios .= " and de.eliminado = 'no'";
 			$criterios .= " and (
 				upper(de.nombre) like '%".strtoupper($data['busqueda'])."%' OR
 				upper(de.nombre_corto) like '%".strtoupper($data['busqueda'])."%' OR

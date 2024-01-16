@@ -296,6 +296,7 @@ class Perfil extends CI_Controller {
 	public function agregar_modificar_empresa($id_usuario,$id = false){
 		try{
 			$data['id_usuario'] = $id_usuario;
+			$data['cat_categoria_empresa'] = $this->CatalogoModel->get_catalogo('cat_categoria_empresa');
 			if($id){
 				$data['datos_empresa'] = $this->DatosEmpresaModel->obtener_row($id);
 				$data['archivo_logotipo'] = $this->ArchivoModel->obtener_row($data['datos_empresa']->id_archivo_logotipo);

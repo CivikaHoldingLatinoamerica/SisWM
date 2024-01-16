@@ -61,13 +61,15 @@ $(document).ready(function(){
 	$(document).on('click','.btn_modificar_empresa',function () {
 		var id_usuario = $(this).data('id_usuario');
 		var id_datos_empresa = $(this).data('id_datos_empresa');
-		PerfilCandidato.modal_empresa(id_usuario,id_datos_empresa);
+		var from_catalogo = $(this).data('from_catalogo') != undefined && $(this).data('from_catalogo') == 'si' ? true : false;
+		PerfilCandidato.modal_empresa(id_usuario,id_datos_empresa,from_catalogo);
 	});
 
 	$(document).on('click','#btn_guardar_form_empresa',function(){
 		var id_usuario = $(this).data('id_usuario');
 		var id_datos_empresa = $(this).data('id_datos_empresa');
-		PerfilCandidato.guardar_empresa(id_usuario,id_datos_empresa);
+		var from_catalogo = $(this).data('from_catalogo') != undefined && $(this).data('from_catalogo') == 'si' ? true : false;
+		PerfilCandidato.guardar_empresa(id_usuario,id_datos_empresa,from_catalogo);
 	});
 
 	$(document).on('change','#input_rfc',function(){
@@ -97,7 +99,7 @@ var PerfilCandidato = {
 		);
 	},
 
-	modal_empresa : function(id_usuario,id_datos_empresa = ''){
+	modal_empresa : function(id_usuario,id_datos_empresa = '',from_catalogo = false){
 		Comun.obtener_contenido_peticion_html(
 			base_url + 'Perfil/agregar_modificar_empresa/' + id_usuario + '/' + id_datos_empresa,{},
 			function(response){
@@ -105,6 +107,12 @@ var PerfilCandidato = {
 				Comun.mostrar_ocultar_modal('#modal_form_empresa',true);
 				Comun.funcion_fileinput('#img_logotipo_emp','Logotipo');
 				PerfilCandidato.iniciar_carga_img_logo_empresa();
+				if(from_catalogo){
+					$('#btn_guardar_form_empresa').attr('data-from_catalogo','si');
+					$('#contenedor_empresa_categoria_admin').fadeIn();
+					$('#contenedor_puesto_empresa').fadeOut();
+					$('.input_empresa_actual_usuario').fadeOut();
+				}
 			}
 		);
 	},
@@ -205,7 +213,7 @@ var PerfilCandidato = {
 		}
 	},
 
-	guardar_empresa : function(id_usuario,id_datos_empresa = ''){
+	guardar_empresa : function(id_usuario,id_datos_empresa = '',from_catalogo = false){
 		if(PerfilCandidato.validar_form_empresa()){
 			Comun.enviar_formulario_post(
 				'#form_agregar_modificar_empresa',
@@ -214,7 +222,13 @@ var PerfilCandidato = {
 					if(response.success){
 						Comun.mostrar_ocultar_modal('#modal_form_empresa',false);
 						Comun.mensajes_operacion(response.msg,'success');
-						$('#tab_datos_empresa').trigger('click');
+						//cambio para cuando actualiza el administrador 
+						if(from_catalogo){
+							$('#btn_buscar_datos_empresa').trigger('click');
+						}else{
+							$('#tab_datos_empresa').trigger('click');
+						}
+						
 					}else{
 						Comun.mensajes_operacion(response.msg,'error',5000);
 					}
@@ -321,8 +335,9 @@ var PerfilCandidato = {
 		$('#input_representante_legal').val('').attr('readonly',false);
 		$('#input_representante_trabajadores').val('').attr('readonly',false);
 		$('#input_domicilio').val('').attr('readonly',false);
-		$('#input_cargo').val('').attr('readonly',false);
-		$('#id_archivo_logotipo').val().attr('readonly',false);
+		//$('#input_cargo').val('').attr('readonly',false);
+		$('#input_id_archivo_logotipo').val('').attr('readonly',false);
+		$('#input_id_cat_categoria_empresa').val('').attr('readonly',false);
 		$('#input_vigente_si').removeAttr('checked').attr('readonly',false);
 		$('#input_vigente_no').removeAttr('checked').attr('readonly',false);
 		$('#procesando_img_logotipo_emp').html('');
@@ -335,16 +350,17 @@ var PerfilCandidato = {
 				if(response_json.success){
 					//obtenemos los datos de la empresa encontrada en el formulario
 					$('#contenedor_mensaje_empresa_encontrada').fadeIn();
-					$('#input_nombre').val(response_json.data.empresa_encontrada.nombre).attr('readonly',true);
-					$('#input_nombre_corto').val(response_json.data.empresa_encontrada.nombre_corto).attr('readonly',true);
-					$('#input_telefono').val(response_json.data.empresa_encontrada.telefono).attr('readonly',true);
-					$('#input_correo').val(response_json.data.empresa_encontrada.correo).attr('readonly',true);
-					$('#input_representante_legal').val(response_json.data.empresa_encontrada.representante_legal).attr('readonly',true);
-					$('#input_representante_trabajadores').val(response_json.data.empresa_encontrada.representante_trabajadores).attr('readonly',true);
-					$('#input_domicilio').val(response_json.data.empresa_encontrada.domicilio_fiscal).attr('readonly',true);
-					$('#input_cargo').val(response_json.data.empresa_encontrada.cargo).attr('readonly',true);
-					$('#id_archivo_logotipo').val(response_json.data.empresa_encontrada.id_archivo_logotipo).attr('readonly',true);
-					response_json.data.empresa_encontrada.vigente == 'si' ? $('#input_vigente_si').attr('checked',true).attr('readonly',true) : $('#input_vigente_no').attr('checked',true).attr('readonly',true);
+					$('#input_nombre').val(response_json.data.empresa_encontrada.nombre);
+					$('#input_nombre_corto').val(response_json.data.empresa_encontrada.nombre_corto);
+					$('#input_telefono').val(response_json.data.empresa_encontrada.telefono);
+					$('#input_correo').val(response_json.data.empresa_encontrada.correo);
+					$('#input_representante_legal').val(response_json.data.empresa_encontrada.representante_legal);
+					$('#input_representante_trabajadores').val(response_json.data.empresa_encontrada.representante_trabajadores);
+					$('#input_domicilio').val(response_json.data.empresa_encontrada.domicilio_fiscal);
+					//$('#input_cargo').val(response_json.data.empresa_encontrada.cargo); # quitamos el cargo dado que deberia ser personal para cada usuario
+					$('#input_id_archivo_logotipo').val(response_json.data.empresa_encontrada.id_archivo_logotipo);
+					$('#input_id_cat_categoria_empresa').val(response_json.data.empresa_encontrada.id_cat_categoria_empresa);
+					response_json.data.empresa_encontrada.vigente == 'si' ? $('#input_vigente_si').attr('checked',true) : $('#input_vigente_no').attr('checked',true);
 					var html_img_logotipo = '<img src="'+base_url+response_json.data.archivo_logotipo.ruta_directorio+response_json.data.archivo_logotipo.nombre+'" alt="Imágen logotipo empresa" style="max-width: 120px" class="img-fluid img-thumbnail">';
 					$('#procesando_img_logotipo_emp').html(html_img_logotipo);
 				}

@@ -289,14 +289,19 @@ class Catalogos extends CI_Controller
 			$data['sidebar'] = 'cat_empresa';
 			$data['usuario'] = $this->usuario;
 			$data['extra_js'] = array(
-				
+				base_url().'assets/frm/fileinput/js/fileinput.js',
+				base_url().'assets/frm/fileupload/js/vendor/jquery.ui.widget.js',
+				base_url().'assets/frm/fileupload/js/jquery.iframe-transport.js',
+				base_url().'assets/frm/fileupload/js/jquery.fileupload.js',
 				base_url() . 'assets/js/catalogos/datos_empresa.js',
+				base_url() . 'assets/js/perfil/candidato.js',
 			);
 			$data['extra_css'] = array(
-				
+				base_url().'assets/frm/fileinput/css/fileinput.css',
+				base_url().'assets/frm/fileupload/css/jquery.fileupload.css',
 			);
 			
-			$data_paginacion = data_paginacion(1,5,$data['total_registros']);
+			$data_paginacion = data_paginacion(1,10,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
 			//var_dump($data);exit;
 			$this->load->view('catalogo/empresa/datos_empresa', $data);
