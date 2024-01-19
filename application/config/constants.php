@@ -97,8 +97,10 @@ define('RUTA_QR_FILES','files_usr/qr_generados');
 /**
  * constantes para los perfiles de usuario
  */
+define('PERFIL_ADMIN',2);
 define('PERFIL_INSTRUCTOR',3);
 define('PERFIL_ALUMNO',4);
+define('PERFIL_ADMINRRHH',5);
 
 /**
  * constantes para los estatus de proceso

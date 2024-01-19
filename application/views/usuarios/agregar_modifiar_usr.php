@@ -2,7 +2,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title"><?=isset($usuario) ? 'Actualizar':'Nuevo'?> <?=isset($tipo_usuario) ? $tipo_usuario : ''?></h4>
+				<h4 class="modal-title"><?=isset($usuario) ? 'Actualizar':'Nuevo'?> <?=isset($tipo_usuario_label) ? $tipo_usuario_label : ''?></h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
@@ -10,15 +10,21 @@
 			<form id="form_agregar_modificar_usr">
 				<input type="hidden" name="update_datos" value="<?=isset($usuario) ? $usuario->update_datos + 1 : 0?>">
 				<div class="modal-body">
-					<?php if(isset($tipo_usuario) && $tipo_usuario == 'admin'): ?>
-						<?php $this->load->view('usuarios/form_admin'); ?>
-					<?php endif?>
-					<?php if(isset($tipo_usuario) && $tipo_usuario == 'evaluador'): ?>
-						<?php $this->load->view('usuarios/form_instructor'); ?>
-					<?php endif?>
-					<?php if(isset($tipo_usuario) && $tipo_usuario == 'candidato'): ?>
-						<?php $this->load->view('usuarios/form_candidato'); ?>
-					<?php endif?>
+					<?php switch($tipo_usuario){
+							case 'admin':
+								$this->load->view('usuarios/form_admin');
+								break;
+							case 'admin_emp':
+								$this->load->view('usuarios/form_admin_emp');
+								break;
+							case 'evaluador':
+								$this->load->view('usuarios/form_instructor');
+								break;
+							case 'candidato':
+								$this->load->view('usuarios/form_candidato');
+								break;
+						}
+					?>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>

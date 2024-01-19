@@ -39,6 +39,9 @@
 					<?php if($sidebar == 'administradores'): ?>
 						<button type="button" id="agregar_administrador" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-square"></i> Nuevo</button>
 					<?php endif; ?>
+					<?php if($sidebar == 'administradoresrrhh'): ?>
+						<button type="button" id="agregar_administradorrrhh" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-square"></i> Nuevo</button>
+					<?php endif; ?>
 					<?php if($sidebar == 'instructores'): ?>
 						<button type="button" id="agregar_instructor" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-square"></i> Nuevo</button>
 					<?php endif; ?>
