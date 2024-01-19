@@ -10,6 +10,11 @@ $(document).ready(function () {
 		UsuarioAdmin.buscar_usuarios_tablero_admin();
 	});
 
+	$(document).on('click','#btn_buscar_administradoresrrhh',function(e){
+		e.preventDefault();
+		UsuarioAdmin.buscar_usuarios_tablero_adminrrhh();
+	});
+
 	$(document).on('click','#btn_buscar_instructores',function(e){
 		e.preventDefault();
 		UsuarioAdmin.buscar_usuarios_tablero_evaluadores();
@@ -23,6 +28,11 @@ $(document).ready(function () {
 	$(document).on('click','#agregar_administrador',function(e){
 		e.preventDefault();
 		UsuarioAdmin.agregar_modificar_usr();
+	});
+	
+	$(document).on('click','#agregar_administradorrrhh',function(e){
+		e.preventDefault();
+		UsuarioAdmin.agregar_modificar_usr('admin_emp');
 	});
 
 	$(document).on('click','#agregar_instructor',function(e){
@@ -139,6 +149,35 @@ var UsuarioAdmin = {
 			$('#overlay_full_page').fadeIn();
 			Comun.obtener_contenido_peticion_html(
 				base_url + 'Usuario/tablero_administradores/' + pagina + '/' + registros,
+				post,
+				function(response){
+					$('#contenedor_resultados_usuario').append(response);
+					$('#overlay_full_page').fadeOut();
+					Comun.tooltips();
+				}
+			);
+		}
+	},
+
+	buscar_usuarios_tablero_adminrrhh : function(inicial = true, pagina = 1, registros = 10){
+		var post = {
+			busqueda : $('#input_buscar_usuarios').val()
+		};
+		if(inicial){
+			$('#contenedor_resultados_usuario').html(overlay);
+			Comun.obtener_contenido_peticion_html(
+				base_url + 'Usuario/tablero_administradoresRRHH/' + pagina + '/' + registros,
+				post,
+				function(response){
+					$('#contenedor_resultados_usuario').html(response);
+					$('#overlay_full_page').fadeOut();
+					Comun.tooltips();
+				}
+			);
+		}else{
+			$('#overlay_full_page').fadeIn();
+			Comun.obtener_contenido_peticion_html(
+				base_url + 'Usuario/tablero_administradoresRRHH/' + pagina + '/' + registros,
 				post,
 				function(response){
 					$('#contenedor_resultados_usuario').append(response);

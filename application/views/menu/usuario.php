@@ -1,6 +1,7 @@
 <?php if(perfil_permiso_operacion_menu('usuarios.consultar')): ?>
-	<li class="nav-item <?=isset($sidebar) && in_array($sidebar,array('usuarios','perfil_permisos','administradores','instructores','candidatos')) ? ' menu-is-opening menu-open':''?>" >
-		<a href="<?=base_url()?>usuario" class="nav-link nav-link-wm <?=isset($sidebar) && in_array($sidebar,array('usuarios','perfil_permisos','administradores','instructores','candidatos')) ? ' active':''?>">
+	<?php $sidebarArray = ['usuarios','perfil_permisos','administradores','administradoresrrhh','instructores','candidatos']; ?>
+	<li class="nav-item <?=isset($sidebar) && in_array($sidebar,$sidebarArray) ? ' menu-is-opening menu-open':''?>" >
+		<a href="<?=base_url()?>usuario" class="nav-link nav-link-wm <?=isset($sidebar) && in_array($sidebar,$sidebarArray) ? ' active':''?>">
 			<i class="nav-icon fas fa-user"></i>
 			<p>
 				Usuarios
@@ -21,6 +22,14 @@
 					<a href="<?=base_url()?>usuario/administradores" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'administradores' ? 'active':''?>">
 						<i class="nav-icon fas fa-user-cog"></i>
 						<p>Administradores</p>
+					</a>
+				</li>
+			<?php endif; ?>
+			<?php if(perfil_permiso_operacion_menu('usuarios.admin')):?>
+				<li class="nav-item">
+					<a href="<?=base_url()?>usuario/admini-rrhh" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'administradoresrrhh' ? 'active':''?>">
+						<i class="nav-icon fas fa-users"></i>
+						<p>Admin. de Empresa</p>
 					</a>
 				</li>
 			<?php endif; ?>

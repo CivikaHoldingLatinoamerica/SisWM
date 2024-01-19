@@ -113,5 +113,6 @@ $route['reportes/candidato/descargar'] = 'Reportes/descargar_reporte_candidato';
 $route['perfil_permisos'] = 'PerfilPermiso/index';
 $route['candidato/perfil/(:num)'] = 'Perfil/editar/$1';
 $route['usuario/administradores'] = 'Usuario/administradores';
+$route['usuario/admini-rrhh'] = 'Usuario/administradoresRRHH';
 $route['usuario/evaluadores'] = 'Usuario/evaluadores';
 $route['usuario/candidatos'] = 'Usuario/candidatos';

@@ -134,6 +134,25 @@ class UsuarioModel extends ModeloBase
 		return $resultado;
 	}
 
+	public function guardar_usuario_adminrrhh($data,$id_usuario = false){
+		try{
+			if($id_usuario){
+				$resultado['success'] = false;
+				$resultado['msg'] = 'No fue posible actualizar el administrador de recursos humanos de empresa';
+				if($this->actualizar_usuario($data,$id_usuario)){
+					$resultado['success'] = true;
+					$resultado['msg'] = 'Se actualizó el administrador de recursos humanos de empresa con exito';
+				}
+			}else{
+				$resultado = $this->nuevo_usuario($data,'admin_emp');
+			}
+		}catch (Exception $ex){
+			$resultado['success'] = false;
+			$resultado['msg'] = 'Ocurrio un error al tratar de guardar el administrador de recursos humanos de empresa';
+		}
+		return $resultado;
+	}
+
 	public function guardar_usuario_instructor($data,$id_usuario = false){
 		try{
 			if($id_usuario){
@@ -354,6 +373,8 @@ class UsuarioModel extends ModeloBase
 					'usuario' => $perfil != 'candidato' ? $data['correo'] : $curp_usuario,
 					'password' => $perfil != 'candidato' ? sha1($data['password']) : sha1($curp_usuario),
 				);
+				$usuario_guardar['id_usuario_registro'] = $data['id_usuario_registro'];
+				unset($data['id_usuario_registro']);
 				$id_usuario = $this->guardar_usuario($usuario_guardar);
 				$this->insertar_perfil_usuario($id_usuario,$perfil);
 				$datos_usuario = $data;
@@ -446,7 +467,10 @@ class UsuarioModel extends ModeloBase
 	}
 
 	private function obtener_criterios_adicionales_usuarios($data_adicionales){
-		$criterios = '';
+		$criterios = ' and 1=1';
+		if(isset($data_adicionales['id_usuario_registro']) && $data_adicionales['id_usuario_registro'] != ''){
+			$criterios .= ' and u.id_usuario_registro = '.$data_adicionales['id_usuario_registro'];
+		}
 		if(isset($data_adicionales['busqueda']) && $data_adicionales['busqueda']){
 			$data_adicionales['busqueda'] = strtoupper($data_adicionales['busqueda']);
 			$criterios .= " and (
@@ -490,9 +514,10 @@ class UsuarioModel extends ModeloBase
 	public function insertar_perfil_usuario($id_usuario,$perfil){
 		$insert['id_usuario'] = $id_usuario;
 		switch ($perfil){
-			case 'admin': $insert['id_cat_perfil'] = 2; break;
-			case 'instructor': $insert['id_cat_perfil'] = 3;break;
-			case 'candidato': $insert['id_cat_perfil'] = 4;break;
+			case 'admin': $insert['id_cat_perfil'] = PERFIL_ADMIN; break;
+			case 'instructor': $insert['id_cat_perfil'] = PERFIL_INSTRUCTOR;break;
+			case 'candidato': $insert['id_cat_perfil'] = PERFIL_ALUMNO;break;
+			case 'admin_emp': $insert['id_cat_perfil'] = PERFIL_ADMINRRHH;break;
 		}
 		$this->db->insert('usuario_has_perfil',$insert);
 		return $this->db->insert_id();

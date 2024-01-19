@@ -105,6 +105,50 @@ class Usuario extends CI_Controller {
 		}
 	}
 
+	public function administradoresRRHH($pagina = 1, $limit = 10){
+		perfil_permiso_operacion('usuarios.admin');
+		try{
+			$post = $this->input->post();
+			$data = $this->UsuarioModel->obtener_usuarios_tablero($post,'admin_emp',$pagina,$limit);
+			$data['titulo_pagina'] = 'Administradores de empresa';
+			$data['migas_pan'] = array(
+				array('nombre' => 'Inicio','activo' => false,'url' => base_url()),
+				array('nombre' => 'Usuarios','activo' => false,'url' => $this->usuario->perfil=='root' ? base_url().'usuario' : '#'),
+				array('nombre' => 'Administradores','activo' => true,'url' => '#'),
+			);
+			$data['usuario'] = $this->usuario;
+			$data['sidebar'] = 'administradoresrrhh';
+			$data['extra_js'][] = base_url().'assets/js/admin/usuario.js';
+			$data_paginacion = data_paginacion($pagina,$limit,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+			//var_dump($data);exit;
+			$this->load->view('usuarios/tablero',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function tablero_administradoresRRHH($pagina = 1, $limit = 10){
+		perfil_permiso_operacion('usuarios.admin');
+		try{
+			$post = $this->input->post();
+			$data = $this->UsuarioModel->obtener_usuarios_tablero($post,'admin_emp',$pagina,$limit);
+			$data['sidebar'] = 'administradoresrrhh';
+			$data['usuario'] = $this->usuario;
+			$data_paginacion = data_paginacion($pagina,$limit,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+			$this->load->view('usuarios/resultado_tablero',$data);
+		}catch(Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
 	public function evaluadores($pagina = 1, $limit = 10){
 		perfil_permiso_operacion('usuarios.instructor');
 		try{
@@ -151,6 +195,9 @@ class Usuario extends CI_Controller {
 		perfil_permiso_operacion('usuarios.alumno');
 		try{
 			$post = $this->input->post();
+			if(isset($this->usuario->perfil) && $this->usuario->perfil == 'admin_emp'){
+				$post['id_usuario_registro'] = $this->usuario->id_usuario;
+			}
 			$data = $this->UsuarioModel->obtener_usuarios_tablero($post,'alumno',$pagina,$limit);
 			$data['titulo_pagina'] = 'Candidatos';
 			$data['migas_pan'] = array(
@@ -169,13 +216,16 @@ class Usuario extends CI_Controller {
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
 			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);
 		}
 	}
 
 	public function tablero_candidatos($pagina = 1, $limit = 10){
 		try{
 			$post = $this->input->post();
-			//var_dump($post);
+			if(isset($this->usuario->perfil) && $this->usuario->perfil == 'admin_emp'){
+				$post['id_usuario_registro'] = $this->usuario->id_usuario;
+			}
 			$data = $this->UsuarioModel->obtener_usuarios_tablero($post,'alumno',$pagina,$limit);
 			$data['sidebar'] = 'candidatos';
 			$data['usuario'] = $this->usuario;
@@ -193,6 +243,12 @@ class Usuario extends CI_Controller {
 
 	public function agregar_modificar_usuario($tipo = 'admin',$id_usuario = false){
 		$data['tipo_usuario'] = $tipo == 'instructor' ? 'evaluador' : $tipo;
+		switch($tipo){
+			case 'admin': $data['tipo_usuario_label'] = 'administrador'; break;
+			case 'admin_emp': $data['tipo_usuario_label'] = 'administrador de empresa'; break;
+			case 'instructor': $data['tipo_usuario_label'] = 'instructor'; break;
+			case 'candidato': $data['tipo_usuario_label'] = 'Alumno'; break;
+		}
 		$data['cat_sector_ec'] = $this->CatalogoModel->get_catalogo('cat_sector_ec');
 		$data['cat_ocupacion_especifica'] = $this->CatalogoModel->cat_ocupacion_especifica();
 		if($id_usuario){
@@ -205,11 +261,31 @@ class Usuario extends CI_Controller {
 	public function guardar_form_usuario($tipo = 'admin',$id_usuario = false){
 		try{
 			$post = $this->input->post();
+			//se integra campo del id de. usuario que registro el candidato
+			if($id_usuario === false){
+				$post['id_usuario_registro'] = $this->usuario->id_usuario;
+			}
 			switch ($tipo){
 				case 'admin':
 					$validacion_campos = Validaciones_Helper::formUsuarioAdmin($post,$id_usuario);
 					if($validacion_campos['success']){
 						$guardar_admin = $this->UsuarioModel->guardar_usuario_admin($post,$id_usuario);
+						if($guardar_admin['success']){
+							$response['success'] = true;
+							$response['msg'][] = $guardar_admin['msg'];
+						}else{
+							$response['success'] = false;
+							$response['msg'][] = $guardar_admin['msg'];
+						}
+					}else {
+						$response['success'] = false;
+						$response['msg'][] = $validacion_campos['msg'];
+					}
+					break;
+				case 'admin_emp':
+					$validacion_campos = Validaciones_Helper::formUsuarioAdmin($post,$id_usuario);
+					if($validacion_campos['success']){
+						$guardar_admin = $this->UsuarioModel->guardar_usuario_adminrrhh($post,$id_usuario);
 						if($guardar_admin['success']){
 							$response['success'] = true;
 							$response['msg'][] = $guardar_admin['msg'];
