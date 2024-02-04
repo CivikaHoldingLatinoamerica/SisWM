@@ -635,7 +635,33 @@ class Validaciones_Helper {
 		return $result;
 	}
 
-
+	public static function formEcGrupo($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['clave_grupo']) || self::isCampoVacio($data['clave_grupo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo clave de grupo es requerido';
+		}if(!isset($data['nombre_grupo']) || self::isCampoVacio($data['nombre_grupo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo nombre de grupo es requerido';
+		}if(!isset($data['duracion']) || self::isCampoVacio($data['duracion'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo duración es requerido';
+		}if(!isset($data['periodo_inicio']) || self::isCampoVacio($data['periodo_inicio'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo periodo de inicio es requerido';
+		}if(!isset($data['periodo_fin']) || self::isCampoVacio($data['periodo_fin'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo periodo de fin es requerido';
+		}if(!isset($data['agente_capacitador']) || self::isCampoVacio($data['agente_capacitador'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo agente capacitador es requerido';
+		}if(!isset($data['id_cat_area_tematica']) || self::isCampoVacio($data['id_cat_area_tematica'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo área temática es requerido';
+		}
+		return $result;
+	}
 
 	public static function isCampoVacio($campo){
 		$validacion = false;

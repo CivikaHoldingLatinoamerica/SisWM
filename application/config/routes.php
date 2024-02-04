@@ -61,8 +61,12 @@ $route['recuperar_password'] = 'Login/recuperar_password';
 $route['registro/(:num)'] = 'Login/registro/$1';
 $route['unsubscribe'] = 'Login/darse_baja';
 
+//rutas para los estandar de competencia
 $route['estandar_competencia'] = 'EC/index';
 $route['estandar_competencia/convocatoria/(:num)'] = 'ConvocatoriasEC/index/$1';
+$route['estandar_competencia/grupos/(:num)'] = 'ECGrupos/index/$1';
+
+
 $route['tecnicas_instrumentos/(:any)'] = 'TecnicasInstrumentos/index/$1';
 $route['evaluacion_cerrada/(:any)/(:any)'] = 'EvaluacionEC/index/$1/$2';
 $route['evaluacion_diagnostica/(:num)/(:num)'] = 'AlumnosEC/evaluacion_diagnostica/$1/$2';

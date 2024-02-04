@@ -75,9 +75,8 @@
 					<?php endif; ?>
 
 					<?php if(perfil_permiso_operacion_menu('estandar_competencia.instructor')): ?>
-						<button class="btn btn-sm btn-outline-secondary btn_asignacion_grupos" data-toggle="tooltip"
-								data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>"
-								title="Ver y/o asignar grupos"><i class="fa fa-user-group"></i> Grupos</button>
+						<a href="<?=base_url()?>estandar_competencia/grupos/<?=$ec->id_estandar_competencia?>" class="btn btn-sm btn-outline-secondary btn_asignacion_grupos" data-toggle="tooltip"
+								title="Ver y/o asignar grupos"><i class="fa fa-user-group"></i> Grupos</a>
 						<button class="btn btn-sm btn-outline-warning btn_instructor_evaluador" data-toggle="tooltip"
 								data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>"
 								title="Ver y/o asignar evaluador"><i class="fa fa-user-tie"></i> Evaluadores</button>
@@ -94,7 +93,10 @@
 									<span class="sr-only">Toggle Dropdown</span>
 								</button>
 								<div class="dropdown-menu" role="menu" style="">
-									<a class="dropdown-item btn_alumnos_ec" role="button" data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>">
+									<!-- <a class="dropdown-item btn_alumnos_ec" role="button" data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>">
+										Asignación
+									</a> -->
+									<a class="dropdown-item btn_asingar_alumno_ec" role="button" data-id_estandar_competencia="<?=$ec->id_estandar_competencia?>">
 										Asignación
 									</a>
 									<a class="dropdown-item" href="<?=base_url()?>EvaluadoresEC/alumnos/<?=$ec->id_estandar_competencia?>">Tablero</a>

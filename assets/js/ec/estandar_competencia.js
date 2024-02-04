@@ -34,6 +34,11 @@ $(document).ready(function () {
 		EstandarCompetencia.ver_asignar_instructor_alumno_ec(id_estandar_competencia,'alumno');
 	});
 
+	$(document).on('click','.btn_asingar_alumno_ec',function(){
+		var id_estandar_competencia = $(this).data('id_estandar_competencia');
+		EstandarCompetencia.ver_asignar_alumno_ec(id_estandar_competencia);
+	});
+
 	$(document).on('click','.slt_instructor_alumno_ec',function(){
 		var id_usuario = $(this).val()[0];
 		var tipo = $(this).data('tipo');
@@ -100,7 +105,9 @@ $(document).ready(function () {
 		var pagina_select = $('#paginacion_usuario').val();
 		var max_paginacion = $('#paginacion_usuario').data('max_paginacion');
 		if(pagina_select < max_paginacion){
-			if(Math.round($(window).scrollTop()) == Math.round($(document).height() - $(window).height())){
+			var scroll_pos = Math.round($(window).scrollTop()) + 1;
+			var scroll_length = Math.round($(document).height() - $(window).height())-1;
+			if(scroll_pos >= scroll_length){
 				pagina_select++;
 				EstandarCompetencia.tablero(false,pagina_select);
 				$('#paginacion_usuario').val(pagina_select);
@@ -202,6 +209,15 @@ var EstandarCompetencia = {
 				$('#contenedor_modal_primario').html(response);
 				Comun.mostrar_ocultar_modal('#modal_form_instructor_ec',true);
 				EstandarCompetencia.obtener_registro_instructores_alumnos_ec(id_estandar_competencia,tipo,true);
+			}
+		);
+	},
+
+	ver_asignar_alumno_ec : function(id_estandar_competencia){
+		Comun.obtener_contenido_peticion_html(base_url + 'EC/agregar_modificar_alumno_ec/'+ id_estandar_competencia,{},
+			function(response){
+				$('#contenedor_modal_primario').html(response);
+				Comun.mostrar_ocultar_modal('#modal_form_alumno_ec',true);
 			}
 		);
 	},
@@ -409,7 +425,6 @@ var EstandarCompetencia = {
 			"autoWidth": false,
 			"responsive": true,
 		});
-	}
-
+	},
 
 };

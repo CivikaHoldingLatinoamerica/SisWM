@@ -71,7 +71,7 @@ ADD COLUMN `clave_grupo` VARCHAR(45) NOT NULL AFTER `i_destandar_competencia_gru
 ADD COLUMN `nombre_grupo` VARCHAR(250) NOT NULL AFTER `clave_grupo`;
 
 ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
-CHANGE COLUMN `i_destandar_competencia_grupos` `id_estandar_competencia_grupos` INT UNSIGNED NOT NULL AUTO_INCREMENT ;
+CHANGE COLUMN `i_destandar_competencia_grupos` `id_estandar_competencia_grupo` INT UNSIGNED NOT NULL AUTO_INCREMENT ;
 
 CREATE TABLE `civika_ped`.`cat_categoria_empresa` (
   `id_cat_categoria_empresa` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -105,3 +105,6 @@ ADD CONSTRAINT `fk_datos_empresa_categoria_emp`
 
 ALTER TABLE `civika_ped`.`datos_empresa` 
 ADD COLUMN `nombre_corto` VARCHAR(150) NULL AFTER `nombre`;
+
+ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ADD COLUMN `eliminado` ENUM('si', 'no') NOT NULL DEFAULT 'no' AFTER `id_estandar_competencia`;

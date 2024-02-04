@@ -122,9 +122,9 @@ $(document).ready(function(){
 		var pagina_select = $('#paginacion_usuario').val();
 		var max_paginacion = $('#paginacion_usuario').data('max_paginacion');
 		if(pagina_select < max_paginacion){
-			var wst = Math.round($(window).scrollTop());
-			var dhwh = Math.round($(document).height() - $(window).height());
-			if(wst == dhwh){
+			var scroll_pos = Math.round($(window).scrollTop()) + 1;
+			var scroll_length = Math.round($(document).height() - $(window).height())-1;
+			if(scroll_pos >= scroll_length){
 				pagina_select++;
 				var id_estandar_competencia = $('#val_id_estandar_competencia').val();
 				EvaluadoresEC.cargar_alumnos_estandar_competencia(false,id_estandar_competencia,pagina_select);

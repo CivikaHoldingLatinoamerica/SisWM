@@ -238,6 +238,22 @@ class EC extends CI_Controller {
 		}
 	}
 
+	public function agregar_modificar_alumno_ec($id_estandar_competencia){
+		perfil_permiso_operacion('estandar_competencia.instructor');
+		try{
+			$data['id_estandar_competencia'] = $id_estandar_competencia;
+			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar_competencia);
+			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
+			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
+			$this->load->view('ec/form_alumno',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
 	public function instructores_alumnos_asignados($id_estandar_competencia,$tipo='instructor'){
 		perfil_permiso_operacion('estandar_competencia.instructor');
 		try{
@@ -362,8 +378,6 @@ class EC extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
-	public function agregar_modificar_grupos(){
-		
-	}
+	
 
 }

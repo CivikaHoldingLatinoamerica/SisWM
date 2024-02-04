@@ -31,7 +31,9 @@ $(document).ready(function (){
 		var pagina_select = $('#paginacion_usuario').val();
 		var max_paginacion = $('#paginacion_usuario').data('max_paginacion');
 		if(pagina_select < max_paginacion){
-			if(Math.round($(window).scrollTop()) == Math.round($(document).height() - $(window).height())){
+			var scroll_pos = Math.round($(window).scrollTop()) + 1;
+			var scroll_length = Math.round($(document).height() - $(window).height())-1;
+			if(scroll_pos >= scroll_length){
 				pagina_select++;
 				methods.buscarEntregables(false,pagina_select);
 				$('#paginacion_usuario').val(pagina_select);
