@@ -24,7 +24,7 @@ CREATE TABLE `cat_area_tematica` (
   `id_cat_area_tematica` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
   `clave` CHAR(5) NOT NULL,
   `area_tematica` VARCHAR(150) NOT NULL,
-  PRIMARY KEY (`id_cat_area_tematica`));
+  PRIMARY KEY (`id_cat_area_tematica`)) ENGINE=InnoDB;
 
 INSERT INTO cat_area_tematica (clave,area_tematica) VALUES
 	 ('1000','Producción general'),
@@ -51,7 +51,7 @@ CREATE TABLE `estandar_competencia_grupo` (
     FOREIGN KEY (`id_cat_area_tematica`)
     REFERENCES `cat_area_tematica` (`id_cat_area_tematica`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE=InnoDB;
 
 ALTER TABLE `estandar_competencia_grupo` 
 ADD COLUMN `id_estandar_competencia` INT UNSIGNED NOT NULL AFTER `id_cat_area_tematica`;
@@ -76,7 +76,7 @@ CHANGE COLUMN `i_destandar_competencia_grupos` `id_estandar_competencia_grupo` I
 CREATE TABLE `civika_ped`.`cat_categoria_empresa` (
   `id_cat_categoria_empresa` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(150) NOT NULL,
-  PRIMARY KEY (`id_cat_categoria_empresa`));
+  PRIMARY KEY (`id_cat_categoria_empresa`)) ENGINE=InnoDB;
 
 INSERT INTO cat_categoria_empresa (nombre) VALUES
 	 ('CRI'),
@@ -93,7 +93,7 @@ DROP COLUMN `cri`,
 DROP COLUMN `supervision`,
 DROP COLUMN `id_cat_ocupacion_especifica`,
 ADD COLUMN `id_cat_categoria_empresa` INT(3) UNSIGNED NULL AFTER `cargo`,
-ADD INDEX `fk_datos_empresa_categoria_emp_idx` (`id_cat_categoria_empresa` ASC) VISIBLE,
+ADD INDEX `fk_datos_empresa_categoria_emp_idx` (`id_cat_categoria_empresa` ASC),
 DROP INDEX `fk_datos_empresa_cat_ocupacion_especifica_idx` ;
 ;
 ALTER TABLE `civika_ped`.`datos_empresa` 
@@ -108,3 +108,21 @@ ADD COLUMN `nombre_corto` VARCHAR(150) NULL AFTER `nombre`;
 
 ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
 ADD COLUMN `eliminado` ENUM('si', 'no') NOT NULL DEFAULT 'no' AFTER `id_estandar_competencia`;
+
+ALTER TABLE `civika_ped`.`estandar_competencia` 
+DROP FOREIGN KEY `fk_estandar_competencia_cat_sector_ec1`,
+DROP FOREIGN KEY `fk_estandar_competencia_cat_comite_ec1`;
+ALTER TABLE `civika_ped`.`estandar_competencia` 
+DROP COLUMN `id_cat_comite_ec`,
+DROP COLUMN `id_cat_sector_ec`,
+ADD COLUMN `id_cat_area_tematica` INT(3) UNSIGNED NULL AFTER `id_archivo`,
+ADD INDEX `fk_estandar_competencia_cat_area_tem_idx` (`id_cat_area_tematica` ASC),
+DROP INDEX `fk_estandar_competencia_cat_comite_ec1_idx` ,
+DROP INDEX `fk_estandar_competencia_cat_sector_ec1_idx` ;
+;
+ALTER TABLE `civika_ped`.`estandar_competencia` 
+ADD CONSTRAINT `fk_estandar_competencia_cat_area_tem`
+  FOREIGN KEY (`id_cat_area_tematica`)
+  REFERENCES `civika_ped`.`cat_area_tematica` (`id_cat_area_tematica`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

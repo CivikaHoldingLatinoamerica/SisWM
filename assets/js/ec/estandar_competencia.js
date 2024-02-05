@@ -99,6 +99,28 @@ $(document).ready(function () {
 		var id_estandar_competencia = $(this).data('id_estandar_competencia');
 	});
 
+	/**
+	 * nueva funcionalidad para la asignación de candidatos al estandar de competencia
+	 * @author: enrique corona
+	 * @date: enero-2024
+	 */
+
+	$(document).on('click','#btn_asingar_candidato_estandar_competencia',function(){
+		$('#contenedor_listado_candidatos_asignados_ec').fadeOut();
+		$('#contenedor_asignar_candidato_ec').fadeIn();
+	});
+
+	$(document).on('click','#btn_cancelar_asingar_candidato_ec',function(){
+		$('#contenedor_listado_candidatos_asignados_ec').fadeIn();
+		$('#contenedor_asignar_candidato_ec').fadeOut();
+	});
+
+	$(document).on('click','#btn_buscar_usr_candidatos_asignados',function(){
+		
+	});
+
+
+
 	//funcionalidad para el paginado por scroll
 	$(window).scroll(function(){
 		//validamos lo del scroll

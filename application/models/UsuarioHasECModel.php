@@ -18,13 +18,16 @@ class UsuarioHasECModel extends ModeloBase
 
 	public function obtener_query_base(){
 		$consulta = "select 
-			  	uhec.*,du.*,
+			  	uhec.*,du.*,u.usuario, 
+				due.nombre as nombre_evaluador, due.apellido_p as apellido_p_evaluador, due.apellido_m as apellido_m_evaluador,
   				DATE(uhec.fecha_evidencia_ati) fecha_evidencia_ati, time (uhec.fecha_evidencia_ati) hora_evidencia_ati,
   				DATE(uhec.fecha_presentacion_resultados) fecha_presentacion_resultados, time (uhec.fecha_presentacion_resultados) hora_presentacion_resultados
 			from usuario_has_estandar_competencia uhec
-			  inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
-			  inner join datos_usuario du on du.id_usuario = uhec.id_usuario
-			  inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil";
+				inner join usuario u on u.id_usuario = uhec.id_usuario
+			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
+			  	inner join datos_usuario du on du.id_usuario = uhec.id_usuario
+				left join datos_usuario due on due.id_usuario = uhec.id_usuario_evaluador
+			  	inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil";
 		return $consulta;
 	}
 
@@ -196,6 +199,24 @@ class UsuarioHasECModel extends ModeloBase
 			log_message('error',$ex->getMessage());
 			return 0;
 		}
+	}
+
+	public function obtener_candidatos_sin_asignar_ec($id_estandar_competencia){
+		$consulta = "select 
+			u.id_usuario,u.usuario, du.nombre,du.apellido_p, du.apellido_m, du.curp
+		from usuario u
+			left join usuario_has_estandar_competencia uhec on uhec.id_usuario = u.id_usuario 
+			inner join usuario_has_perfil uhp on uhp.id_usuario = u.id_usuario 
+			inner join datos_usuario du on du.id_usuario = u.id_usuario 
+		where u.activo = 'si'
+			and u.eliminado = 'no'
+			and uhp.id_cat_perfil = ".PERFIL_ALUMNO."
+			and (
+				uhec.id_usuario is null 
+				or uhec.id_estandar_competencia <> $id_estandar_competencia
+			)";
+		$query = $this->db->query($consulta);
+		return $query->result();
 	}
 
 }

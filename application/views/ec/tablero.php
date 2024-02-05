@@ -46,6 +46,7 @@
 										<tr>
 											<th>ID</th>
 											<th>Código</th>
+											<th>Área Temática</th>
 											<th>Titulo</th>
 											<th>Banner</th>
 											<th>Operaciones</th>

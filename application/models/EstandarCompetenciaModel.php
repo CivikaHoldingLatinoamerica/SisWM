@@ -38,6 +38,7 @@ class EstandarCompetenciaModel extends ModeloBase
 	public function criterios_join()
 	{
 		$joins = ' left join archivo a on a.id_archivo = ec.id_archivo ';
+		$joins .= ' left join cat_area_tematica cat on cat.id_cat_area_tematica = ec.id_cat_area_tematica ';
 		if(in_array($this->usuario->perfil,array('instructor','alumno'))){
 			$joins .= ' inner join usuario_has_estandar_competencia uhec on uhec.id_estandar_competencia = ec.id_estandar_competencia ';
 		}
@@ -119,7 +120,7 @@ class EstandarCompetenciaModel extends ModeloBase
 	}
 
 	public function obtener_query_base(){
-		$params_slt = "ec.*,a.*";
+		$params_slt = "ec.*,a.*,cat.*";
 		if(in_array($this->usuario->perfil,array('instructor','alumno'))){
 			$params_slt .= ', uhec.*';
 		}

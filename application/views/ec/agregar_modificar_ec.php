@@ -31,6 +31,17 @@
 						</div>
 					</div>
 					<div class="form-group row">
+						<label for="input_cat_area_tematica" class="col-sm-3 col-form-label">Área Temática</label>
+						<div class="col-sm-9" >
+							<select class="custom-select" id="input_cat_area_tematica" data-rule-required="true" name="id_cat_area_tematica">
+								<option value="">--Seleccione--</option>
+								<?php foreach ($cat_area_tematica as $cat): ?>
+									<option value="<?=$cat->id_cat_area_tematica?>" <?=isset($estandar_competencia->id_cat_area_tematica) && $estandar_competencia->id_cat_area_tematica == $cat->id_cat_area_tematica ? 'selected="selected"':'' ?> ><?=$cat->clave.'-'.$cat->area_tematica?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
 						<label for="img_banner_ec" class="col-sm-3 col-form-label">Imagen Banner:</label>
 						<input type="hidden" id="input_id_archivo_banner_ec" name="id_archivo" value="<?=isset($estandar_competencia) ? $estandar_competencia->id_archivo : ''?>">
 						<input type="file" id="img_banner_ec" name="img_banner_ec" class="col-sm-3" accept="image/*" >

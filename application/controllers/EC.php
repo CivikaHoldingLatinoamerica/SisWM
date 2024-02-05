@@ -133,14 +133,14 @@ class EC extends CI_Controller {
 
 	public function agregar_modifcar($id_estandar_competencia = false){
 		perfil_permiso_operacion('estandar_competencia.agregar');
-		$data = array();
+		$data['cat_area_tematica'] = $this->CatalogoModel->get_catalogo('cat_area_tematica');
 		if($id_estandar_competencia){
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
-				$data['archivo_banner'] = null;
-				if(isset($data['estandar_competencia']->id_archivo) && !is_null($data['estandar_competencia']->id_archivo) && $data['estandar_competencia']->id_archivo != ''){
-					$data['archivo_banner'] = $this->ArchivoModel->obtener_archivo($data['estandar_competencia']->id_archivo);
-				}
+			$data['archivo_banner'] = null;
+			if(isset($data['estandar_competencia']->id_archivo) && !is_null($data['estandar_competencia']->id_archivo) && $data['estandar_competencia']->id_archivo != ''){
+				$data['archivo_banner'] = $this->ArchivoModel->obtener_archivo($data['estandar_competencia']->id_archivo);
 			}
+		}
 		$this->load->view('ec/agregar_modificar_ec',$data);
 	}
 
@@ -241,10 +241,22 @@ class EC extends CI_Controller {
 	public function agregar_modificar_alumno_ec($id_estandar_competencia){
 		perfil_permiso_operacion('estandar_competencia.instructor');
 		try{
+			$post = $this->input->post();
+			$buscar = array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'perfil' => 'alumno',
+				'busqueda' => isset($post['busqueda']) ? $post['busqueda'] : ''
+			);
+			$data = $this->UsuarioHasECModel->tablero($buscar,1,5);
+			$data['usuario'] = $this->usuario;
+			$data_paginacion = data_paginacion(1,5,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar_competencia);
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
+			$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
+			var_dump($data);exit;
 			$this->load->view('ec/form_alumno',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -378,6 +390,27 @@ class EC extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
-	
+	public function candidatos_asigandos_ec($id_estandar_competencia,$pagina = 1, $registros){
+		perfil_permiso_operacion('estandar_competencia.instructor');
+		try{
+			$post = $this->input->post();
+			$buscar = array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'perfil' => 'alumno',
+				'busqueda' => isset($post['busqueda']) ? $post['busqueda'] : ''
+			);
+			$data = $this->UsuarioHasECModel->tablero($buscar,$pagina,$registros);
+			$data['usuario'] = $this->usuario;
+			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+			var_dump($data);exit;
+			//sacamos la lista de instructores que se asignaron al EC
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);exit;
+	}
 
 }

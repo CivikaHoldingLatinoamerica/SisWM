@@ -6,6 +6,9 @@
 		<tr class="<?=$ec->eliminado =='si' ? 'text-danger':''?>">
 			<td><?=$ec->id_estandar_competencia?></td>
 			<td><?=$ec->codigo?></td>
+			<td>
+				<?=$ec->clave != null ?  $ec->clave.'-'.$ec->area_tematica : 'Sin registro'?>
+			</td>
 			<td><?=$ec->titulo?></td>
 			<td>
 				<?php if(isset($ec->id_archivo) && !is_null($ec->id_archivo) && $ec->id_archivo != ''): ?>

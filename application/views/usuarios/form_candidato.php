@@ -114,7 +114,7 @@
 </div>
 
 <div class="form-group row">
-	<label for="input_ocupacion_especifica" class="col-sm-3 col-form-label">Ocupación específicaaaa</label>
+	<label for="input_ocupacion_especifica" class="col-sm-3 col-form-label">Ocupación específica</label>
 	<div class="col-sm-9" >
 		<select class="custom-select" id="input_ocupacion_especifica" data-rule-required="true" name="id_cat_ocupacion_especifica">
 			<option value="">--Seleccione--</option>
