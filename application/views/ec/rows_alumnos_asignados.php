@@ -1,9 +1,10 @@
 <?php if($pagina_select == 1 && $paginas > 1): ?>
-	<input type="hidden" id="paginacion_usuario" value="<?=$pagina_select?>" data-max_paginacion="<?=$paginas?>">
+	<input type="hidden" id="paginacion_usuario_candidatos_asignados" value="<?=$pagina_select?>" data-max_paginacion="<?=$paginas?>">
 	<tfoot >
 		<tr>
 			<td colspan="3" class="text-center">
 				<button type="button" class="btn btn-sm btn-outline-primary"><i class="fas fa-arrow-down"></i>Mostrar Más</button>
+				<i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin" style="display:none"></i>
 			</td>
 		</tr>
 	</tfoot>

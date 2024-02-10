@@ -256,8 +256,29 @@ class EC extends CI_Controller {
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
 			$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
-			var_dump($data);exit;
+			//var_dump($data);exit;
 			$this->load->view('ec/form_alumno',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function listado_candidatos_asignados($id_estandar_competencia,$pagina = 1,$registros = 5){
+		perfil_permiso_operacion('estandar_competencia.instructor');
+		try{
+			$post = $this->input->post();
+			$buscar = array(
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'perfil' => 'alumno',
+				'busqueda' => isset($post['busqueda']) ? $post['busqueda'] : ''
+			);
+			$data = $this->UsuarioHasECModel->tablero($buscar,$pagina,$registros);
+			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
+			$data = array_merge($data,$data_paginacion);
+			$this->load->view('ec/rows_alumnos_asignados',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

@@ -116,7 +116,7 @@ $(document).ready(function () {
 	});
 
 	$(document).on('click','#btn_buscar_usr_candidatos_asignados',function(){
-		
+		EstandarCompetencia.tablero_candidatos_asignados();	
 	});
 
 
@@ -178,6 +178,30 @@ var EstandarCompetencia = {
 					Comun.tooltips();
 					$('.popoverShowHTML').trigger('click');
 					$('#overlay_full_page').fadeOut();
+				}
+			);
+		}
+	},
+
+	tablero_candidatos_asignados : function(){
+		var paginacion_usuario_candidatos_asignados = $('#paginacion_usuario_candidatos_asignados').val();
+		var max_paginacion = $('#paginacion_usuario_candidatos_asignados').data('max_paginacion');
+		if(paginacion_usuario_candidatos_asignados < max_paginacion){
+			var post = {
+				busqueda : $('#input_buscar_candidatos_asignados_ec').val(),
+				id_usuario_evaluador : $('#input_buscar_evaluador_asigando').val(),
+			}
+			$('#spinner_buscar_candidatos_asignados').fadeIn();
+			var id_estandar_competencia = $('#id_estandar_competencia_asignar').val();
+			Comun.obtener_contenido_peticion_html(
+				base_url + 'EC/listado_candidatos_asignados/' + id_estandar_competencia + '/' + pagina + '/' + registros,
+				post,
+				function(response){
+					paginacion_usuario_candidatos_asignados++;
+					$('#contenedor_resultados_usr_asignados').append(response);
+					Comun.tooltips();
+					$('#spinner_buscar_candidatos_asignados').fadeOut();
+					$('#paginacion_usuario_candidatos_asignados').val(paginacion_usuario_candidatos_asignados);
 				}
 			);
 		}

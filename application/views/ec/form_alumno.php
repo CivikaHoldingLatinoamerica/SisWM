@@ -67,8 +67,7 @@
 								<div class="card-body">
 									<div class="form-group row">
 										<div class="col-sm-4">
-											<input type="text" id="input_buscar_candidatos_para_asignar_ec" class="form-control form-control" 
-													name="busqueda_usr_candidatos" placeholder="Escribe algo para buscar">
+											<input type="text" id="input_buscar_candidatos_asignados_ec" class="form-control form-control" placeholder="Escribe algo para buscar">
 											<small class="form-text text-muted">Escribe algun texto de referencia, puedes buscar entre nombre, apellidos, correo, telefono o CURP; cuando termines pulsa en el boton del icono de buscar</small>
 										</div>
 										<div class="col-sm-4">
