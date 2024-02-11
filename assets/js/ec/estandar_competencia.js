@@ -121,7 +121,11 @@ $(document).ready(function () {
 		EstandarCompetencia.tablero_candidatos_asignados(pagina,registros);	
 	});
 
-
+	$(document).on('click','#btn_buscar_mas_usr_candidatos_asignados',function(){
+		var pagina = parseInt($('#paginacion_usuario_candidatos_asignados').val()) + 1;
+		var registros = $('#numero_registros_candidatos').val()
+		EstandarCompetencia.tablero_candidatos_asignados(pagina,registros);	
+	});
 
 	//funcionalidad para el paginado por scroll
 	$(window).scroll(function(){
@@ -192,6 +196,7 @@ var EstandarCompetencia = {
 			id_usuario_evaluador : $('#input_buscar_evaluador_asigando').val(),
 		}
 		if(pagina == 1){
+			$("#contenedor_resultados_usr_asignados").closest('table').find('tfoot').remove();
 			$("#contenedor_resultados_usr_asignados").html('<tr>'+
 				'<td colspan="3" class="text-center"><i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin"></i></td>'+
 			'</tr>');
