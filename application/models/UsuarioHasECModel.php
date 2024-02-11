@@ -39,6 +39,8 @@ class UsuarioHasECModel extends ModeloBase
 			$criterios .= " and uhec.id_usuario = '".$data['id_usuario']."'";
 		}if(isset($data['perfil']) && $data['perfil'] != ''){
 			$criterios .= " and cp.slug = '".$data['perfil']."'";
+		}if(isset($data['id_usuario_evaluador']) && $data['id_usuario_evaluador'] != ''){
+			$criterios .= " and uhec.id_usuario_evaluador = '".$data['id_usuario_evaluador']."'";
 		}
 		return $criterios;
 	}

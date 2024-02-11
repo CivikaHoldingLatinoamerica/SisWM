@@ -35,21 +35,6 @@
 											<span class="badge badge-danger">Solo apareceran candidatos no asigandos al EC</span>
 										</div>
 									</div>
-									<div class="form-group row">
-										<div class="col-sm-12">
-											<div class="input-group">
-												<input type="text" id="input_buscar_candidatos_para_asignar_ec" class="form-control form-control-lg" 
-													name="busqueda_usr_candidatos" placeholder="Escribe algo para buscar">
-												<div class="input-group-append">
-													<button type="button" id="btn_buscar_usr_candidatos_para_asignar" class="btn btn-sm btn-default">
-														<i class="fa fa-search"></i>
-													</button>
-												</div>
-											</div>
-											<small class="form-text text-muted">Escribe algun texto de referencia, puedes buscar entre nombre, apellidos, correo, telefono o CURP; cuando termines pulsa en el boton del icono de buscar</small>
-											<span class="badge badge-danger">Solo apareceran candidatos no asigandos al EC</span>
-										</div>
-									</div>
 								</div>
 								<div class="card-footer text-right">
 									<button type="button" id="btn_cancelar_asingar_candidato_ec" class="btn btn-sm btn-outline-danger">Cancelar</button>
@@ -79,7 +64,19 @@
 											</select>
 											<small class="form-text text-muted">Instructor asignado</small>
 										</div>
-										<div class="col-sm-4 text-right">
+										<div class="col-sm-4">
+											<select class="custom-select" id="numero_registros_candidatos" data-rule-required="true">
+												<option value="5">5</option>
+												<option value="15">15</option>
+												<option value="30">30</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+											</select>
+											<small class="form-text text-muted">Número de registros</small>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-12 text-right">
 											<button type="button" id="btn_buscar_usr_candidatos_asignados" class="btn btn-sm btn-primary">
 												<i class="fa fa-search"></i> Buscar
 											</button>

@@ -273,11 +273,13 @@ class EC extends CI_Controller {
 			$buscar = array(
 				'id_estandar_competencia' => $id_estandar_competencia,
 				'perfil' => 'alumno',
-				'busqueda' => isset($post['busqueda']) ? $post['busqueda'] : ''
+				'busqueda' => isset($post['busqueda']) ? $post['busqueda'] : '',
+				'id_usuario_evaluador' => isset($post['id_usuario_evaluador']) ? $post['id_usuario_evaluador'] : '',
 			);
 			$data = $this->UsuarioHasECModel->tablero($buscar,$pagina,$registros);
 			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
+			$data['id_estandar_competencia'] = $id_estandar_competencia;
 			$this->load->view('ec/rows_alumnos_asignados',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
