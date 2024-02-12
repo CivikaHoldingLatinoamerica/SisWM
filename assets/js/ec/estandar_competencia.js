@@ -123,6 +123,7 @@ $(document).ready(function () {
 
 	$(document).on('click','#btn_buscar_mas_usr_candidatos_asignados',function(){
 		var pagina = parseInt($('#paginacion_usuario_candidatos_asignados').val()) + 1;
+		//var pagina = parseInt($('#paginacion_usuario_candidatos_asignados').data('pagina_select')) + 1;
 		var registros = $('#numero_registros_candidatos').val()
 		EstandarCompetencia.tablero_candidatos_asignados(pagina,registros);	
 	});
@@ -196,23 +197,23 @@ var EstandarCompetencia = {
 			id_usuario_evaluador : $('#input_buscar_evaluador_asigando').val(),
 		}
 		if(pagina == 1){
-			$("#contenedor_resultados_usr_asignados").closest('table').find('tfoot').remove();
 			$("#contenedor_resultados_usr_asignados").html('<tr>'+
-				'<td colspan="3" class="text-center"><i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin"></i></td>'+
+				'<td colspan="4" class="text-center"><i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin"></i></td>'+
 			'</tr>');
 			Comun.obtener_contenido_peticion_html(
 				base_url + 'EC/listado_candidatos_asignados/' + id_estandar_competencia + '/' + pagina + '/' + registros,
 				post,
 				function(response){
-					paginacion_usuario_candidatos_asignados++;
-					$('#contenedor_resultados_usr_asignados').html(response)
+					$('#contenedor_resultados_usr_asignados').html(response);
 					Comun.tooltips();
 					$('#spinner_buscar_candidatos_asignados').fadeOut();
-					$('#paginacion_usuario_candidatos_asignados').val(paginacion_usuario_candidatos_asignados);
+					$('#paginacion_usuario_candidatos_asignados').val(pagina);
+					var candidatos_registrados = $('#total_registros_candidatos_asignados').val();
+					$('#numero_registros_candidatos_registrados').html(candidatos_registrados);
 				}
 			);
 		}else{
-			var paginacion_usuario_candidatos_asignados = $('#paginacion_usuario_candidatos_asignados').val();
+			var paginacion_usuario_candidatos_asignados = parseInt($('#paginacion_usuario_candidatos_asignados').val());
 			var max_paginacion = $('#paginacion_usuario_candidatos_asignados').data('max_paginacion');
 			if(paginacion_usuario_candidatos_asignados < max_paginacion){	
 				$('#spinner_buscar_candidatos_asignados').fadeIn();

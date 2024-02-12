@@ -255,8 +255,8 @@ class EC extends CI_Controller {
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar_competencia);
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
-			//$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
-			var_dump($data);
+			$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
+			//var_dump($data);
 			$this->load->view('ec/form_alumno',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -280,7 +280,7 @@ class EC extends CI_Controller {
 			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
-			var_dump($data);
+			//var_dump($data);
 			$this->load->view('ec/rows_alumnos_asignados',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

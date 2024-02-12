@@ -1,10 +1,11 @@
 <?php if($pagina_select == 1 && $paginas > 1): ?>
-	<input type="hidden" id="paginacion_usuario_candidatos_asignados" value="<?=$pagina_select?>" data-max_paginacion="<?=$paginas?>">
+	<input type="hidden" id="paginacion_usuario_candidatos_asignados" data-pagina_select="<?=$pagina_select?>" value="<?=$pagina_select?>" data-max_paginacion="<?=$paginas?>">
+	<input type="hidden" id="total_registros_candidatos_asignados" value="<?=$total_registros?>">
 <?php endif; ?>
 <?php if(isset($usuario_has_estandar_competencia) && is_array($usuario_has_estandar_competencia) && !empty($usuario_has_estandar_competencia)): ?>
 	<?php foreach ($usuario_has_estandar_competencia as $index => $candidato): ?>
 		<tr>
-			<td><?=($index + 1 * $pagina_select)+1?></td>
+			<td><?=$candidato->id_usuario?> - </td>
 			<td><?=$candidato->usuario.' - '.$candidato->nombre.' '.$candidato->apellido_p.' '.$candidato->apellido_m?></td>
 			<td><?=$candidato->nombre_evaluador.' '.$candidato->apellido_p_evaluador.' '.$candidato->apellido_m_evaluador?></td>
 			<td>
@@ -26,15 +27,3 @@
 		</td>
 	</tr>
 <?php endif; ?>
-
-<?php if($pagina_select == 1 && $paginas > 1): ?>
-	<tfoot >
-		<tr>
-			<td colspan="4" class="text-center">
-				<button id="btn_buscar_mas_usr_candidatos_asignados" type="button" class="btn btn-sm btn-outline-primary"><i class="fas fa-arrow-down"></i>Mostrar Más</button>
-				<i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin" style="display:none"></i>
-			</td>
-		</tr>
-	</tfoot>
-<?php endif; ?>
-

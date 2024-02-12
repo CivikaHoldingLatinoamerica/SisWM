@@ -41,6 +41,15 @@ class UsuarioHasECModel extends ModeloBase
 			$criterios .= " and cp.slug = '".$data['perfil']."'";
 		}if(isset($data['id_usuario_evaluador']) && $data['id_usuario_evaluador'] != ''){
 			$criterios .= " and uhec.id_usuario_evaluador = '".$data['id_usuario_evaluador']."'";
+		}if(isset($data['busqueda']) && $data['busqueda'] != ''){
+			$criterios .= " and (
+				UPPER(du.nombre) like '%".$data['busqueda']."%' or
+				UPPER(du.apellido_p) like '%".$data['busqueda']."%' or
+				UPPER(du.apellido_m) like '%".$data['busqueda']."%' or
+				UPPER(du.correo) like '%".$data['busqueda']."%' or
+				UPPER(du.telefono) like '%".$data['busqueda']."%' or
+				UPPER(du.curp) like '%".$data['busqueda']."%'
+			  )";
 		}
 		return $criterios;
 	}
@@ -49,8 +58,11 @@ class UsuarioHasECModel extends ModeloBase
 		$consulta = "select 
 			  count(*) total_registros 
 			from usuario_has_estandar_competencia uhec
-			  inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
-			  inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil". $this->criterios_busqueda($data);
+				inner join usuario u on u.id_usuario = uhec.id_usuario
+			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
+				inner join datos_usuario du on du.id_usuario = uhec.id_usuario
+			  	left join datos_usuario due on due.id_usuario = uhec.id_usuario_evaluador
+			  	inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil ". $this->criterios_busqueda($data);
 		$query = $this->db->query($consulta);
 		return $query->row()->total_registros;
 	}
