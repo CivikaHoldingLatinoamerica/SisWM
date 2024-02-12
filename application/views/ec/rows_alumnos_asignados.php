@@ -5,7 +5,8 @@
 <?php if(isset($usuario_has_estandar_competencia) && is_array($usuario_has_estandar_competencia) && !empty($usuario_has_estandar_competencia)): ?>
 	<?php foreach ($usuario_has_estandar_competencia as $index => $candidato): ?>
 		<tr>
-			<td><?=$candidato->id_usuario?> - </td>
+			<td><?=$index + 1 + ($pagina_select*$limit_select-$limit_select)?></td>
+			<td><?=$candidato->id_usuario?></td>
 			<td><?=$candidato->usuario.' - '.$candidato->nombre.' '.$candidato->apellido_p.' '.$candidato->apellido_m?></td>
 			<td><?=$candidato->nombre_evaluador.' '.$candidato->apellido_p_evaluador.' '.$candidato->apellido_m_evaluador?></td>
 			<td>
@@ -22,7 +23,7 @@
 	<?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="4" class="text-center">
+		<td colspan="5" class="text-center">
 			Sin registros encontrados
 		</td>
 	</tr>

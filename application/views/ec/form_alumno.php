@@ -89,6 +89,7 @@
 												<table class="table table-striped">
 													<thead>
 													<tr>
+														<th>#</th>
 														<th>ID</th>
 														<th>Candidato</th>
 														<th>Evaluador</th>
@@ -100,17 +101,16 @@
 													<tbody id="contenedor_resultados_usr_asignados">
 														<?php $this->load->view('ec/rows_alumnos_asignados'); ?>
 													</tbody>
-													
 													<tfoot >
-														<tr>
-															<td colspan="4" class="text-center">
+														<tr id="contenedor_footer_usuarios_asignados" <?=$pagina_select == 1 && $paginas > 1 ? '':'style="display:none"' ?>>
+															<td colspan="5" class="text-center">
 																<button id="btn_buscar_mas_usr_candidatos_asignados" type="button" class="btn btn-sm btn-outline-primary"><i class="fas fa-arrow-down"></i>Mostrar Más</button>
 																<i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin" style="display:none"></i>
 															</td>
 														</tr>
 														<tr>
-															<td colspan="4" class="text-center">
-																<span>Número de registros: </span><span id="numero_registros_candidatos_registrados" class="badge badge-success"><?=$total_registros?></span>
+															<td colspan="5" class="text-center">
+																<span>Total de registros: </span><span id="numero_registros_candidatos_registrados" class="badge badge-success"><?=$total_registros?></span>
 															</td>
 														</tr>
 													</tfoot>
