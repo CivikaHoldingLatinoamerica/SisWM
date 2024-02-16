@@ -13,36 +13,7 @@
 				<?php if((isset($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0
 							&& isset($instructores_asignados) && sizeof($instructores_asignados) != 0)): ?>
 					<input type="hidden" id="id_estandar_competencia_asignar" value="<?=$id_estandar_competencia?>">
-					<div class="form-group row" id="contenedor_asignar_candidato_ec" style="display: none;">
-						<div class="col-12">
-							<div class="card card-primary">
-								<div class="card-header">
-									<h3 class="card-title">Registrar candidato al EC</h3>
-								</div>
-								<div class="card-body">
-									<div class="form-group row">
-										<div class="col-sm-12">
-											<div class="input-group">
-												<input type="text" id="input_buscar_candidatos_para_asignar_ec" class="form-control form-control-lg" 
-													name="busqueda_usr_candidatos" placeholder="Escribe algo para buscar">
-												<div class="input-group-append">
-													<button type="button" id="btn_buscar_usr_candidatos_para_asignar" class="btn btn-sm btn-default">
-														<i class="fa fa-search"></i>
-													</button>
-												</div>
-											</div>
-											<small class="form-text text-muted">Escribe algun texto de referencia, puedes buscar entre nombre, apellidos, correo, telefono o CURP; cuando termines pulsa en el boton del icono de buscar</small>
-											<span class="badge badge-danger">Solo apareceran candidatos no asigandos al EC</span>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer text-right">
-									<button type="button" id="btn_cancelar_asingar_candidato_ec" class="btn btn-sm btn-outline-danger">Cancelar</button>
-									<button type="button" id="btn_guardar_asignar_candidato_ec" class="btn btn-sm btn-outline-success">Aceptar</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					<div class="form-group row" id="contenedor_asignar_modificar_candidato_ec" style="display: none;"></div>
 					<div class="form-group row" id="contenedor_listado_candidatos_asignados_ec">
 						<div class="col-12">
 							<div class="card card-primary">

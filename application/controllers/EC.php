@@ -50,21 +50,16 @@ class EC extends CI_Controller {
 				base_url().'assets/frm/fileupload/js/vendor/jquery.ui.widget.js',
 				base_url().'assets/frm/fileupload/js/jquery.iframe-transport.js',
 				base_url().'assets/frm/fileupload/js/jquery.fileupload.js',
-				base_url().'assets/frm/adm_lte/plugins/datatables/jquery.dataTables.min.js',
-				base_url().'assets/frm/adm_lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
-				base_url().'assets/frm/adm_lte/plugins/datatables-responsive/js/dataTables.responsive.js',
-				base_url().'assets/frm/adm_lte/plugins/datatables-responsive/js/responsive.bootstrap4.js',
-				base_url().'assets/frm/adm_lte/plugins/datatables-buttons/js/dataTables.buttons.min.js',
-				base_url().'assets/frm/adm_lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js',
+				base_url().'assets/frm/adm_lte/plugins/select2/js/select2.full.min.js',
 				base_url().'assets/js/ec/estandar_competencia.js',
 			);
 			$data['extra_css'] = array(
 				base_url().'assets/frm/fileinput/css/fileinput.css',
 				base_url().'assets/frm/fileupload/css/jquery.fileupload.css',
-				base_url().'assets/frm/adm_lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
-				base_url().'assets/frm/adm_lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
-				base_url().'assets/frm/adm_lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css',
+				base_url().'assets/frm/adm_lte/plugins/select2/css/select2.min.css',
+				base_url().'assets/frm/adm_lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css',
 			);
+
 			if($this->usuario->perfil == 'alumno'){
 				//sacar el instructor asignado al EC
 				foreach ($data['estandar_competencia'] as $index => $ec){
@@ -255,7 +250,7 @@ class EC extends CI_Controller {
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar_competencia);
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
-			$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
+			//$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
 			//var_dump($data);exit;
 			$this->load->view('ec/form_alumno',$data);
 		}catch (Exception $ex){
@@ -282,6 +277,26 @@ class EC extends CI_Controller {
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
 			//var_dump($data);
 			$this->load->view('ec/rows_alumnos_asignados',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
+		}
+	}
+
+	public function agregar_modificar_asigancion_candidato($id_estandar_competencia,$id_usuario_has_estandar_competencia = false){
+		perfil_permiso_operacion('estandar_competencia.instructor');
+		try{
+			$data['id_estandar_competencia'] = $id_estandar_competencia;
+			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
+			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
+			// if($id_usuario_has_estandar_competencia !== false){
+
+			// }
+			$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
+			//var_dump($data);exit;
+			$this->load->view('ec/form_agregar_modificar_candidato',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
