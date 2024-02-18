@@ -112,6 +112,8 @@ var PerfilCandidato = {
 					$('#contenedor_empresa_categoria_admin').fadeIn();
 					$('#contenedor_puesto_empresa').fadeOut();
 					$('.input_empresa_actual_usuario').fadeOut();
+				}else{
+					$('#contenedor_empresa_categoria_admin').remove();
 				}
 			}
 		);

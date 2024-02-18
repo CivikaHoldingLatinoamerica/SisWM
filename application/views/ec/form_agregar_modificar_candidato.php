@@ -4,29 +4,47 @@
 			<h3 class="card-title">Registrar candidato al EC</h3>
 		</div>
 		<div class="card-body">
-			<form id="registar_modificar_candidato_ec">
+			<form id="form_registar_modificar_candidato_ec">
+				<input type="hidden" name="id_estandar_competencia" value="<?=$id_estandar_competencia?>">
+				<?php if(isset($usuario_has_estandar_competencia)): ?>
+					<input type="hidden" name="id_usuario_has_estandar_competencia" value="<?=$usuario_has_estandar_competencia->id_usuario_has_estandar_competencia?>">
+				<?php else: ?>
+					<div class="form-group row">
+						<div class="col-lg-4">
+							<label>Candidato:</label>
+						</div>
+						<div class="col-lg-8">
+							<select id="input_id_usuario_asignar" name="id_usuario" class="select2" data-placeholder="--Seleccione candidato--" data-rule-required="true" style="width: 100%; ">
+								<option value="">--Seleccione Candidato--</option>
+								<?php foreach ($candidatos_disponible as $u): ?>
+									<option value="<?=$u->id_usuario?>"><?=$u->curp. ' - '.$u->nombre.' '.$u->apellido_p.' '.$u->apellido_m?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+				<?php endif; ?>
 				<div class="form-group row">
 					<div class="col-lg-4">
-						<label>Candidato:</label>
+						<label>Evaluador:</label>
 					</div>
 					<div class="col-lg-8">
-						<select name="id_usuario" class="select2" data-placeholder="--Seleccione candidato--" data-rule-required="true" style="width: 100%; ">
-							<option value="">--Seleccione Candidato--</option>
-							<?php foreach ($candidatos_disponible as $u): ?>
-								<option value="<?=$u->id_usuario?>"><?=$u->curp. ' - '.$u->nombre.' '.$u->apellido_p.' '.$u->apellido_m?></option>
+						<select name="id_usuario_evaluador" class="custom-select" data-placeholder="--Seleccione evaluador--" data-rule-required="true" style="width: 100%;">
+							<option value="">--Seleccione evaluador--</option>
+							<?php foreach ($instructores_asignados as $u): ?>
+								<option value="<?=$u->id_usuario?>" <?=isset($usuario_has_estandar_competencia) && $usuario_has_estandar_competencia->id_usuario_evaluador == $u->id_usuario ? 'selected="selected"':''?>><?=$u->nombre.' '.$u->apellido_p.' '.$u->apellido_m?></option>
 							<?php endforeach; ?>
 						</select>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-lg-4">
-						<label>Evaluador:</label>
+						<label>Grupo:</label>
 					</div>
 					<div class="col-lg-8">
-						<select name="id_usuario_evaluador" class="select2" data-placeholder="--Seleccione evaluador--" data-rule-required="true" style="width: 100%;">
-							<option value="">--Seleccione evaluador--</option>
-							<?php foreach ($instructores_asignados as $u): ?>
-								<option value="<?=$u->id_usuario?>"><?=$u->nombre.' '.$u->apellido_p.' '.$u->apellido_m?></option>
+						<select name="id_estandar_competencia_grupo" class="custom-select" data-rule-required="true" style="width: 100%;">
+							<option value="">--Selecciona grupo--</option>
+							<?php foreach ($estandar_competencia_grupo as $ecg): ?>
+								<option value="<?=$ecg->id_estandar_competencia_grupo?>" <?=isset($usuario_has_estandar_competencia) && $usuario_has_estandar_competencia->id_estandar_competencia_grupo == $ecg->id_estandar_competencia_grupo ? 'selected="selected"':''?>><?=$ecg->clave_grupo.' - '.$ecg->nombre_grupo?></option>
 							<?php endforeach; ?>
 						</select>
 					</div>

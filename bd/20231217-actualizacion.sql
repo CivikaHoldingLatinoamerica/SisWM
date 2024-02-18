@@ -126,3 +126,41 @@ ADD CONSTRAINT `fk_estandar_competencia_cat_area_tem`
   REFERENCES `civika_ped`.`cat_area_tematica` (`id_cat_area_tematica`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+
+ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ENGINE = InnoDB ;
+ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ADD CONSTRAINT `fk_ec_grupo_estandar_competencia`
+  FOREIGN KEY (`id_estandar_competencia`)
+  REFERENCES `civika_ped`.`estandar_competencia` (`id_estandar_competencia`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_ec_grupo_has_cat_area_tematica`
+  FOREIGN KEY (`id_cat_area_tematica`)
+  REFERENCES `civika_ped`.`cat_area_tematica` (`id_cat_area_tematica`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
+ADD COLUMN `id_estandar_competencia_grupo` INT(10) UNSIGNED NULL AFTER `id_estandar_competencia_convocatoria`,
+ADD INDEX `fk_usuario_has_ec_grupo_idx` (`id_estandar_competencia_grupo` ASC);
+;
+ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
+ADD CONSTRAINT `fk_usuario_has_ec_grupo`
+  FOREIGN KEY (`id_estandar_competencia_grupo`)
+  REFERENCES `civika_ped`.`estandar_competencia_grupo` (`id_estandar_competencia_grupo`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
+ADD COLUMN `id_estandar_competencia_grupo` INT(10) UNSIGNED NULL AFTER `id_estandar_competencia_convocatoria`,
+ADD INDEX `fk_usuario_has_ec_grupo_idx` (`id_estandar_competencia_grupo` ASC);
+;
+ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
+ADD CONSTRAINT `fk_usuario_has_ec_grupo`
+  FOREIGN KEY (`id_estandar_competencia_grupo`)
+  REFERENCES `civika_ped`.`estandar_competencia_grupo` (`id_estandar_competencia_grupo`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

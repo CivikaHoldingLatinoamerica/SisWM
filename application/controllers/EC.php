@@ -14,6 +14,7 @@ class EC extends CI_Controller {
         	$this->load->model('ArchivoModel');
         	$this->load->model('CatalogoModel');
         	$this->load->model('EstandarCompetenciaModel');
+        	$this->load->model('EstandarCompetenciaGrupoModel');
 		$this->load->model('ECHasEvaluacionModel');
         	$this->load->model('UsuarioHasECModel');
         	$this->load->model('UsuarioModel');
@@ -285,15 +286,18 @@ class EC extends CI_Controller {
 		}
 	}
 
-	public function agregar_modificar_asigancion_candidato($id_estandar_competencia,$id_usuario_has_estandar_competencia = false){
+	public function agregar_modificar_asignacion_candidato($id_estandar_competencia,$id_usuario_has_estandar_competencia = false){
 		perfil_permiso_operacion('estandar_competencia.instructor');
 		try{
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
-			// if($id_usuario_has_estandar_competencia !== false){
-
-			// }
+			//integracion para agregar lo del grupo para el candidato
+			$grupos = $this->EstandarCompetenciaGrupoModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia),0);
+			$data['estandar_competencia_grupo'] = $grupos['estandar_competencia_grupo'];
+			if($id_usuario_has_estandar_competencia !== false){
+				$data['usuario_has_estandar_competencia'] = $this->UsuarioHasECModel->obtener_row($id_usuario_has_estandar_competencia);
+			}
 			$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
 			//var_dump($data);exit;
 			$this->load->view('ec/form_agregar_modificar_candidato',$data);
@@ -444,6 +448,61 @@ class EC extends CI_Controller {
 			$data = array_merge($data,$data_paginacion);
 			var_dump($data);exit;
 			//sacamos la lista de instructores que se asignaron al EC
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);exit;
+	}
+
+	public function nuevo_actualizar_asignacion_candidato_ec(){
+		perfil_permiso_operacion('estandar_competencia.instructor');
+		try{
+			$post = $this->input->post();
+			if(isset($post['id_usuario_has_estandar_competencia']) && $post['id_usuario_has_estandar_competencia'] != ''){
+				$validaciones = Validaciones_Helper::formActualizarAsignarCandidatoEC($post);
+				if($validaciones['success']){
+					$update = array(
+						'id_usuario_evaluador' => $post['id_usuario_evaluador'],
+						'id_estandar_competencia_grupo' => $post['id_estandar_competencia_grupo'],
+						'fecha_registro' => date('Y-m-d')
+					);
+					$guardar = $this->UsuarioHasECModel->guardar_row($update,$post['id_usuario_has_estandar_competencia']);
+					if($guardar['success']){
+						$response['success'] = true;
+						$response['msg'][] = $guardar['msg'];
+					}else{
+						$response['success'] = false;
+						$response['msg'][] = $guardar['msg'];
+					}
+				}else{
+					$response['success'] = false;
+					$response['msg'] = $validaciones['msg'];
+				}				
+			}else{
+				$validaciones = Validaciones_Helper::formNuevoAsignarCandidatoEC($post);
+				if($validaciones['success']){
+					$insert = array(
+						'id_estandar_competencia' => $post['id_estandar_competencia'],
+						'id_usuario' => $post['id_usuario'],
+						'id_usuario_evaluador' => $post['id_usuario_evaluador'],
+						'id_estandar_competencia_grupo' => $post['id_estandar_competencia_grupo'],
+						'fecha_registro' => date('Y-m-d')
+					);
+					$guardar = $this->UsuarioHasECModel->guardar_row($insert);
+					if($guardar['success']){
+						$response['success'] = true;
+						$response['msg'][] = $guardar['msg'];
+					}else{
+						$response['success'] = false;
+						$response['msg'][] = $guardar['msg'];
+					}
+				}else{
+					$response['success'] = false;
+					$response['msg'] = $validaciones['msg'];
+				}
+			}
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';

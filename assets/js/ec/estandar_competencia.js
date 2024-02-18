@@ -105,9 +105,15 @@ $(document).ready(function () {
 	 * @date: enero-2024
 	 */
 
-	$(document).on('click','#btn_asingar_candidato_estandar_competencia',function(){
+	$(document).on('click','#btn_asignar_candidato_estandar_competencia',function(){
 		$('#contenedor_listado_candidatos_asignados_ec').fadeOut();
 		EstandarCompetencia.agregar_modificar_asignacion_candidato();
+	});
+
+	$(document).on('click','.btn_modificar_candidato_asignado',function(){
+		$('#contenedor_listado_candidatos_asignados_ec').fadeOut();
+		var id_usuario_has_estandar_competencia = $(this).data('id_usuario_has_estandar_competencia');
+		EstandarCompetencia.agregar_modificar_asignacion_candidato(id_usuario_has_estandar_competencia);
 	});
 
 	$(document).on('click','#btn_cancelar_asingar_candidato_ec',function(){
@@ -126,6 +132,10 @@ $(document).ready(function () {
 		//var pagina = parseInt($('#paginacion_usuario_candidatos_asignados').data('pagina_select')) + 1;
 		var registros = $('#numero_registros_candidatos').val()
 		EstandarCompetencia.tablero_candidatos_asignados(pagina,registros);	
+	});
+
+	$(document).on('click','#btn_guardar_asignar_candidato_ec',function(){
+		EstandarCompetencia.guardar_asignacion_candidato_ec();
 	});
 
 	//funcionalidad para el paginado por scroll
@@ -210,13 +220,11 @@ var EstandarCompetencia = {
 					$('#spinner_buscar_candidatos_asignados').fadeOut();
 					$('#paginacion_usuario_candidatos_asignados').val(pagina);
 					var paginacion_usuario = $('#paginacion_usuario_candidatos_asignados').length != 0 ? true : false;
+					var candidatos_registrados = $('#total_registros_candidatos_asignados').val();
+					$('#numero_registros_candidatos_registrados').html(candidatos_registrados);
 					if(paginacion_usuario){
 						var paginas = parseInt($('#paginacion_usuario_candidatos_asignados').data('max_paginacion'));
-						var candidatos_registrados = $('#total_registros_candidatos_asignados').val();
-						$('#numero_registros_candidatos_registrados').html(candidatos_registrados);
 						paginas > 1 ? $("#contenedor_footer_usuarios_asignados").fadeIn() : false;
-					}else{
-						$('#numero_registros_candidatos_registrados').html($("#contenedor_resultados_usr_asignados").find('tr').length);
 					}
 					
 				}
@@ -256,7 +264,7 @@ var EstandarCompetencia = {
 		$('#contenedor_asignar_modificar_candidato_ec').fadeIn();
 		$('#contenedor_asignar_modificar_candidato_ec').html(overlay);
 		Comun.obtener_contenido_peticion_html(
-			base_url + 'EC/agregar_modificar_asigancion_candidato/'+id_estandar_competencia+'/'+id_usuario_has_estandar_competencia,
+			base_url + 'EC/agregar_modificar_asignacion_candidato/'+id_estandar_competencia+'/'+id_usuario_has_estandar_competencia,
 			{},
 			function(response){
 				$('#contenedor_asignar_modificar_candidato_ec').html(response);
@@ -482,10 +490,6 @@ var EstandarCompetencia = {
 		);
 	},
 
-	guardar_grupo_ec : function(){
-
-	},
-
 	validar_form_plan_requerimientos : function(){
 		var form_valido = Comun.validar_form('#form_agregar_modificar_plan_requerimientos',Comun.reglas_validacion_form());
 		//validaciones secundarias
@@ -526,6 +530,43 @@ var EstandarCompetencia = {
 			"autoWidth": false,
 			"responsive": true,
 		});
+	},
+
+	/**
+	 * para la nueva interfaz de la asignación de candidatos al estandar
+	 * se integra lo del actualizar para cambiar el evaluador por requerimiento
+	 */
+	validar_form_asignacion_candidato : function(){
+		var form_valido = Comun.validar_form('#form_registar_modificar_candidato_ec',Comun.reglas_validacion_form());
+		if(form_valido){
+			
+		}
+		return form_valido;
+	},
+
+	guardar_asignacion_candidato_ec : function(){
+		if(EstandarCompetencia.validar_form_asignacion_candidato()){
+			Comun.enviar_formulario_post(
+				'#form_registar_modificar_candidato_ec',
+				base_url + 'EC/nuevo_actualizar_asignacion_candidato_ec',
+				function(response){
+					if(response.success){
+						$('#contenedor_listado_candidatos_asignados_ec').fadeIn();
+						$('#contenedor_asignar_modificar_candidato_ec').fadeOut();
+						Comun.mensajes_operacion(response.msg,'success');
+						$('#btn_buscar_usr_candidatos_asignados').trigger('click');
+						//se envia notificacion en caso de que sea una nueva asignación, solo es para cuando se asigna al candidato
+						if($('#input_id_usuario_asignar').length != 0){
+							EstandarCompetencia.enviar_correo_notificacion_ec_usuario($('#input_id_usuario_asignar').val());
+						} 
+					}else{
+						Comun.mensajes_operacion(response.msg,'error',5000);
+					}
+				}
+			)
+		}else{
+			Comun.mensaje_operacion('Error, hay campos requeridos','error');
+		}
 	},
 
 };

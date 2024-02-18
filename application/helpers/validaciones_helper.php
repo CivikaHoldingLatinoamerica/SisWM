@@ -663,6 +663,41 @@ class Validaciones_Helper {
 		return $result;
 	}
 
+	public static function formNuevoAsignarCandidatoEC($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['id_estandar_competencia']) || self::isCampoVacio($data['id_estandar_competencia'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El estándar de competencia es requerido';
+		}if(!isset($data['id_usuario']) || self::isCampoVacio($data['id_usuario'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo candidato es requerido';
+		}if(!isset($data['id_usuario_evaluador']) || self::isCampoVacio($data['id_usuario_evaluador'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo evaluador es requerido';
+		}if(!isset($data['id_estandar_competencia_grupo']) || self::isCampoVacio($data['id_estandar_competencia_grupo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo grupo es requerido';
+		}
+		return $result;
+	}
+
+	public static function formActualizarAsignarCandidatoEC($data){
+		$result['success'] = true;
+		$result['msg'] = array();
+		if(!isset($data['id_usuario_has_estandar_competencia']) || self::isCampoVacio($data['id_usuario_has_estandar_competencia'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo identificador de la asignación es requerido';
+		}if(!isset($data['id_usuario_evaluador']) || self::isCampoVacio($data['id_usuario_evaluador'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo evaluador es requerido';
+		}if(!isset($data['id_estandar_competencia_grupo']) || self::isCampoVacio($data['id_estandar_competencia_grupo'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo grupo es requerido';
+		}
+		return $result;
+	}
+
 	public static function isCampoVacio($campo){
 		$validacion = false;
 		if(trim($campo) == '' && strlen($campo)){

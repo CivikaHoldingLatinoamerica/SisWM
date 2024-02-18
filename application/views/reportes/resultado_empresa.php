@@ -25,6 +25,7 @@
 						<tr>
 							<th>RFC</th>
 							<th>Razón social</th>
+							<th>Categoria</th>
 							<th>Certificación</th>
 							<th>Candidatos</th>
 						</tr>
@@ -34,7 +35,8 @@
 							<?php foreach($reporte_empresa as $index => $re): ?>
 								<tr>
 									<td><?=$re->rfc_empresa?></td>
-									<td><?=$re->nombre_empresa?></td>
+									<td><?=$re->nombre_empresa_corto.' - '.$re->nombre_empresa?></td>
+									<td><?=$re->categoria_empresa?></td>
 									<td>
 										<span class="badge badge-<?=$re->proceso_evaluacion != 'Finalizada' ? 'primary':'success'?>" ><?=$re->proceso_evaluacion?></span>
 									</td>
@@ -49,7 +51,7 @@
 							<?php endforeach; ?>
 						<?php else: ?>
 							<tr>
-								<td colspan="4" class="text-center">Sin registros por mostrar</td>
+								<td colspan="5" class="text-center">Sin registros por mostrar</td>
 							</tr>
 						<?php endif; ?>
 						</tbody>

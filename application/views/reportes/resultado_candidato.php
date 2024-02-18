@@ -40,12 +40,15 @@
 									</td>
 									<td>
 										Nombre: <?=$r->nombre.' '.$r->apellido_p.' '.$r->apellido_m?>
-										<br>CURP.: <?=$r->curp?>
+										<br>CURP: <?=$r->curp?>
+										<br>Ocupación específica: <?=$r->ocupacion_especifica?>
 										<br>Teléfono: <?=$r->celular?>
 									</td>
 									<td>
 										Razón social: <?=$r->nombre_empresa?>
+										<br>Nombre corto: <?=$r->nombre_empresa_corto?>
 										<br>RFC: <?=$r->rfc_empresa?>
+										<br>Categoria: <?=$r->categoria_empresa?>
 									</td>
 									<td><span class="badge badge-primary" ><?=$r->juicio_evaluacion?></span></td>
 									<td>

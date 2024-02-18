@@ -20,6 +20,7 @@ class UsuarioHasECModel extends ModeloBase
 		$consulta = "select 
 			  	uhec.*,du.*,u.usuario, 
 				due.nombre as nombre_evaluador, due.apellido_p as apellido_p_evaluador, due.apellido_m as apellido_m_evaluador,
+				if(uhec.id_estandar_competencia_grupo is null,'Sin grupo asignado',concat(ecg.clave_grupo,'-',ecg.nombre_grupo) ) as grupo_asignado,
   				DATE(uhec.fecha_evidencia_ati) fecha_evidencia_ati, time (uhec.fecha_evidencia_ati) hora_evidencia_ati,
   				DATE(uhec.fecha_presentacion_resultados) fecha_presentacion_resultados, time (uhec.fecha_presentacion_resultados) hora_presentacion_resultados
 			from usuario_has_estandar_competencia uhec
@@ -27,6 +28,7 @@ class UsuarioHasECModel extends ModeloBase
 			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
 			  	inner join datos_usuario du on du.id_usuario = uhec.id_usuario
 				left join datos_usuario due on due.id_usuario = uhec.id_usuario_evaluador
+				left join estandar_competencia_grupo ecg on ecg.id_estandar_competencia_grupo = uhec.id_estandar_competencia_grupo
 			  	inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil";
 		return $consulta;
 	}

@@ -23,7 +23,7 @@
 			<li class="nav-item">
 				<a href="<?=base_url()?>catalogos/empresa" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'cat_empresa' ? 'active':''?>">
 					<i class="nav-icon fas fa-building-user"></i>
-					<p>Empresa (por usuarios)</p>
+					<p>Empresa (por Candidatos)</p>
 				</a>
 			</li>
 			<!-- <li class="nav-item">
