@@ -243,6 +243,7 @@ var EstandarCompetencia = {
 						Comun.tooltips();
 						$('#spinner_buscar_candidatos_asignados').fadeOut();
 						$('#paginacion_usuario_candidatos_asignados').val(paginacion_usuario_candidatos_asignados);
+						$("#contenedor_footer_usuarios_asignados").fadeIn()
 					}
 				);
 			}

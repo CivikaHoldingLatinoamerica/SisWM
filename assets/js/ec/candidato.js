@@ -659,7 +659,7 @@ var CandidatoEC = {
 		encuesta_satisfaccion : function(){
 			var id_estandar_competencia = $('#input_id_estandar_competencia').val();
 			var id_usuario_alumno = $('#input_id_usuario_alumno').val();
-			if($('#contenedor_pasos_encuesta_satisfacion').html() == ''){
+			//if($('#contenedor_pasos_encuesta_satisfacion').html() == ''){
 				$('#contenedor_pasos_encuesta_satisfacion').html(overlay);
 				Comun.obtener_contenido_peticion_html(
 					base_url + 'AlumnosEC/ver_progreso_encuesta_satisfaccion/' + id_estandar_competencia + '/' + id_usuario_alumno,{},
@@ -667,7 +667,7 @@ var CandidatoEC = {
 						$('#contenedor_pasos_encuesta_satisfacion').html(response);
 					}
 				);
-			}
+			//}
 		},
 
 		expediente_digital : function (){

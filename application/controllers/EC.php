@@ -17,6 +17,7 @@ class EC extends CI_Controller {
         	$this->load->model('EstandarCompetenciaGrupoModel');
 		$this->load->model('ECHasEvaluacionModel');
         	$this->load->model('UsuarioHasECModel');
+        	$this->load->model('UsuarioHasECEvaluadoresModel');
         	$this->load->model('UsuarioModel');
         	$this->load->model('UsuarioHasECProgresoModel');
         	$this->load->model('PerfilModel');
@@ -472,6 +473,7 @@ class EC extends CI_Controller {
 					if($guardar['success']){
 						$response['success'] = true;
 						$response['msg'][] = $guardar['msg'];
+						$id_usuario_has_estandar_competencia = $post['$id_usuario_has_estandar_competencia'];
 					}else{
 						$response['success'] = false;
 						$response['msg'][] = $guardar['msg'];
@@ -494,6 +496,7 @@ class EC extends CI_Controller {
 					if($guardar['success']){
 						$response['success'] = true;
 						$response['msg'][] = $guardar['msg'];
+						$id_usuario_has_estandar_competencia = $guardar['id'];
 					}else{
 						$response['success'] = false;
 						$response['msg'][] = $guardar['msg'];
@@ -502,6 +505,15 @@ class EC extends CI_Controller {
 					$response['success'] = false;
 					$response['msg'] = $validaciones['msg'];
 				}
+			}
+			//agregamos el row para el historico
+			if($response['success']){
+				$insert_history = [
+					'fecha_asignacion' => date('Y-m-d'),
+					'id_usuario_evaluador' => $post['id_usuario_evaluador'],
+					'id_usuario_has_estandar_competencia' => $id_usuario_has_estandar_competencia,
+				];
+				$this->UsuarioHasECEvaluadores->guardar_row($insert_history);
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

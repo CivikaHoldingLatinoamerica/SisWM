@@ -66,14 +66,14 @@ ADD CONSTRAINT `fk_ec_grupo_estandar_competencia`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ALTER TABLE `estandar_competencia_grupo` 
 ADD COLUMN `clave_grupo` VARCHAR(45) NOT NULL AFTER `i_destandar_competencia_grupos`,
 ADD COLUMN `nombre_grupo` VARCHAR(250) NOT NULL AFTER `clave_grupo`;
 
-ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ALTER TABLE `estandar_competencia_grupo` 
 CHANGE COLUMN `i_destandar_competencia_grupos` `id_estandar_competencia_grupo` INT UNSIGNED NOT NULL AUTO_INCREMENT ;
 
-CREATE TABLE `civika_ped`.`cat_categoria_empresa` (
+CREATE TABLE `cat_categoria_empresa` (
   `id_cat_categoria_empresa` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`id_cat_categoria_empresa`)) ENGINE=InnoDB;
@@ -84,9 +84,9 @@ INSERT INTO cat_categoria_empresa (nombre) VALUES
 	 ('Subcontratista Asociado'),
 	 ('Supervisión');
 	 
-ALTER TABLE `civika_ped`.`datos_empresa` 
+ALTER TABLE `datos_empresa` 
 DROP FOREIGN KEY `fk_datos_empresa_cat_ocupacion_especifica`;
-ALTER TABLE `civika_ped`.`datos_empresa` 
+ALTER TABLE `datos_empresa` 
 DROP COLUMN `subcontratista`,
 DROP COLUMN `contratista`,
 DROP COLUMN `cri`,
@@ -96,23 +96,23 @@ ADD COLUMN `id_cat_categoria_empresa` INT(3) UNSIGNED NULL AFTER `cargo`,
 ADD INDEX `fk_datos_empresa_categoria_emp_idx` (`id_cat_categoria_empresa` ASC),
 DROP INDEX `fk_datos_empresa_cat_ocupacion_especifica_idx` ;
 ;
-ALTER TABLE `civika_ped`.`datos_empresa` 
+ALTER TABLE `datos_empresa` 
 ADD CONSTRAINT `fk_datos_empresa_categoria_emp`
   FOREIGN KEY (`id_cat_categoria_empresa`)
-  REFERENCES `civika_ped`.`cat_categoria_empresa` (`id_cat_categoria_empresa`)
+  REFERENCES `cat_categoria_empresa` (`id_cat_categoria_empresa`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `civika_ped`.`datos_empresa` 
+ALTER TABLE `datos_empresa` 
 ADD COLUMN `nombre_corto` VARCHAR(150) NULL AFTER `nombre`;
 
-ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ALTER TABLE `estandar_competencia_grupo` 
 ADD COLUMN `eliminado` ENUM('si', 'no') NOT NULL DEFAULT 'no' AFTER `id_estandar_competencia`;
 
-ALTER TABLE `civika_ped`.`estandar_competencia` 
+ALTER TABLE `estandar_competencia` 
 DROP FOREIGN KEY `fk_estandar_competencia_cat_sector_ec1`,
 DROP FOREIGN KEY `fk_estandar_competencia_cat_comite_ec1`;
-ALTER TABLE `civika_ped`.`estandar_competencia` 
+ALTER TABLE `estandar_competencia` 
 DROP COLUMN `id_cat_comite_ec`,
 DROP COLUMN `id_cat_sector_ec`,
 ADD COLUMN `id_cat_area_tematica` INT(3) UNSIGNED NULL AFTER `id_archivo`,
@@ -120,47 +120,55 @@ ADD INDEX `fk_estandar_competencia_cat_area_tem_idx` (`id_cat_area_tematica` ASC
 DROP INDEX `fk_estandar_competencia_cat_comite_ec1_idx` ,
 DROP INDEX `fk_estandar_competencia_cat_sector_ec1_idx` ;
 ;
-ALTER TABLE `civika_ped`.`estandar_competencia` 
+ALTER TABLE `estandar_competencia` 
 ADD CONSTRAINT `fk_estandar_competencia_cat_area_tem`
   FOREIGN KEY (`id_cat_area_tematica`)
-  REFERENCES `civika_ped`.`cat_area_tematica` (`id_cat_area_tematica`)
+  REFERENCES `cat_area_tematica` (`id_cat_area_tematica`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
 
-ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ALTER TABLE `estandar_competencia_grupo` 
 ENGINE = InnoDB ;
-ALTER TABLE `civika_ped`.`estandar_competencia_grupo` 
+ALTER TABLE `estandar_competencia_grupo` 
 ADD CONSTRAINT `fk_ec_grupo_estandar_competencia`
   FOREIGN KEY (`id_estandar_competencia`)
-  REFERENCES `civika_ped`.`estandar_competencia` (`id_estandar_competencia`)
+  REFERENCES `estandar_competencia` (`id_estandar_competencia`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
 ADD CONSTRAINT `fk_ec_grupo_has_cat_area_tematica`
   FOREIGN KEY (`id_cat_area_tematica`)
-  REFERENCES `civika_ped`.`cat_area_tematica` (`id_cat_area_tematica`)
+  REFERENCES `cat_area_tematica` (`id_cat_area_tematica`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
+ALTER TABLE `usuario_has_estandar_competencia` 
 ADD COLUMN `id_estandar_competencia_grupo` INT(10) UNSIGNED NULL AFTER `id_estandar_competencia_convocatoria`,
 ADD INDEX `fk_usuario_has_ec_grupo_idx` (`id_estandar_competencia_grupo` ASC);
 ;
-ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
+ALTER TABLE `usuario_has_estandar_competencia` 
 ADD CONSTRAINT `fk_usuario_has_ec_grupo`
   FOREIGN KEY (`id_estandar_competencia_grupo`)
-  REFERENCES `civika_ped`.`estandar_competencia_grupo` (`id_estandar_competencia_grupo`)
+  REFERENCES `estandar_competencia_grupo` (`id_estandar_competencia_grupo`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-
-ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
-ADD COLUMN `id_estandar_competencia_grupo` INT(10) UNSIGNED NULL AFTER `id_estandar_competencia_convocatoria`,
-ADD INDEX `fk_usuario_has_ec_grupo_idx` (`id_estandar_competencia_grupo` ASC);
-;
-ALTER TABLE `civika_ped`.`usuario_has_estandar_competencia` 
-ADD CONSTRAINT `fk_usuario_has_ec_grupo`
-  FOREIGN KEY (`id_estandar_competencia_grupo`)
-  REFERENCES `civika_ped`.`estandar_competencia_grupo` (`id_estandar_competencia_grupo`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+CREATE TABLE `usuario_has_ec_evaluadores` (
+  `id_usuario_has_ec_evaluadores` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fecha_asignacion` DATE NOT NULL,
+  `id_usuario_evaluador` INT UNSIGNED NOT NULL,
+  `id_usuario_has_estandar_competencia` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_usuario_has_ec_evaluadores`),
+  INDEX `fk_usuario_has_ec_evaluador_idx` (`id_usuario_evaluador` ASC) VISIBLE,
+  INDEX `fk_usuario_has_ec_candidato_asig_idx` (`id_usuario_has_estandar_competencia` ASC) VISIBLE,
+  CONSTRAINT `fk_usuario_has_ec_evaluador`
+    FOREIGN KEY (`id_usuario_evaluador`)
+    REFERENCES `usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_has_ec_candidato_asig`
+    FOREIGN KEY (`id_usuario_has_estandar_competencia`)
+    REFERENCES `usuario_has_estandar_competencia` (`id_usuario_has_estandar_competencia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
