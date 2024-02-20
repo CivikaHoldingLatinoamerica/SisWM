@@ -130,7 +130,7 @@ ADD CONSTRAINT `fk_estandar_competencia_cat_area_tem`
 
 ALTER TABLE `estandar_competencia_grupo` 
 ENGINE = InnoDB ;
-ALTER TABLE `estandar_competencia_grupo` 
+/*ALTER TABLE `estandar_competencia_grupo` 
 ADD CONSTRAINT `fk_ec_grupo_estandar_competencia`
   FOREIGN KEY (`id_estandar_competencia`)
   REFERENCES `estandar_competencia` (`id_estandar_competencia`)
@@ -140,7 +140,7 @@ ADD CONSTRAINT `fk_ec_grupo_has_cat_area_tematica`
   FOREIGN KEY (`id_cat_area_tematica`)
   REFERENCES `cat_area_tematica` (`id_cat_area_tematica`)
   ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+  ON UPDATE NO ACTION;*/
 
 ALTER TABLE `usuario_has_estandar_competencia` 
 ADD COLUMN `id_estandar_competencia_grupo` INT(10) UNSIGNED NULL AFTER `id_estandar_competencia_convocatoria`,
@@ -159,8 +159,8 @@ CREATE TABLE `usuario_has_ec_evaluadores` (
   `id_usuario_evaluador` INT UNSIGNED NOT NULL,
   `id_usuario_has_estandar_competencia` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id_usuario_has_ec_evaluadores`),
-  INDEX `fk_usuario_has_ec_evaluador_idx` (`id_usuario_evaluador` ASC) VISIBLE,
-  INDEX `fk_usuario_has_ec_candidato_asig_idx` (`id_usuario_has_estandar_competencia` ASC) VISIBLE,
+  INDEX `fk_usuario_has_ec_evaluador_idx` (`id_usuario_evaluador` ASC),
+  INDEX `fk_usuario_has_ec_candidato_asig_idx` (`id_usuario_has_estandar_competencia` ASC),
   CONSTRAINT `fk_usuario_has_ec_evaluador`
     FOREIGN KEY (`id_usuario_evaluador`)
     REFERENCES `usuario` (`id_usuario`)
