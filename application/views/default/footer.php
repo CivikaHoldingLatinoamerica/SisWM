@@ -4,9 +4,9 @@
 	Todos los derechos reservados
 	<div class="float-right d-none d-sm-inline-block">
 		<?php if(es_yosoyliderwm()): ?>
-			<b>Version</b> 1.1.0
+			<b>Version</b> 1.4.0
 		<?php else: ?>
-			<b>Version</b> 1.0.0
+			<b>Version</b> 1.5.0
 		<?php endif; ?>
 	</div>
 </footer>
