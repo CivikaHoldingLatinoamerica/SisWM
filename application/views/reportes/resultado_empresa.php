@@ -43,8 +43,10 @@
 									<td>
 										<ul>
 											<li>Candidatos registrados: <span class="badge badge-primary" ><?=$re->candidatos_registrados_empresa?></span></li>
-											<li>Candidatos en proceso: <span class="badge badge-warning" ><?=$re->candidatos_preceso_certificacion?></span></li>
+											<li>Candidatos en proceso: <span class="badge badge-info" ><?=$re->candidatos_preceso_certificacion?></span></li>
 											<li>Candidatos certificados: <span class="badge badge-success" ><?=$re->candidatos_certificados?></span></li>
+											<li>Candidatos inactivos: <span class="badge badge-warning" ><?=$re->candidatos_inactivos?></span></li>
+											<li>Candidatos eliminados: <span class="badge badge-dark" ><?=$re->candidatos_eliminados?></span></li>
 										</ul>
 									</td>
 								</tr>

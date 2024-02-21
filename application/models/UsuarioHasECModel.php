@@ -27,14 +27,14 @@ class UsuarioHasECModel extends ModeloBase
 				inner join usuario u on u.id_usuario = uhec.id_usuario
 			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
 			  	inner join datos_usuario du on du.id_usuario = uhec.id_usuario
+				inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
 				left join datos_usuario due on due.id_usuario = uhec.id_usuario_evaluador
-				left join estandar_competencia_grupo ecg on ecg.id_estandar_competencia_grupo = uhec.id_estandar_competencia_grupo
-			  	inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil";
+				left join estandar_competencia_grupo ecg on ecg.id_estandar_competencia_grupo = uhec.id_estandar_competencia_grupo";
 		return $consulta;
 	}
 
 	public function criterios_busqueda($data){
-		$criterios = " where 1=1";
+		$criterios = " where 1=1 and u.activo = 'si' and u.eliminado = 'no'";
 		if(isset($data['id_estandar_competencia']) && $data['id_estandar_competencia'] != ''){
 			$criterios .= " and uhec.id_estandar_competencia = ".$data['id_estandar_competencia'];
 		}if(isset($data['id_usuario']) && $data['id_usuario'] != ''){

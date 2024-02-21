@@ -8,6 +8,14 @@
 				<input type="hidden" name="id_estandar_competencia" value="<?=$id_estandar_competencia?>">
 				<?php if(isset($usuario_has_estandar_competencia)): ?>
 					<input type="hidden" name="id_usuario_has_estandar_competencia" value="<?=$usuario_has_estandar_competencia->id_usuario_has_estandar_competencia?>">
+					<div class="form-group row">
+						<div class="col-lg-4">
+							<label>Candidato:</label>
+						</div>
+						<div class="col-lg-8">
+							<span id="span_usuario_candidato"></span>
+						</div>
+					</div>
 				<?php else: ?>
 					<div class="form-group row">
 						<div class="col-lg-4">

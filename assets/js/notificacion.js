@@ -122,7 +122,7 @@ var Notificaciones = {
 	},
 
 	iniciar_carga_adjuntos_notificacion : function (div_procesando) {
-		Comun.iniciar_carga_imagen('.archivo_adjunto_notificacion',div_procesando,function(archivo){
+		Comun.iniciar_carga_documento_all('.archivo_adjunto_notificacion',div_procesando,function(archivo){
 			//se agrega el html correspondiente para los archivos adjuntos
 			var num_archivos_adjuntos = $('.archivo_adjunto_agregado').length + 1;
 			var html_adjunto = '<div class="row" id="contendor_archivo_adjunto_'+archivo.id_archivo+'">' +

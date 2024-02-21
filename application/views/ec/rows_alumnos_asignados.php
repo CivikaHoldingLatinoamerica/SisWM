@@ -11,7 +11,9 @@
 			<td><?=$candidato->nombre_evaluador.' '.$candidato->apellido_p_evaluador.' '.$candidato->apellido_m_evaluador?></td>
 			<td><?=$candidato->grupo_asignado?></td>
 			<td>
-				<button class="btn btn-sm btn-outline-warning btn_modificar_candidato_asignado" data-id_usuario_has_estandar_competencia="<?=$candidato->id_usuario_has_estandar_competencia?>"><i class="fa fa-edit"></i></button>
+				<button class="btn btn-sm btn-outline-warning btn_modificar_candidato_asignado" 
+					data-usuario_candidato="<?=$candidato->usuario.' - '.$candidato->nombre.' '.$candidato->apellido_p.' '.$candidato->apellido_m?>"
+					data-id_usuario_has_estandar_competencia="<?=$candidato->id_usuario_has_estandar_competencia?>"><i class="fa fa-edit"></i></button>
 				<button id="btn_eliminar_asignacion_<?=$candidato->id_usuario?>" type="button" class="btn btn-sm btn-danger iniciar_confirmacion_operacion" 
 						data-toggle="tooltip" title="Eliminar Candidato" 
 						data-msg_confirmacion_general="¿Esta seguro de eliminar el usuario seleccionado del EC?, esta acción no podrá revertirse" 

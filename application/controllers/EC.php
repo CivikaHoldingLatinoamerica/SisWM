@@ -473,7 +473,7 @@ class EC extends CI_Controller {
 					if($guardar['success']){
 						$response['success'] = true;
 						$response['msg'][] = $guardar['msg'];
-						$id_usuario_has_estandar_competencia = $post['$id_usuario_has_estandar_competencia'];
+						$id_usuario_has_estandar_competencia = $post['id_usuario_has_estandar_competencia'];
 					}else{
 						$response['success'] = false;
 						$response['msg'][] = $guardar['msg'];
@@ -513,7 +513,7 @@ class EC extends CI_Controller {
 					'id_usuario_evaluador' => $post['id_usuario_evaluador'],
 					'id_usuario_has_estandar_competencia' => $id_usuario_has_estandar_competencia,
 				];
-				$this->UsuarioHasECEvaluadores->guardar_row($insert_history);
+				$this->UsuarioHasECEvaluadoresModel->guardar_row($insert_history);
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

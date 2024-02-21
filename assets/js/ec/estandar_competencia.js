@@ -113,7 +113,8 @@ $(document).ready(function () {
 	$(document).on('click','.btn_modificar_candidato_asignado',function(){
 		$('#contenedor_listado_candidatos_asignados_ec').fadeOut();
 		var id_usuario_has_estandar_competencia = $(this).data('id_usuario_has_estandar_competencia');
-		EstandarCompetencia.agregar_modificar_asignacion_candidato(id_usuario_has_estandar_competencia);
+		var usuario_candidato = $(this).data('usuario_candidato');
+		EstandarCompetencia.agregar_modificar_asignacion_candidato(id_usuario_has_estandar_competencia,usuario_candidato);
 	});
 
 	$(document).on('click','#btn_cancelar_asingar_candidato_ec',function(){
@@ -260,7 +261,7 @@ var EstandarCompetencia = {
 		});
 	},
 
-	agregar_modificar_asignacion_candidato : function(id_usuario_has_estandar_competencia = ''){
+	agregar_modificar_asignacion_candidato : function(id_usuario_has_estandar_competencia = '',nombre_candidato=''){
 		var id_estandar_competencia = $('#id_estandar_competencia_asignar').val();
 		$('#contenedor_asignar_modificar_candidato_ec').fadeIn();
 		$('#contenedor_asignar_modificar_candidato_ec').html(overlay);
@@ -270,6 +271,9 @@ var EstandarCompetencia = {
 			function(response){
 				$('#contenedor_asignar_modificar_candidato_ec').html(response);
 				EstandarCompetencia.iniciar_select2_candidatos();
+				if(id_usuario_has_estandar_competencia != ''){
+					$('#span_usuario_candidato').html(nombre_candidato);
+				}
 			}
 		);
 	},
