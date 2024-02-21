@@ -101,7 +101,7 @@
 							<h5>Lo siento</h5>
 							<p>Para poder asignar los alumnos es necesario que registre:</p>
 							<ol>
-								<li>Las actividades, tecnicas e instrumentos de evaluación <span class="badge badge-dark"><?=isset($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0 && $evaluacion_instrumento_liberados ? 'OK':'Falta'?></span></li>
+								<li>Las actividades, tecnicas e instrumentos de evaluación <span class="badge badge-dark"><?=isset($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0 && $estandar_competencia_instrumento ? 'OK':'Falta'?></span></li>
 								<li>Los requerimientos de evaluación <span class="badge badge-dark"><?=isset($estandar_competencia_has_requerimientos) && sizeof($estandar_competencia_has_requerimientos) != 0 ? 'OK':'Falta'?></span></li>
 								<li>La evaluación diagnóstica liberada <span class="badge badge-dark"><?=isset($estandar_competencia_evaluacion) && is_object($estandar_competencia_evaluacion) != 0 ? 'OK':'Falta'?></span></li>
 								<li>Asignar por lo menos un evaluador al Estándar de competencia <span class="badge badge-dark"><?=isset($instructores_asignados) && sizeof($instructores_asignados) != 0 ? 'OK':'Falta'?></span></li>
