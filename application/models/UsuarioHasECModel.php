@@ -79,11 +79,12 @@ class UsuarioHasECModel extends ModeloBase
 				$sql_limit = '';
 			}
 			$consulta = "select 
-			  	du.*,uhec.*
+			  	du.*,uhec.*,u.activo, u.eliminado
 			from usuario_has_estandar_competencia uhec
 			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
 			  	inner join datos_usuario du on du.id_usuario = uhec.id_usuario
-			where 1=1 and uhp.id_cat_perfil = ".$datosBusqueda['usuario_perfil']."
+				inner join usuario u on u.id_usuario = uhec.id_usuario
+			where 1=1 and  uhp.id_cat_perfil = ".$datosBusqueda['usuario_perfil']."
 			  	and uhec.id_estandar_competencia = ".$datosBusqueda['id_estandar_competencia'];
 			if(isset($datosBusqueda['id_usuario_evaluador']) && $datosBusqueda['id_usuario_evaluador'] != ''){
 				$consulta .= " and uhec.id_usuario_evaluador = ".$datosBusqueda['id_usuario_evaluador'];
