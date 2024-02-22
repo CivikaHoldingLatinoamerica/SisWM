@@ -100,8 +100,7 @@ class EvaluadoresEC extends CI_Controller {
 			$this->load->model('EvaluacionModel');
 			$this->load->model('ECInstrumentoActividadEvaluacionModel');
 			$this->load->model('UsuarioHasEvaluacionRealizadaModel');
-			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario_alumno),0,10);
-			var_dump($usuario_has_ec);exit;
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario_alumno),0,10);			
 			$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec_alumno($id_estandar_competencia,$id_usuario_alumno);
 			//echo print_r($data['estandar_competencia_instrumento']);exit;
@@ -114,7 +113,6 @@ class EvaluadoresEC extends CI_Controller {
 			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario_alumno);
 
 			$data['entregables'] = $datos;
-			var_dump($data['entregables']);exit;
 			$this->load->view('instructor_ec/modal_evidencia_ati_alumno',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
