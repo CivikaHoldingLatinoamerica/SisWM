@@ -28,7 +28,7 @@ $(document).ready(function () {
 			var scroll_length = Math.round($(document).height() - $(window).height())-1;
 			if(scroll_pos >= scroll_length){
 				pagina_select++;
-				EstandarCompetencia.tablero(false,pagina_select);
+				ECGrupo.tablero(false,pagina_select);
 				$('#paginacion_usuario').val(pagina_select);
 			}
 		}
