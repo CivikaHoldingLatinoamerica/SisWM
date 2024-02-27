@@ -21,7 +21,7 @@
 					<div class="form-group row">
 						<label for="input_rfc" class="col-sm-3 col-form-label">RFC</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="input_rfc" data-rule-required="true" name="rfc" placeholder="RFC (YYY010101123)" value="<?=isset($datos_empresa) ? $datos_empresa->rfc : ''?>">
+							<input type="text" class="form-control input_str_mayus" id="input_rfc" data-rule-required="true" name="rfc" placeholder="RFC (YYY010101123)" value="<?=isset($datos_empresa) ? $datos_empresa->rfc : ''?>">
 						</div>
 					</div>
 					<div class="form-group row">

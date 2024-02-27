@@ -164,7 +164,8 @@ var PerfilCandidato = {
 			if(Comun.validar_rfc(strRFC) == null){
 				form_valido = false;
 				Comun.mensaje_operacion('El RFC no tiene la estructura correcta','error');
-				$('#input_rfc').parend('div').append('<span id="input_rfc-error" class="error help-block invalid-feedback">El RFC debe ser mas o menos .</span>');
+				$('#input_rfc').parent('div').append('<span id="input_rfc-error" class="error help-block invalid-feedback" style="display: inline;">El RFC no tiene la estructura correcta.</span>');
+				$('#input_rfc').addClass('is-invalid');
 			}
 		}
 		return form_valido;

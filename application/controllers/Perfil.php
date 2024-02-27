@@ -347,10 +347,11 @@ class Perfil extends CI_Controller {
 			$post = $this->input->post();
 			$validacion_campos = Validaciones_Helper::formEmpresa($post);
 			if($validacion_campos['success']){
-				if($this->usuario->perfil == 'alumno'){
+				//if($this->usuario->perfil == 'alumno'){
 					$post['id_usuario'] = $id_usuario;
-				}
+				//}
 				isset($post['vigente']) && $post['vigente'] == 'si' ? $this->DatosEmpresaModel->actualizar_vigente($this->usuario->id_usuario) : false;
+				//var_dump($post);exit;
 				$guardar_empresa = $this->DatosEmpresaModel->guardar_row($post,$id);
 				if($guardar_empresa){
 					$response['success'] = true;
