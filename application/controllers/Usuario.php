@@ -291,7 +291,7 @@ class Usuario extends CI_Controller {
 					}
 					break;
 				case 'admin_emp':
-					$validacion_campos = Validaciones_Helper::formUsuarioAdmin($post,$id_usuario);
+					$validacion_campos = Validaciones_Helper::formUsuarioAdminEmp($post,$id_usuario);
 					if($validacion_campos['success']){
 						$guardar_admin = $this->UsuarioModel->guardar_usuario_adminrrhh($post,$id_usuario);
 						if($guardar_admin['success']){

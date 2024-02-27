@@ -112,7 +112,7 @@ class Validaciones_Helper {
 
 	public static function formUsuarioAdminEmp($data,$id_usuario){
 		$result = self::formUsuarioAdmin($data,$id_usuario);
-		if(!isset($data['rfc']) || self::isCampoVacio($data['rfc']) || !self::isValidRegex($data['rfc'],'/^[A-ZÑ]{3}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}$/')){
+		if(!isset($data['rfc']) || self::isCampoVacio($data['rfc']) || !self::isValidRegex($data['rfc'],'/^[A-ZÑ]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}$/')){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo RFC es requerido o no cuenta con la estructura correcta';
 		}
