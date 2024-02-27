@@ -52,6 +52,12 @@ var PerfilAdmin = {
 					form_valido = false;
 					Comun.mensaje_operacion('El CURP no tiene la estructura correcta','error');
 				}
+			}if($('#form_agregar_modificar_usr').find('input#input_rfc').length == 1){
+				var input_rfc = $('#input_rfc').val();
+				if(Comun.validar_rfc_empresa(input_rfc) == null){
+					form_valido = false;
+					Comun.mensaje_operacion('El RFC de la empresa no tiene la estructura correcta','error');
+				}
 			}
 		}
 		return form_valido;
@@ -62,7 +68,7 @@ var PerfilAdmin = {
 		if(PerfilAdmin.validar_form_usuario()){
 			Comun.enviar_formulario_post(
 				'#form_agregar_modificar_usr',
-				base_url + 'Usuario/guardar_form_usuario/admin/' + id_usuario,
+				base_url + 'Usuario/guardar_form_usuario/admin_emp/' + id_usuario,
 				function(response){
 					if(response.success){
 						Comun.mostrar_ocultar_modal('#modal_form_usr',false);

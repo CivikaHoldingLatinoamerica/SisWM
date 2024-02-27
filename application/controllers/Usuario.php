@@ -197,6 +197,10 @@ class Usuario extends CI_Controller {
 			$post = $this->input->post();
 			if(isset($this->usuario->perfil) && $this->usuario->perfil == 'admin_emp'){
 				$post['id_usuario_registro'] = $this->usuario->id_usuario;
+				//agregamos el rfc para que igual busque a los que pertene a la empresa de este admin
+				if(isset($this->usuario->datos_usuario->rfc) && $this->usuario->datos_usuario->rfc != ''){
+					$post['rfc'] = $this->usuario->datos_usuario->rfc;
+				}
 			}
 			$data = $this->UsuarioModel->obtener_usuarios_tablero($post,'alumno',$pagina,$limit);
 			$data['titulo_pagina'] = 'Candidatos';
@@ -225,6 +229,10 @@ class Usuario extends CI_Controller {
 			$post = $this->input->post();
 			if(isset($this->usuario->perfil) && $this->usuario->perfil == 'admin_emp'){
 				$post['id_usuario_registro'] = $this->usuario->id_usuario;
+				//agregamos el rfc para que igual busque a los que pertene a la empresa de este admin
+				if(isset($this->usuario->datos_usuario->rfc) && $this->usuario->datos_usuario->rfc != ''){
+					$post['rfc'] = $this->usuario->datos_usuario->rfc;
+				}
 			}
 			$data = $this->UsuarioModel->obtener_usuarios_tablero($post,'alumno',$pagina,$limit);
 			$data['sidebar'] = 'candidatos';

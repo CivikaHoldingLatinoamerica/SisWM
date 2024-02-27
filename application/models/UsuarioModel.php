@@ -82,7 +82,7 @@ class UsuarioModel extends ModeloBase
 			$consulta = $this->obtener_query_base_usuarios($perfil);
 			$consulta .= $this->obtener_criterios_adicionales_usuarios($data_busqueda);
 			$consulta .= $sql_limit;
-			//var_dump($consulta);exit;
+			//echo($consulta);exit;
 			$query = $this->db->query($consulta);
 			$usuarios = $query->result();
 			foreach($usuarios as $u){
@@ -447,6 +447,10 @@ class UsuarioModel extends ModeloBase
 	}
 
 	private function obtener_query_base_usuarios($perfil = false){
+		$joinAlumno = '';
+		if($perfil == 'alumno'){
+			$joinAlumno = ' left join datos_empresa de on de.id_usuario = u.id_usuario ';
+		}
 		$consulta = "select 
 				u.id_usuario,u.usuario,u.activo,u.eliminado,
 				du.nombre, du.apellido_p, du.apellido_m, du.genero, du.fecha_nacimiento, du.correo, du.celular, du.telefono, du.curp, du.profesion, du.puesto, du.educacion, du.habilidades, du.codigo_evaluador,
@@ -455,6 +459,7 @@ class UsuarioModel extends ModeloBase
 				inner join usuario_has_perfil uhp on uhp.id_usuario = u.id_usuario
   				inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
 			  	left join datos_usuario du on du.id_usuario = u.id_usuario 
+				$joinAlumno
 			where cp.slug <> 'root' ";
 		if($this->usuario->perfil == 'root' && $perfil != 'alumno'){
 			$consulta .= " and u.eliminado in('no','si') ";
@@ -469,7 +474,13 @@ class UsuarioModel extends ModeloBase
 	private function obtener_criterios_adicionales_usuarios($data_adicionales){
 		$criterios = ' and 1=1';
 		if(isset($data_adicionales['id_usuario_registro']) && $data_adicionales['id_usuario_registro'] != ''){
-			$criterios .= ' and u.id_usuario_registro = '.$data_adicionales['id_usuario_registro'];
+			$criteriosAlumnosRFCUsuario = ' and (';
+			$criteriosAlumnosRFCUsuario .= ' u.id_usuario_registro = '.$data_adicionales['id_usuario_registro'];
+			if(isset($data_adicionales['rfc']) && $data_adicionales['rfc'] != ''){
+				$criteriosAlumnosRFCUsuario .= " or (de.rfc like '".$data_adicionales['rfc']."' and de.vigente = 'si')";
+			}
+			$criteriosAlumnosRFCUsuario .= ')';
+			$criterios .= $criteriosAlumnosRFCUsuario;
 		}
 		if(isset($data_adicionales['busqueda']) && $data_adicionales['busqueda']){
 			$data_adicionales['busqueda'] = strtoupper($data_adicionales['busqueda']);
@@ -486,12 +497,17 @@ class UsuarioModel extends ModeloBase
 	}
 
 	private function obtener_numero_registros_usuario($perfil = false,$array_busqueda = array()){
+		$joinAlumno = '';
+		if($perfil == 'alumno'){
+			$joinAlumno = ' left join datos_empresa de on de.id_usuario = u.id_usuario ';
+		}
 		$consulta = "select 
 			  count(*) total_registros
 			from usuario u
 				inner join usuario_has_perfil uhp on uhp.id_usuario = u.id_usuario
   				inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
 			  	left join datos_usuario du on du.id_usuario = u.id_usuario
+				$joinAlumno
 			where cp.slug <> 'root' ";
 		if($perfil){
 			$consulta .= " and cp.slug = '$perfil'";

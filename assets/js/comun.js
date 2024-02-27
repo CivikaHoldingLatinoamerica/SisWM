@@ -203,6 +203,10 @@ var Comun = {
 		return stringValidar.match(/^[A-ZÑ]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}$/);
 	},
 
+	validar_rfc_empresa : function(stringValidar){
+		return stringValidar.match(/^[A-ZÑ]{3}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}$/);
+	},
+
 	validar_correo : function(stringValidar){
 		return stringValidar.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
 	},

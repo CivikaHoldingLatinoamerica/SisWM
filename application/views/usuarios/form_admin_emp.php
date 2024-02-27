@@ -24,6 +24,14 @@
 </div>
 
 <div class="form-group row">
+	<label for="input_rfc" class="col-sm-3 col-form-label">RFC</label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control" id="input_rfc" data-rule-required="true" name="rfc"
+			   placeholder="RFC (AAA901231AA1)" value="<?=isset($usuario) ? $usuario->rfc : ''?>">
+	</div>
+</div>
+
+<div class="form-group row">
 	<label for="input_genero" class="col-sm-3 col-form-label">Genero</label>
 	<div class="col-sm-9">
 		<div class="custom-control custom-radio">

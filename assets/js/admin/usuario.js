@@ -273,6 +273,13 @@ var UsuarioAdmin = {
 					Comun.mensaje_operacion('El CURP no tiene la estructura correcta','error');
 				}
 			}
+			if($('#form_agregar_modificar_usr').find('input#input_rfc').length == 1){
+				var input_rfc = $('#input_rfc').val();
+				if(Comun.validar_rfc_empresa(input_rfc) == null){
+					form_valido = false;
+					Comun.mensaje_operacion('El RFC de la empresa no tiene la estructura correcta','error');
+				}
+			}
 		}
 		return form_valido;
 	},

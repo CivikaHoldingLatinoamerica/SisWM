@@ -27,7 +27,7 @@
 			<?php endif; ?>
 			<?php if(perfil_permiso_operacion_menu('usuarios.admin')):?>
 				<li class="nav-item">
-					<a href="<?=base_url()?>usuario/admini-rrhh" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'administradoresrrhh' ? 'active':''?>">
+					<a href="<?=base_url()?>usuario/admin-rrhh" class="nav-link nav-link-wm <?=isset($sidebar) && $sidebar == 'administradoresrrhh' ? 'active':''?>">
 						<i class="nav-icon fas fa-users"></i>
 						<p>Admin. de Empresa</p>
 					</a>

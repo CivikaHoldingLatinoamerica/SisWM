@@ -53,7 +53,11 @@ class Perfil extends CI_Controller {
 			case 'root':case 'admin':
 				$data['extra_js'][] = base_url().'assets/js/perfil/admin.js';
 				$this->load->view('perfil/admin',$data);
-			break;
+				break;
+			case 'admin_emp':
+				$data['extra_js'][] = base_url().'assets/js/perfil/admin_emp.js';
+				$this->load->view('perfil/admin_emp',$data);
+				break;
 			case 'instructor':
 				$data['extra_js'][] = base_url().'assets/js/perfil/instructor.js';
 				$this->load->view('perfil/instructor',$data);
