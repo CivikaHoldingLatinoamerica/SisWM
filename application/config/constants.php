@@ -94,6 +94,8 @@ define('RUTA_PDF_TEMP','files_usr/temp/');
 define('RUTA_PDF_PED','files_usr/ped/');
 define('RUTA_QR_FILES','files_usr/qr_generados');
 
+define('RUTA_PLANTILLA_GAFETE','assets/docs/plantilla-gafete.pdf');
+
 /**
  * constantes para los perfiles de usuario
  */

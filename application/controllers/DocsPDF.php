@@ -427,6 +427,41 @@ class DocsPDF extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
+
+	/**
+	 * apartado de funciones para generar el gafete de los candidatos que ya completaron su certificacion de la ec
+	 */
+	public function gafete_candidato($id_usuario_has_estandar_competencia){
+		try{
+			$pdf = new Fpdi();
+			//leemos la plantilla para generar el GAFETE
+			$paginasPDF = $pdf->setSourceFile(RUTA_PLANTILLA_GAFETE);
+			
+			$paginaActual = $pdf->importPage(1);
+			$paPlantilla = $pdf->getTemplatesize($paginaActual);
+			$pdf->AddPage($paPlantilla['orientation'],$paPlantilla);
+			$pdf->useImportedPage($paginaActual);
+			//agregamos la marca de agua para pruebas
+			if(!es_produccion()) {
+				//agregamos el texto
+				$pdf->SetFont('Arial','',40);
+				$pdf->SetTextColor(150, 150, 150);
+				$pdf->SetXY(20, $paPlantilla[1] / 2);
+				$pdf->Write(0, utf8_decode('PED Demo - ECO SOFTyH'));
+			}
+
+			$pdf->Output('I', 'GAFETE-'.$id_usuario_has_estandar_competencia);
+			$pdf->cleanUp();
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			log_message('error','***** DocsPDFModel -> gafete_candidato');
+			log_message('error',$ex->getMessage());
+		}
+		echo json_encode($response);exit;
+	}
+
 	protected function set_variables_defaults_pdf()
 	{
 		$configVariablrs =new ConfigVariables();

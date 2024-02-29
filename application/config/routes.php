@@ -81,8 +81,14 @@ $route['encuesta/(:num)/(:num)'] = 'EncuestaSatisfaccion/candidato/$1/$2';
 $route['encuesta_candidato/(:num)/(:num)'] = 'EncuestaSatisfaccion/candidato_lectura/$1/$2';
 $route['modulo_capacitacion/(:num)'] = 'Curso/index/$1';
 $route['modulo_capacitacion/modulo/(:num)'] = 'Curso/index_curso_modulos/$1';
+
 //rutas para la evaluacion del cuestionario del instrumento
 $route['evaluacion_instrumento/(:num)/(:num)'] = 'AlumnosEC/evaluacion_instrumento/$1/$2';
+$route['gafete_candidato/(:num)/(:num)'] = 'DocsPDF/gafete_candidato/$1/$2';
+
+/**
+ * rutas para los codigos de respuesta
+ */
 $route['403'] = 'admin/sin_permisos';
 $route['404'] = 'admin/no_encontrado';
 $route['500'] = 'admin/error_sistema';
