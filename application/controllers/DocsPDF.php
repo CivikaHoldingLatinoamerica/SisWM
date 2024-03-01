@@ -435,7 +435,7 @@ class DocsPDF extends CI_Controller {
 		try{
 			$pdf = new Fpdi();
 			//leemos la plantilla para generar el GAFETE
-			$paginasPDF = $pdf->setSourceFile(RUTA_PLANTILLA_GAFETE);
+			$pdf->setSourceFile(RUTA_PLANTILLA_GAFETE);
 			
 			$paginaActual = $pdf->importPage(1);
 			$paPlantilla = $pdf->getTemplatesize($paginaActual);
