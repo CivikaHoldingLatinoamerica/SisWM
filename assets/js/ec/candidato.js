@@ -263,7 +263,7 @@ var CandidatoEC = {
 						'</tr>'
 					$(id_body_comentarios).append(html_row_comentario);
 					Comun.mensajes_operacion(response.msg,'success');
-					$('#txt_comentarios_candidato_'+id_ec_instrumento_alumno).val('');
+					$('#txt_comentarios_candidato_'+id_entregable).val('');
 				}else{
 					Comun.mensajes_operacion(response.msg,'error');
 				}

@@ -449,7 +449,7 @@ class UsuarioModel extends ModeloBase
 	private function obtener_query_base_usuarios($perfil = false){
 		$joinAlumno = '';
 		if($perfil == 'alumno'){
-			$joinAlumno = ' left join datos_empresa de on de.id_usuario = u.id_usuario ';
+			$joinAlumno = " left join datos_empresa de on de.id_usuario = u.id_usuario and de.vigente = 'si' and de.eliminado = 'no' ";
 		}
 		$consulta = "select 
 				u.id_usuario,u.usuario,u.activo,u.eliminado,
@@ -468,6 +468,7 @@ class UsuarioModel extends ModeloBase
 		}if($perfil){
 			$consulta .= " and cp.slug = '$perfil'";
 		}
+		//$consulta .= ' group by u.id_usuario';
 		return $consulta;
 	}
 
@@ -477,7 +478,7 @@ class UsuarioModel extends ModeloBase
 			$criteriosAlumnosRFCUsuario = ' and (';
 			$criteriosAlumnosRFCUsuario .= ' u.id_usuario_registro = '.$data_adicionales['id_usuario_registro'];
 			if(isset($data_adicionales['rfc']) && $data_adicionales['rfc'] != ''){
-				$criteriosAlumnosRFCUsuario .= " or (de.rfc like '".$data_adicionales['rfc']."' and de.vigente = 'si')";
+				$criteriosAlumnosRFCUsuario .= " or (de.rfc like '".$data_adicionales['rfc']."' and de.vigente = 'si' and de.eliminado = 'no' )";
 			}
 			$criteriosAlumnosRFCUsuario .= ')';
 			$criterios .= $criteriosAlumnosRFCUsuario;

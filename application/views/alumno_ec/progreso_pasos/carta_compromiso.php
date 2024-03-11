@@ -161,13 +161,13 @@ if(!is_null($datos_domicilio)){
 									</div>
 									<div class="col-md-12 text-center">
 										NOMBRE: <span
-												class="mayusculas"><?= isset($usuario) ? $usuario->datos_usuario->nombre . ' ' . $usuario->datos_usuario->apellido_p . ' ' . $usuario->datos_usuario->apellido_m : '' ?></span>
+												class="mayusculas"><?= isset($datos_usuario) ? $datos_usuario->nombre . ' ' . $datos_usuario->apellido_p . ' ' . $datos_usuario->apellido_m : '' ?></span>
 										<br><img src="<?= base_url() . $firma_candidato->ruta_directorio . $firma_candidato->nombre ?>"
 												alt="Firma digital" style="max-width: 120px">
 										<br>____________________
 										<br>DIRECCIÓN: <span class="mayusculas"><?= $domicilio ?></span>
-										<br>CELULAR: <?= isset($usuario->datos_usuario->celular) ? $usuario->datos_usuario->celular : 'Sin registro' ?>
-										<br>TELEFONO: <?= isset($usuario->datos_usuario->telefono) ? $usuario->datos_usuario->telefono : 'Sin registro' ?>
+										<br>CELULAR: <?= isset($datos_usuario->celular) ? $datos_usuario->celular : 'Sin registro' ?>
+										<br>TELEFONO: <?= isset($datos_usuario->telefono) ? $datos_usuario->telefono : 'Sin registro' ?>
 									</div>
 								</div>
 							</div>

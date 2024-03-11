@@ -99,6 +99,7 @@ class AlumnosEC extends CI_Controller {
 			$data['firma_candidato'] = $this->PerfilModel->obtener_datos_expediente($this->usuario->id_usuario,8);
 			$data['foto_certificado_candidato'] = $this->PerfilModel->obtener_datos_expediente($this->usuario->id_usuario,2);
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
+			//var_dump($data);exit;
 			$vista_carta_compromiso = $this->load->view('alumno_ec/progreso_pasos/carta_compromiso',$data,true);
 			$response['success'] = true;
 			$response['msg'][] = 'Se obtuvo la carta compromiso con exito';
