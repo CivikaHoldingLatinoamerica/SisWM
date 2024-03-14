@@ -109,7 +109,8 @@ class entregable extends CI_Controller
 				'descripcion' => array("required","maxLength"=>1000),
 				'instrucciones' => array("required"),
 				'tipo_entregable' => array("required"),
-				'instrumentos' => array("required")
+				'instrumentos' => array("required"),
+				'entregable_wm' => array("required"),
 			);
 
 

@@ -27,6 +27,7 @@ class EntregableECModel extends ModeloBase
 				$this->db->set('descripcion', $parametros['descripcion']);
 				$this->db->set('instrucciones', $parametros['instrucciones']);
 				$this->db->set('tipo_entregable', $parametros['tipo_entregable']);
+				$this->db->set('entregable_wm', $parametros['entregable_wm']);
 				$this->db->where('id_entregable', $id);
 				$this->db->update('entregable_ec');
 			} else {
@@ -36,6 +37,7 @@ class EntregableECModel extends ModeloBase
 					'instrucciones' => $parametros['instrucciones'],
 					'tipo_entregable' => $parametros['tipo_entregable'],
 					'activo' => true,
+					'entregable_wm' => $parametros['entregable_wm'],
 					'id_estandar_competencia' => $parametros['id_estandar_comptencia'],
 				));
 

@@ -8,6 +8,13 @@
 				<div class="card" style="height: 100%;">
 					<div class="card-body">
 						<div class="row">
+							
+							<?php if(isset($item->entregable_wm) && $item->entregable_wm == 'si'): ?>
+								<div class="col-12 text-right">
+									<span class="badge badge-primary">Para WM</span>
+								</div>
+							<?php endif; ?>
+							
 							<div class="col-10">
 								<h5 class="card-title text-bold">
 
@@ -22,7 +29,9 @@
 									<?php if ($item->tipo_entregable == "cuest") : ?>
 										<em style="color: var(--green)" class="fa fa-question mr-1"></em>
 									<?php endif; ?>
-									<?= $item->nombre ?></h5>
+									<?= $item->nombre ?>
+								</h5>
+								<br>
 							</div>
 							
 							<div class="col-2">

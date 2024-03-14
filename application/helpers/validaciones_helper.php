@@ -193,6 +193,24 @@ class Validaciones_Helper {
 		}if(!isset($data['titulo']) || self::isCampoVacio($data['titulo'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo titulo es requerido';
+		}if(!isset($data['calificacion_juicio']) || self::isCampoVacio($data['calificacion_juicio'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo calificacion juicio es requerido';
+		}if(!isset($data['calificacion_min_conocer']) || self::isCampoVacio($data['calificacion_min_conocer'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo calificacion minima del CONOCER es requerido';
+		}if(!isset($data['calificacion_max_conocer']) || self::isCampoVacio($data['calificacion_max_conocer'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo calificacion máxima del CONOCER es requerido';
+		}
+		if(es_yosoyliderwm()){
+			if(!isset($data['calificacion_min_wm']) || self::isCampoVacio($data['calificacion_min_wm'])){
+				$result['success'] = false;
+				$result['msg'][] = 'El campo calificacion minima de WM es requerido';
+			}if(!isset($data['calificacion_max_wm']) || self::isCampoVacio($data['calificacion_max_wm'])){
+				$result['success'] = false;
+				$result['msg'][] = 'El campo calificacion máxima de WM es requerido';
+			}
 		}
 		return $result;
 	}
