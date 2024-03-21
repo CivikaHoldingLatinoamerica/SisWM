@@ -24,21 +24,21 @@
 							</button>
 							<div class="dropdown-menu" role="menu" style="">
 								<a role="button" class="dropdown-item btn_evaluaciones_alumno" href="#"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario="<?=$aec->id_usuario?>"
 								data-es_evaluacion="si"
 								data-toggle="tooltip" title="Evaluacion(es) diagnoósticas del candidato">
 									Evaluación diagnóstica
 								</a>
 								<a role="button" class="dropdown-item btn_evaluaciones_modulo_alumno" href="#"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario="<?=$aec->id_usuario?>"
 								data-es_evaluacion="si"
 								data-toggle="tooltip" title="Evaluacion(es) módulo de capacitación del candidato">
 									Evaluación módulo de capacitación
 								</a>
 								<a role="button" class="dropdown-item btn_encuesta_satisfaccion_lectura" data-toggle="tooltip" title="Ver encuesta de satisfacción"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario="<?=$aec->id_usuario?>" href="#">
 									Encuesta de satisfacción
 								</a>
@@ -46,25 +46,25 @@
 						</div>
 						<br>
 						<button class="btn btn-sm btn-outline-warning btn_evaluaciones_alumno mt-1" data-toggle="tooltip"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario="<?=$aec->id_usuario?>" data-es_evaluacion="no"
 								title="Cédula de evaluación"><i class="fa fa-check-circle"></i> Cédula de evaluación</button>
 					<?php endif; ?>
 					<?php if(perfil_permiso_operacion_menu('tecnicas_instrumentos.consultar')): ?>
 						<br>
 						<button class="btn btn-sm btn-outline-info btn_evidencia_ati_alumno mt-1" data-toggle="tooltip"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario="<?=$aec->id_usuario?>"
 								title="Evidencia de trabajo por parte del candidato"><i class="fa fa-clipboard-list"></i> Evidencia de trabajo</button>
 						<br>
 						<button class="btn btn-sm btn-outline-danger btn_cargar_expediente_alumno mt-1" data-toggle="tooltip"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario="<?=$aec->id_usuario?>"
 								data-id_usuario_instructor="<?=$aec->id_usuario_evaluador?>"
 								title="Carga del expediente del candidato"><i class="fa fa-upload"></i> Expediente digital</button>
 						<br>
 						<button class="btn btn-sm btn-outline-success generar_portafolio_evidencia mt-1" data-toggle="tooltip"
-								data-id_estandar_competencia="<?=$estandar_competencia->id_estandar_competencia?>"
+								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario_alumno="<?=$aec->id_usuario?>"
 								data-id_usuario_instructor="<?=$aec->id_usuario_evaluador?>"
 								title="Generación del Portafolio de evidencias"><i class="fa fa-file-alt"></i> Generar PED</button>

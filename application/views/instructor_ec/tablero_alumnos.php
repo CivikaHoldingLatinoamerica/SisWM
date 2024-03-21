@@ -16,6 +16,10 @@
 							class="col-sm-10 col-form-label"><?= $estandar_competencia->codigo . ' - ' . $estandar_competencia->titulo ?></span>
 				</div>
 				<input type="hidden" id="val_id_estandar_competencia" value="<?=$estandar_competencia->id_estandar_competencia?>">
+				<input type="hidden" id="val_calificacion_min_conocer" value="<?=$estandar_competencia->calificacion_min_conocer?>">
+				<input type="hidden" id="val_calificacion_max_conocer" value="<?=$estandar_competencia->calificacion_max_conocer?>">
+				<input type="hidden" id="val_calificacion_min_wm" value="<?=$estandar_competencia->calificacion_min_wm?>">
+				<input type="hidden" id="val_calificacion_max_wm" value="<?=$estandar_competencia->calificacion_max_wm?>">
 			<?php endif; ?>
 			<div class="row">
 				<div class="col-md-6">

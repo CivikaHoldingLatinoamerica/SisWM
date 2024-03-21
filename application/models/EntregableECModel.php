@@ -127,6 +127,7 @@ class EntregableECModel extends ModeloBase
 	{
 		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad ,
        			(select eea.id_cat_proceso from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = " . $id_usuario . ") as id_estatus, " .
+				"(select eea.calificacion from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = " . $id_usuario . ") as calificacion_entregable , ".
 			"(select ehf.id_entregable_formulario from entregable_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, " .
 			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregable_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = " . $id_usuario . ") as id_estatus_formulario "
 			. "from entregable_ec ee "
@@ -155,6 +156,8 @@ class EntregableECModel extends ModeloBase
 				'id_estatus' => $item->id_estatus,
 				'id_entregable_formulario' => $item->id_entregable_formulario,
 				'id_usuario' => $id_usuario,
+				'entregable_wm' =>  isset($item->entregable_wm) ? $item->entregable_wm : 'no',
+				'calificacion_entregable' =>  isset($item->calificacion_entregable) ? $item->calificacion_entregable : '',
 				'instrumentos' => array(),
 				'archivos' => array(),
 				'comentarios' => array(),

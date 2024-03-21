@@ -80,7 +80,8 @@ class EvaluadoresEC extends CI_Controller {
 			$candidatos_asignados = $this->UsuarioHasECModel->alumnos_inscritos_ec($datosBusqueda,$pagina,$limit);
 			//var_dump($candidatos_asignados);exit;
 			$data['alumnos_ec'] = $candidatos_asignados;
-			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
+			$data['id_estandar_competencia'] = $id_estandar_competencia;
+			//$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
 			$data['total_registros'] = $this->UsuarioHasECModel->total_registros_alumnos_inscritos_ec($id_estandar_competencia,PERFIL_ALUMNO);
 			$data_paginacion = data_paginacion($pagina,$limit,$data['total_registros']);
 			$data = array_merge($data,$data_paginacion);
@@ -113,6 +114,7 @@ class EvaluadoresEC extends CI_Controller {
 			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario_alumno);
 
 			$data['entregables'] = $datos;
+			//var_dump($datos);exit;
 			$this->load->view('instructor_ec/modal_evidencia_ati_alumno',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

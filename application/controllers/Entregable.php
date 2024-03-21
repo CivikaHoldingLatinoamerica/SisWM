@@ -246,6 +246,25 @@ class entregable extends CI_Controller
 		echo json_encode($response);
 	}
 
+	public function actualizar_calificacion_entregable($id_entregable,$id_usuario_alumno){
+		try{
+			$post = $this->input->post();
+			$data =  $this->EcEntregableAlumno->registrar_calificacion_entregable($id_entregable, $id_usuario_alumno,$post['calificacion']);
+			if($data['success']){
+				$response['success'] = true;
+				$response['msg'][] = $data['msg'];
+			}else{
+				$response['success'] = false;
+				$response['msg'][] = $data['msg'];
+			}
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);
+	}
+
 	public function liberar_entregables($id_estandar_competencia){
 		try{
 			$data =  $this->EntregableECModel->liberar_entregables($id_estandar_competencia);

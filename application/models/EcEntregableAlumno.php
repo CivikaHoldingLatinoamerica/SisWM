@@ -36,6 +36,21 @@ class EcEntregableAlumno  extends ModeloBase
 
 	}
 
+	public function registrar_calificacion_entregable($id_entregable,$id_usuario_alumno,$calificacion){
+		try{
+			$return['success'] = true;
+			$return['msg'] = 'Se registro la calificación del entregable correctamente';
+			$this->db->set('calificacion',$calificacion);
+			$this->db->where('id_entregable', $id_entregable);
+			$this->db->where('id_usuario', $id_usuario_alumno);
+			$this->db->update('ec_entregable_alumno');
+		}catch (Exception $ex) {
+			$return['success'] = false;
+			$return['msg'] = 'Hubo un error en el sistema, favor de intentar más tarde';
+		}
+		return $return;
+	}
+
 	private function registroEntregable($id_entregable,$id_alumno){
 		$this->db->where('id_entregable', $id_entregable);
 		$this->db->where('id_usuario', $id_alumno);

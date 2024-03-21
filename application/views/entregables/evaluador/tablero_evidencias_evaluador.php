@@ -21,6 +21,7 @@
 								<em style="color: var(--green)" class="fa fa-question mr-1"></em>
 							<?php endif; ?>
 							<?= old($entregable, 'nombre_entregable') ?>
+							<?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? '<span class="badge badge-dark">Entregable WM</span>' :''?>
 						</button>
 
 
@@ -105,6 +106,35 @@
 					<?php endif; ?>
 
 					<div class="row">
+						<div class="col-12">
+							<label>Calificación Entregable</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<?php if ($entregable->id_estatus == ESTATUS_ENVIADA) :?>
+								<div class="input-group mb-3">
+									<input class="form-control input_calificacion <?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'input_calificacion_wm' :'input_calificacion_conocer'?>" type="number"
+										id="input_calificacion_<?= $entregable->id_entregable ?>"
+										placeholder="Agrega una calificación" aria-label="Calificación"
+										aria-describedby="button-addon2" value="<?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?>" />
+									<div class="input-group-append">
+										<button type="button"
+											class="btn btn-outline-success <?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'btn_calificacion_wm' :'btn_calificacion_conocer'?>"
+											data-id_entregable="<?= $entregable->id_entregable ?>">
+												<em class="fa fa-save"></em>
+										</button>
+									</div>
+								</div>
+							<?php else: ?>
+								<input type="hidden" class="<?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'input_calificacion_wm' :'input_calificacion_conocer'?>" 
+									value="<?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?>">
+								<span><?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?></span>
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<div class="row">
 						<div id="contenedor_formulario_<?= $entregable->id_entregable ?>" class="col">
 
 						</div>
@@ -114,10 +144,10 @@
 						<div class="row">
 							<div class="col-12">
 								<div class="input-group mb-3">
-							<textarea class="form-control"
-									  id="txt_comentarios_candidato_<?= $entregable->id_entregable ?>"
-									  placeholder="Agrega un comentario" aria-label="Comentario"
-									  aria-describedby="button-addon2"></textarea>
+									<textarea class="form-control"
+									  	id="txt_comentarios_candidato_<?= $entregable->id_entregable ?>"
+									  	placeholder="Agrega un comentario" aria-label="Comentario"
+									  	aria-describedby="button-addon2"></textarea>
 									<div class="input-group-append">
 										<button
 											class="btn btn-outline-success txt_guardar_comentario_instructor"
@@ -226,6 +256,22 @@
 										data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>"
 										data-id_entregable="<?= $entregable->id_entregable ?>"><em
 										class="fa fa-check-circle"></em> Liberar
+								</button>
+							</div>
+						<?php endif; ?>
+
+						<?php if ($entregable->id_estatus == ESTATUS_FINALIZADA) : ?>
+							<div class="col-8" >
+								<div class="callout callout-danger">
+									<h5>Aviso importante</h5>
+									<p>Recuerde que el entregable ya esta liberado, pero si encuentra una inconsistencia y debe volverla a revisar con el candidato, puede revertir este proceso y se marcará como enviada para que lo revise el evaluador</p>
+								</div>
+							</div>
+							<div class="col-4 text-right">
+								<button class="btn btn-sm btn-danger desliberar-entregable"
+										data-id_entregable_formulario="<?= $entregable->id_entregable_formulario ?>"
+										data-id_entregable="<?= $entregable->id_entregable ?>"><em
+										class="fa fa-check-circle"></em> Volver a revisar
 								</button>
 							</div>
 						<?php endif; ?>
