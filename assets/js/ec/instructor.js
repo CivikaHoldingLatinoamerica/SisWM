@@ -213,6 +213,28 @@ var EvaluadoresEC = {
 					$(this).addClass(EvaluadoresEC.obtener_class_calificacion(calificacion));
 				});
 				EvaluadoresEC.validar_input_fecha_envio_ati_instructor();
+				//para validar si es posible registrar calificación a los entregables
+				if(($('#val_calificacion_max_conocer').val() == '' || parseFloat($('#val_calificacion_max_conocer').val()) == 0)){
+					//$('.contenedor_calificacion_entregable_ec').html();
+					$('.contenedor_calificacion_entregable_ec').html('');
+					$('#contenedor_calificacion_ec').html('<div class="callout callout-danger"><h5>Lo siento</h5><p>No se encontro calificación min/max del CONOCER del estándar de competencia, no es posible registrar una calificación al entregable</p></div>');
+				}else{
+					//parseamos la calificación min y max del conocer al span del modal
+					var min_conocer = $('#val_calificacion_min_conocer').val();
+					var max_conocer = $('#val_calificacion_max_conocer').val();
+					$('#calificacion_conocer_ec').html(min_conocer + ' - ' + max_conocer);
+				}
+				if(es_yosoyliderwm){
+					if(($('#val_calificacion_max_wm').val() == '' || parseFloat($('#val_calificacion_max_wm').val()) == 0)){
+						$('.contenedor_calificacion_entregable_ec').html('');
+						$('#contenedor_calificacion_ec').html('<div class="callout callout-danger"><h5>Lo siento</h5><p>No se encontro calificación min/max de WM del estándar de competencia, no es posible registrar una calificación al entregable</p></div>');
+					}else{
+						//parseamos la calificación min y max del conocer al span del modal
+						var min_wm = $('#val_calificacion_min_wm').val();
+						var max_wm = $('#val_calificacion_max_wm').val();
+						$('#calificacion_wm_ec').html(min_wm + ' - ' + max_wm);
+					}
+				}
 			}
 		);
 	},
@@ -329,7 +351,9 @@ var EvaluadoresEC = {
 			descripcion_presentacion_resultados : $('#input_descripcion_lugar').val(),
 			fecha_evidencia_ati : $('#input_fecha_evidencia_ati').val() + ' ' + $('#input_hora_evidencia_ati').val(),
 			fecha_presentacion_resultados : $('#input_fecha_revision_ati').val() + ' ' + $('#input_hora_revision_ati').val(),
+			id_cat_calibracion_desempeno : $('#slt_id_cat_calibracion_desempeno').val(),
 		};
+		//var post = $('#form_acuerdos_evaluacion').serialize();
 		Comun.obtener_contenido_peticion_json(
 			base_url + 'EvaluadoresEC/guardar_fecha_evidencia_ati',post,
 			function(response){

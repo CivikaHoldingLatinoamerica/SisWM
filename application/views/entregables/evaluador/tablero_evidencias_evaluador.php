@@ -104,33 +104,35 @@
 
 
 					<?php endif; ?>
-
-					<div class="row">
-						<div class="col-12">
-							<label>Calificación Entregable</label>
+					
+					<div class="contenedor_calificacion_entregable_ec">
+						<div class="row ">
+							<div class="col-12">
+								<label>Calificación Entregable</label>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-6">
-							<?php if ($entregable->id_estatus == ESTATUS_ENVIADA) :?>
-								<div class="input-group mb-3">
-									<input class="form-control input_calificacion <?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'input_calificacion_wm' :'input_calificacion_conocer'?>" type="number"
-										id="input_calificacion_<?= $entregable->id_entregable ?>"
-										placeholder="Agrega una calificación" aria-label="Calificación"
-										aria-describedby="button-addon2" value="<?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?>" />
-									<div class="input-group-append">
-										<button type="button"
-											class="btn btn-outline-success <?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'btn_calificacion_wm' :'btn_calificacion_conocer'?>"
-											data-id_entregable="<?= $entregable->id_entregable ?>">
-												<em class="fa fa-save"></em>
-										</button>
+						<div class="row">
+							<div class="col-6">
+								<?php if ($entregable->id_estatus == ESTATUS_ENVIADA) :?>
+									<div class="input-group mb-3">
+										<input class="form-control input_calificacion <?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'input_calificacion_wm' :'input_calificacion_conocer'?>" type="number"
+											id="input_calificacion_<?= $entregable->id_entregable ?>"
+											placeholder="Agrega una calificación" aria-label="Calificación"
+											aria-describedby="button-addon2" value="<?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?>" />
+										<div class="input-group-append">
+											<button type="button"
+												class="btn btn-outline-success <?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'btn_calificacion_wm' :'btn_calificacion_conocer'?>"
+												data-id_entregable="<?= $entregable->id_entregable ?>">
+													<em class="fa fa-save"></em>
+											</button>
+										</div>
 									</div>
-								</div>
-							<?php else: ?>
-								<input type="hidden" class="<?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'input_calificacion_wm' :'input_calificacion_conocer'?>" 
-									value="<?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?>">
-								<span><?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?></span>
-							<?php endif; ?>
+								<?php else: ?>
+									<input type="hidden" class="<?=isset($entregable->entregable_wm) && $entregable->entregable_wm == 'si' ? 'input_calificacion_wm' :'input_calificacion_conocer'?>" 
+										value="<?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?>">
+									<span><?=isset($entregable->calificacion_entregable) ? $entregable->calificacion_entregable : ''?></span>
+								<?php endif; ?>
+							</div>
 						</div>
 					</div>
 

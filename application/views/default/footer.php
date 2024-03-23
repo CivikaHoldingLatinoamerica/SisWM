@@ -133,6 +133,7 @@
 	var es_development = '<?=es_development()?>';
 	var es_pruebas = '<?=es_pruebas()?>';
 	var es_produccion = '<?=es_produccion()?>';
+	var es_yosoyliderwm = '<?=es_yosoyliderwm()?>';
 	var existe_login = '<?=sesionActive() != false ? true : false?>';
 </script>
 

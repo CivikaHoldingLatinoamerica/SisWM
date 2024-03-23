@@ -11,12 +11,13 @@ class EvaluadoresEC extends CI_Controller {
 		$this->load->model('ActividadIEModel');
 		$this->load->model('EcInstrumentoAlumnoComentarioModel');
 		$this->load->model('EntregableAlumnoComentariosModel');
-        $this->load->model('EcInstrumentoAlumnoModel');
-        $this->load->model('ECUsuarioHasExpedientePEDModel');
+		$this->load->model('EcInstrumentoAlumnoModel');
+		$this->load->model('ECUsuarioHasExpedientePEDModel');
 		$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('UsuarioHasECModel');
 		$this->load->model('UsuarioModel');
 		$this->load->model('EntregableECModel');
+		$this->load->model('CatalogoModel');
         if(sesionActive()){
 			$this->usuario = usuarioSession();
         }else{
@@ -109,7 +110,7 @@ class EvaluadoresEC extends CI_Controller {
 			$data['id_estandar_compentencia'] = $id_estandar_competencia;
 			$data['id_usuario_alumno'] = $id_usuario_alumno;
 			$data['usuario_alumno'] = $this->UsuarioModel->obtener_usuario_modificar_id($id_usuario_alumno);
-			
+			$data['cat_calibracion_desempeno'] = $this->CatalogoModel->get_catalogo('cat_calibracion_desempeno');
 
 			$datos = $this->EntregableECModel->obtener_entregables_candidato($id_estandar_competencia,$id_usuario_alumno);
 
@@ -296,13 +297,14 @@ class EvaluadoresEC extends CI_Controller {
 
 	public function guardar_fecha_evidencia_ati(){
 		perfil_permiso_operacion('tecnicas_instrumentos.modificar');
-    	try{
+    		try{
 			$post = $this->input->post();
 			$criterios = $post;
 			unset($criterios['fecha_evidencia_ati']);
 			unset($criterios['lugar_presentacion_resultados']);
 			unset($criterios['descripcion_presentacion_resultados']);
 			unset($criterios['fecha_presentacion_resultados']);
+			unset($criterios['id_cat_calibracion_desempeno']);
 			$valores = $post;
 			unset($valores['id_estandar_competencia']);
 			unset($valores['id_usuario']);
