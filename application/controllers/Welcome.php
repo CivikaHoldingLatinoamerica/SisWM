@@ -29,6 +29,10 @@ class Welcome extends CI_Controller {
 		echo sha1($strPass);
 	}
 
+	public function basestr($cadena){
+		echo base64_encode($cadena);
+	}
+
 	public function sesion(){
 		//var_dump(perfil_permiso_operacion_menu('usuarios.consultar'));exit;
 		dd($this->session->userdata());exit;

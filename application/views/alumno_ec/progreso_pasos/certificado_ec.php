@@ -40,7 +40,7 @@
 		</button>
 	</div>
 	<div class="col-lg-6 text-right">
-		<button type="button" data-siguiente_link="#tab_encuesta_satisfaccion-tab" data-numero_paso="6" <?=$usuario_has_ec->jucio_evaluacion == 'competente' ? '':'disabled="disabled"'?>
+		<button type="button" data-siguiente_link="#tab_encuesta_satisfaccion-tab" data-numero_paso="7" <?=$usuario_has_ec->jucio_evaluacion == 'competente' ? '':'disabled="disabled"'?>
 				class="btn btn-outline-success btn-sm guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
 	</div>
 </div>

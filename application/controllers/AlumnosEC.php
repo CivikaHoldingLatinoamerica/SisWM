@@ -483,15 +483,18 @@ class AlumnosEC extends CI_Controller {
 			$data['usuario_has_ec'] = $usuario_has_ec;
 			$data['usuario_has_encuesta_satisfacion'] = $this->UsuarioHasEncuestaModel->encuesta_satisfacion_usuario_ec($usuario_has_ec->id_usuario_has_estandar_competencia);
 			$data['cat_preguntas_encuesta'] = $this->CatalogoModel->cat_preguntas_encuesta();
+			$data['preguntas_sin_responder'] = false;
 			if(!is_null($data['usuario_has_encuesta_satisfacion'])){
 				foreach ($data['cat_preguntas_encuesta'] as $cpe){
 					$respuesta_candidato = $this->UsuarioHasEncuestaModel->respuesta_candidato_pregunta($cpe->id_cat_preguntas_encuesta,$data['usuario_has_encuesta_satisfacion']->id_usuario_has_encuesta_satisfaccion);
 					$cpe->respuesta = $respuesta_candidato;
+					is_null($respuesta_candidato) ? $data['preguntas_sin_responder'] = true : false;
 				}
 			}
 			$data['estandar_competencia'] = $this->EstandarCompetenciaModel->obtener_row($id_estandar_competencia);
 			$data['titulo_pagina'] = 'Encuesta de satisfacción';
 			$data['usuario'] = $this->usuario;
+			// var_dump($data);exit;
 			$this->load->view('alumno_ec/progreso_pasos/encuesta_satisfacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

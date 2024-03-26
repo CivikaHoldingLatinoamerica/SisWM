@@ -462,6 +462,70 @@ class DocsPDF extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
+	public function gafete_candidato_sewm($id_usuario_has_estandar_competencia){
+		try{
+			$pdf = new Fpdi();
+			$mpdf = $this->pdf->load($this->default_pdf_params);
+			//leemos la plantilla para generar el GAFETE
+			$pdf->setSourceFile(RUTA_PLANTILLA_GAFETE_SEWM);
+			
+			$paginaActual = $pdf->importPage(1);
+			$paPlantilla = $pdf->getTemplatesize($paginaActual);
+			$pdf->AddPage($paPlantilla['orientation'],$paPlantilla);
+			$pdf->useImportedPage($paginaActual);
+			//agregamos la marca de agua para pruebas
+			if(!es_produccion()) {
+				//agregamos el texto
+				$pdf->SetFont('Arial','',40);
+				$pdf->SetTextColor(150, 150, 150);
+				$pdf->SetXY(20, $paPlantilla[1] / 2);
+				$pdf->Write(0, utf8_decode('PED Demo - ECO SOFTyH'));
+
+				//para los datos de la plantilla en la credencial
+				if(es_yosoyliderwm()){
+					//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
+					//$pdf->SetFont('fontwm','B',9);
+					$pdf->SetFont('Arial','B',9);
+					$pdf->SetTextColor(255,255,255);
+					$nombre = utf8_decode("Enrique Corona Ricaño");
+					$apellido = utf8_decode("Cascos Rojos");
+					$otro = utf8_decode("Alto desempeño");
+
+					$pos = 10;
+					//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
+					$pdf->SetXY(0, 110);
+					//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
+					$pdf->SetX(0);
+					$pdf->Cell(135,$pos,$nombre,0,0,'R');
+					$pdf->SetX(-11.5);
+					$pos = $pos + 10;
+					$pdf->Cell(-133,$pos,$apellido,0,0,'R');
+					
+					$pdf->SetTextColor(0,0,0);
+					$pdf->SetX(-21.5);
+					$pos = $pos + 10;
+					$pdf->Cell(-123,$pos,$otro,0,0,'R');
+					
+					//se agregan las palomitas conforme al desempeño
+					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',115,128,4,4); //una
+					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',120,128,4,4); //dos
+					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',125,128,4,4); //tres
+					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',130,128,4,4); //cuatro
+				}
+			}
+
+			$pdf->Output('I', 'GAFETE-SEWM-'.$id_usuario_has_estandar_competencia);
+			$pdf->cleanUp();
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			log_message('error','***** DocsPDFModel -> gafete_candidato_sewm');
+			log_message('error',$ex->getMessage());
+		}
+		echo json_encode($response);exit;
+	}
+
 	protected function set_variables_defaults_pdf()
 	{
 		$configVariablrs =new ConfigVariables();
@@ -502,6 +566,13 @@ class DocsPDF extends CI_Controller {
 						'I' => "BauhausStd-Medium.ttf",
 						'BI' => "BauhausStd-Medium.ttf",
 					),
+
+					"nuefa_fuente_wm" => array(
+						'R' => "wm.TTF",
+						'B' => "wm.TTF",
+						'I' => "wm.TTF",
+						'BI' => "wm.TTF",
+					)
 				)
 		);
 	}

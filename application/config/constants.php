@@ -95,6 +95,7 @@ define('RUTA_PDF_PED','files_usr/ped/');
 define('RUTA_QR_FILES','files_usr/qr_generados');
 
 define('RUTA_PLANTILLA_GAFETE','assets/docs/plantilla-gafete.pdf');
+define('RUTA_PLANTILLA_GAFETE_SEWM','assets/docs/01-plantilla-gafete.pdf');
 
 /**
  * constantes para los perfiles de usuario
@@ -119,6 +120,15 @@ define('EVALUACION_DIAGNOSTICA',1);
 define('EVALUACION_CUESTIONARIO_INSTRUMENTO',2);
 define('EVALUACION_ENTREGABLE',3);
 define('EVALUACION_MODULO',4);
+
+/**
+ * constantes para la clasificacion de juicio
+ */
+define('JUICIO_AUN_NO_CALIFICADO',1);
+define('JUICIO_CALIFICADO',2);
+define('JUICIO_OPTIMO',3);
+define('JUICIO_ALTO_POTENCIAL',4);
+define('JUICIO_ALTO_DESEMPENO',5);
 
 /**
  * constantes para las opciones de pregunta

@@ -36,7 +36,7 @@
 						<div class="text-right">
 							<a class="btn btn-sm btn-success" href="<?=base_url()?>AlumnosEC/ver_progreso/<?=$ec->id_estandar_competencia?>/<?=$ec->instructor->id_usuario?>"
 							data-toggle="tooltip" title="Ver progreso">
-								<i class="fa fa-tasks"></i> Progreso: <?=number_format(($ec->progreso_pasos / 6) * 100,2)?>%
+								<i class="fa fa-tasks"></i> Progreso: <?=number_format(($ec->progreso_pasos / 7) * 100)?>%
 							</a>
 
 						</div>

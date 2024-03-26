@@ -16,7 +16,6 @@
 							<h5>Información del sistema</h5>
 							<p>Esta evaluación es información de sus respuestas realizadas</p>
 							<ul>
-								<?php if(isset($usuario_has_evaluacion_realizada)){};?>
 								<li>Inicio: <?=fechaHoraBDToHTML($usuario_has_evaluacion_realizada->fecha_iniciada)?></li>
 								<li>Fin: <?=fechaHoraBDToHTML($usuario_has_evaluacion_realizada->fecha_enviada)?></li>
 								<li>Calificación: <span class="span_calificacion_evidencia" data-calificacion="<?=$usuario_has_evaluacion_realizada->calificacion?>"><?=$usuario_has_evaluacion_realizada->calificacion?></span></li>

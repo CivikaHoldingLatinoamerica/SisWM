@@ -77,7 +77,7 @@
 				</button>
 			</div>
 			<div class="col-lg-6 text-right">
-				<button type="button" data-siguiente_link="#tab_certificado-tab" data-numero_paso="5" <?=isset($usuario_has_ec->observaciones_candidato) && $usuario_has_ec->observaciones_candidato != '' ? '' : 'disabled="disabled"'?>
+				<button type="button" data-siguiente_link="#tab_certificado-tab" data-numero_paso="6" <?=isset($usuario_has_ec->observaciones_candidato) && $usuario_has_ec->observaciones_candidato != '' ? '' : 'disabled="disabled"'?>
 						class="btn btn-outline-success btn-sm guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
 			</div>
 		</div>

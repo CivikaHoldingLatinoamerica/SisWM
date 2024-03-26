@@ -103,7 +103,6 @@ class Publico extends CI_Controller {
 		try{
 			$this->load->model('UsuarioModel');
 			$this->load->model('UsuarioHasECModel');
-			$this->load->model('UsuarioHasECModel');
 			//validamos el campo de curp para verificar que si llegue el dato y la curp
 			$post = $this->input->post();
 			$validacion_campos = Validaciones_Helper::formUsuarioCandidatoConvocatoria($post);
@@ -179,6 +178,31 @@ class Publico extends CI_Controller {
 			$insert['id_usuario_evaluador'] = $instructor->id_usuario;
 		}
 		return $this->UsuarioHasECModel->guardar_row($insert);
+	}
+
+	/**
+	 * funcion(es) para visualizar el perfil publico del candidato y su progreso 
+	 * para que se llegue a esta funcion es en base al escaneo del codigo QR emitido en la credencia de wm
+	 */
+	public function candidato_certificacion($usuario){
+		try{
+			$this->load->model('UsuarioModel');
+			$this->load->model('UsuarioHasECModel');
+			if(sesionActive()){
+				$data['usuario'] = usuarioSession();
+			}
+			$data['usuario_candidato'] = $this->UsuarioModel->obtener_usuario_by_usr($usuario);
+			$data['datos_usuario'] = $this->UsuarioModel->obtener_data_usuario_id($data['usuario_candidato']->id_usuario);
+			$data['datos_empresa'] = $this->PerfilModel->obtener_datos_empresa($data['usuario_candidato']->id_usuario,true);
+			$data['certificacion_candidato'] = $this->UsuarioHasECModel->obtener_progreso_alumno_publico($data['usuario_candidato']->id_usuario);
+			// var_dump($data);exit;
+			$this->load->view('alumno_ec/progreso_certificacion',$data);
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			redirect(base_url().'500');
+		}
 	}
 
 }

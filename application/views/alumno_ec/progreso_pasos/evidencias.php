@@ -110,7 +110,7 @@ $numero_actividades_finalizadas = 0;
 		</button>
 	</div>
 	<div class="col-lg-6 text-right">
-		<button type="button" data-siguiente_link="#tab_jucio_competencia-tab" data-numero_paso="4" disabled="disabled"
+		<button type="button" data-siguiente_link="#tab_jucio_competencia-tab" data-numero_paso="5" disabled="disabled"
 				class="btn btn-outline-success btn-sm guardar_progreso_pasos">Siguiente <i class="fa fa-forward"></i></button>
 	</div>
 </div>

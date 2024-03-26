@@ -236,4 +236,26 @@ class UsuarioHasECModel extends ModeloBase
 		return $query->result();
 	}
 
+	public function obtener_progreso_alumno_publico($id_usuario){
+		try{
+			$consulta = "select 
+					ec.codigo codigo_ec, ec.titulo titulo_ec,
+					u.activo candidato_activo,
+					u.eliminado candidato_eliminado,
+					if(uhec.jucio_evaluacion is null,'En proceso', upper(uhec.jucio_evaluacion)) as juicio_evaluacion,
+					uhec.id_cat_calibracion_desempeno,ccd.nombre as calibracion_desempeno,
+					format((select if(count(*) = 0,0, ((count(*) / 7) * 100)) from usuario_has_ec_progreso uhep where uhep.id_usuario_has_estandar_competencia = uhec.id_usuario_has_estandar_competencia),'N2') progreso
+				from usuario u
+					inner join usuario_has_estandar_competencia uhec on uhec.id_usuario = u.id_usuario
+					inner join estandar_competencia ec on ec.id_estandar_competencia = uhec.id_estandar_competencia
+					inner join cat_calibracion_desempeno ccd on ccd.id_cat_calibracion_desempeno = uhec.id_cat_calibracion_desempeno
+				where 1=1 and u.id_usuario = $id_usuario";
+			$query = $this->db->query($consulta);
+			return $query->result();
+		}catch (Exception $ex){
+			$data = [];
+		}
+		return $data;
+	}
+
 }

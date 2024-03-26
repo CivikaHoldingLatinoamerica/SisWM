@@ -54,14 +54,11 @@ class UsuarioHasEncuestaModel extends ModeloBase
 
 	public function guardar_respuestas_candidato($id_usuario_has_ec,$data){
 		try{
-			$save['id_usuario_has_estandar_competencia'] = $id_usuario_has_ec;
-			$save['fecha_envio'] = date('Y-m-d H:i:s');
-			$save['observaciones'] = $data['observaciones'];
-			$usuario_has_encuesta_satisfacion =$this->guardar_row($save);
+			$usuario_has_encuesta_satisfacion = $this->guardar_respuesta_encuesta_satisfaccion($id_usuario_has_ec,$data);
 			foreach ($data['respuesta'] as $id_cat_preguntas_encuesta => $r){
 				$respuesta['id_cat_preguntas_encuesta'] = $id_cat_preguntas_encuesta;
 				$respuesta['respuesta'] = $r;
-				$respuesta['id_usuario_has_encuesta_satisfaccion'] = $usuario_has_encuesta_satisfacion['id'];
+				$respuesta['id_usuario_has_encuesta_satisfaccion'] = $usuario_has_encuesta_satisfacion->id_usuario_has_encuesta_satisfaccion;
 				$this->UsuarioHasRespuestaEncuestaModel->guardar_row($respuesta);
 			}
 			$response['success'] = true;
@@ -73,4 +70,22 @@ class UsuarioHasEncuestaModel extends ModeloBase
 		return $response;
 	}
 
+	public function guardar_respuesta_encuesta_satisfaccion($id_usuario_has_ec,$data){
+		$encuesta_satisfaccion = $this->encuesta_satisfacion_usuario_ec($id_usuario_has_ec);
+		if(!is_null($encuesta_satisfaccion)){
+			$usuario_has_encuesta_satisfacion = $encuesta_satisfaccion;
+			$save['id_usuario_has_estandar_competencia'] = $id_usuario_has_ec;
+			$save['fecha_envio'] = date('Y-m-d H:i:s');
+			$save['observaciones'] = $data['observaciones'];
+			$this->guardar_row($save,$usuario_has_encuesta_satisfacion->id_usuario_has_encuesta_satisfaccion);
+			$this->UsuarioHasRespuestaEncuestaModel->eliminar_row_criterios(array('id_usuario_has_encuesta_satisfaccion' => $usuario_has_encuesta_satisfacion->id_usuario_has_encuesta_satisfaccion));
+		}else{
+			$save['id_usuario_has_estandar_competencia'] = $id_usuario_has_ec;
+			$save['fecha_envio'] = date('Y-m-d H:i:s');
+			$save['observaciones'] = $data['observaciones'];
+			$this->guardar_row($save);
+			$usuario_has_encuesta_satisfacion = $this->encuesta_satisfacion_usuario_ec($id_usuario_has_ec);
+		}
+		return $usuario_has_encuesta_satisfacion;
+	}
 }
