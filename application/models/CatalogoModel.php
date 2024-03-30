@@ -32,7 +32,12 @@ class CatalogoModel extends CI_Model
 		return $query->result();
 	}
 
-	public function get_catalogo($tabla){
+	public function get_catalogo($tabla,$id = false){
+		if($id !== false){
+			$this->db->where('id_'.$tabla,$id);
+			$query = $this->db->get($tabla);
+			return $query->row();
+		}
 		$query = $this->db->get($tabla);
 		return $query->result();
 	}

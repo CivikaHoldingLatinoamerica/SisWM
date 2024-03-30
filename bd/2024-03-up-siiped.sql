@@ -6,7 +6,7 @@
 	@local
 	@date 22/mar/2024
 	@pruebas
-	@date N/A
+	@date 30/mar/2024
 	@produccion
 	@date N/A
 */
@@ -45,3 +45,16 @@ INSERT INTO cat_calibracion_desempeno (nombre) VALUES
 	('Alto desempeño');
 	
 	
+ALTER TABLE `usuario` 
+ADD COLUMN `id_archivo_qr` BIGINT(20) UNSIGNED NULL COMMENT 'llave foranea para identificar el codigo qr del usuario para el sistema' AFTER `id_usuario_registro`,
+ADD INDEX `fk_usuario_archivo_qr_idx` (`id_archivo_qr` ASC);
+;
+ALTER TABLE `usuario` 
+ADD CONSTRAINT `fk_usuario_archivo_qr`
+  FOREIGN KEY (`id_archivo_qr`)
+  REFERENCES `archivo` (`id_archivo`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+ALTER TABLE `usuario_has_estandar_competencia` 
+ADD COLUMN `fecha_emision_certificado` DATE NULL COMMENT 'columna que almacenara la fecha de cuando se emitio el certificado, para adicionar o contar un año a partir de aqui para la vigencia de la credencial' AFTER `intentos_adicionales`;

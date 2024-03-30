@@ -351,6 +351,7 @@ var EvaluadoresEC = {
 			descripcion_presentacion_resultados : $('#input_descripcion_lugar').val(),
 			fecha_evidencia_ati : $('#input_fecha_evidencia_ati').val() + ' ' + $('#input_hora_evidencia_ati').val(),
 			fecha_presentacion_resultados : $('#input_fecha_revision_ati').val() + ' ' + $('#input_hora_revision_ati').val(),
+			fecha_emision_certificado : $('#input_fecha_emision_certificado').val(),
 			id_cat_calibracion_desempeno : $('#slt_id_cat_calibracion_desempeno').val(),
 		};
 		//var post = $('#form_acuerdos_evaluacion').serialize();

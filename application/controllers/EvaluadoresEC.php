@@ -304,6 +304,7 @@ class EvaluadoresEC extends CI_Controller {
 			unset($criterios['lugar_presentacion_resultados']);
 			unset($criterios['descripcion_presentacion_resultados']);
 			unset($criterios['fecha_presentacion_resultados']);
+			unset($criterios['fecha_emision_certificado']);
 			unset($criterios['id_cat_calibracion_desempeno']);
 			$valores = $post;
 			unset($valores['id_estandar_competencia']);
@@ -311,10 +312,10 @@ class EvaluadoresEC extends CI_Controller {
 			$actualizar = $this->UsuarioHasECModel->actualizar_row_criterios($criterios,$valores);
 			if($actualizar['success']){
 				$response['success'] = true;
-				$response['msg'][] = 'Se actualizó la fecha de la evidencia con éxito';
+				$response['msg'][] = 'Se actualizó los acuerdos de la evaluación con éxito';
 			}else{
 				$response['success'] = false;
-				$response['msg'][] = 'No fue posible actualizar la fecha de la evidencia, favor de intentar más tarde';
+				$response['msg'][] = 'No fue posible actualizar los acuerdos de la evaluación, favor de intentar más tarde';
 			}
 		}catch (Exception $ex){
 			$response['success'] = false;

@@ -20,9 +20,11 @@ class DocsPDF extends CI_Controller {
 		$this->load->library('pdf');
 		$this->load->model('ActividadIEModel');
 		$this->load->model('ArchivoModel');
+		$this->load->model('CatalogoModel');
 		$this->load->model('ECUsuarioHasExpedientePEDModel');
 		$this->load->model('DocsPDFModel');
 		$this->load->model('PerfilModel');
+		$this->load->model('UsuarioModel');
 		$this->load->model('UsuarioHasECModel');
 		$this->load->model('UsuarioHasEncuestaModel');
 		$this->load->model('UsuarioHasEvaluacionRealizadaModel');
@@ -464,6 +466,32 @@ class DocsPDF extends CI_Controller {
 
 	public function gafete_candidato_sewm($id_usuario_has_estandar_competencia){
 		try{
+			//traemos los datos para poder generar la credencial y codigoqr
+			$usuario_has_estandar_competencia = $this->UsuarioHasECModel->obtener_row($id_usuario_has_estandar_competencia);
+			//validamos que ya se pueda emitir la credencial con una calificacion aprobatoria
+			if((int)$usuario_has_estandar_competencia->id_cat_calibracion_desempeno < JUICIO_CALIFICADO){
+				echo 'Candidato aun no calificado';exit;
+			}
+			$cat_calibracion_desempeno = $this->CatalogoModel->get_catalogo('cat_calibracion_desempeno',$usuario_has_estandar_competencia->id_cat_calibracion_desempeno);
+			$datos_usuario = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario);
+			$usuario = $this->UsuarioModel->obtener_usuario_by_id($usuario_has_estandar_competencia->id_usuario);
+			$foto_perfil = $this->PerfilModel->foto_perfil($usuario_has_estandar_competencia->id_usuario);
+			$datos_empresa = $this->PerfilModel->obtener_datos_empresa($usuario_has_estandar_competencia->id_usuario,true);
+			if(isset($usuario->id_archivo_qr) && !is_null($usuario->id_archivo_qr)){
+				$codigoQRCandidato = $this->ArchivoModel->obtener_archivo($usuario->id_archivo_qr);
+			}else{
+				//en caso de que no exista el codigo QR para el candidato se genera uno nuevo
+				//el codigo qr es generico o general para el usuario ya que al escanear se manda a un perfil publico
+				$qrGenerado = $this->generar_qr_usuario_candidato($usuario->usuario,$usuario->id_usuario);
+				if($qrGenerado['success']){
+					$codigoQRCandidato = $qrGenerado['data']['archivo_qr'];
+				}
+			}
+			// var_dump($datos_usuario,$cat_calibracion_desempeno,$foto_perfil,$datos_empresa,$codigoQRCandidato);exit;
+			$fecha_emision_certificado = date('Y-m-d',strtotime($usuario_has_estandar_competencia->fecha_emision_certificado));
+			$fecha_fin_vigencia=date('Y-m-d', strtotime('+1 year', strtotime($fecha_emision_certificado)) );
+			$vigencia = fechaBDToHtml($fecha_emision_certificado). ' al '.fechaBDToHtml($fecha_fin_vigencia);
+
 			$pdf = new Fpdi();
 			$mpdf = $this->pdf->load($this->default_pdf_params);
 			//leemos la plantilla para generar el GAFETE
@@ -480,38 +508,52 @@ class DocsPDF extends CI_Controller {
 				$pdf->SetTextColor(150, 150, 150);
 				$pdf->SetXY(20, $paPlantilla[1] / 2);
 				$pdf->Write(0, utf8_decode('PED Demo - ECO SOFTyH'));
+			}
 
-				//para los datos de la plantilla en la credencial
-				if(es_yosoyliderwm()){
-					//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
-					//$pdf->SetFont('fontwm','B',9);
-					$pdf->SetFont('Arial','B',9);
-					$pdf->SetTextColor(255,255,255);
-					$nombre = utf8_decode("Enrique Corona Ricaño");
-					$apellido = utf8_decode("Cascos Rojos");
-					$otro = utf8_decode("Alto desempeño");
+			//para los datos de la plantilla en la credencial
+			if(es_yosoyliderwm()){
+				//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
+				//$pdf->SetFont('fontwm','B',9);
+				$pdf->SetFont('Arial','B',11);
+				$pdf->SetTextColor(255,255,255);
+				$nombre = utf8_decode($datos_usuario->nombre.' '.$datos_usuario->apellido_p.' '.$datos_usuario->apellido_m);
+				$titulo = utf8_decode($datos_empresa->cargo);
+				$clasificacion = utf8_decode($cat_calibracion_desempeno->nombre);
 
-					$pos = 10;
-					//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
-					$pdf->SetXY(0, 110);
-					//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
-					$pdf->SetX(0);
-					$pdf->Cell(135,$pos,$nombre,0,0,'R');
-					$pdf->SetX(-11.5);
-					$pos = $pos + 10;
-					$pdf->Cell(-133,$pos,$apellido,0,0,'R');
-					
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetX(-21.5);
-					$pos = $pos + 10;
-					$pdf->Cell(-123,$pos,$otro,0,0,'R');
-					
-					//se agregan las palomitas conforme al desempeño
-					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',115,128,4,4); //una
-					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',120,128,4,4); //dos
-					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',125,128,4,4); //tres
-					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',130,128,4,4); //cuatro
+				$pos = 5;
+				//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
+				$pdf->SetXY(0, 105);
+				//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
+				$pdf->SetX(0);
+				$pdf->Cell(160,$pos,$nombre,0,0,'R');
+				$pdf->SetX(-46);
+				$pos = $pos + 10;
+				$pdf->Cell(-132,$pos,$titulo,0,0,'R');
+				
+				$pdf->SetTextColor(0,0,0);
+				$pdf->SetX(-46);
+				$pos = $pos + 10;
+				$pdf->Cell(-132,$pos,$clasificacion,0,0,'R');
+				
+				//se agregan las palomitas conforme al desempeño
+				$starPos = 155;
+				for($i = 2; $i <= (int)$cat_calibracion_desempeno->id_cat_calibracion_desempeno; $i++){
+					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',$starPos,121,4,4); //palomitas
+					$starPos -= 5;
 				}
+
+				//foto de perfil
+				$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,195,44,35,30);
+
+				//codigo qr del candidato
+				$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
+
+				//imagen de la empresa del candidato
+				$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,55,20);
+
+				//vigencia
+				$pdf->SetXY(200, 156);
+				$pdf->Write(0, utf8_decode($vigencia));
 			}
 
 			$pdf->Output('I', 'GAFETE-SEWM-'.$id_usuario_has_estandar_competencia);
@@ -746,4 +788,42 @@ class DocsPDF extends CI_Controller {
 		return false;
 	}
 
+	protected function generar_qr_usuario_candidato($strUsuario,$idUsuario){
+		try{
+			$response['success'] = true;
+			$response['msg'][] = 'Se genero el QR correctamente';
+			$stringToQR = base_url().'candidato/certificacion/'.$strUsuario;
+			//var_dump('aqui toy');exit;
+			$this->load->library('ciqrcode');
+			$directorio = RUTA_QR_FILES_PERFIL.date('Y').'/'.date('m').'/'.date('d').'/';
+			subdirectorios_files($directorio);
+			$qr_image = $strUsuario.'.png';
+			$params['data'] = $stringToQR;
+			$params['level'] = 'l';
+			$params['size'] = 300;
+			$params['savename'] = FCPATH.$directorio.$qr_image;
+			if(!file_exists($params['savename'])){
+				$this->ciqrcode->generate($params);
+			}
+			//guardamo el archivo generado y lo almacenamos en la tabla de archivo
+			$datos_doc['nombre'] = $qr_image;
+			$datos_doc['ruta_directorio'] = $directorio;
+			$datos_doc['fecha'] = date('Y-m-d H:i:s');
+			$id_archivo = $this->ArchivoModel->guardar_archivo_model($datos_doc);
+			$this->UsuarioModel->guardar_row(array('id_archivo_qr' => $id_archivo),$idUsuario);
+			$archivoQr = new stdClass();
+			$archivoQr->id_archivo = $id_archivo;
+			$archivoQr->nombre = $qr_image;
+			$archivoQr->ruta_directorio = $directorio;
+			$archivoQr->fecha = $datos_doc['fecha'];
+			$response['data']['archivo_qr'] = $archivoQr;
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			log_message('error','***** DocsPDFModel -> generar_qr_usuario_candidato');
+			log_message('error',$ex->getMessage());
+		}
+		return $response;
+	}
 }

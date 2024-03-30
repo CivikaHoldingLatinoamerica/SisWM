@@ -107,6 +107,16 @@
 														</select>
 													</div>
 												</div>
+
+												<!-- actualizacion para la fecha de emisión del certificado -->
+												<label>Certificado del CONOCER</label>
+												<div class="form-group row">
+													<label for="input_fecha_emision_certificado" class="col-lg-3">Fecha de emisión</label>
+													<div class="col-lg-3">
+														<input type="date" id="input_fecha_emision_certificado" placeholder="Fecha de emisión del certificado" data-rule-required="true" name="fecha_emision_certificado"
+																class="form-control" value="<?=$usuario_has_ec->fecha_emision_certificado?>">
+													</div>
+												</div>
 											</form>
 											<div class="col-lg-12 text-right">
 												<button type="button" id="btn_date_fecha_envio_ati" data-id_estandar_competencia="<?=$id_estandar_compentencia?>"
