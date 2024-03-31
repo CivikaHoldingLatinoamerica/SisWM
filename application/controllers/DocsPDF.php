@@ -22,6 +22,7 @@ class DocsPDF extends CI_Controller {
 		$this->load->model('ArchivoModel');
 		$this->load->model('CatalogoModel');
 		$this->load->model('ECUsuarioHasExpedientePEDModel');
+		$this->load->model('EntregableECModel');
 		$this->load->model('DocsPDFModel');
 		$this->load->model('PerfilModel');
 		$this->load->model('UsuarioModel');
@@ -49,8 +50,13 @@ class DocsPDF extends CI_Controller {
 			$usuario_has_evaluacion_enviada['total_registros'] != 0 ? $data['evaluacion_diagnostica_realizada'] = true : $data['evaluacion_diagnostica_realizada'] = false;
 
 			//validacion carga de evidencia ati
-			$instrumentos_ec_candidato = $this->ActividadIEModel->instrumentos_ec_entregados_candidato($id_estandar_competencia,$id_usuario_alumno);
-			$instrumentos_ec_candidato['instrumentos_ec']->num_entregables_ati == $instrumentos_ec_candidato['instrumentos_ec_candidato']->num_entregables_ati_candidato ? $data['cargo_evidencia_ati'] = true : false;
+			// $instrumentos_ec_candidato = $this->ActividadIEModel->instrumentos_ec_entregados_candidato($id_estandar_competencia,$id_usuario_alumno);
+			// $instrumentos_ec_candidato['instrumentos_ec']->num_entregables_ati == $instrumentos_ec_candidato['instrumentos_ec_candidato']->num_entregables_ati_candidato ? $data['cargo_evidencia_ati'] = true : false;
+			//nueva validacion de la evidencia de los instrumentos por la actualización de los entregables
+			$entregables_por_liberar = $this->EntregableECModel->obtenerEntregablesPorLiberarCandidato($id_usuario_alumno,$id_estandar_competencia);
+			if(is_array($entregables_por_liberar) && sizeof($entregables_por_liberar) == 0){
+				$data['cargo_evidencia_ati'] = true;
+			}
 
 			//validacion cargo_expediente_digital
 			$buscar_expediente_ped = array('id_estandar_competencia' => $id_estandar_competencia, 'id_usuario' => $id_usuario_alumno);
@@ -290,7 +296,7 @@ class DocsPDF extends CI_Controller {
 	public function generar_pdf_cierre_eva_to_entrega_certificado($id_usuario_alumno,$id_usuario_instructor,$id_estandar_competencia,$es_html = false, $output = 'F'){
 		try{
 			$pre = date('Ymd').'-'.$id_usuario_alumno.'-'.$id_estandar_competencia;
-			$nombre_documento = $pre.'-04-cierre_evaluacion_entraga_certificado.pdf';
+			$nombre_documento = $pre.'-04-cierre_evaluacion_entrega_certificado.pdf';
 			if(!file_exists(RUTA_PDF_TEMP.$nombre_documento)){
 				subdirectorios_files(RUTA_PDF_TEMP);
 				$data = $this->DocsPDFModel->get_data_portafolio_evidencia($id_usuario_alumno,$id_usuario_instructor,$id_estandar_competencia);
@@ -361,7 +367,9 @@ class DocsPDF extends CI_Controller {
 		try{
 			$mergePDF = new Merger();
 			$post = $this->input->post();
-			$documentos_alumno_evidencia = $this->DocsPDFModel->obtener_archivos_ec_alumno($id_usuario_alumno,$id_estandar_competencia);
+			//$documentos_alumno_evidencia = $this->DocsPDFModel->obtener_archivos_ec_alumno($id_usuario_alumno,$id_estandar_competencia);
+			//nueva consulta de información de la evidencia de los candidatos
+			$documentos_alumno_evidencia = $this->DocsPDFModel->obtener_archivos_ec_alumno_entregables($id_usuario_alumno,$id_estandar_competencia);
 			$data = $this->DocsPDFModel->get_data_portafolio_evidencia($id_usuario_alumno,$id_usuario_instructor,$id_estandar_competencia);
 			$archivos_conjuntar = array();
 			$archivos_conjuntar[] = $post['docs_generados'][0];//portada a antes de la ficha de registro
@@ -379,7 +387,6 @@ class DocsPDF extends CI_Controller {
 				$data['foto_firma_instructor']->ruta_directorio.$data['foto_firma_instructor']->nombre,
 				$data['usuario_has_expediente_ped'][1]
 			); //instrumentos de evaluación de competencia al sistema por el admin/evaluador
-
 			//entregables candidato
 			$archivos_entregables_modificados = $this->generar_entregables($documentos_alumno_evidencia);
 			$archivos_conjuntar = array_merge($archivos_conjuntar,$archivos_entregables_modificados);
@@ -625,7 +632,6 @@ class DocsPDF extends CI_Controller {
 
 	protected function generar_entregables_instrumento($firma_candidato,$firma_evaluador,$instrumento){
 		try{
-
 			$pdf = new Fpdi();
 			//leemos el entregable cargado por el candidato
 			$paginasPDF = $pdf->setSourceFile($instrumento->ruta_directorio.$instrumento->nombre);

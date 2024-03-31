@@ -65,11 +65,18 @@ class DocsPDFModel extends ModeloBase
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec_alumno($id_estandar_competencia);
 			$data['estandar_competencia_requerimientos'] = $this->obtener_requerimientos_ec($id_estandar_competencia);
 			$data['usuario_has_encuesta'] = $this->UsuarioHasEncuestaModel->encuesta_satisfacion_usuario_ec($data['usuario_has_ec']->id_usuario_has_estandar_competencia);
-			$data['respuestas_encuesta_satisfacion'] = array();
-			if(!is_null($data['usuario_has_encuesta'])){
-				$respuestas_encuesta = $this->UsuarioHasRespuestaEncuestaModel->tablero(array('id_usuario_has_encuesta_satisfaccion' => $data['usuario_has_encuesta']->id_usuario_has_encuesta_satisfaccion),0);
-				$data['respuestas_encuesta_satisfacion'] = $respuestas_encuesta['usuario_has_respuesta_encuesta'];
+			// $data['respuestas_encuesta_satisfacion'] = array();
+			// if(!is_null($data['usuario_has_encuesta'])){
+			// 	$respuestas_encuesta = $this->UsuarioHasRespuestaEncuestaModel->tablero(array('id_usuario_has_encuesta_satisfaccion' => $data['usuario_has_encuesta']->id_usuario_has_encuesta_satisfaccion),0);
+			// 	$data['respuestas_encuesta_satisfacion'] = $respuestas_encuesta['usuario_has_respuesta_encuesta'];
+			// }
+			$data['respuestas_encuesta_satisfacion'] = $this->UsuarioHasEncuestaModel->encuesta_satisfacion_usuario_ec($data['usuario_has_ec']->id_usuario_has_estandar_competencia);
+			$data['respuestas_encuesta_satisfacion'] = $this->CatalogoModel->cat_preguntas_encuesta();
+			foreach ($data['respuestas_encuesta_satisfacion'] as $cpe){
+				$respuesta_candidato = $this->UsuarioHasEncuestaModel->respuesta_candidato_pregunta($cpe->id_cat_preguntas_encuesta,$data['usuario_has_encuesta']->id_usuario_has_encuesta_satisfaccion);
+				$cpe->respuesta = $respuesta_candidato;
 			}
+			//var_dump($data);exit;
 			$buscar_expediente_ped = array('id_estandar_competencia' => $id_estandar_competencia, 'id_usuario' => $id_usuario_alumno);
 			$expediente_ped = $this->ECUsuarioHasExpedientePEDModel->tablero($buscar_expediente_ped,0);
 			$data['usuario_has_expediente_ped'] = $expediente_ped['ec_usuario_has_expediente_ped'];
@@ -138,6 +145,27 @@ class DocsPDFModel extends ModeloBase
 			return $query->result();
 		}catch (Exception $ex){
 			log_message('error','***** DocsPDFModel -> portafolio_evidencia');
+			return false;
+		}
+	}
+
+	public function obtener_archivos_ec_alumno_entregables($id_usuario,$id_estandar_competencia){
+		try{
+			$id_cat_proceso = ESTATUS_FINALIZADA;
+			$consulta = "SELECT 
+					eaa.*,ei.nombre, ei.ruta_directorio 
+				FROM ec_entregable_alumno eea
+					INNER JOIN entregable_ec ee ON ee.id_entregable = eea.id_entregable
+					INNER JOIN entregable_alumno_archivo eaa ON eaa.id_entregable_alumno = eea.id_entregable_alumno
+					INNER JOIN archivo_instrumento ei ON ei.id_archivo_instrumento = eaa.id_archivo_instrumento
+				WHERE eea.id_usuario = $id_usuario
+					AND ee.id_estandar_competencia = $id_estandar_competencia
+					AND eea.id_cat_proceso = $id_cat_proceso
+				ORDER BY ee.nombre ASC;";
+			$query = $this->db->query($consulta);
+			return $query->result();
+		}catch (Exception $ex){
+			log_message('error','***** DocsPDFModel -> obtener_archivos_ec_alumno_entregables');
 			return false;
 		}
 	}

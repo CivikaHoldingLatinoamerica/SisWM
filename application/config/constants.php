@@ -93,7 +93,7 @@ define('MAX_FILESIZE', 15000000);
 define('RUTA_PDF_TEMP','files_usr/temp/');
 define('RUTA_PDF_PED','files_usr/ped/');
 define('RUTA_QR_FILES','files_usr/qr_generados');
-define('RUTA_QR_FILES_PERFIL','files_usr/qr_generados');
+define('RUTA_QR_FILES_PERFIL','files_usr/qr_generados/');
 
 define('RUTA_PLANTILLA_GAFETE','assets/docs/plantilla-gafete.pdf');
 define('RUTA_PLANTILLA_GAFETE_SEWM','assets/docs/01-plantilla-gafete-sewm.pdf');

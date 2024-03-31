@@ -195,7 +195,7 @@ class Publico extends CI_Controller {
 			$data['datos_usuario'] = $this->UsuarioModel->obtener_data_usuario_id($data['usuario_candidato']->id_usuario);
 			$data['datos_empresa'] = $this->PerfilModel->obtener_datos_empresa($data['usuario_candidato']->id_usuario,true);
 			$data['certificacion_candidato'] = $this->UsuarioHasECModel->obtener_progreso_alumno_publico($data['usuario_candidato']->id_usuario);
-			var_dump($data);exit;
+			//var_dump($data);exit;
 			$this->load->view('alumno_ec/progreso_certificacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;

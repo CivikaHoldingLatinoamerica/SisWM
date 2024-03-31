@@ -313,6 +313,25 @@ class EntregableECModel extends ModeloBase
 	}
 
 	/**
+	 * funcion que me devuelve los entregables del candidato conforme al estatus en el que se encuentra
+	 * esta funcion ayuda para determinar si hay entregables por el usuario y el estandar de competencia
+	 * parametros: $id_usuario candidato, $id_estandar_competencia, $estatus_proceso (valor por default en captura)
+	 */
+	public function obtenerEntregablesPorLiberarCandidato($id_usuario,$id_estandar_competencia){
+		$id_cat_estatus_proceso = ESTATUS_FINALIZADA;
+		$consulta = "SELECT 
+				* 
+			FROM ec_entregable_alumno eea
+				INNER JOIN entregable_ec ee ON ee.id_entregable = eea.id_entregable
+			WHERE eea.id_usuario = $id_usuario
+				AND ee.id_estandar_competencia = $id_estandar_competencia
+				AND eea.id_cat_proceso <> $id_cat_estatus_proceso
+			ORDER BY ee.nombre ASC;";
+		$query = $this->db->query($consulta);
+		return $query->result();
+	}
+
+	/**
 	 * funcioens privadas al entregable
 	 */
 
