@@ -96,7 +96,7 @@ define('RUTA_QR_FILES','files_usr/qr_generados');
 define('RUTA_QR_FILES_PERFIL','files_usr/qr_generados/');
 
 define('RUTA_PLANTILLA_GAFETE','assets/docs/plantilla-gafete.pdf');
-define('RUTA_PLANTILLA_GAFETE_SEWM','assets/docs/01-plantilla-gafete-sewm.pdf');
+define('RUTA_PLANTILLA_GAFETE_SEWM','assets/docs/02-plantilla-gafete-sewm.pdf');
 
 /**
  * constantes para los perfiles de usuario

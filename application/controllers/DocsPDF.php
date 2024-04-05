@@ -550,13 +550,13 @@ class DocsPDF extends CI_Controller {
 				}
 
 				//foto de perfil
-				$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,195,44,35,30);
+				$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,200,40,25,30);
 
 				//codigo qr del candidato
 				$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
 
 				//imagen de la empresa del candidato
-				$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,55,20);
+				$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,50,25);
 
 				//vigencia
 				$pdf->SetXY(200, 156);
@@ -572,7 +572,7 @@ class DocsPDF extends CI_Controller {
 			log_message('error','***** DocsPDFModel -> gafete_candidato_sewm');
 			log_message('error',$ex->getMessage());
 		}
-		echo json_encode($response);exit;
+		echo 'Ocurrio un error en el proceso de generar la firma, intente más tarde';
 	}
 
 	protected function set_variables_defaults_pdf()
@@ -687,6 +687,7 @@ class DocsPDF extends CI_Controller {
 				//el else es para unicamente ponerle la marca de agua a los entregables del alumno
 				foreach ($entregables as $e){
 					//Para saber si es una url de video o es una imagen
+					log_message('error','***** ---- ***** '.json_encode($e));
 					if(!is_null($e->url_video) && $e->url_video != ''){
 						//es un video
 						$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,false);
@@ -707,6 +708,8 @@ class DocsPDF extends CI_Controller {
 		}catch (Exception $ex){
 			log_message('error','***** DocsPDFModel -> generar_entregables');
 			log_message('error',$ex->getMessage());
+			log_message('error',$ex->getLine());
+			log_message('error',$ex->getFile());
 			return array();
 		}
 	}
@@ -788,7 +791,7 @@ class DocsPDF extends CI_Controller {
 			}
 			return $retorno;
 		}catch (Exception $ex){
-			log_message('error','***** DocsPDFModel -> generar_entregables');
+			log_message('error','***** DocsPDFModel -> generar_evidencia_pdf_img_video');
 			log_message('error',$ex->getMessage());
 		}
 		return false;
