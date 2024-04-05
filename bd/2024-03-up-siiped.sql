@@ -8,7 +8,7 @@
 	@pruebas
 	@date 30/mar/2024
 	@produccion
-	@date N/A
+	@date 05/ABR/2024
 */
 
 ALTER TABLE `estandar_competencia` 
