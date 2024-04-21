@@ -137,7 +137,8 @@ $(document).ready(function(){
 		var calificacion_max = $('input#val_calificacion_max_conocer').val();
 		var id_entregable = $(this).data('id_entregable');
 		var calificacion = $('#input_calificacion_'+id_entregable).val();
-		EvaluadoresEC.guardar_calificacion_entregable(class_input,calificacion_max,id_entregable,calificacion);
+		var span_calificacion_registrada = '#calificacion_conocer_registrada_ec';
+		EvaluadoresEC.guardar_calificacion_entregable(class_input,calificacion_max,id_entregable,calificacion,span_calificacion_registrada);
 	});
 
 	$(document).on('click','.btn_calificacion_wm',function(){
@@ -146,7 +147,8 @@ $(document).ready(function(){
 		var id_entregable = $(this).data('id_entregable');
 		var calificacion = $(this).val();
 		var calificacion = $('#input_calificacion_'+id_entregable).val();
-		EvaluadoresEC.guardar_calificacion_entregable(class_input,calificacion_max,id_entregable,calificacion);
+		var span_calificacion_registrada = '#calificacion_wm_registrada_ec';
+		EvaluadoresEC.guardar_calificacion_entregable(class_input,calificacion_max,id_entregable,calificacion,span_calificacion_registrada);
 	});
 
 	//funcionalidad para el paginado por scroll
@@ -223,6 +225,8 @@ var EvaluadoresEC = {
 					var min_conocer = $('#val_calificacion_min_conocer').val();
 					var max_conocer = $('#val_calificacion_max_conocer').val();
 					$('#calificacion_conocer_ec').html(min_conocer + ' - ' + max_conocer);
+					//obtenemos la calificacion registrada hasta este momento
+					$('#calificacion_conocer_registrada_ec').html(EvaluadoresEC.obtener_suma_calificacion_entregables('.input_calificacion_conocer'));
 				}
 				if(es_yosoyliderwm){
 					if(($('#val_calificacion_max_wm').val() == '' || parseFloat($('#val_calificacion_max_wm').val()) == 0)){
@@ -233,6 +237,8 @@ var EvaluadoresEC = {
 						var min_wm = $('#val_calificacion_min_wm').val();
 						var max_wm = $('#val_calificacion_max_wm').val();
 						$('#calificacion_wm_ec').html(min_wm + ' - ' + max_wm);
+						//obtenemos la calificación para los entregables de walmart registrada hasta este momento
+						$('#calificacion_wm_registrada_ec').html(EvaluadoresEC.obtener_suma_calificacion_entregables('.input_calificacion_wm'));
 					}
 				}
 			}
@@ -648,12 +654,8 @@ var EvaluadoresEC = {
 	},
 
 	validar_calificacion_entregable : function(input_class,calificacion_max){
-		var suma_calificacion = 0;
+		var suma_calificacion = EvaluadoresEC.obtener_suma_calificacion_entregables(input_class);
 		calificacion_max = parseFloat(calificacion_max);
-		$(input_class).each(function (index) {
-			var calificacion =  parseFloat($(this).val() != '' ? $(this).val() : 0);
-			suma_calificacion += calificacion;
-		});
 		var validacion = true;
 		if(suma_calificacion > calificacion_max){
 			var validacion = false;
@@ -661,7 +663,16 @@ var EvaluadoresEC = {
 		return validacion;
 	},
 
-	guardar_calificacion_entregable : function(input_class,calificacion_max,id_entregable,calificacion){
+	obtener_suma_calificacion_entregables : function(input_class){
+		var suma_calificacion = 0;
+		$(input_class).each(function (index) {
+			var calificacion =  parseFloat($(this).val() != '' ? $(this).val() : 0);
+			suma_calificacion += calificacion;
+		});
+		return suma_calificacion.toFixed(2);
+	},
+
+	guardar_calificacion_entregable : function(input_class,calificacion_max,id_entregable,calificacion,span_calificaion_reg){
 		if(EvaluadoresEC.validar_calificacion_entregable(input_class,calificacion_max)){
 			var id_usuario_alumno = $('#id_alumno').val();
 			Comun.obtener_contenido_peticion_json(
@@ -669,6 +680,7 @@ var EvaluadoresEC = {
 				function(response){
 					if (response.success) {
 						Comun.mensajes_operacion( ['Calificación registrada'], 'success');
+						$(span_calificaion_reg).html(EvaluadoresEC.obtener_suma_calificacion_entregables(input_class));
 					}else {
 						Comun.mensajes_operacion(response.msg, 'error');
 					}
@@ -677,7 +689,8 @@ var EvaluadoresEC = {
 		}else{
 			Comun.mensajes_operacion(['No es posible guardar esta calificación',
 								'La suma de calificación excede la máxima registrada en el EC',
-								'La calificacion máxima es: '+ calificacion_max],
+								'La calificacion máxima es: '+ calificacion_max,
+								'La suma de calificaciones que llevaria es de: ' + EvaluadoresEC.obtener_suma_calificacion_entregables(input_class)],
 								'error');
 		}
 	},

@@ -18,11 +18,15 @@
 				<input id="ati_revisados_liberados" hidden value="<?= $ati_revisados_liberados? 'si':'no'?>">
 				<input id="numero_entregables" hidden value="<?= sizeof($entregables)?>">
 				<div class="form-group row" id="contenedor_calificacion_ec">
-					<label class="col-lg-3">Calificación CONOCER: </label>
+					<label class="col-lg-3">Rango de calificación CONOCER: </label>
 					<span class="col-lg-3" id="calificacion_conocer_ec"></span>
+					<label class="col-lg-3">Calificación registrada CONOCER: </label>
+					<span class="col-lg-3" id="calificacion_conocer_registrada_ec"></span>
 					<?php if(es_yosoyliderwm()): ?>
-						<label class="col-lg-3">Calificación WM: </label>
+						<label class="col-lg-3">Rango de calificación WM: </label>
 						<span class="col-lg-3" id="calificacion_wm_ec"></span>
+						<label class="col-lg-3">Calificación registrada WM: </label>
+						<span class="col-lg-3" id="calificacion_wm_registrada_ec"></span>
 					<?php endif; ?>
 				</div>
 				<div class="form-group row">

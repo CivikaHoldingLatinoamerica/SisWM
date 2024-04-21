@@ -258,6 +258,8 @@ class DocsPDF extends CI_Controller {
 			$paginaHTML = $this->load->view('pdf/portafolio_evidencia/plan_evaluacion_requerimientos', $data, true);
 			$mpdf->WriteHTML($paginaHTML);
 			$mpdf->Output(RUTA_PDF_TEMP.$nombre_documento, 'I');
+			$response['success'] = true;
+			$response['msg'][] = 'se genero el pdf del plan evaluacion requerimientos';
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -285,6 +287,8 @@ class DocsPDF extends CI_Controller {
 			$paginaHTML = $this->load->view('pdf/portafolio_evidencia/resultados_evaluacion', $data, true);
 			$mpdf->WriteHTML($paginaHTML);
 			$mpdf->Output(RUTA_PDF_TEMP.$nombre_documento, 'I');
+			$response['success'] = true;
+			$response['msg'][] = 'se genero el pdf del plan resultados evaluacion';
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -668,39 +672,53 @@ class DocsPDF extends CI_Controller {
 			if(es_produccion()) {
 				foreach ($entregables as $e){
 					//Para saber si es una url de video o es una imagen
-					if(!is_null($e->url_video) && $e->url_video != ''){
-						//es un video
-						$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,false);
-						$archivos_modificados[] = $archivos_modificado['ruta_directorio'].$archivos_modificado['nombre'];
-					}else{
-						if(!strpos(strMinusculas($e->nombre),'.pdf')){
-							//es una imagen
-							$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,true);
+
+					//se agrega el try catch para poder generar los pdf del ped completo
+					try{
+						//en caso de que se pueda generar el archivo del pdf, la imagen o el video de evidencia
+						if(!is_null($e->url_video) && $e->url_video != ''){
+							//es un video
+							$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,false);
 							$archivos_modificados[] = $archivos_modificado['ruta_directorio'].$archivos_modificado['nombre'];
-						}if(strpos(strMinusculas($e->nombre),'.pdf')){
-							//es un pdf
-							$archivos_modificados[] = $e->ruta_directorio.$e->nombre;
+						}else{
+							if(!strpos(strMinusculas($e->nombre),'.pdf')){
+								//es una imagen
+								$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,true);
+								$archivos_modificados[] = $archivos_modificado['ruta_directorio'].$archivos_modificado['nombre'];
+							}if(strpos(strMinusculas($e->nombre),'.pdf')){
+								//es un pdf
+								$archivos_modificados[] = $e->ruta_directorio.$e->nombre;
+							}
 						}
+					}catch(Exception $exception){
+						//como no fue posible generar el pdf por la herramienta permitida entonces generamos un pdf con el link nadamas y la leyenda correspondiente
+						$archivos_modificado[] = $this->generar_evidencia_pdf_img_video($e,false,true); //REUTILIZAMOS LA FUNCION para generar el pdf
 					}
 				}
 			}else{
 				//el else es para unicamente ponerle la marca de agua a los entregables del alumno
 				foreach ($entregables as $e){
-					//Para saber si es una url de video o es una imagen
-					log_message('error','***** ---- ***** '.json_encode($e));
-					if(!is_null($e->url_video) && $e->url_video != ''){
-						//es un video
-						$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,false);
-						$archivos_modificados[] = $this->poner_marca_agua_doc($archivos_modificado['ruta_directorio'],$archivos_modificado['nombre']);
-					}else{
-						if(!strpos(strMinusculas($e->nombre),'.pdf')){
-							//es una imagen
-							$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,true);
+					
+					//se agrega el try catch para poder generar los pdf del ped completo
+					try{
+						if(!is_null($e->url_video) && $e->url_video != ''){
+							//es un video
+							$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,false);
 							$archivos_modificados[] = $this->poner_marca_agua_doc($archivos_modificado['ruta_directorio'],$archivos_modificado['nombre']);
-						}if(strpos(strMinusculas($e->nombre),'.pdf')){
-							//es un pdf
-							$archivos_modificados[] = $this->poner_marca_agua_doc($e->ruta_directorio,$e->nombre);
+						}else{
+							if(!strpos(strMinusculas($e->nombre),'.pdf')){
+								//es una imagen
+								$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,true);
+								$archivos_modificados[] = $this->poner_marca_agua_doc($archivos_modificado['ruta_directorio'],$archivos_modificado['nombre']);
+							}if(strpos(strMinusculas($e->nombre),'.pdf')){
+								//es un pdf
+								$archivos_modificados[] = $this->poner_marca_agua_doc($e->ruta_directorio,$e->nombre);
+							}
 						}
+					}catch(Exception $exception){
+						//como no fue posible generar el pdf por la herramienta permitida entonces generamos un pdf con el link nadamas y la leyenda correspondiente
+						$archivos_modificado = $this->generar_evidencia_pdf_img_video($e,false,true); //REUTILIZAMOS LA FUNCION para generar el pdf
+						$archivos_modificados[] = $this->poner_marca_agua_doc($archivos_modificado['ruta_directorio'],$archivos_modificado['nombre']);
 					}
 				}
 			}
@@ -765,7 +783,7 @@ class DocsPDF extends CI_Controller {
 		return RUTA_PDF_TEMP.$entregable->nombre;
 	}
 
-	protected function generar_evidencia_pdf_img_video($entregable,$esImg){
+	protected function generar_evidencia_pdf_img_video($entregable,$esImg,$es_pdf_protegido = false){
 		try{
 			$pre = date('Ymd').'-';
 			$nombre_documento = $pre.uniqid().'.pdf';
@@ -784,6 +802,8 @@ class DocsPDF extends CI_Controller {
 				}
 				$mpdf->showWatermarkText = true;
 				$data['es_evidencia_imagen'] = $esImg;
+				$data['es_evidencia_video'] = !$esImg;
+				$data['es_pdf_protegido'] = $es_pdf_protegido;
 				$data['evidencia'] = $entregable;
 				$paginaHTML = $this->load->view('pdf/evidencia_imagen_video', $data, true);
 				$mpdf->WriteHTML($paginaHTML);
