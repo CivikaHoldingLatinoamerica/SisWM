@@ -7,8 +7,10 @@
 	@date 22/mar/2024
 	@pruebas
 	@date 30/mar/2024
-	@produccion
+	@produccion walmart
 	@date 05/ABR/2024
+	@production siiped
+	@date 
 */
 
 ALTER TABLE `estandar_competencia` 

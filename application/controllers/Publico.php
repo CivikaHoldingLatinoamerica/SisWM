@@ -8,6 +8,7 @@ class Publico extends CI_Controller {
 	function __construct()
 	{
 		parent:: __construct();
+		$this->load->model('ArchivoModel');
 		$this->load->model('EstandarCompetenciaConvocatoriaModel');
 		$this->load->model('UsuarioHasECModel');
 		if(sesionActive()){
@@ -195,13 +196,32 @@ class Publico extends CI_Controller {
 			$data['datos_usuario'] = $this->UsuarioModel->obtener_data_usuario_id($data['usuario_candidato']->id_usuario);
 			$data['datos_empresa'] = $this->PerfilModel->obtener_datos_empresa($data['usuario_candidato']->id_usuario,true);
 			$data['certificacion_candidato'] = $this->UsuarioHasECModel->obtener_progreso_alumno_publico($data['usuario_candidato']->id_usuario);
-			//var_dump($data);exit;
+			$data['extra_js'] = array(
+				base_url() . 'assets/js/public/certificacion.js',
+			);
 			$this->load->view('alumno_ec/progreso_certificacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
 			$response['msg'][] = $ex->getMessage();
 			redirect(base_url().'500');
+		}
+	}
+
+	public function ver_detalle_certificacion($id_usuario_has_estandar_competencia){
+		try{
+			$data['usuario_has_estandar_competencia'] = $this->UsuarioHasECModel->obtener_row($id_usuario_has_estandar_competencia);
+			$data['portafolio_evidencias_wm'] = false;
+			if(isset($data['usuario_has_estandar_competencia']->id_archivo_ped_wm) && !is_null($data['usuario_has_estandar_competencia']->id_archivo_ped_wm) && $data['usuario_has_estandar_competencia']->id_archivo_ped_wm != ''){
+				$data['portafolio_evidencias_wm'] = $this->ArchivoModel->obtener_row($data['usuario_has_estandar_competencia']->id_archivo_ped_wm);
+			}
+			var_dump($data);exit;
+			$this->load->view('alumno_ec/modal_progreso_certificacion');
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+			echo json_encode($response);exit;
 		}
 	}
 

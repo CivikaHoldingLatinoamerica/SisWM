@@ -86,6 +86,7 @@ $route['modulo_capacitacion/modulo/(:num)'] = 'Curso/index_curso_modulos/$1';
 $route['evaluacion_instrumento/(:num)/(:num)'] = 'AlumnosEC/evaluacion_instrumento/$1/$2';
 $route['gafete_candidato/(:num)'] = 'DocsPDF/gafete_candidato/$1';
 $route['gafete_sewm/(:num)'] = 'DocsPDF/gafete_candidato_sewm/$1';
+$route['constancia_dc3/(:num)'] = 'DocsPDF/constancia_dc3/$1';
 $route['candidato/certificacion/(:any)'] = 'Publico/candidato_certificacion/$1';
 
 /**

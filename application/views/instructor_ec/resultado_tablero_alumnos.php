@@ -67,7 +67,7 @@
 								data-id_estandar_competencia="<?=$id_estandar_competencia?>"
 								data-id_usuario_alumno="<?=$aec->id_usuario?>"
 								data-id_usuario_instructor="<?=$aec->id_usuario_evaluador?>"
-								title="Generación del Portafolio de evidencias"><i class="fa fa-file-alt"></i> Generar PED</button>
+								title="Generación del Portafolio de evidencias"><i class="fa fa-file-alt"></i> Generar Portafolio</button>
 					<?php endif; ?>
 				<?php else: ?>
 					<?php if($aec->activo == 'no'): ?>

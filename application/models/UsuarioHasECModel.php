@@ -239,6 +239,7 @@ class UsuarioHasECModel extends ModeloBase
 	public function obtener_progreso_alumno_publico($id_usuario){
 		try{
 			$consulta = "select 
+					uhec.id_usuario_has_estandar_competencia,
 					ec.codigo codigo_ec, ec.titulo titulo_ec,
 					u.activo candidato_activo,
 					u.eliminado candidato_eliminado,

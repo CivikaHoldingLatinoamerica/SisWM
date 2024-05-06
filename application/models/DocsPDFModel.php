@@ -129,6 +129,13 @@ class DocsPDFModel extends ModeloBase
 		return $this->db->update('usuario_has_estandar_competencia',array('id_archivo_ped' => $id_archivo_ped));
 	}
 
+	public function actualizar_ped_wm_generado($id_usuario_alumno, $id_estandar_competencia,$id_archivo_ped){
+		$this->db->where('id_usuario',$id_usuario_alumno);
+		$this->db->where('id_estandar_competencia',$id_estandar_competencia);
+		return $this->db->update('usuario_has_estandar_competencia',array('id_archivo_ped_wm' => $id_archivo_ped));
+	}
+
+
 	public function obtener_archivos_ec_alumno($id_usuario_alumno,$id_estandar_competencia){
 		try{
 			$consulta = "select 

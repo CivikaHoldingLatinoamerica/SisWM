@@ -61,6 +61,11 @@
 												<div class="col-5 text-right">
 													<?=$cc->codigo_ec.' '.$cc->titulo_ec?>
 													<br>
+													<button clasS="btn btn-sm btn-outline-dark ver_detalle_certificacion_candidato" 
+														data-id_usuario_has_estandar_competencia="<?=$cc->id_usuario_has_estandar_competencia?>">
+														<i class="fa fa-eye"></i> Ver detalle
+													</button>
+													<br>
 													<?php if($cc->juicio_evaluacion == 'COMPETENTE'): ?>
 														<span class="badge badge-success">COMPETENTE</span>
 													<?php else: ?>

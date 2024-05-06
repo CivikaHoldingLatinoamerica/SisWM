@@ -32,6 +32,29 @@
 
 </div>
 
+<div class="col-lg-12">
+	<div class="card card-primary">
+		<div class="card-header">
+			<h3 class="card-title">Certificado DC-3</h3>
+			<div class="card-tools">
+				<button type="button" class="btn btn-tool" data-card-widget="collapse">
+					<i class="fas fa-minus"></i>
+				</button>
+			</div>
+		</div>
+
+		<div class="card-body">
+
+
+			<div class="form-group row">
+				<iframe src="<?=base_url().'constancia_dc3/'.$usuario_has_ec->id_usuario_has_estandar_competencia?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
 <?php if(es_yosoyliderwm()): ?>
 	<div class="col-lg-12">
 		<div class="card card-primary">

@@ -97,7 +97,13 @@ define('RUTA_QR_FILES_PERFIL','files_usr/qr_generados/');
 
 define('RUTA_PLANTILLA_GAFETE','assets/docs/plantilla-gafete.pdf');
 define('RUTA_PLANTILLA_GAFETE_SEWM','assets/docs/02-plantilla-gafete-sewm.pdf');
+define('RUTA_PLANTILLA_CONSTANCIA_DC3','assets/docs/01-formato_dc3.pdf');
 
+/**
+ * definimos las constantes para los logotipos
+ */
+define('RUTA_LOGO_CIVIKA_PDF','assets/imgs/logos/logo_civika_pdf.png');
+define('RUTA_SELLO_CIVIKA_PDF','assets/imgs/logos/sello_civika_negro.png');
 /**
  * constantes para los perfiles de usuario
  */
@@ -148,6 +154,18 @@ define('OPCION_RELACIONAL',7);
 define('EXPEDIENTE_FICHA_REGISTRO',1);
 define('EXPEDIENTE_INSTRUMENTO_EVA',2);
 define('EXPEDIENTE_CERTIFICADO_EC',3);
+
+/**
+ * constantes para el expediente de perfil
+ */
+define('EXPEDIENTE_FOTO_PERFIL',1);
+define('EXPEDIENTE_FOTO_CERTIFICADO',2);
+define('EXPEDIENTE_FOTO_INE_ANVERSO',3);
+define('EXPEDIENTE_FOTO_INE_REVERSO',4);
+define('EXPEDIENTE_FOTO_CEDULA_ANVERSO',5);
+define('EXPEDIENTE_FOTO_CEDULA_REVERSO',6);
+define('EXPEDIENTE_CURP',7);
+define('EXPEDIENTE_FIRMA_DIGITAL',8);
 
 /**
  * CONSTANTES PARA LOS INSTRUMENTOS DE EVALUACION
