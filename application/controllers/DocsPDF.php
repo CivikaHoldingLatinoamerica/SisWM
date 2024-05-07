@@ -522,11 +522,6 @@ class DocsPDF extends CI_Controller {
 		echo json_encode($response);exit;
 	}
 
-	public function generando_pdf_wm_completo(){
-
-	}
-
-
 	/**
 	 * apartado de funciones para generar el gafete de los candidatos que ya completaron su certificacion de la ec
 	 */

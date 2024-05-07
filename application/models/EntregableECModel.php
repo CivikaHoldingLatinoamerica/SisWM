@@ -214,6 +214,97 @@ class EntregableECModel extends ModeloBase
 		return $entregables;
 	}
 
+	public function obtener_entregables_candidato_publico($id_estandar_competencia, $id_usuario)
+	{
+		$consulta = "select ee.*,ee.nombre as nombre_entregable, ci.*, eiha.id_ec_instrumento_has_actividad , eiha.actividad ,
+       			(select eea.id_cat_proceso from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = " . $id_usuario . ") as id_estatus, " .
+				"(select eea.calificacion from ec_entregable_alumno eea where eea.id_entregable = ee.id_entregable and eea.id_usuario = " . $id_usuario . ") as calificacion_entregable , ".
+			"(select ehf.id_entregable_formulario from entregable_has_formulario ehf where ehf.id_entregable = ee.id_entregable limit 1 ) as id_entregable_formulario, " .
+			"(select efa.id_cat_proceso from entregable_formulario_has_alumno efa join entregable_has_formulario ehf on ehf.id_entregable_formulario = efa.id_entregable_formulario  where ehf.id_entregable = ee.id_entregable and efa.id_usuario = " . $id_usuario . ") as id_estatus_formulario "
+			. "from entregable_ec ee "
+			. "join entregable_has_instrumento ehi ON ehi.id_entregable = ee.id_entregable "
+			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
+			. "join estandar_competencia_instrumento eci on eci.id_estandar_competencia_instrumento =eiha.id_estandar_competencia_instrumento "
+			. "join cat_instrumento ci on ci.id_cat_instrumento = eci.id_cat_instrumento "
+			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia ." and ee.entregable_wm='si' order by ee.nombre asc";
+
+		$query = $this->db->query($consulta);
+		$data = $query->result();
+
+		$entregables = array();
+		foreach ($data as $item) {
+
+			// if ($item->tipo_entregable == 'form') {
+			// 	$item->id_estatus = $item->id_estatus_formulario;
+			// }
+
+			$object = (object)array(
+				'id_entregable' => $item->id_entregable,
+				'nombre_entregable' => $item->nombre_entregable,
+				'descripcion' => $item->descripcion,
+				'instrucciones' => $item->instrucciones,
+				'tipo_entregable' => $item->tipo_entregable,
+				'id_estatus' => $item->id_estatus,
+				'id_entregable_formulario' => $item->id_entregable_formulario,
+				'id_usuario' => $id_usuario,
+				'entregable_wm' =>  isset($item->entregable_wm) ? $item->entregable_wm : 'no',
+				'calificacion_entregable' =>  isset($item->calificacion_entregable) ? $item->calificacion_entregable : '',
+				'instrumentos' => array(),
+				'archivos' => array(),
+				'comentarios' => array(),
+				'entregable_has_archivo' => array()
+			);
+			if (!in_array($object, $entregables)) {
+				$entregables[] = $object;
+			}
+			
+
+		}
+		foreach ($entregables as $item) {
+			$item->instrumentos = array_filter($data, function ($i) use ($item) {
+				return $i->id_entregable == $item->id_entregable;
+			});
+
+			$consulta = "select ai.*, eaa.id_entregable_alumno_archivo from archivo_instrumento ai "
+				. " join entregable_alumno_archivo eaa on eaa.id_archivo_instrumento = ai.id_archivo_instrumento"
+				. " join ec_entregable_alumno ea on ea.id_entregable_alumno = eaa.id_entregable_alumno"
+				. " where ea.id_entregable = " . $item->id_entregable
+				. " and ea.id_usuario = " . $id_usuario;
+
+			$query = $this->db->query($consulta);
+			$item->archivos = $query->result();
+
+			$consulta = "select eac.*, ea.id_entregable_alumno from entregable_alumno_comentarios eac "
+				. " join ec_entregable_alumno ea on ea.id_entregable_alumno = eac.id_entregable_alumno"
+				. " where ea.id_entregable = " . $item->id_entregable
+				. " and ea.id_usuario = " . $id_usuario;
+
+			$query = $this->db->query($consulta);
+			$item->comentarios = $query->result();
+
+			//para obtener la evaluacion
+			$consulta = "select 
+				* 
+			from entregable_has_evaluacion ehe 
+				inner join usuario_has_evaluacion_realizada uher on uher.id_entregable_has_evaluacion = ehe.id_entregable_has_evaluacion
+			where ehe.id_entregable = ".$item->id_entregable." and uher.id_usuario = $id_usuario";
+			$query = $this->db->query($consulta);
+			$item->evaluacion = $query->result();
+
+			$consulta = "select 
+					* 
+				from entregable_has_evaluacion ehe 
+				where ehe.id_entregable = ".$item->id_entregable." limit 1" ;
+			$query = $this->db->query($consulta);
+			$item->evaluacion_a_realizar = $query->row();
+			/**
+			 * para los archivos del entregable que se subieron en el admin
+			 */
+			$item->entregable_has_archivo = $this->obtenerEntregableHasArchivos($item->id_entregable);
+		}
+		return $entregables;
+	}
+
 	public function existenEntregablesPorLiberar($id_estandar_competencia){
 		$this->db->where('id_estandar_competencia',$id_estandar_competencia);
 		$this->db->where('liberado','no');

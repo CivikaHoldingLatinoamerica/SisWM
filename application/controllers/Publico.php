@@ -10,6 +10,7 @@ class Publico extends CI_Controller {
 		parent:: __construct();
 		$this->load->model('ArchivoModel');
 		$this->load->model('EstandarCompetenciaConvocatoriaModel');
+		$this->load->model('EntregableECModel');
 		$this->load->model('UsuarioHasECModel');
 		if(sesionActive()){
 			$this->usuario = usuarioSession();
@@ -215,8 +216,9 @@ class Publico extends CI_Controller {
 			if(isset($data['usuario_has_estandar_competencia']->id_archivo_ped_wm) && !is_null($data['usuario_has_estandar_competencia']->id_archivo_ped_wm) && $data['usuario_has_estandar_competencia']->id_archivo_ped_wm != ''){
 				$data['portafolio_evidencias_wm'] = $this->ArchivoModel->obtener_row($data['usuario_has_estandar_competencia']->id_archivo_ped_wm);
 			}
-			var_dump($data);exit;
-			$this->load->view('alumno_ec/modal_progreso_certificacion');
+			$data['entregables'] = $this->EntregableECModel->obtener_entregables_candidato_publico($data['usuario_has_estandar_competencia']->id_estandar_competencia,$data['usuario_has_estandar_competencia']->id_usuario);
+			//var_dump($data);exit;
+			$this->load->view('alumno_ec/modal_progreso_certificacion',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
