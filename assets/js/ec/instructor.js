@@ -228,19 +228,6 @@ var EvaluadoresEC = {
 					//obtenemos la calificacion registrada hasta este momento
 					$('#calificacion_conocer_registrada_ec').html(EvaluadoresEC.obtener_suma_calificacion_entregables('.input_calificacion_conocer'));
 				}
-				if(es_yosoyliderwm){
-					if(($('#val_calificacion_max_wm').val() == '' || parseFloat($('#val_calificacion_max_wm').val()) == 0)){
-						$('.contenedor_calificacion_entregable_ec').html('');
-						$('#contenedor_calificacion_ec').html('<div class="callout callout-danger"><h5>Lo siento</h5><p>No se encontro calificación min/max de WM del estándar de competencia, no es posible registrar una calificación al entregable</p></div>');
-					}else{
-						//parseamos la calificación min y max del conocer al span del modal
-						var min_wm = $('#val_calificacion_min_wm').val();
-						var max_wm = $('#val_calificacion_max_wm').val();
-						$('#calificacion_wm_ec').html(min_wm + ' - ' + max_wm);
-						//obtenemos la calificación para los entregables de walmart registrada hasta este momento
-						$('#calificacion_wm_registrada_ec').html(EvaluadoresEC.obtener_suma_calificacion_entregables('.input_calificacion_wm'));
-					}
-				}
 			}
 		);
 	},

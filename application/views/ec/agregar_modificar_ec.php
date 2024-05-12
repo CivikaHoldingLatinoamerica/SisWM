@@ -47,24 +47,6 @@
 						</div>
 					</div>
 
-					<?php if(es_yosoyliderwm()): ?>
-						<div class="form-group row">
-							<label for="input_calificacion_min_wm" class="col-sm-3 col-form-label">Calificación minima WM:</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" id="input_calificacion_min_wm" data-rule-required="true" data-rule-number="true"
-									name="calificacion_min_wm" placeholder="Calificación minima - WM" value="<?=isset($estandar_competencia) ? $estandar_competencia->calificacion_min_wm : ''?>">
-							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="input_calificacion_max_wm" class="col-sm-3 col-form-label">Calificación máxima WM:</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" id="input_calificacion_max_wm" data-rule-required="true" data-rule-number="true"
-									name="calificacion_max_wm" placeholder="Calificación máxima - WM" value="<?=isset($estandar_competencia) ? $estandar_competencia->calificacion_max_wm : ''?>">
-							</div>
-						</div>
-					<?php endif; ?>
-
 					<div class="form-group row">
 						<label for="input_cat_area_tematica" class="col-sm-3 col-form-label">Área Temática</label>
 						<div class="col-sm-9" >

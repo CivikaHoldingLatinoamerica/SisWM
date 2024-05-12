@@ -27,7 +27,6 @@ class EntregableECModel extends ModeloBase
 				$this->db->set('descripcion', $parametros['descripcion']);
 				$this->db->set('instrucciones', $parametros['instrucciones']);
 				$this->db->set('tipo_entregable', $parametros['tipo_entregable']);
-				$this->db->set('entregable_wm', $parametros['entregable_wm']);
 				$this->db->where('id_entregable', $id);
 				$this->db->update('entregable_ec');
 			} else {
@@ -37,7 +36,6 @@ class EntregableECModel extends ModeloBase
 					'instrucciones' => $parametros['instrucciones'],
 					'tipo_entregable' => $parametros['tipo_entregable'],
 					'activo' => true,
-					'entregable_wm' => $parametros['entregable_wm'],
 					'id_estandar_competencia' => $parametros['id_estandar_comptencia'],
 				));
 
@@ -135,7 +133,7 @@ class EntregableECModel extends ModeloBase
 			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
 			. "join estandar_competencia_instrumento eci on eci.id_estandar_competencia_instrumento =eiha.id_estandar_competencia_instrumento "
 			. "join cat_instrumento ci on ci.id_cat_instrumento = eci.id_cat_instrumento "
-			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia;
+			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia . " order by ee.nombre asc";
 
 		$query = $this->db->query($consulta);
 		$data = $query->result();
@@ -156,7 +154,6 @@ class EntregableECModel extends ModeloBase
 				'id_estatus' => $item->id_estatus,
 				'id_entregable_formulario' => $item->id_entregable_formulario,
 				'id_usuario' => $id_usuario,
-				'entregable_wm' =>  isset($item->entregable_wm) ? $item->entregable_wm : 'no',
 				'calificacion_entregable' =>  isset($item->calificacion_entregable) ? $item->calificacion_entregable : '',
 				'instrumentos' => array(),
 				'archivos' => array(),
@@ -226,7 +223,7 @@ class EntregableECModel extends ModeloBase
 			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
 			. "join estandar_competencia_instrumento eci on eci.id_estandar_competencia_instrumento =eiha.id_estandar_competencia_instrumento "
 			. "join cat_instrumento ci on ci.id_cat_instrumento = eci.id_cat_instrumento "
-			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia ." and ee.entregable_wm='si' order by ee.nombre asc";
+			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia ." order by ee.nombre asc";
 
 		$query = $this->db->query($consulta);
 		$data = $query->result();
@@ -247,7 +244,6 @@ class EntregableECModel extends ModeloBase
 				'id_estatus' => $item->id_estatus,
 				'id_entregable_formulario' => $item->id_entregable_formulario,
 				'id_usuario' => $id_usuario,
-				'entregable_wm' =>  isset($item->entregable_wm) ? $item->entregable_wm : 'no',
 				'calificacion_entregable' =>  isset($item->calificacion_entregable) ? $item->calificacion_entregable : '',
 				'instrumentos' => array(),
 				'archivos' => array(),

@@ -408,9 +408,7 @@ class DocsPDF extends CI_Controller {
 			$documentos_alumno_evidencia = $this->DocsPDFModel->obtener_archivos_ec_alumno_entregables($id_usuario_alumno,$id_estandar_competencia);
 			$data = $this->DocsPDFModel->get_data_portafolio_evidencia($id_usuario_alumno,$id_usuario_instructor,$id_estandar_competencia);
 			$archivos_conjuntar = array();
-			$archivos_conjuntar_ped_wm = array();
 			$archivos_conjuntar[] = $post['docs_generados'][0];//portada a antes de la ficha de registro
-			$archivos_conjuntar_ped_wm[] = $post['docs_generados_wm'][0]; //portada
 			if(!es_produccion()){
 				//ficha registro cargado al sistema por el admin/evaluador y se le pone la marca de agua del sistema
 				$archivos_conjuntar[] = $this->poner_marca_agua_doc($data['usuario_has_expediente_ped'][0]->ruta_directorio,$data['usuario_has_expediente_ped'][0]->nombre);
@@ -428,7 +426,6 @@ class DocsPDF extends CI_Controller {
 			//entregables candidato
 			$archivos_entregables_modificados = $this->generar_entregables($documentos_alumno_evidencia);
 			$archivos_conjuntar = array_merge($archivos_conjuntar,$archivos_entregables_modificados);
-			$archivos_conjuntar_ped_wm = array_merge($archivos_conjuntar_ped_wm,$archivos_entregables_modificados);
 
 			$archivos_conjuntar[] = $post['docs_generados'][3];//cierre hasta antes del certificado
 			
@@ -440,11 +437,8 @@ class DocsPDF extends CI_Controller {
 			);
 
 			$archivos_conjuntar[] = $certificado_conocer;
-			$archivos_conjuntar_ped_wm[] = $certificado_conocer;
-			$constancia_dc3 = $this->constancia_dc3($data['usuario_has_ec']->id_usuario_has_estandar_competencia,true);
-			$archivos_conjuntar_ped_wm[] = $constancia_dc3->ruta_directorio.$constancia_dc3->nombre;
+			//$constancia_dc3 = $this->constancia_dc3($data['usuario_has_ec']->id_usuario_has_estandar_competencia,true);//se comenta ya que este archivo no es parte del siiped del conocer
 			$archivos_conjuntar[] = 'assets/docs/final_ped.pdf';
-			$archivos_conjuntar_ped_wm[] = 'assets/docs/final_ped.pdf';
 			//conjuntamos los archivos generados previamente para el ped
 			$mergePDF = new Merger();
 			foreach ($archivos_conjuntar as $dg){
@@ -459,20 +453,6 @@ class DocsPDF extends CI_Controller {
 			$directorio = $this->subdirectorio_peds_generados();
 			subdirectorios_files($directorio);
 			$isArchivo_generado = file_put_contents($directorio.$nombre_documento,$archivo_combinado);
-
-			//conjuntamos los archivos generados para el ped de walmart
-			$mergePDFPEDWM = new Merger();
-			foreach($archivos_conjuntar_ped_wm as $dg){
-				log_message('error',$dg);
-				$mergePDFPEDWM->addFile(FCPATH.$dg);
-			}
-			
-			$archivo_combinado_ped_wm = $mergePDFPEDWM->merge();
-			$pre = date('Ymd').'-'.$id_usuario_alumno.'-'.$id_estandar_competencia;
-			$nombre_documento_wm = $pre.'-final-portafolio-evidencias-wm.pdf';
-			$directorio = $this->subdirectorio_peds_generados();
-			subdirectorios_files($directorio);
-			$isArchivo_generado_wm = file_put_contents($directorio.$nombre_documento_wm,$archivo_combinado_ped_wm);
 
 			if($isArchivo_generado){
 				foreach ($archivos_conjuntar as $dg){
@@ -493,27 +473,6 @@ class DocsPDF extends CI_Controller {
 				$response['success'] = false;
 				$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
 			}
-
-			if($isArchivo_generado_wm){
-				foreach ($archivos_conjuntar_ped_wm as $dg){
-					if(strpos($dg,RUTA_PDF_TEMP) !== false && file_exists(FCPATH.$dg)){
-						unlink(FCPATH.$dg);
-					}
-				}
-				//almacenamos el archivo en la tabla de archivo y luego en la tabla de referencia de que se genero el PED
-				$datos_doc['nombre'] = $nombre_documento_wm;
-				$datos_doc['ruta_directorio'] = $directorio;
-				$datos_doc['fecha'] = date('Y-m-d H:i:s');
-				$id_archivo = $this->ArchivoModel->guardar_archivo_model($datos_doc);
-				$this->DocsPDFModel->actualizar_ped_wm_generado($id_usuario_alumno,$id_estandar_competencia,$id_archivo);
-				$response['success'] = true;
-				$response['msg'][] = 'Se genero el Portafolio de evidencias del alumno correctamente';
-				$response['data']['ped_wm'] = $datos_doc;
-			}else{
-				$response['success'] = false;
-				$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
-			}
-
 		}catch (Exception $ex){
 			$response['success'] = false;
 			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
@@ -603,50 +562,46 @@ class DocsPDF extends CI_Controller {
 			}
 
 			//para los datos de la plantilla en la credencial
-			if(es_yosoyliderwm()){
-				//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
-				//$pdf->SetFont('fontwm','B',9);
-				$pdf->SetFont('Arial','B',11);
-				$pdf->SetTextColor(255,255,255);
-				$nombre = utf8_decode($datos_usuario->nombre.' '.$datos_usuario->apellido_p.' '.$datos_usuario->apellido_m);
-				$titulo = utf8_decode($datos_empresa->cargo);
-				$clasificacion = utf8_decode($cat_calibracion_desempeno->nombre);
+			$pdf->SetFont('Arial','B',11);
+			$pdf->SetTextColor(255,255,255);
+			$nombre = utf8_decode($datos_usuario->nombre.' '.$datos_usuario->apellido_p.' '.$datos_usuario->apellido_m);
+			$titulo = utf8_decode($datos_empresa->cargo);
+			$clasificacion = utf8_decode($cat_calibracion_desempeno->nombre);
 
-				$pos = 5;
-				//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
-				$pdf->SetXY(0, 105);
-				//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
-				$pdf->SetX(0);
-				$pdf->Cell(160,$pos,$nombre,0,0,'R');
-				$pdf->SetX(-46);
-				$pos = $pos + 10;
-				$pdf->Cell(-132,$pos,$titulo,0,0,'R');
-				
-				$pdf->SetTextColor(0,0,0);
-				$pdf->SetX(-46);
-				$pos = $pos + 10;
-				$pdf->Cell(-132,$pos,$clasificacion,0,0,'R');
-				
-				//se agregan las palomitas conforme al desempeño
-				$starPos = 155;
-				for($i = 2; $i <= (int)$cat_calibracion_desempeno->id_cat_calibracion_desempeno; $i++){
-					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',$starPos,121,4,4); //palomitas
-					$starPos -= 5;
-				}
-
-				//foto de perfil
-				$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,200,40,25,30);
-
-				//codigo qr del candidato
-				$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
-
-				//imagen de la empresa del candidato
-				$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,50,25);
-
-				//vigencia
-				$pdf->SetXY(200, 156);
-				$pdf->Write(0, utf8_decode($vigencia));
+			$pos = 5;
+			//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
+			$pdf->SetXY(0, 105);
+			//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
+			$pdf->SetX(0);
+			$pdf->Cell(160,$pos,$nombre,0,0,'R');
+			$pdf->SetX(-46);
+			$pos = $pos + 10;
+			$pdf->Cell(-132,$pos,$titulo,0,0,'R');
+			
+			$pdf->SetTextColor(0,0,0);
+			$pdf->SetX(-46);
+			$pos = $pos + 10;
+			$pdf->Cell(-132,$pos,$clasificacion,0,0,'R');
+			
+			//se agregan las palomitas conforme al desempeño
+			$starPos = 155;
+			for($i = 2; $i <= (int)$cat_calibracion_desempeno->id_cat_calibracion_desempeno; $i++){
+				$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',$starPos,121,4,4); //palomitas
+				$starPos -= 5;
 			}
+
+			//foto de perfil
+			$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,200,40,25,30);
+
+			//codigo qr del candidato
+			$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
+
+			//imagen de la empresa del candidato
+			$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,50,25);
+
+			//vigencia
+			$pdf->SetXY(200, 156);
+			$pdf->Write(0, utf8_decode($vigencia));
 
 			$pdf->Output('I', 'GAFETE-SEWM-'.$id_usuario_has_estandar_competencia);
 			$pdf->cleanUp();

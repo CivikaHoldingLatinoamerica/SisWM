@@ -50,11 +50,7 @@
 									</a>
 									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 6 ? 'text-green':'disabled'?>" id="tab_certificado-tab"  data-toggle="pill" href="#tab_certificado"
 									   role="tab" aria-controls="tab_certificado" aria-selected="false">
-										<?php if(es_yosoyliderwm()): ?>
-											<i class="fa fa-certificate"></i> Certificado EC, DC-3 y Credencial
-										<?php else: ?>
-											<i class="fa fa-certificate"></i> Certificado EC y DC-3
-										<?php endif; ?>
+									   <i class="fa fa-certificate"></i> Certificado EC y DC-3
 									</a>
 									<a class="nav-link <?=isset($progreso_pasos) && $progreso_pasos >= 7 ? 'text-green':'disabled'?>" id="tab_encuesta_satisfaccion-tab"  data-toggle="pill" href="#tab_encuesta_satisfaccion"
 									   role="tab" aria-controls="tab_encuesta_satisfaccion" aria-selected="false">

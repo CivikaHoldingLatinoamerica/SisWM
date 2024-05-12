@@ -294,7 +294,11 @@ class EC extends CI_Controller {
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
 			//integracion para agregar lo del grupo para el candidato
-			$grupos = $this->EstandarCompetenciaGrupoModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia),0);
+			$array_busqueda = [
+				'id_estandar_competencia' => $id_estandar_competencia,
+				'usuario_perfil' => $this->usuario->perfil
+			];
+			$grupos = $this->EstandarCompetenciaGrupoModel->tablero($array_busqueda,0);
 			$data['estandar_competencia_grupo'] = $grupos['estandar_competencia_grupo'];
 			if($id_usuario_has_estandar_competencia !== false){
 				$data['usuario_has_estandar_competencia'] = $this->UsuarioHasECModel->obtener_row($id_usuario_has_estandar_competencia);

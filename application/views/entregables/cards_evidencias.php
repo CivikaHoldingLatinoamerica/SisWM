@@ -9,12 +9,6 @@
 					<div class="card-body">
 						<div class="row">
 							
-							<?php if(isset($item->entregable_wm) && $item->entregable_wm == 'si'): ?>
-								<div class="col-12 text-right">
-									<span class="badge badge-primary">Para WM</span>
-								</div>
-							<?php endif; ?>
-							
 							<div class="col-10">
 								<h5 class="card-title text-bold">
 
