@@ -135,7 +135,7 @@ class EntregableECModel extends ModeloBase
 			. "join ec_instrumento_has_actividad eiha ON eiha.id_ec_instrumento_has_actividad = ehi.id_ec_instrumento_has_actividad "
 			. "join estandar_competencia_instrumento eci on eci.id_estandar_competencia_instrumento =eiha.id_estandar_competencia_instrumento "
 			. "join cat_instrumento ci on ci.id_cat_instrumento = eci.id_cat_instrumento "
-			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia;
+			. "where ee.activo and ee.liberado = 'si' and ee.id_estandar_competencia = " . $id_estandar_competencia . " order by ee.nombre asc";
 
 		$query = $this->db->query($consulta);
 		$data = $query->result();
