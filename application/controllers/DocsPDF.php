@@ -603,50 +603,48 @@ class DocsPDF extends CI_Controller {
 			}
 
 			//para los datos de la plantilla en la credencial
-			if(es_yosoyliderwm()){
-				//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
-				//$pdf->SetFont('fontwm','B',9);
-				$pdf->SetFont('Arial','B',11);
-				$pdf->SetTextColor(255,255,255);
-				$nombre = utf8_decode($datos_usuario->nombre.' '.$datos_usuario->apellido_p.' '.$datos_usuario->apellido_m);
-				$titulo = utf8_decode($datos_empresa->cargo);
-				$clasificacion = utf8_decode($cat_calibracion_desempeno->nombre);
+			//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
+			//$pdf->SetFont('fontwm','B',9);
+			$pdf->SetFont('Arial','B',11);
+			$pdf->SetTextColor(255,255,255);
+			$nombre = utf8_decode($datos_usuario->nombre.' '.$datos_usuario->apellido_p.' '.$datos_usuario->apellido_m);
+			$titulo = utf8_decode($datos_empresa->cargo);
+			$clasificacion = utf8_decode($cat_calibracion_desempeno->nombre);
 
-				$pos = 5;
-				//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
-				$pdf->SetXY(0, 105);
-				//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
-				$pdf->SetX(0);
-				$pdf->Cell(160,$pos,$nombre,0,0,'R');
-				$pdf->SetX(-46);
-				$pos = $pos + 10;
-				$pdf->Cell(-132,$pos,$titulo,0,0,'R');
-				
-				$pdf->SetTextColor(0,0,0);
-				$pdf->SetX(-46);
-				$pos = $pos + 10;
-				$pdf->Cell(-132,$pos,$clasificacion,0,0,'R');
-				
-				//se agregan las palomitas conforme al desempeño
-				$starPos = 155;
-				for($i = 2; $i <= (int)$cat_calibracion_desempeno->id_cat_calibracion_desempeno; $i++){
-					$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',$starPos,121,4,4); //palomitas
-					$starPos -= 5;
-				}
-
-				//foto de perfil
-				$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,200,40,25,30);
-
-				//codigo qr del candidato
-				$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
-
-				//imagen de la empresa del candidato
-				$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,50,25);
-
-				//vigencia
-				$pdf->SetXY(200, 156);
-				$pdf->Write(0, utf8_decode($vigencia));
+			$pos = 5;
+			//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
+			$pdf->SetXY(0, 105);
+			//with SetX I use numbers instead of lMargin, and I also use half of the size I added as margin for the page when I did SetMargins
+			$pdf->SetX(0);
+			$pdf->Cell(160,$pos,$nombre,0,0,'R');
+			$pdf->SetX(-46);
+			$pos = $pos + 10;
+			$pdf->Cell(-132,$pos,$titulo,0,0,'R');
+			
+			$pdf->SetTextColor(0,0,0);
+			$pdf->SetX(-46);
+			$pos = $pos + 10;
+			$pdf->Cell(-132,$pos,$clasificacion,0,0,'R');
+			
+			//se agregan las palomitas conforme al desempeño
+			$starPos = 155;
+			for($i = 2; $i <= (int)$cat_calibracion_desempeno->id_cat_calibracion_desempeno; $i++){
+				$pdf->Image(FCPATH.'assets/imgs/iconos/01_check.png',$starPos,121,4,4); //palomitas
+				$starPos -= 5;
 			}
+
+			//foto de perfil
+			$pdf->Image(FCPATH.$foto_perfil->ruta_directorio.$foto_perfil->nombre,200,40,25,30);
+
+			//codigo qr del candidato
+			$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
+
+			//imagen de la empresa del candidato
+			$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,50,25);
+
+			//vigencia
+			$pdf->SetXY(200, 156);
+			$pdf->Write(0, utf8_decode($vigencia));
 
 			$pdf->Output('I', 'GAFETE-SEWM-'.$id_usuario_has_estandar_competencia);
 			$pdf->cleanUp();

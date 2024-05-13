@@ -22,12 +22,10 @@
 					<span class="col-lg-3" id="calificacion_conocer_ec"></span>
 					<label class="col-lg-3">Calificación registrada CONOCER: </label>
 					<span class="col-lg-3" id="calificacion_conocer_registrada_ec"></span>
-					<?php if(es_yosoyliderwm()): ?>
-						<label class="col-lg-3">Rango de calificación WM: </label>
-						<span class="col-lg-3" id="calificacion_wm_ec"></span>
-						<label class="col-lg-3">Calificación registrada WM: </label>
-						<span class="col-lg-3" id="calificacion_wm_registrada_ec"></span>
-					<?php endif; ?>
+					<label class="col-lg-3">Rango de calificación WM: </label>
+					<span class="col-lg-3" id="calificacion_wm_ec"></span>
+					<label class="col-lg-3">Calificación registrada WM: </label>
+					<span class="col-lg-3" id="calificacion_wm_registrada_ec"></span>
 				</div>
 				<div class="form-group row">
 					<?php if(isset($estandar_competencia_instrumento) && is_array($estandar_competencia_instrumento) && sizeof($estandar_competencia_instrumento) != 0): ?>

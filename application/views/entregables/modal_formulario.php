@@ -99,22 +99,20 @@
 						</div>
 					</div>
 
-					<?php if(es_yosoyliderwm()): ?>
-						<div class="form-group row">
-							<label for="input_entregable_wm" class="col-sm-3 col-form-label">Es entregable para Walmart</label>
-							<div class="col-sm-9">
-								<div class="custom-control custom-radio">
-									<input class="custom-control-input" type="radio" data-rule-required="true" id="input_entregable_wm" name="entregable_wm"
-										value="si" <?=isset($entregable) && $entregable->entregable_wm == 'si' ? 'checked="checked"':''?>>
-									<label for="input_entregable_wm" class="custom-control-label">Si</label>
-								</div>
-								<div class="custom-control custom-radio">
-									<input class="custom-control-input" type="radio" id="input_entregable_wm_no" name="entregable_wm" value="no" <?=isset($entregable) && $entregable->entregable_wm == 'no' ? 'checked="checked"':''?>>
-									<label for="input_entregable_wm_no" class="custom-control-label">No</label>
-								</div>
+					<div class="form-group row">
+						<label for="input_entregable_wm" class="col-sm-3 col-form-label">Es entregable para Walmart</label>
+						<div class="col-sm-9">
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input" type="radio" data-rule-required="true" id="input_entregable_wm" name="entregable_wm"
+									value="si" <?=isset($entregable) && $entregable->entregable_wm == 'si' ? 'checked="checked"':''?>>
+								<label for="input_entregable_wm" class="custom-control-label">Si</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input" type="radio" id="input_entregable_wm_no" name="entregable_wm" value="no" <?=isset($entregable) && $entregable->entregable_wm == 'no' ? 'checked="checked"':''?>>
+								<label for="input_entregable_wm_no" class="custom-control-label">No</label>
 							</div>
 						</div>
-					<?php endif; ?>
+					</div>
 
 				</div>
 				<div class="modal-footer justify-content-between">

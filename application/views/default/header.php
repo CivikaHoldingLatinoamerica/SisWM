@@ -8,11 +8,7 @@
 
 	<meta name="author" content="Enrique Corona Ricaño">
 	<meta name="description" content="Sistema Integral de Portafolio de Evidencias PED  Civika Holding Latinoamérica, S.A. de C.V.">
-	<?php if(es_yosoyliderwm()): ?>
-		<meta name="keywords" content="Portafolio de evidencias Civika, PED Civika, Certificaciones Walmart México, Walmart México">
-	<?php else: ?>
-		<meta name="keywords" content="Portafolio de evidencias Civika, PED Civika">
-	<?php endif; ?>
+	<meta name="keywords" content="Portafolio de evidencias Civika, PED Civika, Certificaciones Walmart México, Walmart México">
 
 	<!-- css para el admin lte -->
 	<!-- Google Font: Source Sans Pro -->
@@ -26,12 +22,8 @@
 	<link href="<?=base_url()?>assets/frm/watnotif/css/bubble/watnotif.right-top-bubble.min.css" rel="stylesheet" type="text/css">
 
 	<link href="<?= base_url() ?>assets/css/comun.css" rel="stylesheet">
-	<?php if(es_yosoyliderwm()): ?>
-		<link href="<?= base_url() ?>assets/css/comun.css" rel="stylesheet">
-		<link href="<?= base_url() ?>assets/css/colores_wm.css" rel="stylesheet">
-	<?php else: ?>
-		<link href="<?= base_url() ?>assets/css/comun_siiped.css" rel="stylesheet">
-	<?php endif; ?>
+	<link href="<?= base_url() ?>assets/css/comun.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/css/colores_wm.css" rel="stylesheet">
 
 	<!-- CSS extras -->
 	<?php if (isset($extra_css) && is_array($extra_css)): ?>
@@ -40,26 +32,16 @@
 		<?php endforeach;?>
 	<?php endif;?>
 
-	<?php if(es_yosoyliderwm()): ?>
-		<!-- icono -->
-		<link href="<?=base_url()?>assets/imgs/logos/icono.png" rel="shortcut icon">
-		<title>Certificaciones WM MXCAM - Cívika</title>
-	<?php else: ?>
-		<!-- icono -->
-		<link href="<?=base_url()?>assets/imgs/logos/icono_ckv.png" rel="shortcut icon">
-		<title>Certificaciones Cívika</title>
-	<?php endif; ?>
+	<!-- icono -->
+	<link href="<?=base_url()?>assets/imgs/logos/icono.png" rel="shortcut icon">
+	<title>Certificaciones WM MXCAM - Cívika</title>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
 	<!-- Preloader -->
 	<div class="preloader flex-column justify-content-center align-items-center">
-		<?php if(es_yosoyliderwm()): ?>
-			<img class="animation__shake" src="<?=base_url()?>assets/imgs/logos/icono.png" alt="Civika Holding" height="60" width="60">
-		<?php else: ?>
-			<img class="animation__shake" src="<?=base_url()?>assets/imgs/logos/icono_ckv.png" alt="Civika Holding" height="60" width="60">
-		<?php endif; ?>
+		<img class="animation__shake" src="<?=base_url()?>assets/imgs/logos/icono.png" alt="Civika Holding" height="60" width="60">
 	</div>
 
 	<!-- Navbar -->

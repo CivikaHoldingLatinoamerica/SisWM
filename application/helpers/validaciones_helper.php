@@ -203,14 +203,12 @@ class Validaciones_Helper {
 			$result['success'] = false;
 			$result['msg'][] = 'El campo calificacion máxima del CONOCER es requerido';
 		}
-		if(es_yosoyliderwm()){
-			if(!isset($data['calificacion_min_wm']) || self::isCampoVacio($data['calificacion_min_wm'])){
-				$result['success'] = false;
-				$result['msg'][] = 'El campo calificacion minima de WM es requerido';
-			}if(!isset($data['calificacion_max_wm']) || self::isCampoVacio($data['calificacion_max_wm'])){
-				$result['success'] = false;
-				$result['msg'][] = 'El campo calificacion máxima de WM es requerido';
-			}
+		if(!isset($data['calificacion_min_wm']) || self::isCampoVacio($data['calificacion_min_wm'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo calificacion minima de WM es requerido';
+		}if(!isset($data['calificacion_max_wm']) || self::isCampoVacio($data['calificacion_max_wm'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo calificacion máxima de WM es requerido';
 		}
 		return $result;
 	}

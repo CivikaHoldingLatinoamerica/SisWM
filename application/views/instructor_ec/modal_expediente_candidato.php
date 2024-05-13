@@ -120,30 +120,28 @@
 
 				</div>
 
-				<?php if(es_yosoyliderwm()): ?>
-					<div class="col-lg-12">
-						<div class="card card-primary">
-							<div class="card-header">
-								<h3 class="card-title">Gafete Wal-Mart</h3>
-								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-card-widget="collapse">
-										<i class="fas fa-minus"></i>
-									</button>
-								</div>
-							</div>
-
-							<div class="card-body">
-
-
-								<div class="form-group row">
-									<iframe src="<?=base_url().'gafete_sewm/'.$usuario_has_ec->id_usuario_has_estandar_competencia?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
-								</div>
-
+				<div class="col-lg-12">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">Gafete Wal-Mart</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool" data-card-widget="collapse">
+									<i class="fas fa-minus"></i>
+								</button>
 							</div>
 						</div>
 
+						<div class="card-body">
+
+
+							<div class="form-group row">
+								<iframe src="<?=base_url().'gafete_sewm/'.$usuario_has_ec->id_usuario_has_estandar_competencia?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+							</div>
+
+						</div>
 					</div>
-				<?php endif; ?>
+
+				</div>
 			</div>
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

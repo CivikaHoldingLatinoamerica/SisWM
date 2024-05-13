@@ -317,14 +317,6 @@ function es_pruebas(){
     return $es_pruebas;
 }
 
-function es_yosoyliderwm(){
-	$es_yosoyliderwm = false;
-	if($_SERVER['SERVER_NAME'] == 'wmlocal.civika.com' || $_SERVER['SERVER_NAME'] == 'demowm.enriquecr.com' || $_SERVER['SERVER_NAME'] == 'yosoyliderwm.com'){
-        $es_yosoyliderwm = true;
-    }
-    return $es_yosoyliderwm;
-}
-
 function listar_directorios_ruta($ruta)
 {
     $subruta = $ruta;

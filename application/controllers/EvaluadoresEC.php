@@ -226,10 +226,8 @@ class EvaluadoresEC extends CI_Controller {
 			$data['ficha_registro_pdf'] = $this->ECUsuarioHasExpedientePEDModel->obtener_registro_existente($id_estandar_competencia,$id_usuario_alumno,EXPEDIENTE_FICHA_REGISTRO);
 			$data['instrumento_evaluacion_pdf'] = $this->ECUsuarioHasExpedientePEDModel->obtener_registro_existente($id_estandar_competencia,$id_usuario_alumno,EXPEDIENTE_INSTRUMENTO_EVA);
 			$data['certificado_laboral_pdf'] = $this->ECUsuarioHasExpedientePEDModel->obtener_registro_existente($id_estandar_competencia,$id_usuario_alumno,EXPEDIENTE_CERTIFICADO_EC);
-			if(es_yosoyliderwm()){
-				$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario_alumno),0);
-				$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
-			}
+			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario_alumno),0);
+			$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
 			//var_dump($data);exit;
 			$this->load->view('instructor_ec/modal_expediente_candidato',$data);
 		}catch (Exception $ex){
