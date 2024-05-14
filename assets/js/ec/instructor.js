@@ -482,8 +482,8 @@ var EvaluadoresEC = {
 			}else{
 				$('.smal_hora_envio').html('Formato de 12 hrs');
 			}
-			Comun.desabilitar_fines_semana_calendario('#input_fecha_evidencia_ati','#error_fecha_evidencia');
-			Comun.desabilitar_fines_semana_calendario('#input_fecha_revision_ati','#error_fecha_revision');
+			//Comun.desabilitar_fines_semana_calendario('#input_fecha_evidencia_ati','#error_fecha_evidencia');
+			//Comun.desabilitar_fines_semana_calendario('#input_fecha_revision_ati','#error_fecha_revision');
 			var fecha_evidencia = $('#input_fecha_evidencia_ati').val();
 			if(fecha_evidencia != ''){
 				var dia_max_revision = Comun.sumar_dias_habiles_calendario(fecha_evidencia,8); //obtener la fecha limite
