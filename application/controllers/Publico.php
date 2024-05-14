@@ -184,13 +184,15 @@ class Publico extends CI_Controller {
 	 */
 	public function candidato_certificacion($usuario){
 		try{
+			//por el momento en el siiped no se lleva a cabo el perfil publico del candidato
+			redirect(base_url().'404');
 			$this->load->model('UsuarioModel');
 			$this->load->model('UsuarioHasECModel');
 			if(sesionActive()){
 				$data['usuario'] = usuarioSession();
 			}
 			$data['usuario_candidato'] = $this->UsuarioModel->obtener_usuario_by_usr($usuario);
-			$data['datos_usuario'] = $this->UsuarioModel->obtener_data_usuario_id($data['usuario_candidato']->id_usuario);
+			$data['datos_usuario_candidato'] = $this->UsuarioModel->obtener_data_usuario_id($data['usuario_candidato']->id_usuario);
 			$data['datos_empresa'] = $this->PerfilModel->obtener_datos_empresa($data['usuario_candidato']->id_usuario,true);
 			$data['certificacion_candidato'] = $this->UsuarioHasECModel->obtener_progreso_alumno_publico($data['usuario_candidato']->id_usuario);
 			$data['extra_js'] = array(
@@ -207,6 +209,8 @@ class Publico extends CI_Controller {
 
 	public function ver_detalle_certificacion($id_usuario_has_estandar_competencia){
 		try{
+			//por el momento en el siiped no se lleva a cabo el perfil publico del candidato
+			redirect(base_url().'404');
 			$data['usuario_has_estandar_competencia'] = $this->UsuarioHasECModel->obtener_row($id_usuario_has_estandar_competencia);
 			$data['portafolio_evidencias_wm'] = false;
 			if(isset($data['usuario_has_estandar_competencia']->id_archivo_ped_wm) && !is_null($data['usuario_has_estandar_competencia']->id_archivo_ped_wm) && $data['usuario_has_estandar_competencia']->id_archivo_ped_wm != ''){

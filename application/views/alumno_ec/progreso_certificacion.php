@@ -34,7 +34,7 @@
 									</div>
 									<ul class="list-group list-group-unbordered mb-3">
 									<li class="list-group-item">
-										<b>CURP</b> <a class="float-right"><?=$datos_usuario->curp?></a>
+										<b>CURP</b> <a class="float-right"><?=$datos_usuario_candidato->curp?></a>
 									</li>
 									<li class="list-group-item">
 										<b>RFC de Empresa</b> <a class="float-right"><?=$datos_empresa->rfc?></a>
