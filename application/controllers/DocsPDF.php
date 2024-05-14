@@ -117,15 +117,8 @@ class DocsPDF extends CI_Controller {
 				$doc_ped = $this->ArchivoModel->obtener_archivo($usuario_has_ec->id_archivo_ped);
 				$response['success'] = true;
 				$response['existe_ped'] = true;
-				$response['existe_ped_wm'] = false;
 				$response['msg'][] = array('');
 				$response['doc_portafolio_evidencia'] = base_url() . $doc_ped->ruta_directorio . $doc_ped->nombre;
-				//para el ped de wm
-				if(is_object($usuario_has_ec) && isset($usuario_has_ec->id_archivo_ped_wm) && !is_null($usuario_has_ec->id_archivo_ped_wm) && $usuario_has_ec->id_archivo_ped_wm != ''){
-					$doc_ped = $this->ArchivoModel->obtener_archivo($usuario_has_ec->id_archivo_ped_wm);
-					$response['existe_ped_wm'] = true;
-					$response['doc_portafolio_evidencia_wm'] = base_url() . $doc_ped->ruta_directorio . $doc_ped->nombre;
-				}
 			}else{
 				$data = $this->DocsPDFModel->get_data_portafolio_evidencia($id_usuario_alumno,$id_usuario_instructor,$id_estandar_competencia);
 				$response['success'] = true;
@@ -638,15 +631,35 @@ class DocsPDF extends CI_Controller {
 					redirect(base_url().$constanciaDC3->ruta_directorio.$constanciaDC3->nombre);
 				}
 			}else{
+				$validacion_datos = [
+					'estatus' => true,
+				];
 				$datos_usuario = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario);
 				$datos_instructor = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario_evaluador);
 				$firma_instructor = $this->PerfilModel->obtener_datos_expediente($usuario_has_estandar_competencia->id_usuario_evaluador,EXPEDIENTE_FIRMA_DIGITAL);
+				if(!is_object($firma_instructor)){
+					$validacion_datos['estatus'] = false;
+					echo "Falta la firma del instructor en el sistema<br>";
+				}
 				$datos_empresa = $this->PerfilModel->obtener_datos_empresa($usuario_has_estandar_competencia->id_usuario,true);
+				if(!is_object($datos_empresa)){
+					$validacion_datos['estatus'] = false;
+					echo "Falta los datos de la empresa del candidato<br>";
+				}
 				$cat_ocupacion_especifica = $this->CatalogoModel->get_catalogo('cat_ocupacion_especifica',$datos_usuario->id_cat_ocupacion_especifica);
 				$estandar_competencia = $this->EstandarCompetenciaModel->obtener_row($usuario_has_estandar_competencia->id_estandar_competencia);
 				$estandar_competencia_grupo = $this->EstandarCompetenciaGrupoModel->obtener_row($usuario_has_estandar_competencia->id_estandar_competencia_grupo);
-				$cat_area_tematica = $this->CatalogoModel->get_catalogo('cat_area_tematica',$estandar_competencia_grupo->id_cat_area_tematica);
-				
+				if(!is_object($estandar_competencia_grupo)){
+					$validacion_datos['estatus'] = false;
+					echo "Falta la asignación del grupo al candidato<br>";
+				}else{
+					$cat_area_tematica = $this->CatalogoModel->get_catalogo('cat_area_tematica',$estandar_competencia_grupo->id_cat_area_tematica);
+				}
+
+				if(!$validacion_datos['estatus']){
+					return '';
+				}
+
 				$pdf = new Fpdi();
 				$mpdf = $this->pdf->load($this->default_pdf_params);
 				//leemos la plantilla para generar el GAFETE
