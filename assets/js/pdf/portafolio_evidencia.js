@@ -13,13 +13,10 @@ var PortafolioEvidencia = {
 
 	archivos_temporales : [],
 
-	archivos_temporales_wm : [],
-
 	data_usuario : [],
 
 	generar_pdf_portafolio_evidencia : function(id_usuario_alumno,id_usuario_instructor,id_estandar_comptencia){
 		PortafolioEvidencia.archivos_temporales = [];
-		PortafolioEvidencia.archivos_temporales_wm = [];
 		$('#contenedor_generador_evidencias').html('<div class="form-group row">' +
 			'<div class="col-lg-12 alert alert-info">' +
 			'Se está validando la información en el sistema y si se cumplen los datos se procederá a generar el Portafolio de evidencias en PDF, espere que termine y no cierre esta ventana o la refresque' +
@@ -131,14 +128,6 @@ var PortafolioEvidencia = {
 							'		<iframe src="'+response.doc_portafolio_evidencia+'" height="350px" width="100%"></iframe>' +
 							'	</div>' +
 							'</div>';
-							if(response.existe_ped_wm){
-								iframe += '<div class="row form-group">' +
-								'	<div class="col-lg-12  alert alert-info">Portafolio de evidencias PED para WM</div>' +
-								'	<div class="col-lg-12">' +
-								'		<iframe src="'+response.doc_portafolio_evidencia_wm+'" height="350px" width="100%"></iframe>' +
-								'	</div>' +
-								'</div>';
-							}
 						$('#contenedor_generador_evidencias').append(iframe);
 						$('.btn_close_modal_generar_evidencia').removeAttr('disabled');
 					}else{
@@ -183,7 +172,6 @@ var PortafolioEvidencia = {
 					);
 					$('#label_procesar_pdf_portada_ficha_registro').html('PDF generado correctamente (Portada - ficha de registro)');
 					PortafolioEvidencia.archivos_temporales.push(response.data.documento);
-					PortafolioEvidencia.archivos_temporales_wm.push(response.data.documento_wm);//se agrega el documento para el ped de wm
 					PortafolioEvidencia.generar_pdf_diagnostico(id_usuario_alumno,id_usuario_instructor,id_estandar_comptencia);
 				}else{
 					$('#procesar_pdf_portada_ficha_registro').html(
@@ -325,10 +313,7 @@ var PortafolioEvidencia = {
 		$('#contenedor_generador_evidencias').append(html_procesar_datos);
 		Comun.obtener_contenido_peticion_json(
 			base_url + 'DocsPDF/generando_pdf_completo/'+id_usuario_alumno+'/'+id_usuario_instructor+'/'+id_estandar_comptencia,
-			{
-				docs_generados : PortafolioEvidencia.archivos_temporales,
-				docs_generados_wm : PortafolioEvidencia.archivos_temporales_wm
-			},
+			{docs_generados : PortafolioEvidencia.archivos_temporales},
 			function(response){
 				if(response.success){
 					$('#procesar_pdf_conjunto_ped').html(
@@ -341,12 +326,6 @@ var PortafolioEvidencia = {
 						'	<div class="col-lg-12 alert alert-info">Portafolio de evidencias PED</div>' +
 						'	<div class="col-lg-12">' +
 						'		<iframe src="'+base_url+response.data.ped.ruta_directorio+response.data.ped.nombre+'" height="350px" width="100%"></iframe>' +
-						'	</div>' +
-						'</div>'+
-						'<div class="row form-group">' +
-						'	<div class="col-lg-12 alert alert-info">Portafolio de evidencias PED - WM</div>' +
-						'	<div class="col-lg-12">' +
-						'		<iframe src="'+base_url+response.data.ped_wm.ruta_directorio+response.data.ped_wm.nombre+'" height="350px" width="100%"></iframe>' +
 						'	</div>' +
 						'</div>';
 					$('#contenedor_generador_evidencias').append(iframe);
