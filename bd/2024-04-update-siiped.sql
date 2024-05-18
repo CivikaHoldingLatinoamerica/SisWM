@@ -8,9 +8,9 @@
 	@pruebas
 	@date  14/may/2024
 	@produccion walmart
-	@date 
+	@date 17/mayo/2024
 	@production siiped
-	@date 
+	@date 17/mayo/2024
 */
 
 ALTER TABLE `usuario_has_estandar_competencia` 
@@ -18,7 +18,7 @@ ADD COLUMN `id_archivo_dc3` BIGINT UNSIGNED NULL AFTER `id_cat_calibracion_desem
 ADD COLUMN `id_archivo_dc3_qr` BIGINT UNSIGNED NULL AFTER `id_archivo_dc3`,
 ADD INDEX `fk_usuario_has_estandar_competencia_archivodc3_idx` (`id_archivo_dc3` ASC) ,
 ADD INDEX `fk_usuario_has_ec_archivo_dc3qr_idx` (`id_archivo_dc3_qr` ASC) ;
-;
+
 ALTER TABLE `usuario_has_estandar_competencia` 
 ADD CONSTRAINT `fk_usuario_has_estandar_competencia_archivodc3`
   FOREIGN KEY (`id_archivo_dc3`)
@@ -34,7 +34,7 @@ ADD CONSTRAINT `fk_usuario_has_ec_archivo_dc3qr`
 ALTER TABLE `usuario_has_estandar_competencia` 
 ADD COLUMN `id_archivo_ped_wm` BIGINT UNSIGNED NULL AFTER `id_archivo_dc3_qr`,
 ADD INDEX `fk_usr_has_ec_archivo_ped_wm_idx` (`id_archivo_ped_wm` ASC);
-;
+
 ALTER TABLE `usuario_has_estandar_competencia` 
 ADD CONSTRAINT `fk_usr_has_ec_archivo_ped_wm`
   FOREIGN KEY (`id_archivo_ped_wm`)
