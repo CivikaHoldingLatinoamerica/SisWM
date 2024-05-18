@@ -19,7 +19,6 @@ class Admin extends CI_Controller {
 			}
 		}else{
 			$this->usuario = null;
-			redirect(base_url().'login');
 		}
 	}
 
@@ -100,6 +99,9 @@ class Admin extends CI_Controller {
 	}
 
 	public function actualizar_comun(){
+		if(!sesionActive()){
+			redirect(base_url().'login');
+		}
 		try{
 			$this->load->model('ComunModel');
 			$resultado['success'] = false;
@@ -123,6 +125,9 @@ class Admin extends CI_Controller {
 	}
 
 	public function eliminar_comun(){
+		if(!sesionActive()){
+			redirect(base_url().'login');
+		}
 		try{
 			$this->load->model('ComunModel');
 			$resultado['success'] = false;
