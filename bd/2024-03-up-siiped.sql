@@ -10,7 +10,7 @@
 	@produccion walmart
 	@date 05/ABR/2024
 	@production siiped
-	@date 
+	@date 17/mayo/2024
 */
 
 ALTER TABLE `estandar_competencia` 
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 ALTER TABLE `usuario_has_estandar_competencia` 
 ADD COLUMN `id_cat_calibracion_desempeno` INT(3) UNSIGNED NULL COMMENT 'columna de información que almacenara la calibracion de desepeño que se utilizara para la credencialización' AFTER `id_estandar_competencia_grupo`,
 ADD INDEX `fk_usuario_has_estandar_competencia_calibracion_desem_idx` (`id_cat_calibracion_desempeno` ASC);
-;
+
 ALTER TABLE `usuario_has_estandar_competencia` 
 ADD CONSTRAINT `fk_usuario_has_estandar_competencia_calibracion_desem`
   FOREIGN KEY (`id_cat_calibracion_desempeno`)
@@ -50,7 +50,7 @@ INSERT INTO cat_calibracion_desempeno (nombre) VALUES
 ALTER TABLE `usuario` 
 ADD COLUMN `id_archivo_qr` BIGINT(20) UNSIGNED NULL COMMENT 'llave foranea para identificar el codigo qr del usuario para el sistema' AFTER `id_usuario_registro`,
 ADD INDEX `fk_usuario_archivo_qr_idx` (`id_archivo_qr` ASC);
-;
+
 ALTER TABLE `usuario` 
 ADD CONSTRAINT `fk_usuario_archivo_qr`
   FOREIGN KEY (`id_archivo_qr`)
