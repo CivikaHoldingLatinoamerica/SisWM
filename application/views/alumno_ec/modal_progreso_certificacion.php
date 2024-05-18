@@ -49,7 +49,7 @@
 																		<td><?=$index+1?></td>
 																		<td><?=$e->nombre_entregable?></td>
 																		<td><?=$e->descripcion?></td>
-																		<td><span><?=$e->calificacion_entregable?></span></td>
+																		<td><span><?=$e->calificacion_entregable != null && $e->calificacion_entregable != 0 && $e->calificacion_entregable != '' ? $e->calificacion_entregable : 'En Revisión'?></span></td>
 																	</tr>
 																<?php endforeach; ?>
 																<tr>
@@ -79,7 +79,11 @@
 								</div>
 
 								<div class="card-body">								
-									<iframe src="<?=base_url().$portafolio_evidencias_wm->ruta_directorio.$portafolio_evidencias_wm->nombre?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+								<?php if(isset($portafolio_evidencias_wm) && is_object($portafolio_evidencias_wm)): ?>
+										<iframe src="<?=base_url().$portafolio_evidencias_wm->ruta_directorio.$portafolio_evidencias_wm->nombre?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+									<?php else: ?>
+										<span>El portafolio de evidencias se encuentra en revisión; espere a ser generado y liberado por el evaluador</span>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
