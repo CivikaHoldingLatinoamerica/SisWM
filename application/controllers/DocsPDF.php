@@ -640,7 +640,7 @@ class DocsPDF extends CI_Controller {
 			$pdf->Image(FCPATH.$codigoQRCandidato->ruta_directorio.$codigoQRCandidato->nombre,190,78,45,45);
 
 			//imagen de la empresa del candidato
-			$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,185,126,50,25);
+			$pdf->Image(FCPATH.$datos_empresa->ruta_directorio_logo.$datos_empresa->nombre_archivo_logo,190,126,45,25);
 
 			//vigencia
 			$pdf->SetXY(200, 156);
