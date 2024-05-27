@@ -25,19 +25,21 @@ class Admin extends CI_Controller {
 	public function index()
 	{
 		$data['titulo_pagina'] = 'BIENVENIDO al Sistema Integral de Información PED';
-		$data['usuario'] = $this->usuario;
-		switch ($this->usuario->perfil){
-			case 'alumno':
-				$data['cat_msg_bienvenida'] = $this->CatalogoModel->cat_msg_bienvenida();
-				$data['extra_js'] = array(
-					base_url().'assets/js/validacion_datos.js'
-				);
-				break;
-			case 'instructor':
-				$data['extra_js'] = array(
-					base_url().'assets/js/validacion_datos.js'
-				);
-				break;
+		if(!is_null($this->usuario)){
+			$data['usuario'] = $this->usuario;
+			switch ($this->usuario->perfil){
+				case 'alumno':
+					$data['cat_msg_bienvenida'] = $this->CatalogoModel->cat_msg_bienvenida();
+					$data['extra_js'] = array(
+						base_url().'assets/js/validacion_datos.js'
+					);
+					break;
+				case 'instructor':
+					$data['extra_js'] = array(
+						base_url().'assets/js/validacion_datos.js'
+					);
+					break;
+			}
 		}
 		$this->load->view('index',$data);
 	}
