@@ -568,7 +568,13 @@ class DocsPDF extends CI_Controller {
 			$datos_usuario = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario);
 			$usuario = $this->UsuarioModel->obtener_usuario_by_id($usuario_has_estandar_competencia->id_usuario);
 			$foto_perfil = $this->PerfilModel->foto_perfil($usuario_has_estandar_competencia->id_usuario);
+			if(!is_object($foto_perfil)){
+				echo 'Candidato no a subido foto de perfil para credencial';exit;
+			}
 			$datos_empresa = $this->PerfilModel->obtener_datos_empresa($usuario_has_estandar_competencia->id_usuario,true);
+			if(!is_object($datos_empresa) || !isset($datos_empresa->cargo) || $datos_empresa->cargo == '' || is_null($datos_empresa->cargo)){
+				echo 'Candidato no tiente datos completos en empresa';exit;
+			}
 			if(isset($usuario->id_archivo_qr) && !is_null($usuario->id_archivo_qr)){
 				$codigoQRCandidato = $this->ArchivoModel->obtener_archivo($usuario->id_archivo_qr);
 			}else{
