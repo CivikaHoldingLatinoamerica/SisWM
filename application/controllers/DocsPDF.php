@@ -559,6 +559,9 @@ class DocsPDF extends CI_Controller {
 	public function gafete_candidato_sewm($id_usuario_has_estandar_competencia){
 		try{
 			//traemos los datos para poder generar la credencial y codigoqr
+			$validacion_datos = [
+				'estatus' => true,
+			];
 			$usuario_has_estandar_competencia = $this->UsuarioHasECModel->obtener_row($id_usuario_has_estandar_competencia);
 			//validamos que ya se pueda emitir la credencial con una calificacion aprobatoria
 			if((int)$usuario_has_estandar_competencia->id_cat_calibracion_desempeno < JUICIO_CALIFICADO){
@@ -572,9 +575,17 @@ class DocsPDF extends CI_Controller {
 				echo 'Candidato no a subido foto de perfil para credencial';exit;
 			}
 			$datos_empresa = $this->PerfilModel->obtener_datos_empresa($usuario_has_estandar_competencia->id_usuario,true);
-			if(!is_object($datos_empresa) || !isset($datos_empresa->cargo) || $datos_empresa->cargo == '' || is_null($datos_empresa->cargo)){
-				echo 'Candidato no tiente datos completos en empresa';exit;
+			
+			if(!is_object($datos_empresa)){
+				$validacion_datos['estatus'] = false;
+				echo "Falta los datos de la empresa del candidato<br>";
+			}else{
+				if(!isset($datos_empresa->cargo) || $datos_empresa->cargo == '' || is_null($datos_empresa->cargo)){
+					$validacion_datos['estatus'] = false;
+					echo 'Candidato no tiente datos completos en empresa';
+				}
 			}
+			
 			if(isset($usuario->id_archivo_qr) && !is_null($usuario->id_archivo_qr)){
 				$codigoQRCandidato = $this->ArchivoModel->obtener_archivo($usuario->id_archivo_qr);
 			}else{
@@ -586,8 +597,20 @@ class DocsPDF extends CI_Controller {
 				}
 			}
 			// var_dump($datos_usuario,$cat_calibracion_desempeno,$foto_perfil,$datos_empresa,$codigoQRCandidato);exit;
-			$fecha_emision_certificado = date('Y-m-d',strtotime($usuario_has_estandar_competencia->fecha_emision_certificado));
-			$fecha_fin_vigencia=date('Y-m-d', strtotime('+1 year', strtotime($fecha_emision_certificado)) );
+			$fecha_emision_certificado = '';
+			$fecha_fin_vigencia = '';
+			if(!isset($usuario_has_estandar_competencia->fecha_emision_certificado) && $usuario_has_estandar_competencia->fecha_emision_certificado != '' && !is_null($usuario_has_estandar_competencia->fecha_emision_certificado)){
+				$fecha_emision_certificado = date('Y-m-d',strtotime($usuario_has_estandar_competencia->fecha_emision_certificado));
+			}else{
+				$validacion_datos['estatus'] = false;
+				echo 'No se encontro la fecha de emisión del certificado';
+			}
+			
+			if(!$validacion_datos['estatus']){
+				return '';
+			}
+
+			$fecha_fin_vigencia = date('Y-m-d', strtotime('+1 year', strtotime($fecha_emision_certificado)) );
 			$vigencia = fechaBDToHtml($fecha_emision_certificado). ' al '.fechaBDToHtml($fecha_fin_vigencia);
 
 			$pdf = new Fpdi();
@@ -661,7 +684,7 @@ class DocsPDF extends CI_Controller {
 			log_message('error','***** DocsPDFModel -> gafete_candidato_sewm');
 			log_message('error',$ex->getMessage());
 		}
-		echo 'Ocurrio un error en el proceso de generar la firma, intente más tarde';
+		echo 'Ocurrio un error en el proceso de generar el gafete, intente más tarde';
 	}
 
 	public function constancia_dc3($id_usuario_has_estandar_competencia,$para_ped_wm = false){
@@ -701,6 +724,11 @@ class DocsPDF extends CI_Controller {
 				if(!is_object($datos_empresa)){
 					$validacion_datos['estatus'] = false;
 					echo "Falta los datos de la empresa del candidato<br>";
+				}else{
+					if(!is_object($datos_empresa) || !isset($datos_empresa->cargo) || $datos_empresa->cargo == '' || is_null($datos_empresa->cargo)){
+						$validacion_datos['estatus'] = false;
+						echo 'Candidato no tiente datos completos en empresa';
+					}
 				}
 				$cat_ocupacion_especifica = $this->CatalogoModel->get_catalogo('cat_ocupacion_especifica',$datos_usuario->id_cat_ocupacion_especifica);
 				$estandar_competencia = $this->EstandarCompetenciaModel->obtener_row($usuario_has_estandar_competencia->id_estandar_competencia);
