@@ -3,7 +3,7 @@
 	<strong>Copyright &copy; 2023 - Civika Holding.</strong>
 	Todos los derechos reservados
 	<div class="float-right d-none d-sm-inline-block">
-		<b>Version</b> 2.0.2
+		<b>Version</b> 2.0.3
 	</div>
 </footer>
 
