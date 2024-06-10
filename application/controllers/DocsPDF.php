@@ -572,17 +572,17 @@ class DocsPDF extends CI_Controller {
 			$usuario = $this->UsuarioModel->obtener_usuario_by_id($usuario_has_estandar_competencia->id_usuario);
 			$foto_perfil = $this->PerfilModel->foto_perfil($usuario_has_estandar_competencia->id_usuario);
 			if(!is_object($foto_perfil)){
-				echo 'Candidato no a subido foto de perfil para credencial';exit;
+				echo '<li>Candidato no a subido foto de perfil para credencial</li>';exit;
 			}
 			$datos_empresa = $this->PerfilModel->obtener_datos_empresa($usuario_has_estandar_competencia->id_usuario,true);
 			
 			if(!is_object($datos_empresa)){
 				$validacion_datos['estatus'] = false;
-				echo "Falta los datos de la empresa del candidato<br>";
+				echo "<li>Falta los datos de la empresa del candidato</li>";
 			}else{
 				if(!isset($datos_empresa->cargo) || $datos_empresa->cargo == '' || is_null($datos_empresa->cargo)){
 					$validacion_datos['estatus'] = false;
-					echo 'Candidato no tiente datos completos en empresa';
+					echo '<li>Candidato no tiente datos completos en empresa</li>';
 				}
 			}
 			
@@ -599,11 +599,11 @@ class DocsPDF extends CI_Controller {
 			// var_dump($datos_usuario,$cat_calibracion_desempeno,$foto_perfil,$datos_empresa,$codigoQRCandidato);exit;
 			$fecha_emision_certificado = '';
 			$fecha_fin_vigencia = '';
-			if(!isset($usuario_has_estandar_competencia->fecha_emision_certificado) && $usuario_has_estandar_competencia->fecha_emision_certificado != '' && !is_null($usuario_has_estandar_competencia->fecha_emision_certificado)){
+			if(isset($usuario_has_estandar_competencia->fecha_emision_certificado) && $usuario_has_estandar_competencia->fecha_emision_certificado != '' && !is_null($usuario_has_estandar_competencia->fecha_emision_certificado)){
 				$fecha_emision_certificado = date('Y-m-d',strtotime($usuario_has_estandar_competencia->fecha_emision_certificado));
 			}else{
 				$validacion_datos['estatus'] = false;
-				echo 'No se encontro la fecha de emisión del certificado';
+				echo '<li>No se encontro la fecha de emisión del certificado</li>';
 			}
 			
 			if(!$validacion_datos['estatus']){
