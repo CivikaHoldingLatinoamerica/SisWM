@@ -33,7 +33,7 @@
 													<option value="<?=$ia->id_usuario?>" ><?=$ia->nombre.' '.$ia->apellido_p.' '.$ia->apellido_m?></option>
 												<?php endforeach; ?>
 											</select>
-											<small class="form-text text-muted">Instructor asignado</small>
+											<small class="form-text text-muted">Evaluador asignado</small>
 										</div>
 										<div class="col-sm-4">
 											<select class="custom-select" id="numero_registros_candidatos" data-rule-required="true">

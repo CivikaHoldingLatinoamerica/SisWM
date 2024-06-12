@@ -45,7 +45,7 @@
 
 		<div class="card card-primary">
 			<div class="card-header">
-				<label class="modal-title">Plan de evaluación y requerimientos PDF</label>
+				<label class="modal-title">Cédula de evaluación</label>
 				<div class="card-tools">
 					<button type="button" class="btn btn-tool" data-card-widget="collapse">
 						<i class="fas fa-minus"></i>

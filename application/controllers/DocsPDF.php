@@ -634,11 +634,18 @@ class DocsPDF extends CI_Controller {
 			//para los datos de la plantilla en la credencial
 			//$pdf->AddFont('fontwm','',FCPATH.'assets/fonts/wm.TTF',true);
 			//$pdf->SetFont('fontwm','B',9);
-			$pdf->SetFont('Arial','B',11);
-			$pdf->SetTextColor(255,255,255);
 			$nombre = utf8_decode($datos_usuario->nombre.' '.$datos_usuario->apellido_p.' '.$datos_usuario->apellido_m);
 			$titulo = utf8_decode($datos_empresa->cargo);
 			$clasificacion = utf8_decode($cat_calibracion_desempeno->nombre);
+			//actualizacion para los nombres mas grandes 
+			$pdf->SetFont('Arial','B',11);
+			if(strlen($nombre) > 25 && strlen($nombre) <= 30){
+				$pdf->SetFont('Arial','B',10);
+			}if(strlen($nombre) > 30){
+				$pdf->SetFont('Arial','B',9);
+			}
+			$pdf->SetTextColor(255,255,255);
+			
 
 			$pos = 5;
 			//adding XY as well helped me, for some reaons without it again it wasn't entirely centered
@@ -730,7 +737,12 @@ class DocsPDF extends CI_Controller {
 						echo 'Candidato no tiente datos completos en empresa';
 					}
 				}
-				$cat_ocupacion_especifica = $this->CatalogoModel->get_catalogo('cat_ocupacion_especifica',$datos_usuario->id_cat_ocupacion_especifica);
+				if(isset($datos_usuario->id_cat_ocupacion_especifica) && $datos_usuario->id_cat_ocupacion_especifica != '' && !is_null($datos_usuario->id_cat_ocupacion_especifica)){
+					$cat_ocupacion_especifica = $this->CatalogoModel->get_catalogo('cat_ocupacion_especifica',$datos_usuario->id_cat_ocupacion_especifica);
+				}else{
+					$validacion_datos['estatus'] = false;
+					echo "Falta que el candidato registre la ocupación especifica<br>";
+				}
 				$estandar_competencia = $this->EstandarCompetenciaModel->obtener_row($usuario_has_estandar_competencia->id_estandar_competencia);
 				$estandar_competencia_grupo = $this->EstandarCompetenciaGrupoModel->obtener_row($usuario_has_estandar_competencia->id_estandar_competencia_grupo);
 				if(!is_object($estandar_competencia_grupo)){

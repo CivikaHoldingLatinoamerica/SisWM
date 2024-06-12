@@ -80,7 +80,7 @@
 										</div>
 
 										<div class="form-group row">
-											<label class="col-sm-3">Ocupacion_especifica:</label>
+											<label class="col-sm-3">Ocupación Especifica:</label>
 											<span class="col-sm-9"><?=isset($datos_usuario_modificar->ocupacion_especifica) ? $datos_usuario_modificar->ocupacion_especifica : 'Sin dato'?></span>
 										</div>
 
