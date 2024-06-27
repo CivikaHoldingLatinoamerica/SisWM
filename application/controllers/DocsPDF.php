@@ -682,7 +682,7 @@ class DocsPDF extends CI_Controller {
 			$pdf->SetXY(200, 156);
 			$pdf->Write(0, utf8_decode($vigencia));
 
-			$pdf->Output('I', 'GAFETE-SEWM-'.$id_usuario_has_estandar_competencia);
+			$pdf->Output('I', 'GAFETE-SEWM-'.$id_usuario_has_estandar_competencia.'.pdf');
 			$pdf->cleanUp();
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -863,7 +863,7 @@ class DocsPDF extends CI_Controller {
 					}
 				}
 
-				$pdf->SetFont('Arial','B',6);
+				$pdf->SetFont('Arial','B',5.5);
 				$pdf->SetXY(184,249);
 				$folio = 'Folio: '.str_replace('.png','',$codigoQRDC3->nombre);
 				$pdf->Write(0,utf8_decode($folio));
@@ -891,7 +891,9 @@ class DocsPDF extends CI_Controller {
 			log_message('error','***** DocsPDFModel -> certificado_dc3');
 			log_message('error',$ex->getMessage());
 			log_message('error',$ex->getFile().' - '.$ex->getLine());
-			echo 'Ocurrio un error en el proceso de generar la constancia DC3- favor de intentar mas tarde';
+			echo 'Ocurrio un error en el proceso de generar la constancia DC3';
+			echo '<br>'.str_replace('/home/u720938164/domains/yosoyliderwm.com/public_html/wmped/','',$ex->getMessage());
+			echo '<br>Valide el mensaje previo, posiblemente sea una imagen no compatible o difiere de los formatos admitidos por el sistema';
 		}
 	}
 
