@@ -54,6 +54,7 @@
 										<th>Grupo</th>
 										<th>Periodo</th>
 										<th>Agente Capacitador</th>
+										<th>Instructor asignado</th>
 										<th>Área Tematica</th>
 										<th></th>
 									</tr>

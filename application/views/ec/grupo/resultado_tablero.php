@@ -11,6 +11,7 @@
 				<br> y duración de: <?=$ecg->duracion?> hrs
 			</td>
 			<td><?=$ecg->agente_capacitador?></td>
+			<td><?=!is_null($ecg->id_instructor) ? $ecg->nombre.' '.$ecg->apellido_p.' '.$ecg->apellido_m : 'Sin instructor asignado'?></td>
 			<td><?=$ecg->clave.'-'.$ecg->area_tematica?></td>
 			<td>
 				<?php if($ecg->eliminado =='no'): ?>

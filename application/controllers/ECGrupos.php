@@ -14,6 +14,7 @@ class ECGrupos extends CI_Controller {
 		$this->load->model('EstandarCompetenciaModel');
 		$this->load->model('ECInstrumentoActividadHasArchivo');
 		$this->load->model('ECInstrumentoHasActividadModel');
+		$this->load->model('UsuarioHasECModel');
         if(sesionActive()){
 			$this->usuario = usuarioSession();
         }else{
@@ -85,6 +86,8 @@ class ECGrupos extends CI_Controller {
 		$this->load->model('EstandarCompetenciaGrupoModel');
 		$data['cat_area_tematica'] = $this->CatalogoModel->get_catalogo('cat_area_tematica');
 		$data['id_estandar_competencia'] = $id_estandar_competencia;
+		$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
+		$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
 		if($id_estandar_competencia_grupo){
 			$data['estandar_competencia_grupo'] = $this->EstandarCompetenciaGrupoModel->obtener_row($id_estandar_competencia_grupo);
 		}

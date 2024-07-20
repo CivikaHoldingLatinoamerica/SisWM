@@ -684,6 +684,9 @@ class Validaciones_Helper {
 		}if(!isset($data['id_cat_area_tematica']) || self::isCampoVacio($data['id_cat_area_tematica'])){
 			$result['success'] = false;
 			$result['msg'][] = 'El campo área temática es requerido';
+		}if(!isset($data['id_instructor']) || self::isCampoVacio($data['id_instructor'])){
+			$result['success'] = false;
+			$result['msg'][] = 'El campo instructor es requerido';
 		}
 		return $result;
 	}

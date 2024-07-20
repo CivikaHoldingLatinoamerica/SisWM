@@ -33,6 +33,10 @@ class ModeloBase extends CI_Model
 		return '';
 	}
 
+	public function select_data(){
+		return '*';
+	}
+
 	public function tablero($data,$pagina = 1, $registros = 10){
 		try{
 			$sql_limit = " limit ".(($pagina*$registros)-$registros).",$registros";
@@ -153,7 +157,7 @@ class ModeloBase extends CI_Model
 	}
 
 	public function obtener_query_base(){
-		$consulta = "select * from ".$this->table." ".$this->alias;
+		$consulta = "select ".$this->select_data()." from ".$this->table." ".$this->alias;
 		return $consulta;
 	}
 

@@ -73,6 +73,20 @@
 								</select>
 							</div>
 						</div>
+
+						<!-- nuevo cambio para el instructor y se tome en la constancia dc3 -->
+						<div class="form-group row">
+							<label for="input_instructor" class="col-sm-3 col-form-label">Instructor</label>
+							<div class="col-sm-9">
+								<select id="input_instructor" class="custom-select form-control-border"
+										name="id_instructor">
+									<option value="">--Seleccione--</option>
+									<?php foreach($instructores_asignados as $ia): ?>
+										<option value="<?=$ia->id_usuario?>" <?=isset($estandar_competencia_grupo) && $estandar_competencia_grupo->id_instructor == $ia->id_usuario ? 'selected="selected"' : ''?>><?=$ia->nombre.' '.$ia->apellido_p.' '.$ia->apellido_m?></option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+						</div>
 						
 						<div class="form-group row">
 							<div class="col-sm-12 text-right">

@@ -12,9 +12,14 @@ class EstandarCompetenciaGrupoModel extends ModeloBase
 		
 	}
 
+	public function select_data(){
+		return 'ecg.*,cat.*,du.nombre,du.apellido_p,du.apellido_m';
+	}
+
 	public function criterios_join()
 	{
 		$joins = ' inner join cat_area_tematica cat on ecg.id_cat_area_tematica = cat.id_cat_area_tematica ';
+		$joins .= ' left join datos_usuario du on du.id_usuario = ecg.id_instructor ';
 		return $joins;
 	}
 
