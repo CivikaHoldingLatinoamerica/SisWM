@@ -721,6 +721,11 @@ class DocsPDF extends CI_Controller {
 					'estatus' => true,
 				];
 				$datos_usuario = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario);
+				/**
+				 * cambio por requerimiento de que el instructor es diferente del evaluador, estos datos se tomara del modulo de grupos
+				 * ahi se asignara el evaluador como tal, cambio por requerimiento nuevo
+				 * se espera que el instructor sea asignado como en el evaluador
+				 */
 				$datos_instructor = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario_evaluador);
 				$firma_instructor = $this->PerfilModel->obtener_datos_expediente($usuario_has_estandar_competencia->id_usuario_evaluador,EXPEDIENTE_FIRMA_DIGITAL);
 				if(!is_object($firma_instructor)){
