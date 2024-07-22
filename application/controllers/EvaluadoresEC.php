@@ -9,6 +9,7 @@ class EvaluadoresEC extends CI_Controller {
     function __construct(){
         parent:: __construct();
 		$this->load->model('ActividadIEModel');
+		$this->load->model('ArchivoModel');
 		$this->load->model('EcInstrumentoAlumnoComentarioModel');
 		$this->load->model('EntregableAlumnoComentariosModel');
 		$this->load->model('EcInstrumentoAlumnoModel');
@@ -228,6 +229,7 @@ class EvaluadoresEC extends CI_Controller {
 			$data['certificado_laboral_pdf'] = $this->ECUsuarioHasExpedientePEDModel->obtener_registro_existente($id_estandar_competencia,$id_usuario_alumno,EXPEDIENTE_CERTIFICADO_EC);
 			$usuario_has_ec = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'id_usuario' => $id_usuario_alumno),0);
 			$data['usuario_has_ec'] = $usuario_has_ec['usuario_has_estandar_competencia'][0];
+			$data['constancia_dc3'] = $this->ArchivoModel->obtener_archivo($data['usuario_has_ec']->id_archivo_dc3);
 			//var_dump($data);exit;
 			$this->load->view('instructor_ec/modal_expediente_candidato',$data);
 		}catch (Exception $ex){
@@ -236,6 +238,20 @@ class EvaluadoresEC extends CI_Controller {
 			$response['msg'][] = $ex->getMessage();
 			echo json_encode($response);exit;
 		}
+	}
+
+	public function resetDC3Candidato($id_usuario_has_ec){
+		perfil_permiso_operacion('estandar_competencia.alumno');
+		try{
+			$actualizar = $this->UsuarioHasECModel->guardar_row(array('id_archivo_dc3' => null),$id_usuario_has_ec);
+			$response['success'] = $actualizar['success'];
+			$response['msg'][] = $actualizar['msg'];
+		}catch (Exception $ex){
+			$response['success'] = false;
+			$response['msg'][] = 'Hubo un error en el sistema, intente nuevamente';
+			$response['msg'][] = $ex->getMessage();
+		}
+		echo json_encode($response);exit;
 	}
 
 	public function agregar_archivo_expediente_digital(){

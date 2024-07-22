@@ -127,6 +127,11 @@ $(document).ready(function(){
 		EvaluadoresEC.cargar_alumnos_estandar_competencia(true,id_estandar_competencia);
 	});
 
+	$(document).on('click','#btn_actualizar_dc3',function(){
+		var id_usuario_has_estandar_competencia = $(this).data('id_usuario_has_estandar_competencia');
+		EvaluadoresEC.resetear_constancia_dc3(id_usuario_has_estandar_competencia);
+	});
+
 	/**
 	 * nueva funcionalidad para integrar calificaciones de entregables, tanto para walmart como para entregables del conocer
 	 * se manejan dos clases para los input de la calificacion: input_calificacion_wm y input_calificacion_conocer y para los botones
@@ -150,6 +155,8 @@ $(document).ready(function(){
 		var span_calificacion_registrada = '#calificacion_wm_registrada_ec';
 		EvaluadoresEC.guardar_calificacion_entregable(class_input,calificacion_max,id_entregable,calificacion,span_calificacion_registrada);
 	});
+
+
 
 	//funcionalidad para el paginado por scroll
 	$(window).scroll(function(){
@@ -712,7 +719,23 @@ var EvaluadoresEC = {
 			$('#div_leyend_fecha_envio_ati_tablero').html(response);
 			EvaluadoresEC.validar_input_fecha_envio_ati_instructor();
 		})
-	}
+	},
 
+	resetear_constancia_dc3(id_usuario_has_estandar_competencia){
+		$('#contenedor_iframe_dc3').html(overlay);
+		Comun.obtener_contenido_peticion_json(base_url +'EvaluadoresEC/resetDC3Candidato/'+id_usuario_has_estandar_competencia,{},function (response) {
+			if (response.success) {
+				Comun.mensajes_operacion( response.msg, 'success');
+				var html_iframe_dc3 = '<iframe src="'+base_url+'constancia_dc3/'+id_usuario_has_estandar_competencia+'" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>';
+				$('#contenedor_iframe_dc3').html(html_iframe_dc3);
+				$('#contenedor_mensaje_actualizar_dc3').fadeOut();
+				setTimeout(function(){
+					$('#contenedor_mensaje_actualizar_dc3').remove();
+				},1000);
+			}else {
+				Comun.mensajes_operacion(response.msg, 'error');
+			}
+		})
+	},
 
 };

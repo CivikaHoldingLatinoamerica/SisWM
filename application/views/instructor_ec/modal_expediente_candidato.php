@@ -113,7 +113,21 @@
 						</div>
 						<div class="card-body">
 							<div class="form-group row">
-								<iframe src="<?=base_url().'constancia_dc3/'.$usuario_has_ec->id_usuario_has_estandar_competencia?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+								<?php if(isset($constancia_dc3) && !is_null($constancia_dc3)): ?>
+									<div class="col-lg-12" id="contenedor_mensaje_actualizar_dc3">
+										<span>La constancia presente se generó con los datos a la fecha de <?=fechaBDToHtml($constancia_dc3->fecha)?>;</span>
+										<label>¿Desea generarla nuevamente con los datos a la fecha de hoy, recuerdo que esto no es reversible?</label>
+										<button type="button" id="btn_actualizar_dc3" data-id_usuario_has_estandar_competencia="<?=$usuario_has_ec->id_usuario_has_estandar_competencia?>"
+											class="btn btn-sm btn-outline-success">Actualizar constancia DC3</button>
+									</div>
+									<div class="col-lg-12" id="contenedor_iframe_dc3">
+										<iframe src="<?=base_url().$constancia_dc3->ruta_directorio.$constancia_dc3->nombre?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+									</div>
+								<?php else: ?>
+									<div class="col-lg-12">
+										<iframe src="<?=base_url().'constancia_dc3/'.$usuario_has_ec->id_usuario_has_estandar_competencia?>" style="width: 100%; min-height: 300px; max-height: 600px"></iframe>
+									</div>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
