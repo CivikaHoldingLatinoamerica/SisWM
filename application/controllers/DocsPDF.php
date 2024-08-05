@@ -721,17 +721,6 @@ class DocsPDF extends CI_Controller {
 					'estatus' => true,
 				];
 				$datos_usuario = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario);
-				/**
-				 * cambio por requerimiento de que el instructor es diferente del evaluador, estos datos se tomara del modulo de grupos
-				 * ahi se asignara el evaluador como tal, cambio por requerimiento nuevo
-				 * se espera que el instructor sea asignado como en el evaluador
-				 */
-				$datos_instructor = $this->UsuarioModel->obtener_data_usuario_id($usuario_has_estandar_competencia->id_usuario_evaluador);
-				$firma_instructor = $this->PerfilModel->obtener_datos_expediente($usuario_has_estandar_competencia->id_usuario_evaluador,EXPEDIENTE_FIRMA_DIGITAL);
-				if(!is_object($firma_instructor)){
-					$validacion_datos['estatus'] = false;
-					echo "Falta la firma del instructor en el sistema<br>";
-				}
 				$datos_empresa = $this->PerfilModel->obtener_datos_empresa($usuario_has_estandar_competencia->id_usuario,true);
 				if(!is_object($datos_empresa)){
 					$validacion_datos['estatus'] = false;
@@ -755,6 +744,17 @@ class DocsPDF extends CI_Controller {
 					echo "Falta la asignación del grupo al candidato<br>";
 				}else{
 					$cat_area_tematica = $this->CatalogoModel->get_catalogo('cat_area_tematica',$estandar_competencia_grupo->id_cat_area_tematica);
+					/**
+					 * cambio por requerimiento de que el instructor es diferente del evaluador, estos datos se tomara del modulo de grupos
+					 * ahi se asignara el evaluador como tal, cambio por requerimiento nuevo
+					 * se espera que el instructor sea asignado como en el evaluador
+					 */
+					$datos_instructor = $this->UsuarioModel->obtener_data_usuario_id($estandar_competencia_grupo->id_instructor);
+					$firma_instructor = $this->PerfilModel->obtener_datos_expediente($estandar_competencia_grupo->id_instructor,EXPEDIENTE_FIRMA_DIGITAL);
+					if(!is_object($firma_instructor)){
+						$validacion_datos['estatus'] = false;
+						echo "Falta la firma del instructor en el sistema<br>";
+					}
 				}
 
 				if(!$validacion_datos['estatus']){
