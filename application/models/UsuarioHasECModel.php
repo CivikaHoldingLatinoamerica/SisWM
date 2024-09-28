@@ -43,6 +43,8 @@ class UsuarioHasECModel extends ModeloBase
 			$criterios .= " and cp.slug = '".$data['perfil']."'";
 		}if(isset($data['id_usuario_evaluador']) && $data['id_usuario_evaluador'] != ''){
 			$criterios .= " and uhec.id_usuario_evaluador = '".$data['id_usuario_evaluador']."'";
+		}if(isset($data['id_estandar_competencia_grupo']) && $data['id_estandar_competencia_grupo'] != ''){
+			$criterios .= " and ecg.id_estandar_competencia_grupo = '".$data['id_estandar_competencia_grupo']."'";
 		}if(isset($data['busqueda']) && $data['busqueda'] != ''){
 			$criterios .= " and (
 				UPPER(du.nombre) like '%".$data['busqueda']."%' or
@@ -63,8 +65,9 @@ class UsuarioHasECModel extends ModeloBase
 				inner join usuario u on u.id_usuario = uhec.id_usuario
 			  	inner join usuario_has_perfil uhp on uhp.id_usuario = uhec.id_usuario
 				inner join datos_usuario du on du.id_usuario = uhec.id_usuario
+				inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil
 			  	left join datos_usuario due on due.id_usuario = uhec.id_usuario_evaluador
-			  	inner join cat_perfil cp on cp.id_cat_perfil = uhp.id_cat_perfil ". $this->criterios_busqueda($data);
+				left join estandar_competencia_grupo ecg on ecg.id_estandar_competencia_grupo = uhec.id_estandar_competencia_grupo ". $this->criterios_busqueda($data);
 		$query = $this->db->query($consulta);
 		return $query->row()->total_registros;
 	}

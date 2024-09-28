@@ -251,9 +251,11 @@ class EC extends CI_Controller {
 			$data['id_estandar_competencia'] = $id_estandar_competencia;
 			$data['estandar_competencia_instrumento'] = $this->ActividadIEModel->obtener_instrumentos_ec($id_estandar_competencia);
 			$instructores = $this->UsuarioHasECModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia,'perfil' => 'instructor'),0);
+			$grupos = $this->EstandarCompetenciaGrupoModel->tablero(array('id_estandar_competencia' => $id_estandar_competencia),0);
 			$data['instructores_asignados'] = $instructores['usuario_has_estandar_competencia'];
+			$data['estandar_competencia_grupo'] = $grupos['estandar_competencia_grupo'];
 			//$data['candidatos_disponible'] = $this->UsuarioHasECModel->obtener_candidatos_sin_asignar_ec($id_estandar_competencia);
-			//var_dump($data);exit;
+			// var_dump($data);exit;
 			$this->load->view('ec/form_alumno',$data);
 		}catch (Exception $ex){
 			$response['success'] = false;
@@ -272,6 +274,7 @@ class EC extends CI_Controller {
 				'perfil' => 'alumno',
 				'busqueda' => isset($post['busqueda']) ? $post['busqueda'] : '',
 				'id_usuario_evaluador' => isset($post['id_usuario_evaluador']) ? $post['id_usuario_evaluador'] : '',
+				'id_estandar_competencia_grupo' => isset($post['id_estandar_competencia_grupo']) ? $post['id_estandar_competencia_grupo'] : '',
 			);
 			$data = $this->UsuarioHasECModel->tablero($buscar,$pagina,$registros);
 			$data_paginacion = data_paginacion($pagina,$registros,$data['total_registros']);

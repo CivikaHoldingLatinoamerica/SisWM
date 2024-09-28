@@ -36,6 +36,15 @@
 											<small class="form-text text-muted">Evaluador asignado</small>
 										</div>
 										<div class="col-sm-4">
+											<select class="custom-select" id="input_buscar_grupo_asigando" data-rule-required="true">
+												<option value="">--Todos--</option>
+												<?php foreach ($estandar_competencia_grupo as $ecg): ?>
+													<option value="<?=$ecg->id_estandar_competencia_grupo?>" ><?=$ecg->clave_grupo.' - '.$ecg->nombre_grupo?></option>
+												<?php endforeach; ?>
+											</select>
+											<small class="form-text text-muted">Grupo asignado</small>
+										</div>
+										<div class="col-sm-4">
 											<select class="custom-select" id="numero_registros_candidatos" data-rule-required="true">
 												<option value="5">5</option>
 												<option value="15">15</option>

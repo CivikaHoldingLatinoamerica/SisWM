@@ -206,11 +206,12 @@ var EstandarCompetencia = {
 		var post = {
 			busqueda : $('#input_buscar_candidatos_asignados_ec').val(),
 			id_usuario_evaluador : $('#input_buscar_evaluador_asigando').val(),
+			id_estandar_competencia_grupo : $('#input_buscar_grupo_asigando').val(),
 		}
 		$("#contenedor_footer_usuarios_asignados").fadeOut();
 		if(pagina == 1){
 			$("#contenedor_resultados_usr_asignados").html('<tr>'+
-				'<td colspan="5" class="text-center"><i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin"></i></td>'+
+				'<td colspan="6" class="text-center"><i id="spinner_buscar_candidatos_asignados" class="fas fa-sync-alt fa-spin"></i></td>'+
 			'</tr>');
 			Comun.obtener_contenido_peticion_html(
 				base_url + 'EC/listado_candidatos_asignados/' + id_estandar_competencia + '/' + pagina + '/' + registros,

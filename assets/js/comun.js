@@ -261,7 +261,11 @@ var Comun = {
 			data : parametros,
 			dataType: "html",
 			url : url,
+			beforeSend : function(){
+				$('#overlay_full_page').fadeIn();
+			},
 			success : function (data) {
+				$('#overlay_full_page').fadeOut();
 				processor(data,true);
 			},
 			error : function (xhr,ajaxOptions,thrownError) {
