@@ -25,14 +25,14 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="input_nombre" class="col-sm-3 col-form-label">Nombre</label>
+						<label for="input_nombre" class="col-sm-3 col-form-label">Nombre de la empresa</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="input_nombre" data-rule-required="true"
 								   name="nombre" placeholder="Nombre de la la empresa" value="<?=isset($datos_empresa) ? $datos_empresa->nombre : ''?>">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="input_nombre_corto" class="col-sm-3 col-form-label">Nombre corto</label>
+						<label for="input_nombre_corto" class="col-sm-3 col-form-label">Nombre corto de la empresa</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" id="input_nombre_corto" data-rule-required="true"
 								   name="nombre_corto" placeholder="Nombre corto de la la empresa" value="<?=isset($datos_empresa) ? $datos_empresa->nombre_corto : ''?>">
