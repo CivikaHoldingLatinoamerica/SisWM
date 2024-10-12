@@ -760,7 +760,7 @@ class DocsPDF extends CI_Controller {
 				if(!$validacion_datos['estatus']){
 					return '';
 				}
-				
+				// var_dump($datos_instructor,$datos_empresa);exit;
 				
 				$pdf = new Fpdi();
 				$mpdf = $this->pdf->load($this->default_pdf_params);
@@ -841,9 +841,21 @@ class DocsPDF extends CI_Controller {
 				$pdf->SetXY(10,169);
 				$pdf->Write(0,utf8_decode($estandar_competencia_grupo->agente_capacitador));
 
+				//nueva funcionalidad para los nombres largos de las firmas
+
+
 				//nombre y firma instructor
-				$pdf->SetXY(15,207);
-				$pdf->Write(0,utf8_decode($datos_instructor->apellido_p.' '.$datos_instructor->apellido_m.' '.$datos_instructor->nombre));
+				$nombre_instructor = explode(' ',$datos_instructor->nombre);
+				// var_dump($nombre_instructor);exit;
+				if(sizeof($nombre_instructor) > 1){
+					$pdf->SetXY(15,202);
+					$pdf->Write(0,utf8_decode($datos_instructor->nombre));
+					$pdf->SetXY(15,207);
+					$pdf->Write(0,utf8_decode($datos_instructor->apellido_p.' '.$datos_instructor->apellido_m));
+				}else{
+					$pdf->SetXY(15,207);
+					$pdf->Write(0,utf8_decode($datos_instructor->nombre.' '.$datos_instructor->apellido_p.' '.$datos_instructor->apellido_m));
+				}
 				$pdf->Image(FCPATH.$firma_instructor->ruta_directorio.$firma_instructor->nombre,25,185,35,18);
 
 				//sello
@@ -880,7 +892,7 @@ class DocsPDF extends CI_Controller {
 				$datos_doc['ruta_directorio'] = $directorio;
 				$datos_doc['fecha'] = date('Y-m-d H:i:s');
 				
-				$pdf->Output('F', FCPATH.$datos_doc['ruta_directorio'].$datos_doc['nombre']);
+				$pdf->Output('I', FCPATH.$datos_doc['ruta_directorio'].$datos_doc['nombre']);
 				$pdf->cleanUp();
 
 				$id_archivo = $this->ArchivoModel->guardar_archivo_model($datos_doc);
