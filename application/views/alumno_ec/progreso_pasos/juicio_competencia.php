@@ -14,6 +14,14 @@
 			<div class="card-body">
 
 				<div class="form-group row">
+					<div class="callout callout-success">
+						<h5>Aviso importante</h5>
+						<p>Le pedimos de favor colocar las observaciones que tengas de tu proceso de evaluacion y da click en siguiente que se encuentra al final de esta pantalla para continuar al siguiente apartado</p>
+					</div>
+
+				</div>
+
+				<div class="form-group row">
 					<label class="col-sm-3">Mejores practicas:</label>
 					<span class="col-sm-9"><?=$usuario_has_ec->mejores_practicas?></span>
 					<label class="col-sm-3">Áreas de oportunidad</label>

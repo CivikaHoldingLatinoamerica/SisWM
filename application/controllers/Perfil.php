@@ -350,7 +350,7 @@ class Perfil extends CI_Controller {
 				//if($this->usuario->perfil == 'alumno'){
 					$post['id_usuario'] = $id_usuario;
 				//}
-				isset($post['vigente']) && $post['vigente'] == 'si' ? $this->DatosEmpresaModel->actualizar_vigente($this->usuario->id_usuario) : false;
+				isset($post['vigente']) && $post['vigente'] == 'si' ? $this->DatosEmpresaModel->actualizar_vigente($id_usuario) : false;
 				//var_dump($post);exit;
 				$guardar_empresa = $this->DatosEmpresaModel->guardar_row($post,$id);
 				if($guardar_empresa){

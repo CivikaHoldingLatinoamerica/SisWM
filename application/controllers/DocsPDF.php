@@ -862,11 +862,46 @@ class DocsPDF extends CI_Controller {
 				$pdf->Image(FCPATH.RUTA_SELLO_CIVIKA_PDF,62,185);
 
 				//representante legal
-				$pdf->SetXY(82,207);
-				$pdf->Write(0,utf8_decode($datos_empresa->representante_legal));
+				$representante_legal = explode(' ', $datos_empresa->representante_legal);
+				if(sizeof($representante_legal) > 3){
+					$superior_nombre = '';
+					$inferior_nombre = '';
+					foreach($representante_legal as $index => $rl){
+						if($index > 1){
+							$inferior_nombre .= $rl.' ';
+						}else{
+							$superior_nombre .= $rl.' ';
+						}
+					}
+					$pdf->SetXY(90,202);
+					$pdf->Write(0,utf8_decode($superior_nombre));
+					$pdf->SetXY(90,207);
+					$pdf->Write(0,utf8_decode($inferior_nombre));
+				}else{
+					$pdf->SetXY(82,207);
+					$pdf->Write(0,utf8_decode($datos_empresa->representante_legal));
+				}
+				
 				//representante de trabajadores
-				$pdf->SetXY(147,207);
-				$pdf->Write(0,utf8_decode($datos_empresa->representante_trabajadores));
+				$representante_trabajadores = explode(' ', $datos_empresa->representante_trabajadores);
+				if(sizeof($representante_trabajadores) > 3){
+					$superior_nombre = '';
+					$inferior_nombre = '';
+					foreach($representante_trabajadores as $index => $rt){
+						if($index > 1){
+							$inferior_nombre .= $rt.' ';
+						}else{
+							$superior_nombre .= $rt.' ';
+						}
+					}
+					$pdf->SetXY(155,202);
+					$pdf->Write(0,utf8_decode($superior_nombre));
+					$pdf->SetXY(155,207);
+					$pdf->Write(0,utf8_decode($inferior_nombre));
+				}else{
+					$pdf->SetXY(147,207);
+					$pdf->Write(0,utf8_decode($datos_empresa->representante_trabajadores));
+				}
 
 				//el QR para la constancia dc3
 				if(isset($usuario_has_estandar_competencia->id_archivo_dc3) && !is_null($usuario_has_estandar_competencia->id_archivo_dc3)){
@@ -892,7 +927,7 @@ class DocsPDF extends CI_Controller {
 				$datos_doc['ruta_directorio'] = $directorio;
 				$datos_doc['fecha'] = date('Y-m-d H:i:s');
 				
-				$pdf->Output('I', FCPATH.$datos_doc['ruta_directorio'].$datos_doc['nombre']);
+				$pdf->Output('F', FCPATH.$datos_doc['ruta_directorio'].$datos_doc['nombre']);
 				$pdf->cleanUp();
 
 				$id_archivo = $this->ArchivoModel->guardar_archivo_model($datos_doc);
